@@ -1,6 +1,6 @@
 # First Meeting notes
 
-with Tobias Roeddiger and Tobias King 
+with Tobias Roeddiger and Tobias King
 
 ## Grober Zeitplan
 
@@ -21,10 +21,10 @@ erkennung, auf welcher Seite man Kaut beim Essen oder so, das mal replizieren
 
 4. Zykluserkennung mit optischem Temperatursensor im Ohr
 
-Temperatursensor (optisch) 
+Temperatursensor (optisch)
 
 * zirkaliaren Rythmus
 * Zyklus Frau
-* Zusammenhang zwischen 
+* Zusammenhang zwischen
 
 Snapchat Research

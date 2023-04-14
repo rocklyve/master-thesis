@@ -3,18 +3,18 @@
 1. Zykluserkennung schwierig, da Antrag + allg. zeitlich + Geräte bauen + Studie x Auswertung
 
 1.1. Am einen Ohr Temp messen, am anderen Ohr goldstandard. 1. Step allg. 2. step im alltag.
-Hauptherausforderung ist: earpiece entwerfen mit Sensorik, zusammenarbeit mit HIWIS, EquadratC, 3,3V mit Ground + Clock, die den Takt vorgibt + Datenkanal zur datenübertragen... 
-dann software ergänzen zum auslesen, es gibt verschiedene Sensoren, tobi schickt mir die. 
+Hauptherausforderung ist: earpiece entwerfen mit Sensorik, zusammenarbeit mit HIWIS, EquadratC, 3,3V mit Ground + Clock, die den Takt vorgibt + Datenkanal zur datenübertragen...
+dann software ergänzen zum auslesen, es gibt verschiedene Sensoren, tobi schickt mir die.
 
 easyEDA auch anschauen
 
 vllt Bewegung mitbetrachten, damit man diverse Schwankungen rauswerfen kann.
 
-Wir machen Termin aus mit einem HiWi zum designen. Tobi gibt mir auch ncohmal n crashkurs. 
+Wir machen Termin aus mit einem HiWi zum designen. Tobi gibt mir auch ncohmal n crashkurs.
 
-ich soll jz mal einen Proposal abstract schreiben. 
+ich soll jz mal einen Proposal abstract schreiben.
 
-Motivation 
+Motivation
 Problem
 Fragestellung
 Geplantes Vorgehen (auch mit relevanten Metriken)
