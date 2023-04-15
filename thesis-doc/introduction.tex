@@ -6,18 +6,42 @@
 \label{ch:Introduction}
 
 \section{Motivation}
-With the increasing interest in wearable health monitoring devices, temperature measurements have become a critical aspect of biometric data collection. The ear canal is a promising location for body temperature measurement because it provides a stable and easily accessible location for measurements.
+% TODO: allg. Earables motivieren
+With the increasing interest in wearable health monitoring devices, temperature measurements have become a critical aspect of biometric data collection. The ear canal is a promising location for body temperature measurement because it provides a stable and easily accessible location for measurements. % TODO: add citation
 
-In addition, this location is less susceptible to body movement. However, the optimal sensor placement and measurement methodology for ear-based temperature monitoring is still an open research question.
+In addition, this location is less susceptible to body movement. However, the optimal sensor placement and measurement methodology for ear-based temperature monitoring is still an open research question. % TODO: was ich hier noch wichtig fände ist mehr darauf einzugehen warum das ohr allgemein interessant ist und noch viel wichtiger, was einem die temperatur überhaupt bringt. was kann man daraus lernen? wofür misst man die temperatur
+
+% TODO: die optiomale position ist klar, die is im ohr kanal, allerdings ist das nicht so einfach möglich immer die auf das trommelfell auszurichten (zum beispiel ear wax, etc.). die frage zielt also eher darauf ab zu schauen, wie sich verschiedenen positionen unterscheiden um einen alternativen messpunkt zu haben da die sensoren (nicht nur temperatur) möglichst alle am ohr untergebracht werden müssen. Weiterhin ist eine Frage noch, wie sich Temperatur messungen am ohr verhalten wenn diese nicht unter kontrollierenten bedingungen im labor durchgeführt werden. Welchen einfluss haben zum beispiel bewegungsartefakte? eine deiner controbutions könnte ein algorithmus sein der erkennt, dass zu viel bewegung da ist (mit imu) und dann irgendwie fehlerhafte temperaturmessungen kompensiren oder ähnliches. außerdem eine weitere frage könnte sein ob eine kombination von mehreren temperatursensoren helfen kann die messung zu stabilisieren.
 
 \section{Problem}
 Previous studies have reported discrepancies in ear-based temperature measurements due to factors such as sensor location, skin contact, and calibration. In addition, the potential impact of different measurement positions on the accuracy and reliability of ear-based temperature measurements is still unclear.
 
+% TODO: sowas muss alles belegt werden. welche previous studies? was sind die genauen probleme? warum existieren diese? dann im anschluss beschreiben wie wir diese lösen können, bzw. wie wir denken diese zu lösen (hypothesen)
+
 \section{Question}
 In this thesis, we will examine temperature sensors, each placed at different locations in the ear canal to compare the sensor measurements to those of a medically certified thermometer, which will be the ground truth here. The research question is to find the best location for ear-based temperature measurement and the way it affects the accuracy and stability of those. Afterwards, the resulting optimal location will be taken as a basis to detect a temperature-dependent event of the body and evaluate whether it provides conclusive results.
 
+% TODO: hier solltest du etwas konkreter strukturieren:
+% - Forschungsziel / Hypothese
+% - resultierende Forschungsfrage
+% - Metriken
+% - erhoffte Ergebnisse
+
+% Das mit der optimal location würde ich erstmal weglassen. Würden den Fokus eher darauf legen, wie verlgiechen sich die Positionen und wie kann man das maximale rausholen durch kombination von sensoren oder rausfiltern mit hilfe von imu daten etc.
+
+% Wenn du etwas mehr gelesen hast was man konkret mit temperatur machen kann dann können wir mal darüber reden was davon in frage kommt für eine mögliche application. Sollte aber evtl. eher optional sein, je nach aufwand der application (z.b. zyklus tracking zu gefährlich für MA wegen knapper Zeit vs. mind 2 bis 3 Monate tracken für sinnvolle daten)
+
 \section{Planned approach}
-We will use the OpenEarable platform to attach various temperature sensors to the ear canal. The sensors will be placed at various locations including the concha, inside the ear canal, on the eardrum, and behind the pinna on the mastoid. Participants will be asked to wear the sensors on one ear in a study under laboratory conditions. At the same time the participants core body temperature will be measured with a medical thermometer on the other ear. The resulting date will be collected and analyzed afterwards to determine the best sensor position for ear-based temperature measurement. This position will then be used to classify temperature-related events of the body.
+We will use the OpenEarable platform to attach various temperature sensors to the ear canal. The sensors will be placed at various locations including the concha, inside the ear canal, on the eardrum, and behind the pinna on the mastoid. Participants will be asked to wear the sensors on one ear in a study under laboratory conditions.
+At the same time the participants core body temperature will be measured with a medical thermometer on the other ear.
+% TODO: das wird denke ich nicht so funktionieren. die temperatur in dem einen ohr ist soweit ich weiß in der regel anders als im anderen
+The resulting date will be collected and analyzed afterwards to determine the best sensor position for ear-based temperature measurement. This position will then be used to classify temperature-related events of the body.
+
+% TODO: mach mal eine grafik dazu, guter punkt 6 sind wshl notwendig: drei hinterm ohr (oben mitte unten), eins concha, eins ohrkanal, einmal richtung trommelfell (auf dem trommelfell wird nicht gehen)
+
+% TODO: siehe input andere kommentare. zusätzliche finde ich aber die analyse der temperatur bei unterschiedlichen aktivitäten gut. hier fände ich es wichtig konkret zu werden. welche aktivitäten sind relevant? gibt es literatur die bereits temperatur bei unterschiedlichen aktivitäten betrachtet? da sollten wir dann drauf aufbauen damit wir aktivitätn wählen bei denen auch wirklich was passiert.
 
 \section{Expected results}
 We expect that our study will provide insights into the optimal placement of sensors for temperature monitoring in or directly around the ear. We are looking forward to identify variations in temperature measurements at different positions in the ear canal. Our results will inform the development of more accurate and reliable wearable devices for biometric applications. In addition, the optimally determined position will be taken as a new basis to make analyses on various bodily temperature changing events.
+
+% TODO: anpassen basierend auf dem sonstigen input
