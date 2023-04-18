@@ -6,27 +6,28 @@
 \label{ch:Introduction}
 
 \section{Motivation}
-With the increasing world population and the growing demand for healthcare, monitoring various biometric signals of the body has become increasingly important. As a result of increased research and development in this field, several wearable and implantable systems have been developed \cite{loncar-turukaloLiteratureWearableTechnology2019}.
+With the increasing world population and the growing demand for healthcare, monitoring various biometric signals of the body has become increasingly important. 
+As a result of increased research and development in this field, several wearable and implantable systems have been developed \cite{loncar-turukaloLiteratureWearableTechnology2019}.
+Earables have emerged as a particularly promising technology for the future of healthcare and lifestyle \cite{trespGoingDigitalSurvey2016, kirkWearablesRevolutionStandardization2014a}. 
+The global earable market size was valued in 2022 at around USD 58 million and is expected to rise to 12.6\% until 2030 \cite{GlobalEarphonesHeadphones}.
+This revolution began with smartphones, followed by other wearables such as watches, and now includes earables. 
+Most wearables are equipped with various sensors, which are intended to replace a modern medical laboratory through analysis \cite{loncar-turukaloLiteratureWearableTechnology2019}.
 
-Earables have emerged as a particularly promising technology for the future of healthcare and lifestyle \cite{trespGoingDigitalSurvey2016, kirkWearablesRevolutionStandardization2014a}. This revolution began with smartphones, followed by other wearables such as watches, and now includes earables. Most wearables are equipped with various sensors, which are intended to replace a modern medical laboratory through analysis.
-Capturing data using earables has become very popular due to their compact size, their comfortable fit, and their ability to capture lots of physiological data of the human body. 
-Earables are located near the brain and the major blood vessels in the head and neck, which is a huge advantage compared to other positions capturing data.
+Capturing data using earables has become very popular due to their compact size, their comfortable fit, their easy reachability by hands, and their ability to capture lots of physiological data of the human body \cite{roddigerSensingEarablesSystematic2022a}. 
+The fact, that they are very close to the body, especially on a body opening, and can be worn over a long period of time without any issues is a huge advantage compared to other positions to capture such data.
+Furthermore, many earables are designed to be discrete, making them a practical option for individuals who want to monitor their health without drawing attention to themselves.
+Earables are located near the brain and the major blood vessels in the head and neck.
 Additionally, wearable technology can be worn in or around the ears capturing a variety of biometric data to revolutionize the way we monitor and understand our health such as heart rate, oxygen saturation, and body temperature.
 
-The global earphone and headphones market size was valued in 2022 at around USD 58 million and is expected to rise to 12.6\% until 2030 \cite{GlobalEarphonesHeadphones}.
-
-The most crucial advantage of earables in terms of capturing biometric data is the fact, that they are very close to the body, especially on a body opening, and can be worn over a long period without any issues. 
-Furthermore, many earables are designed to be discrete, making them a practical option for individuals who want to monitor their health without drawing attention to themselves.
-
 One important aspect of sensing data with earables is the ability to detect changes in body temperature. 
-
 Earables equipped with temperature sensors can provide accurate measurements of body temperature throughout the day, which can be used to track patterns and identify potential health issues. 
 For example, changes in body temperature can be an early indicator of infection or illness, and tracking temperature over time can help individuals identify when they may be at risk.
 
 Overall, earables are a promising option for sensing data, particularly for tracking body temperature. 
 By monitoring temperature over time, individuals can gain valuable insights into their health and identify potential issues early on.
 
-With the increasing interest in wearable health monitoring devices, temperature measurements have become a crucial aspect of biometric data collection. The ear canal is a promising location for body temperature measurement because it provides a stable and easily accessible measurement location. % TODO: add citation
+With the increasing interest in wearable health monitoring devices, temperature measurements have become a crucial aspect of biometric data collection. 
+The ear canal is a promising location for body temperature measurement because it provides a stable and easily accessible measurement location \cite{ericksonComparisonEarbasedBladder1993}.
 
 In addition, this location is less susceptible to body movement. However, the optimal sensor placement and measurement methodology for ear-based temperature monitoring is still an open research question. % TODO: was ich hier noch wichtig fände ist mehr darauf einzugehen warum das ohr allgemein interessant ist und noch viel wichtiger, was einem die temperatur überhaupt bringt. was kann man daraus lernen? wofür misst man die temperatur
 
@@ -38,7 +39,7 @@ Previous studies have reported discrepancies in ear-based temperature measuremen
 % TODO: sowas muss alles belegt werden. welche previous studies? was sind die genauen probleme? warum existieren diese? dann im anschluss beschreiben wie wir diese lösen können, bzw. wie wir denken diese zu lösen (hypothesen)
 
 \section{Question}
-In this thesis, we will examine temperature sensors, each placed at different locations in the ear canal to compare the sensor measurements to those of a medically certified thermometer, which will be the ground truth here. The research question is to find the best location for ear-based temperature measurement and the way it affects the accuracy and stability of those. Afterwards, the resulting optimal location will be taken as a basis to detect a temperature-dependent event of the body and evaluate whether it provides conclusive results.
+In this thesis, we will examine temperature sensors, each placed at different locations in the ear canal to compare the sensor measurements to those of a medically certified thermometer, which will be the ground truth here. The research question is to find the best location for ear-based temperature measurement and the way it affects the accuracy and stability of those. Afterward, the resulting optimal location will be taken as a basis to detect a temperature-dependent event of the body and evaluate whether it provides conclusive results.
 
 % TODO: hier solltest du etwas konkreter strukturieren:
 % - Forschungsziel / Hypothese
@@ -52,15 +53,15 @@ In this thesis, we will examine temperature sensors, each placed at different lo
 
 \section{Planned approach}
 We will use the OpenEarable platform to attach various temperature sensors to the ear canal. The sensors will be placed at various locations including the concha, inside the ear canal, on the eardrum, and behind the pinna on the mastoid. Participants will be asked to wear the sensors on one ear in a study under laboratory conditions.
-At the same time the participants core body temperature will be measured with a medical thermometer on the other ear.
+At the same time, the participants core body temperature will be measured with a medical thermometer on the other ear.
 % TODO: das wird denke ich nicht so funktionieren. die temperatur in dem einen ohr ist soweit ich weiß in der regel anders als im anderen
-The resulting date will be collected and analyzed afterwards to determine the best sensor position for ear-based temperature measurement. This position will then be used to classify temperature-related events of the body.
+The resulting data will be collected and analyzed afterwards to determine the best sensor position for ear-based temperature measurement. This position will then be used to classify temperature-related events of the body.
 
 % TODO: mach mal eine grafik dazu, guter punkt 6 sind wshl notwendig: drei hinterm ohr (oben mitte unten), eins concha, eins ohrkanal, einmal richtung trommelfell (auf dem trommelfell wird nicht gehen)
 
 % TODO: siehe input andere kommentare. zusätzliche finde ich aber die analyse der temperatur bei unterschiedlichen aktivitäten gut. hier fände ich es wichtig konkret zu werden. welche aktivitäten sind relevant? gibt es literatur die bereits temperatur bei unterschiedlichen aktivitäten betrachtet? da sollten wir dann drauf aufbauen damit wir aktivitätn wählen bei denen auch wirklich was passiert.
 
 \section{Expected results}
-We expect that our study will provide insights into the optimal placement of sensors for temperature monitoring in or directly around the ear. We are looking forward to identify variations in temperature measurements at different positions in the ear canal. Our results will inform the development of more accurate and reliable wearable devices for biometric applications. In addition, the optimally determined position will be taken as a new basis to make analyses on various bodily temperature changing events.
+We expect that our study will provide insights into the optimal placement of sensors for temperature monitoring in or directly around the ear. We are looking forward to identifying variations in temperature measurements at different positions in the ear canal. Our results will inform the development of more accurate and reliable wearable devices for biometric applications. In addition, the optimally determined position will be taken as a new basis to make analyses on various bodily temperature changing events.
 
 % TODO: anpassen basierend auf dem sonstigen input
