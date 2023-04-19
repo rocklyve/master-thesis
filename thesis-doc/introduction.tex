@@ -37,12 +37,22 @@ Overall, continuous core body temperature monitoring can provide valuable insigh
 % Why the ear canal is good for measuring body temperature
 The ear canal is a promising location for body temperature measurement because it provides a stable and easily accessible measurement location \cite{ericksonComparisonEarbasedBladder1993}.
 In addition, this location is less susceptible to body movement. 
+In the ear canal, the tympanic membrane is located.
+The tympanic is supplied with blood by the branches of the internal carotid artery, which supply blood to the thermoregulation center in the hypothalamus of the brain \cite{moranCoreTemperatureMeasurement2002a}.
+Therefore the ear has high potential in measuring the body temperature.
 
 However, the optimal sensor placement and measurement methodology for ear-based temperature monitoring is still an open research question. 
-% TODO: die optiomale position ist klar, die is im ohr kanal, allerdings ist das nicht so einfach möglich immer die auf das trommelfell auszurichten (zum beispiel ear wax, etc.). die frage zielt also eher darauf ab zu schauen, wie sich verschiedenen positionen unterscheiden um einen alternativen messpunkt zu haben da die sensoren (nicht nur temperatur) möglichst alle am ohr untergebracht werden müssen. Weiterhin ist eine Frage noch, wie sich Temperatur messungen am ohr verhalten wenn diese nicht unter kontrollierenten bedingungen im labor durchgeführt werden. Welchen einfluss haben zum beispiel bewegungsartefakte? eine deiner controbutions könnte ein algorithmus sein der erkennt, dass zu viel bewegung da ist (mit imu) und dann irgendwie fehlerhafte temperaturmessungen kompensiren oder ähnliches. außerdem eine weitere frage könnte sein ob eine kombination von mehreren temperatursensoren helfen kann die messung zu stabilisieren.
+The optimal position for temperature measurement on the ear is quite obvious: the ear canal. However, it is not easy to align the infarot sensor with the eardrum. In addition, influencing factors such as ear wax can affect measurement results. 
+This raises the question of how measurement results differ at different measurement points on and in the ear. 
+By using an alternative measuring point, various influencing factors would be eliminated.
+It may also be interesting to see whether the combination of several sensors stabilizes the measurement results.
+Another question is how temperature measurements on the ear behave when they are not performed under controlled conditions in the laboratory.
+For example, what is the influence of motion artifacts?
+With additional sensors, for example an IMU, it would be possible to detect movements and to integrate this knowledge into the erroneous temperature measurement and possibly correct it.
 
 \section{Problem}
-Previous studies have reported discrepancies in ear-based temperature measurements due to factors such as sensor location, skin contact, and calibration. In addition, the potential impact of different measurement positions on the accuracy and reliability of ear-based temperature measurements is still unclear.
+Previous studies have reported discrepancies in ear-based temperature measurements due to factors such as sensor location, skin contact, and calibration \cite{amoateng-adjepongAccuracyInfraredTympanic1999a, hookerScreeningFeverAdult1996a, cattaneoAccuracyPrecisionBody2000}. 
+In addition, the potential impact of different measurement positions on the accuracy and reliability of ear-based temperature measurements is still unclear.
 
 % TODO: sowas muss alles belegt werden. welche previous studies? was sind die genauen probleme? warum existieren diese? dann im anschluss beschreiben wie wir diese lösen können, bzw. wie wir denken diese zu lösen (hypothesen)
 
