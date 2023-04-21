@@ -58,16 +58,12 @@ It is also not known whether the combination of diverse sensor signals provides 
 % TODO: was sind die genauen probleme? warum existieren diese? dann im anschluss beschreiben wie wir diese lösen können, bzw. wie wir denken diese zu lösen (hypothesen)
 
 \section{Question}
-In this thesis, we will examine temperature sensors, each placed at different locations in the ear canal to compare the sensor measurements to those of a medically certified thermometer, which will be the ground truth here. 
-The research question is to combine and/or compare different locations for ear-based temperature measurement and the way it affects the accuracy and stability of those. 
-Additionally, it is interesting to see if other sensor information can be used to filter out potential errors to optimize results.
-Afterward, the resulting optimal location will be taken as a basis to detect a temperature-dependent event of the body and evaluate whether it provides conclusive results.
-
-% TODO: hier solltest du etwas konkreter strukturieren:
-% - Forschungsziel / Hypothese
-% - resultierende Forschungsfrage
-% - Metriken
-% - erhoffte Ergebnisse
+This master's thesis examines temperature sensors, each placed at different locations in the ear canal, to compare the sensor measurements with those of a medically certified thermometer, considered here as the ground truth.
+The research objective is to combine and/or compare different positions for temperature-based measurement in the ear and investigate how this affects the accuracy and stability of the measurements.
+Additionally, it is interesting to see if other sensor information can be used to filter out potential errors and optimize results. These include, for example, audio signals or an IMU signal. The resulting location, or combined locations for the measurement will then be taken as a basis to detect a temperature dependent event of the body and evaluate if this provides conclusive results.
+Various metrics such as Mean Squared Deviation and correlation are used to measure the accuracy and stability of the measurements.
+% TODO: maybe more metrics
+It is hoped that combining different positions for measurement in the ear will lead to more accurate and stable measurements, and that using other sensor information to filter errors may help to further improve the results. It is also expected that the identified optimal location for measurement will be able to detect a temperature dependent event of the body with high accuracy.
 
 % Wenn du etwas mehr gelesen hast was man konkret mit temperatur machen kann dann können wir mal darüber reden was davon in frage kommt für eine mögliche application. Sollte aber evtl. eher optional sein, je nach aufwand der application (z.b. zyklus tracking zu gefährlich für MA wegen knapper Zeit vs. mind 2 bis 3 Monate tracken für sinnvolle daten)
 
