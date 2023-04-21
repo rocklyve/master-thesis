@@ -52,10 +52,18 @@ For example, what is the influence of motion artifacts?
 With additional sensors, for example an IMU, it would be possible to detect movements and to integrate this knowledge into the erroneous temperature measurement and possibly correct it.
 
 \section{Problem}
-Previous studies have reported discrepancies in ear-based temperature measurements due to factors such as sensor location, skin contact, and calibration \cite{rohrbergTemperatureMeasurementEar1997, gasimAccuracyTympanicTemperature2013, amoateng-adjepongAccuracyInfraredTympanic1999a, hookerScreeningFeverAdult1996a, cattaneoAccuracyPrecisionBody2000}. 
-In addition, the potential impact of different measurement positions on the accuracy and reliability of ear-based temperature measurements is still unclear.
-It is also not known whether the combination of diverse sensor signals provides an improvement in temperature measurement.
-% TODO: was sind die genauen probleme? warum existieren diese? dann im anschluss beschreiben wie wir diese lösen können, bzw. wie wir denken diese zu lösen (hypothesen)
+Recent research studies have revealed various problems in measuring temperature in the ear.
+Discrepancies in temperature-based measurement in the ear have been reported due to factors such as sensor location, skin contact, and calibration \cite{rohrbergTemperatureMeasurementEar1997, gasimAccuracyTympanicTemperature2013, amoateng-adjepongAccuracyInfraredTympanic1999a, hookerScreeningFeverAdult1996a, cattaneoAccuracyPrecisionBody2000}.
+The main problem is that the accuracy and reliability of ear temperature measurements can be affected by several factors. 
+Measuring temperature at the eardrum is quite complicated to set up, since the temperature sensor in the ear canal must be properly aligned. 
+Due to a wide variety of ear canal shapes of different individuals, this cannot always be guaranteed.
+In addition, influencing factors such as earwax can affect the path to the eardrum and thus also the temperature measurement and all the advantages of measuring the temperature there.
+In particular, it is unclear what effect different measurement positions have on measurement accuracy and reliability.
+To address these issues, we will test several hypotheses. 
+For example, we may hypothesize that combining signals from different sensors will improve measurement accuracy and reliability.
+In addition, it is conceivable that other signals (audio, IMU, etc.) can be used to detect measurement errors, sports activities, or the like.
+Various metrics are used to evaluate the accuracy and reliability of ear temperature measurements, such as Mean Squared Deviation and correlation.
+Through our studies, we hope to help improve the accuracy and reliability of temperature-based measurements in the ear and thus contribute to medical diagnostics.
 
 \section{Question}
 This master's thesis examines temperature sensors, each placed at different locations in the ear canal, to compare the sensor measurements with those of a medically certified thermometer, considered here as the ground truth.
