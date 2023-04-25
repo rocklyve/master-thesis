@@ -6,26 +6,26 @@
 % Here is the main motivation  - the revolution of earables
 With the increasing world population and the growing demand for healthcare, monitoring various biophysiological signals of the body has become increasingly important. 
 As a result of increased research and development in this field, several wearable and implantable systems have been developed \cite{loncar-turukaloLiteratureWearableTechnology2019}.
+The revolution began with smartphones, followed by other wearables such as watches, and now includes earables.
 Earables have emerged as a particularly promising technology for the future of healthcare and lifestyle \cite{trespGoingDigitalSurvey2016, kirkWearablesRevolutionStandardization2014a}. 
 The global earable market size was valued in 2022 at around USD 58 million and is expected to rise to 12.6\% until 2030 \cite{GlobalEarphonesHeadphones}.
-This revolution began with smartphones, followed by other wearables such as watches, and now includes earables. 
 Most wearables are equipped with various sensors, which are intended to replace a modern medical laboratory through analysis \cite{loncar-turukaloLiteratureWearableTechnology2019}.
 
 % Why earables?
 Capturing data using earables has become very popular due to their compact size, their comfortable fit, their easy reachability by hands, and their ability to capture lots of physiological data of the human body \cite{roddigerSensingEarablesSystematic2022a}. 
 The fact, that they are very close to the body, especially on a body opening, and can be worn over a long period of time without any issues is a huge advantage compared to other positions to capture such data.
 Furthermore, many earables are designed to be discrete, making them a practical option for individuals who want to monitor their health without drawing attention to themselves.
-Earables are located near the brain and the major blood vessels in the head and neck and can be worn in or around the ears capturing a variety of biometric data to revolutionize the way we monitor and understand our health such as heart rate, oxygen saturation, and body temperature.
+Earables are located near the brain and the major blood vessels on the head and neck and can be worn in or around the ears capturing a variety of biometric data to revolutionize the way we monitor and understand our health such as heart rate, oxygen saturation, and body temperature.
 
 % body temperature
-One important aspect of sensing data with earables is the ability to detect changes in body temperature. 
+One important aspect of sensing data with earables is the ability to detect changes in body temperature \cite{dolsonWearableSensorTechnology2022, bonziAccuracyPeripheralThermometers2016, NovelWearableDevice2021}. 
 Earables equipped with temperature sensors can provide accurate measurements of body temperature throughout the day, which can be used to track patterns and identify potential health issues. 
 By monitoring temperature over time, individuals can gain valuable insights into their health and identify potential issues early on.
 Knowing a person's exact core body temperature can provide important health insights and information about the person's physiological state.
 For example, core body temperature can be an important indicator of fever, as well as infection or inflammation. 
 Monitoring this data can provide early insights and enable rapid treatment steps \cite{NovelWearableDevice2021}.
-Furthermore, core body temperature can also be used to classify the circadian rhythm of the body. 
-This controls many physiological processes, revealing possible disturbances when core body temperature is measured continuously \cite{liCircadianRhythmAnalysis2021, juSleepQualityPreclinical2013}.
+Furthermore, core body temperature can also be used to classify the circadian rhythm of the body \cite{liCircadianRhythmAnalysis2021, juSleepQualityPreclinical2013}.
+This controls many physiological processes, revealing possible disturbances when core body temperature is measured continuously.
 Athletic performance can also be monitored using core body temperature. Changes in core body temperature can indicate changes in the body's thermoregulatory system that can affect performance and increase the risk of heat illness \cite{gabbettAthleteMonitoringCycle2017, silvaSleepQualityTraining2022}.
 %Core body temperature is also closely related to sleep, and monitoring core body temperature can help identify sleep disorders such as sleep apnea \cite{PIIS0022399902, liuSleepSuicideSystematic2020}.
 Hormonal changes also affect core body temperature. 
@@ -42,7 +42,7 @@ The tympanic is supplied with blood by the branches of the internal carotid arte
 Therefore the ear provides high potential in measuring body temperature.
 
 However, the optimal sensor placement and measurement methodology for ear-based temperature monitoring is still an open research question. 
-The optimal position for temperature measurement on the ear is quite obvious: the ear canal. 
+The optimal position for temperature measurement on the ear is quite obvious: the tympanic membrane \cite{asdf}. %TODO: Add citation 
 However, it is not easy to align the infrared sensor with the eardrum. In addition, influencing factors such as ear wax can affect measurement results. 
 This raises the question of how measurement results differ at different measurement points on and in the ear. 
 By using an alternative measuring point, various influencing factors would be eliminated.
@@ -66,8 +66,8 @@ Various metrics are used to evaluate the accuracy and reliability of ear tempera
 Through our studies, we hope to help improve the accuracy and reliability of temperature-based measurements in the ear and thus contribute to medical diagnostics.
 
 \section{Question}
-This master's thesis examines temperature sensors, each placed at different locations in the ear canal, to compare the sensor measurements with those of a medically certified thermometer, considered here as the ground truth.
-The research objective is to combine and/or compare different positions for temperature-based measurement in the ear and investigate how this affects the accuracy and stability of the measurements.
+This master's thesis examines temperature sensors, each placed at different locations in and around the ear canal comparing the sensor measurements with those of a medically certified thermometer, considered here as the ground truth.
+The research objective is to combine and/or compare different positions for temperature-based measurement in and around the ear and investigate how this affects the accuracy and stability of the measurements.
 Additionally, it is interesting to see if other sensor information can be used to filter out potential errors and optimize results. These include, for example, audio signals or an IMU signal. The resulting location or combined locations for the measurement will then be taken as a basis to detect a temperature-dependent event of the body and evaluate if this provides conclusive results.
 Various metrics such as Mean Squared Deviation and correlation are used to measure the accuracy and stability of the measurements.
 % TODO: maybe more metrics
@@ -77,7 +77,7 @@ It is hoped that combining different positions for measurement in the ear will l
 
 \section{Planned Approach}
 We will use the OpenEarable platform to attach various temperature sensors to the ear canal. 
-The sensors will be placed at various locations including the concha, inside the ear canal, one pointing to the eardrum and behind the pinna on the mastoid. 
+The sensors will be placed at various locations including the concha, inside the ear canal, one pointing to the eardrum and behind the pinna. 
 Participants will be asked to wear the sensors on one ear in a study under laboratory conditions.
 The resulting data will be collected and analyzed afterward to determine the best sensor position for ear-based temperature measurement. This position will then be used to classify temperature-related events of the body.
 
