@@ -9,19 +9,19 @@
 Earables belong to the class of wearables and are a type of wearable device that is worn in or around the ears. 
 They typically have a number of sensors that allow them to collect data about the wearer's physiology and activity. 
 The most common sensors in earables include accelerometers, gyroscopes, and heart rate monitors. These sensors can be used to track the wearer's movements, monitor their heart rate, and provide other types of health data.
-% TODO: Now link the paper from Röddiger and exend with summary of this paper
+% TODO: Now link the paper from Röddiger and extend with a summary of this paper
 
 \section{Ear-based temperature measurement}
 Ear-based temperature measurement uses a sensor to measure the temperature of the ear canal. 
 The approach has a number of advantages over other measurement positions.
-First, it is an non-invasive measurement procedure, which allows measurement nearly inside the body with the least amount of hematoma.
-Second, the measurement is much more promising compared to other non-invasive alternatives, where many factors can contribute to falsify the final result \cite{ganioValidityReliabilityDevices2009, craigTemperatureMeasuredAxilla2000}. 
+First, it is a non-invasive measurement procedure, which allows measurement nearly inside the body with the least amount of hematoma.
+Second, the measurement is much more promising compared to other non-invasive alternatives, where many factors can contribute to falsifying the final result \cite{ganioValidityReliabilityDevices2009, craigTemperatureMeasuredAxilla2000}. 
 However, it is important to note that the accuracy of temperature measurement may depend on factors such as the positioning of the thermometer and the presence of earwax or other obstructions in the ear canal.
 
 \subsection{Core Body Temperature}
-Core body temperature is the temperature of the body's internal organs, such as the heart, liver and brain and is commonly used indicator of the human health and endurance performance.
+Core body temperature is the temperature of the body's internal organs, such as the heart, liver, and brain, and is a commonly used indicator of human health and endurance performance.
 Unlike the body core temperature, the body surface temperature is more easily influenced by the ambient temperature and therefore cannot reflect the changes inside the body as well as the body core temperature.
-Core body temperature can be measured invasively rectally, orally (oesophagus), in the pulmonary artery (with the use of a catheter) or in the urinary bladder \cite{moranCoreTemperatureMeasurement2002a}. 
+Core body temperature can be measured invasively rectally, orally (oesophagus), in the pulmonary artery (with the use of a catheter), or in the urinary bladder \cite{moranCoreTemperatureMeasurement2002a}. 
 These types of measurements are uncomfortable for a person. 
 In addition, because of this, it is not possible to take a measurement over a long period of time.
 
@@ -40,7 +40,13 @@ The artery called the external carotid artery runs near the external auditory ca
 
 \subsection{Core Body temperature vs skin temperature}
 Pending content... 
-% TODO: fill with content
+% TODO: fill in with content
+
+% SORTIERUNG
+% was kann man damit machen, 
+% dann earables vorstellen, was kann man damit machen
+% dann gesondert auf temperatur und earables machen
+% danach technischer werden (da drin auch mlx vorstellen
 
 \subsection{Optical temperature sensors compared to thermal resistance temperature sensors}
 \includegraphics[scale=0.7]{thesis-doc/images/introduction/temp_sensor_types.png}
@@ -67,12 +73,17 @@ In summary, optical temperature sensors are useful in situations where contact w
 Ultimately, the choice between these two types of sensors depends on the specific requirements of the application.
 
 In the work applied here in the master's thesis, optical temperature sensors are suitable because they do not require direct contact points, which is essential when measuring temperature on the tympanic membrane.
- 
-\section{Analysis}
-\subsection{Analysis based on body temperature}
-\subsubsection{Fever}
-\subsubsection{Circadian rhythm}
-\subsubsection{...}
 
-\subsection{Analysis based on temperature changes}
-\subsubsection{...}
+\section{Platform}
+\subsection{OpenEarable}
+what is this platform and ...
+
+\subsection{Sensors}
+\subsubsection{MLX}
+% https://media.digikey.com/pdf/Data%20Sheets/Excelitas%20PDFs/TPiS_1S_1385.pdf
+% https://www.mouser.de/datasheet/2/734/MLX90632_Datasheet_Melexis-1595868.pdf
+
+% address translator weiter hinten, wo ich die implementierung ändere
+% \subsection{Address translator}
+% da die sensoren alle die gleiche addresse haben werden brauche wir da noch so address übersetzter, ich denke sopwas in die richung: 
+% https://www.analog.com/media/en/technical-documentation/data-sheets/4316fa.pdf
