@@ -5,21 +5,29 @@
 
 ## TODO
 * Citation fine tuning
-* related work + background
+* related work + background -> CITATIONS
 * grafik
 * sensoren beschreiben genauer
-* einlesen in code von OpenEarable
+* einlesen in code von OpenEarable, damit ich anpassen kann
+* auf basis von introduction die slides zu antrittsvortrag
 
 ## Questions
 * eine bemerkung von tobi bei introduction
 
-## Vom letzten mal:
+## Background
 
-schneller sketch, dann abstimmen, damit ich mir nicht unötig arbeit mache
+Erst core body temperature, dann zu earables
 
-messungen gehen eher richtung langzeitmessung circa. 2-3 wochen
+vllt body temperature als header
 
-hardware: ich soll verstehen, was gemacht wurde und im zweifel platine löten max... 
-danach software machen davon. 
+was hier auch interessant ist ist thermal regulation, was is der grund, warum der körper, bzw warum die körpertemperatur wichtig ist... 
+einfach bisschen mehr hintergrund, warum überhaupt, ...
 
-dienstag und donnerstag sind office days von tobi... 
+technische
+
+
+noch was, gibts bei dem MLX sensor vllt n test board oder sowas, damit man das mal ausprobieren kann... zudem noch, ob man das dings mit dem address ding braucht
+
+
+bis dienstag slides draften + Related work
+
