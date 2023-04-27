@@ -1,0 +1,101 @@
+%% Beispiel-Präsentation mit LaTeX Beamer im KIT-Design
+%% entsprechend den Gestaltungsrichtlinien vom 1. August 2020
+%%
+%% Siehe https://sdqweb.ipd.kit.edu/wiki/Dokumentvorlagen
+
+%% Beispiel-Präsentation
+\documentclass[en]{sdqbeamer} 
+ 
+%% Titelbild
+\titleimage{banner_2020_kit}
+
+%% Gruppenlogo
+\grouplogo{teco_logo.png} 
+
+%% Gruppenname und Breite (Standard: 50 mm)
+\groupname{
+Chair of Pervasive Computing Systems/TECO\\
+Institute of Telematics, Department of Informatics\\
+}
+%\groupnamewidth{50mm}
+
+% Beginn der Präsentation
+
+\title[Ear-Based Temperature Probing]{Ear-Based Temperature Probing: \\ Sensor Placement and Fusion for Wearable Applications}
+\subtitle{Chair of Pervasive Computing Systems / TECO} 
+\author[David Laubenstein]{David Laubenstein}
+
+\date[05/10/2023]{May 10, 2023}
+
+% Literatur 
+ 
+\usepackage[citestyle=authoryear,bibstyle=numeric,hyperref,backend=biber]{biblatex}
+\usepackage[inkscapeformat=png]{svg}
+\addbibresource{presentation.bib}
+\bibhang1em
+
+\begin{document}
+ 
+%Titelseite
+\KITtitleframe
+
+%Inhaltsverzeichnis
+% sollte weg laut betreuern
+% \begin{frame}{Inhaltsverzeichnis}
+% \tableofcontents
+% \end{frame}
+
+\section{Motivation}
+\begin{frame}{Motivation}
+asdf
+\end{frame}
+
+\section{Problem}
+\begin{frame}{Problem}
+asdf
+\end{frame}
+
+\section{Question}
+\begin{frame}{Question 1}
+    \begin{itemize}
+        \item asdf
+        \item asdf
+        \item asdf
+        \item asdf
+        \item asdf
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Question 2}
+asdf
+\end{frame}
+
+\section{Planned Approach}
+\begin{frame}{Planned Approach}
+asdf
+\end{frame}
+
+\section{Expected Result}
+\begin{frame}{Expected Result}
+asdf
+\end{frame}
+
+\appendix
+\beginbackup
+
+% TODO: Add frames for appendix
+
+\begin{frame}{Literatur}
+\begin{exampleblock}{Titelbilder Quelle:}
+    asdf    
+\end{exampleblock}
+\end{frame}
+
+\begin{frame}{Literatur}
+    \printbibliography
+\end{frame}
+
+\section{Farben}
+\backupend
+
+\end{document}
