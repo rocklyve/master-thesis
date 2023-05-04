@@ -6,18 +6,20 @@
 \label{ch:Background}
 
 \section{Body Temperature}
+\label{Background:BodyTemperature}
 In medical practice, temperature is one of the most frequently measured physical quantities.
 By measuring temperature, one gains information about the internal energy of an object.
-From the biophysical point of view, temperature measurement determines the changes in physical quantities that occur in a thermodynamic system \cite{dolibogComparativeAnalysisHuman2022}. 
+From the biophysical point of view, temperature measurement determines the changes in physical quantities that occur in a thermodynamic system \cite{dolibogComparativeAnalysisHuman2022}.
 Temperature can be expressed in different scales.
 These include Celsius, Fahrenheit, Kelvin, and Rankine \cite{grodzinskyUnderstandingFeverBody2020}.
 The human body temperature range is usually between $36.5-37.5^\circ C$ ($97.7-99.5^\circ F$) \cite{hutchisonHypothermiaTherapyTraumatic2008}.
-However, body temperature varies constantly and is dependent on many influencing factors such as gender, age, time of day, and many others.
-Likewise, the state of consciousness and emotions are decisive factor that significantly influences the body temperature.
-In addition, the position at which the body temperature is measured is crucial.
+However, body temperature varies constantly and is dependent on many influencing factors such as gender, age, time of day, and many others \cite{sund-levanderNormalOralRectal2002}.
+Likewise, the state of consciousness and emotions are decisive factor that significantly influences the body temperature \cite{barbosaescobarTemperatureEmotions2021}.
+In addition, the position at which the body temperature is measured is crucial \cite{Physiologie9783137960072ZVAB}.
 In order to keep the body temperature within the normal temperature range through internal and external factors, the body uses thermoregulation, through which the temperature is constantly adjusted by signals from the central nervous system.
 
 \subsection{Thermal Regulation}
+\label{Background:BodyTemperature:ThermalRegulation}
 A vital body function is the possibility of regulation from the exchange of body heat \cite{grodzinskyUnderstandingFeverBody2020}.
 Regulation occurs through a neural feedback system. 
 In many parts of the body, sensory means detect cold and heat and transmit them via the central nervous system to the hypothalamus.
@@ -29,29 +31,52 @@ An excessive rise in body temperature (hyperthermia or hyperpyrexia), in which t
 The same applies if the body temperature drops below $35^\circ C$.
 
 \subsection{Core Body Temperature}
+\label{Background:BodyTemperature:CBT}
 Core body temperature is the temperature of the body's internal organs, such as the heart, liver, and brain, and is a commonly used indicator of human health and endurance performance.
 Unlike the body core temperature, the body surface temperature is more easily influenced by the ambient temperature and therefore cannot reflect the changes inside the body as well as the body core temperature.
-Core body temperature can be measured invasively rectally, orally (oesophagus), in the pulmonary artery (with the use of a catheter), or in the urinary bladder \cite{moranCoreTemperatureMeasurement2002a}. 
-These types of measurements are uncomfortable for a person. 
-In addition, because of this, it is not possible to take a measurement over a long period of time.
+Core body temperature can be measured invasively rectally, orally (oesophagus), in the pulmonary artery (with the use of a catheter), or in the urinary bladder \cite{moranCoreTemperatureMeasurement2002a}.
+However, the gold standard is different.
+The core body temperature of a healthy human body differs almost little from the temperature of the blood flowing in the pulmonary artery \cite{krizanacFemoroiliacalArteryPulmonary2013, holtzclawMonitoringBodyTemperature1993}.
+This is exactly what is used as the gold standard for measuring body core temperature \cite{krizanacFemoroiliacalArteryPulmonary2013, holtzclawMonitoringBodyTemperature1993, fulbrookCoreBodyTemperature1997, maxtonEstimatingCoreTemperature2004}.
+However, this comes with a few critical points.
+Measuring the temperature of the blood flowing in the pulmonary artery involves an invasive and risky procedure that requires the insertion of an apulmonary artery catheter \cite{yeohRevisitingTympanicMembrane2017}.
+This is strongly recommended in a medical hospital and nowhere else.
+All of the previously mentioned methods are not comfortable for humans. 
+In addition, it is difficult to make a measurement over a longer period of time with these in everyday life.
 
 Body temperature can also be measured non-invasive.
-This can be done on the axilla, the tympanic membrane, and the body surface \cite{moranCoreTemperatureMeasurement2002a}.
+The following methods are much more convenient, but the measurement accuracy suffers somewhat.
+Measuring the body temperature non-invasive can be done on the axilla, the tympanic membrane, and the body surface \cite{moranCoreTemperatureMeasurement2002a}.
+Usually, core body temperature is constant only in the body core and consequently cannot be determined outside only by temperature sensors \cite{niedermannPredictionHumanCore2014}.
+Due to this, it is necessary to use several other values for the calculation of the core body temperature. 
+These can include e.g. skin temperature and skin heat fluxes or the heart rate.
+Niedermann achieved a root mean square deviation (rmsd) ranging from $0.28 ^\circ C$ to $0.34 ^\circ C$ for all environmental conditions in 2014 \cite{niedermannPredictionHumanCore2014}.
+Therefore, a principal component analysis (PCA) was performed to extract uncorrelated variables that were subsequently used in a linear regression model. 
+Six parameters, consisting of three skin temperatures, two skin heat currents, and heart rate, were selected as input variables to generate two principal components. 
+The predictive power of these components for estimating core body temperature was evaluated using multiple regression analysis.
 
 \subsection{Skin Temperature}
+\label{Background:BodyTemperature:SkinTemperature}
 When measuring body temperature, skin temperature is often used to measure body temperature.
 This is the result of a dynamic equilibrium between the heat released during metabolic processes and transferred to the skin layer by thermal conduction and convection, the heat extracted from the environment, and the heat transferred to the environment by radiation, convection, and evaporation \cite{dolibogComparativeAnalysisHuman2022}.
-% TODO: fill in with more content
+The skin temperature can be measured by various sensors. 
+These include the infrared sensors, but also the thermistors. 
+Both are equal for purposes of clinical electrodiagnostic readings.
+Thermistors offer better responsiveness and sensitivity in measurements.
+Infrared thermistors, on the other hand, are more convenient in terms of speed and maneuverability \cite{burnhamThreeTypesSkinSurface2006}.
+Because the skin is exposed to external influences, temperature differences can quickly occur.
+This can be caused by cold or warm ambient air, but also by rain or other influences.
+Measurements on the skin that cannot be easily influenced, such as the armpits, are suitable here.
 
 \subsection{Temperature Measurements}
-% TODO: General Temperature measurements of human body
+\label{Background:BodyTemperature:TemperatureMeasurements}
+% TODO: General Temperature measurements of the human body
 In General, the temperature of a human body will be measured with a thermometer.
 There are multiple techniques available on which the temperature value will be calculated. 
 These are divided into contact and non-contact thermometers.
 For a detailed overview, take a look at chapter \ref{Background:TemperatureSensors}.
-For clinical purposes, thermometers require an accuracy of $0.1^\circ C$.
 Body temperature is often measured in the armpit, mouth, rectum, ear, or forehead.
-The temperature in the armpit is typically $36.6^\circ C$, in the mouth $36.9^\circ C$, and in the ear $37.1^\circ C$ \cite{dolibogComparativeAnalysisHuman2022}.
+The temperature in the armpit is typically $36.6^\circ C$, in the mouth $36.9^\circ C$, and $37.1^\circ C$ in the ear \cite{dolibogComparativeAnalysisHuman2022}.
 The rectal temperature testing method is the most accurate of all measurements, while non-contact forehead thermometers are considered the least accurate, and measurements are taken with them should be confirmed by other methods.
 The minimum value of the standard error for the above methods is $0.1^\circ C$ [9].
 Ear readings are assumed to be of similar accuracy when compared to the rectal method, which is most commonly used in infants, the correct value is usually $37.1^\circ C$ \cite{dolibogComparativeAnalysisHuman2022}.
@@ -67,7 +92,23 @@ However, it is important to note that the accuracy of temperature measurement ma
 The tympanic membrane is a thin membrane that separates the middle ear from the external auditory canal. 
 The artery called the external carotid artery runs near the external auditory canal and radiates heat, which is why measuring the temperature at the tympanic membrane has a promising chance of determining body temperature \cite{yeohRevisitingTympanicMembrane2017}.
 
-% TODO: \cite{yeohRevisitingTympanicMembrane2017} liefert in der introduction einiges zum thema blut temperatur und relevanz zu core body temperature
+Since measuring body temperature at the eardrum is a non-invasive measurement method, it is already being investigated as a possible replacement for currently accepted methods.
+This could be a safe and very convenient way of measuring core body temperature, but to date it is not de-facto due to unresolved problems.
+These include the accuracy and stability compared to measurements at other locations \cite{maxtonEstimatingCoreTemperature2004, fulbrookCoreBodyTemperature1997, mumaComparisonRectalAxillary1991, rothAgreementRectalTympanic1996}.
+Benzinger \cite{benzingerHeatRegulationHomeostasis1969, benzingerClinicalTemperatureNew1969, benzingerPhysicalHeatRegulation1959} first demonstrated the feasibility of tympanic membrane measurement as an indicator of core body temperature using a thermocouple temperature probe that engages the surface of the eardrum with the ear canal sealed from the environment.
+For this, Benzinger made measurements of eardrum temperature obtained from his probe and measurement approach and showed them to be stable, reproducible, and responsive to thermal stresses of various types.
+However, there are other studies at a later date that refute individual assumptions of this study.
+McCaffrey et al. \cite{mccaffreyEffectHeadSkin1975} and Nielsen \cite{nielsenNaturalCoolingBrain1988} showed that head cooling reduces the body core temperature when measured with exactly the procedure of Benzinger.
+McCaffrey et al. however, also showed that by heating and cooling localized regions of the head, infrared measurement of temperature at the tympanic membrane of human subjects was not proportionally affected by changes in head skin temperature.
+This suggests a contradiction, which means that this method may not be a good predictor of core body temperature because it depends on other, as yet unknown, variables.
+Brinnel and Cabanac \cite{brinnelTympanicTemperatureCore1989} and Sato et al. \cite{satoReexaminationTympanicMembrane1996}, however, provided data showing that measurements for this purpose are still reliable if the measurement point on the tympanic membrane is carefully chosen. 
+Brinnel and Cabanac proposed that the lower anterior quarter of the tympanic membrane \ref{fig:tympanic_membrane_mp} has a higher temperature on the surface of the tympanic membrane and a temperature measurement from a point in this area is the least sensitive to head cooling.
+\begin{figure}[t]
+    \centering
+    \includegraphics[scale=0.5]{thesis-doc/images/tympanic_membrane_mp.png}
+    \caption{Caption}
+    \label{fig:tympanic_membrane_mp}
+\end{figure}
 
 % TODO: \cite{ComparisonPulmonaryArtery}
 % TODO: \cite{kimComparisonBilateralEardrum2022}
@@ -75,7 +116,12 @@ The artery called the external carotid artery runs near the external auditory ca
 
 \section{Temperature Sensors}
 \label{Background:TemperatureSensors}
-\includegraphics[scale=0.7]{thesis-doc/images/introduction/temp_sensor_types.png}
+\begin{figure}[t]
+    \centering
+    \includegraphics[scale=0.7]{thesis-doc/images/introduction/temp_sensor_types.png}
+    \caption{Caption}
+    \label{fig:temperature_sensors}
+\end{figure}
 
 Temperature sensors are used to measure the temperature of a particular object or environment.
 These are divided into 2 main categories, optical and thermal resistance sensors.
@@ -85,6 +131,7 @@ In this section, we will discuss the differences between these two types of sens
 
 
 \subsection{Optical Temperature Sensors}
+\label{Background:TemperatureSensors:OpticalTS}
 Optical temperature sensors measure the radiation emitted from an object at different wavelengths. 
 This type of sensor is typically used in applications where contact with the object being measured is difficult or impossible, such as in space, harsh environments, or just where contact is not wanted.
 Thus, non-contact measurements are possible, which is essential when measuring the temperature of the tympanic membrane.
@@ -93,9 +140,11 @@ However, this requires a line of sight to the measured object.
 In addition, accuracy can be affected by reflective surfaces or atmospheric conditions, which should not be a problem if the measurement is primarily in the ear.
 
 \subsubsection{MLX}
+\label{Background:TemperatureSensors:OpticalTS:MLX}
 % https://www.mouser.de/datasheet/2/734/MLX90632_Datasheet_Melexis-1595868.pdf
 
 \subsection{Thermal Resistance Temperature Sensors}
+\label{Background:TemperatureSensors:ResistanceTS}
 Thermal resistance temperature sensors, also known as thermistors, operate by measuring changes in electrical resistance as a function of temperature. 
 This type of sensor is typically used in applications where high accuracy is required, such as laboratory environments or medical equipment.
 They provide high accuracy and cover a wide range of temperature measurements.
@@ -108,8 +157,10 @@ Ultimately, the choice between these two types of sensors depends on the specifi
 In the work applied here in the master's thesis, optical temperature sensors are suitable because they do not require direct contact points, which is essential when measuring temperature on the tympanic membrane.
 
 \subsubsection{TPiS 1S 1385 / 5029}
+\label{Background:TemperatureSensors:ResistanceTS:TPiS}
 
 \section{Sensing with Earables}
+\label{Background:SensingWithEarables}
 Earables belong to the class of wearables and are a type of wearable device that is worn in or around the ears. 
 They typically have a number of sensors that allow them to collect data about the wearer's physiology and activity. 
 The most common sensors in earables include accelerometers, gyroscopes, and heart rate monitors. These sensors can be used to track the wearer's movements, monitor their heart rate, and provide other types of health data.
@@ -117,11 +168,19 @@ The most common sensors in earables include accelerometers, gyroscopes, and hear
 % TODO: Now link the paper from Röddiger and extend with a summary of this paper
 % 4 parts of sensing with earables
 \subsection{Physiological Monitoring and Health}
+\label{Background:SensingWithEarables:Physiological}
+
 \subsection{Movement and Activity}
+\label{Background:SensingWithEarables:Movement}
+
 \subsection{Interaction}
+\label{Background:SensingWithEarables:Interaction}
+
 \subsection{Authentication and Identification}
+\label{Background:SensingWithEarables:Authentication}
 
 \subsection{Sensing Platforms}
+\label{Background:SensingWithEarables:SensingPlatforms}
 % TODO: Hier abschnitt zu sensing platforms, wie z.B OpenEarable
 
 
