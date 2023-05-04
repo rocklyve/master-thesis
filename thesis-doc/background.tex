@@ -6,6 +6,7 @@
 \label{ch:Background}
 
 \section{Body Temperature}
+\label{Background:BodyTemperature}
 In medical practice, temperature is one of the most frequently measured physical quantities.
 By measuring temperature, one gains information about the internal energy of an object.
 From the biophysical point of view, temperature measurement determines the changes in physical quantities that occur in a thermodynamic system \cite{dolibogComparativeAnalysisHuman2022}.
@@ -18,6 +19,7 @@ In addition, the position at which the body temperature is measured is crucial \
 In order to keep the body temperature within the normal temperature range through internal and external factors, the body uses thermoregulation, through which the temperature is constantly adjusted by signals from the central nervous system.
 
 \subsection{Thermal Regulation}
+\label{Background:BodyTemperature:ThermalRegulation}
 A vital body function is the possibility of regulation from the exchange of body heat \cite{grodzinskyUnderstandingFeverBody2020}.
 Regulation occurs through a neural feedback system. 
 In many parts of the body, sensory means detect cold and heat and transmit them via the central nervous system to the hypothalamus.
@@ -29,9 +31,16 @@ An excessive rise in body temperature (hyperthermia or hyperpyrexia), in which t
 The same applies if the body temperature drops below $35^\circ C$.
 
 \subsection{Core Body Temperature}
+\label{Background:BodyTemperature:CBT}
 Core body temperature is the temperature of the body's internal organs, such as the heart, liver, and brain, and is a commonly used indicator of human health and endurance performance.
 Unlike the body core temperature, the body surface temperature is more easily influenced by the ambient temperature and therefore cannot reflect the changes inside the body as well as the body core temperature.
 Core body temperature can be measured invasively rectally, orally (oesophagus), in the pulmonary artery (with the use of a catheter), or in the urinary bladder \cite{moranCoreTemperatureMeasurement2002a}.
+However, the gold standard is different \cite{yeohRevisitingTympanicMembrane2017}.
+The core body temperature of a healthy human body differs almost little from the temperature of the blood flowing in the pulmonary artery \cite{krizanacFemoroiliacalArteryPulmonary2013, holtzclawMonitoringBodyTemperature1993}.
+This is exactly what is used as the gold standard for measuring body core temperature \cite{krizanacFemoroiliacalArteryPulmonary2013, holtzclawMonitoringBodyTemperature1993, fulbrookCoreBodyTemperature1997, maxtonEstimatingCoreTemperature2004}.
+However, this comes with a few critical points.
+Measuring the temperature of the blood flowing in the pulmonary artery involves an invasive and risky procedure that requires the insertion of an apulmonary artery catheter \cite{yeohRevisitingTympanicMembrane2017}.
+This is strongly recommended in a medical hospital and nowhere else.
 These types of measurements are uncomfortable for a person. 
 In addition, because of this, it is not possible to take a measurement over a long period of time.
 
@@ -46,6 +55,7 @@ Six parameters, consisting of three skin temperatures, two skin heat currents, a
 The predictive power of these components for estimating core body temperature was evaluated using multiple regression analysis.
 
 \subsection{Skin Temperature}
+\label{Background:BodyTemperature:SkinTemperature}
 When measuring body temperature, skin temperature is often used to measure body temperature.
 This is the result of a dynamic equilibrium between the heat released during metabolic processes and transferred to the skin layer by thermal conduction and convection, the heat extracted from the environment, and the heat transferred to the environment by radiation, convection, and evaporation \cite{dolibogComparativeAnalysisHuman2022}.
 The skin temperature can be measured by various sensors. 
@@ -58,12 +68,12 @@ This can be caused by cold or warm ambient air, but also by rain or other influe
 Measurements on the skin that cannot be easily influenced, such as the armpits, are suitable here.
 
 \subsection{Temperature Measurements}
+\label{Background:BodyTemperature:TemperatureMeasurements}
 % TODO: General Temperature measurements of the human body
 In General, the temperature of a human body will be measured with a thermometer.
 There are multiple techniques available on which the temperature value will be calculated. 
 These are divided into contact and non-contact thermometers.
 For a detailed overview, take a look at chapter \ref{Background:TemperatureSensors}.
-For clinical purposes, thermometers require an accuracy of $0.1^\circ C$.
 Body temperature is often measured in the armpit, mouth, rectum, ear, or forehead.
 The temperature in the armpit is typically $36.6^\circ C$, in the mouth $36.9^\circ C$, and $37.1^\circ C$ in the ear \cite{dolibogComparativeAnalysisHuman2022}.
 The rectal temperature testing method is the most accurate of all measurements, while non-contact forehead thermometers are considered the least accurate, and measurements are taken with them should be confirmed by other methods.
@@ -99,6 +109,7 @@ In this section, we will discuss the differences between these two types of sens
 
 
 \subsection{Optical Temperature Sensors}
+\label{Background:TemperatureSensors:OpticalTS}
 Optical temperature sensors measure the radiation emitted from an object at different wavelengths. 
 This type of sensor is typically used in applications where contact with the object being measured is difficult or impossible, such as in space, harsh environments, or just where contact is not wanted.
 Thus, non-contact measurements are possible, which is essential when measuring the temperature of the tympanic membrane.
@@ -107,9 +118,11 @@ However, this requires a line of sight to the measured object.
 In addition, accuracy can be affected by reflective surfaces or atmospheric conditions, which should not be a problem if the measurement is primarily in the ear.
 
 \subsubsection{MLX}
+\label{Background:TemperatureSensors:OpticalTS:MLX}
 % https://www.mouser.de/datasheet/2/734/MLX90632_Datasheet_Melexis-1595868.pdf
 
 \subsection{Thermal Resistance Temperature Sensors}
+\label{Background:TemperatureSensors:ResistanceTS}
 Thermal resistance temperature sensors, also known as thermistors, operate by measuring changes in electrical resistance as a function of temperature. 
 This type of sensor is typically used in applications where high accuracy is required, such as laboratory environments or medical equipment.
 They provide high accuracy and cover a wide range of temperature measurements.
@@ -122,8 +135,10 @@ Ultimately, the choice between these two types of sensors depends on the specifi
 In the work applied here in the master's thesis, optical temperature sensors are suitable because they do not require direct contact points, which is essential when measuring temperature on the tympanic membrane.
 
 \subsubsection{TPiS 1S 1385 / 5029}
+\label{Background:TemperatureSensors:ResistanceTS:TPiS}
 
 \section{Sensing with Earables}
+\label{Background:SensingWithEarables}
 Earables belong to the class of wearables and are a type of wearable device that is worn in or around the ears. 
 They typically have a number of sensors that allow them to collect data about the wearer's physiology and activity. 
 The most common sensors in earables include accelerometers, gyroscopes, and heart rate monitors. These sensors can be used to track the wearer's movements, monitor their heart rate, and provide other types of health data.
@@ -131,11 +146,19 @@ The most common sensors in earables include accelerometers, gyroscopes, and hear
 % TODO: Now link the paper from Röddiger and extend with a summary of this paper
 % 4 parts of sensing with earables
 \subsection{Physiological Monitoring and Health}
+\label{Background:SensingWithEarables:Physiological}
+
 \subsection{Movement and Activity}
+\label{Background:SensingWithEarables:Movement}
+
 \subsection{Interaction}
+\label{Background:SensingWithEarables:Interaction}
+
 \subsection{Authentication and Identification}
+\label{Background:SensingWithEarables:Authentication}
 
 \subsection{Sensing Platforms}
+\label{Background:SensingWithEarables:SensingPlatforms}
 % TODO: Hier abschnitt zu sensing platforms, wie z.B OpenEarable
 
 
