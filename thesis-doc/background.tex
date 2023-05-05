@@ -92,20 +92,20 @@ However, it is important to note that the accuracy of temperature measurement ma
 The tympanic membrane is a thin membrane that separates the middle ear from the external auditory canal. 
 The artery called the external carotid artery runs near the external auditory canal and radiates heat, which is why measuring the temperature at the tympanic membrane has a promising chance of determining body temperature \cite{yeohRevisitingTympanicMembrane2017}.
 
-Since measuring body temperature at the eardrum is a non-invasive measurement method, it is already being investigated as a possible replacement for currently accepted methods.
+Since measuring body temperature at the tympanic membrane is a non-invasive measurement method, it is already being investigated as a possible replacement for currently accepted methods.
 This could be a safe and very convenient way of measuring core body temperature, but to date it is not de-facto due to unresolved problems.
 These include the accuracy and stability compared to measurements at other locations \cite{maxtonEstimatingCoreTemperature2004, fulbrookCoreBodyTemperature1997, mumaComparisonRectalAxillary1991, rothAgreementRectalTympanic1996}.
-Benzinger \cite{benzingerHeatRegulationHomeostasis1969, benzingerClinicalTemperatureNew1969, benzingerPhysicalHeatRegulation1959} first demonstrated the feasibility of tympanic membrane measurement as an indicator of core body temperature using a thermocouple temperature probe that engages the surface of the eardrum with the ear canal sealed from the environment.
-For this, Benzinger made measurements of eardrum temperature obtained from his probe and measurement approach and showed them to be stable, reproducible, and responsive to thermal stresses of various types.
+Benzinger \cite{benzingerHeatRegulationHomeostasis1969, benzingerClinicalTemperatureNew1969, benzingerPhysicalHeatRegulation1959} first demonstrated the feasibility of tympanic membrane measurement as an indicator of core body temperature using a thermocouple temperature probe that engages the surface of the tympanic membrane with the ear canal sealed from the environment.
+For this, Benzinger made measurements of tympanic membrane temperature obtained from his probe and measurement approach and showed them to be stable, reproducible, and responsive to thermal stresses of various types.
 However, there are other studies at a later date that refute individual assumptions of this study.
 McCaffrey et al. \cite{mccaffreyEffectHeadSkin1975} and Nielsen \cite{nielsenNaturalCoolingBrain1988} showed that head cooling reduces the body core temperature when measured with exactly the procedure of Benzinger.
 McCaffrey et al. however, also showed that by heating and cooling localized regions of the head, infrared measurement of temperature at the tympanic membrane of human subjects was not proportionally affected by changes in head skin temperature.
 This suggests a contradiction, which means that this method may not be a good predictor of core body temperature because it depends on other, as yet unknown, variables.
 Brinnel and Cabanac \cite{brinnelTympanicTemperatureCore1989} and Sato et al. \cite{satoReexaminationTympanicMembrane1996}, however, provided data showing that measurements for this purpose are still reliable if the measurement point on the tympanic membrane is carefully chosen. 
-Brinnel and Cabanac proposed that the lower anterior quarter of the tympanic membrane \ref{fig:tympanic_membrane_mp} has a higher temperature on the surface of the tympanic membrane and a temperature measurement from a point in this area is the least sensitive to head cooling.
+Brinnel and Cabanac proposed that the lower anterior quarter of the tympanic membrane (Figure \ref{fig:tympanic_membrane_mp}) has a higher temperature on the surface of the tympanic membrane and a temperature measurement from a point in this area is the least sensitive to head cooling.
 \begin{figure}[t]
     \centering
-    \includegraphics[scale=0.5]{thesis-doc/images/tympanic_membrane_mp.png}
+    \includegraphics[scale=0.15]{thesis-doc/images/tympanic_membrane_mp.png}
     \caption{Caption}
     \label{fig:tympanic_membrane_mp}
 \end{figure}
@@ -124,15 +124,37 @@ Brinnel and Cabanac proposed that the lower anterior quarter of the tympanic mem
 \end{figure}
 
 Temperature sensors are used to measure the temperature of a particular object or environment.
-These are divided into 2 main categories, optical and thermal resistance sensors.
-In this section, we will discuss the differences between these two types of sensors and their advantages and disadvantages.
-% TODO: hier bisschen mehr auf die Grafik eingehen, die wird neu gebaut btw, verschwindet aber nicht
-% Dann noch schreiben, auf was man genauer eingeht,
+They are widely used in many applications, such as industrial, medical or scientific contexts.
+Temperature sensors detect changes in temperature and convert this into a measurable signal.
+There are various types of temperature sensors, including contact and non-contact sensors.
 
+Contact sensors measure temperature by maintaining physical contact with an object and measuring the temperature there.
+Contact sensors can be divided into 3 types: Thermocouples, Thermistors and Resistance Temperature Detectors (RTDs). 
+Thermocouples measure the voltage generated by two different metals when they are exposed to different temperatures.
+RTDs measure changes in the electrical resistance of a metal wire when it has temperature changes.
+Thermistors are semiconductor devices whose electrical resistance changes with temperature.
+
+Non-contact sensors, on the other hand, do not require contact with the object being measured. They are also known as infrared sensors.
+Non-contact sensors measure the emitted infrared radiation from an object and convert it into a measurable signal.
+Most often, the sensors are used when contact with an object is not desirable or practical, such as can often be useful in a medical or scientific research context. 
+This is also the case in this work, as contact with the tympanic membrane, for example, is not desired.
+Non-contact sensors can be roughly divided into two categories: IR sensors and optical pyrometers.
+IR sensors are devices that detect and measure the amount of infrared radiation emitted by an object. They operate on the principle that all objects emit infrared radiation in proportion to their temperature. 
+Optical pyrometers, on the other hand, measure temperature by detecting the color of light emitted by an object. They work on the principle that the color of light emitted from a hot object changes as the temperature of the object changes.
+However, the current classification here is very crude.
+In addition to those mentioned above, there are, for example, fiber optic sensors and acoustic sensors.
+
+When choosing the right sensor for the particular application, some things have to be considered.
+Accuracy, response time and range are important variables.
+Depending on the requirement profile, the right sensor can be selected based on the parameters.
+In the following, the optical temperature sensors, as well as the RTDs are described in more detail, since they are very important in this work.
 
 \subsection{Optical Temperature Sensors}
 \label{Background:TemperatureSensors:OpticalTS}
-Optical temperature sensors measure the radiation emitted from an object at different wavelengths. 
+Optical temperature sensors, also known as optical pyrometers, measure temperature by detecting the color of light emitted from an object. 
+This is based on the assumption that the color of the emitted light is different depending on the temperature.
+Typically, this is done using a lens that focuses the emitted light from the object onto a detector, which then analyzes the color of the light. 
+This is then ultimately used to determine the temperature.
 This type of sensor is typically used in applications where contact with the object being measured is difficult or impossible, such as in space, harsh environments, or just where contact is not wanted.
 Thus, non-contact measurements are possible, which is essential when measuring the temperature of the tympanic membrane.
 Another advantage of optical temperature sensors is that moving objects can still be measured as long as the sensor continues to point at the object.
@@ -143,9 +165,9 @@ In addition, accuracy can be affected by reflective surfaces or atmospheric cond
 \label{Background:TemperatureSensors:OpticalTS:MLX}
 % https://www.mouser.de/datasheet/2/734/MLX90632_Datasheet_Melexis-1595868.pdf
 
-\subsection{Thermal Resistance Temperature Sensors}
-\label{Background:TemperatureSensors:ResistanceTS}
-Thermal resistance temperature sensors, also known as thermistors, operate by measuring changes in electrical resistance as a function of temperature. 
+\subsection{Thermal Resistance Temperature Detectors}
+\label{Background:TemperatureSensors:ResistanceTD}
+Thermal resistance temperature detectors operate by measuring changes in electrical resistance as a function of temperature. 
 This type of sensor is typically used in applications where high accuracy is required, such as laboratory environments or medical equipment.
 They provide high accuracy and cover a wide range of temperature measurements.
 However, contact measurement is required here, which limits temperature measurement to stationary objects.
@@ -154,19 +176,27 @@ Furthermore, thermal resistance temperature sensors have a slow response time, w
 In summary, optical temperature sensors are useful in situations where contact with the object being measured is difficult or impossible, while thermal resistance sensors are suitable for applications that require high accuracy and a wide temperature measurement range. 
 Ultimately, the choice between these two types of sensors depends on the specific requirements of the application.
 
-In the work applied here in the master's thesis, optical temperature sensors are suitable because they do not require direct contact points, which is essential when measuring temperature on the tympanic membrane.
-
-\subsubsection{TPiS 1S 1385 / 5029}
-\label{Background:TemperatureSensors:ResistanceTS:TPiS}
+Here in the master's thesis, optical temperature sensors are suitable because they do not require direct contact points, which is essential when measuring temperature on the tympanic membrane.
 
 \section{Sensing with Earables}
 \label{Background:SensingWithEarables}
 Earables belong to the class of wearables and are a type of wearable device that is worn in or around the ears. 
 They typically have a number of sensors that allow them to collect data about the wearer's physiology and activity. 
-The most common sensors in earables include accelerometers, gyroscopes, and heart rate monitors. These sensors can be used to track the wearer's movements, monitor their heart rate, and provide other types of health data.
+The most common sensors in earables include accelerometers, gyroscopes, and heart rate monitors. 
+These sensors can be used to track the wearer's movements, monitor their heart rate, and provide other types of health data.
+% TODO: Add more details about earables in general
 
-% TODO: Now link the paper from Röddiger and extend with a summary of this paper
-% 4 parts of sensing with earables
+In 2022, Röddiger et al. noted the current state of research on sensing with earables \cite{roddigerSensingEarablesSystematic2022a}.
+A systematic literature review of 271 peer-reviewed research articles was made receiving a better understanding of the current state of research on this topic.
+The research area was divided there into four categories (Figure \ref{fig:sensing_with_earables_overview}), which will now be explained in more detail.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[scale=0.3525]{thesis-doc/images/sensing_with_earables_overview.png}
+    \caption{Overview map of sensing with earables. The map displays all phenomena current research is about divided into the main four categories. For each phenomena, there is a number (N), which describes the available articles and all the used sensors used to detect these phenomena.}
+    \label{fig:sensing_with_earables_overview}
+\end{figure}
+
 \subsection{Physiological Monitoring and Health}
 \label{Background:SensingWithEarables:Physiological}
 
