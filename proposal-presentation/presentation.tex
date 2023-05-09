@@ -7,7 +7,7 @@
 \documentclass[en]{sdqbeamer} 
  
 %% Titelbild
-\titleimage{../images/title_header_3}
+\titleimage{../images/title_header_4}
 
 %% Gruppenlogo
 \grouplogo{teco_logo.png} 
@@ -23,15 +23,15 @@ Institute of Telematics, Department of Informatics\\
 
 \title[Ear-Based Temperature Probing]{Ear-Based Temperature Probing: \\ Sensor Placement and Fusion for Wearable Applications}
 \subtitle{Chair of Pervasive Computing Systems / TECO} 
-\author[David Laubenstein]{David Laubenstein}
+\author[David Laubenstein]{David Laubenstein, Supervisor: Tobias Röddiger}
 
 \date[05/10/2023]{May 10, 2023}
 
 % Literatur 
  
-\usepackage[citestyle=authoryear,bibstyle=numeric,hyperref,backend=biber]{biblatex}
+\usepackage[bibstyle=numeric,hyperref,backend=biber]{biblatex}
 \usepackage[inkscapeformat=png]{svg}
-\addbibresource{presentation.bib}
+\addbibresource{../thesis-doc/Literature.bib}
 \bibhang1em
 
 \begin{document}
@@ -48,10 +48,10 @@ Institute of Telematics, Department of Informatics\\
 \section{Motivation}
 \begin{frame}{Motivation}
     \begin{itemize}
-        \item current state of temperature measurement
+        \item current state of temperature measurement \cite{TemperatureDigitalGlassa}
     \end{itemize}
     \begin{center}
-        \includegraphics[scale=0.17]{proposal-presentation/images/thermometer_types.jpg}    
+        \includegraphics[scale=0.16]{proposal-presentation/images/thermometer_types.jpg}    
     \end{center}
 \end{frame}
 
@@ -80,16 +80,32 @@ Institute of Telematics, Department of Informatics\\
 
 \section{Question}
 \begin{frame}[fragile]{Question}
-    \begin{column}{0.58\textwidth}
+    \begin{column}{0.50\textwidth}
         \begin{itemize}
-            \item measure temperature at different locations in and around the ear
-            \item combine resulting data to a single temperature value
-            \item on different activities inside and outside
+            \item measure temperature at different locations in and around the ears
+            \item hypotheses
+            \begin{itemize}
+                \item Correlations with activity
+                \item Quality can be improved through IMU
+                \item Combination of signals improves the quality
+                \item Skin temperature around the ear strongly correlates with core body temperature.
+            \end{itemize}
         \end{itemize}
     \end{column}
-    \begin{column}{0.38\textwidth}    
-        \includegraphics[scale=0.08]{proposal-presentation/images/open_earable.png}
+    \begin{column}{0.45\textwidth}
+        \includegraphics[scale=0.26]{proposal-presentation/images/open_earable_new.png}
     \end{column}
+\end{frame}
+
+\begin{frame}[fragile]{Related Work}
+    \begin{itemize}
+        \item huge research field for ...
+        \begin{itemize}
+            \item temperature measurement on the tympanic membrane
+            \item body temperature measurement
+        \end{itemize}
+        \item no studies on other positions in/around the ear
+    \end{itemize}
 \end{frame}
 
 \section{Planned Approach}
@@ -100,7 +116,7 @@ Institute of Telematics, Department of Informatics\\
             \item OpenEarable platform adaption
             \item MLX temperature sensor
         \end{itemize}
-        \item study to detect best temperature result
+        \item lab study to observe the different positions
     \end{itemize}
     \begin{center}
         \includegraphics[scale=0.17]{../thesis-doc/images/ear_measurement_points/emp.png}    
@@ -109,8 +125,13 @@ Institute of Telematics, Department of Informatics\\
 
 \begin{frame}{Planned Approach: Phase 2}
     \begin{itemize}
+        \item field study during activities
+        \begin{itemize}
+            \item lying
+            \item sitting during work
+            \item during multiple workouts
+        \end{itemize}
         \item classify temperature-related events of the body
-        \item temperature measurements during different activities
     \end{itemize}
     \begin{center}
         \includegraphics[scale=0.17]{proposal-presentation/images/analytics.png}    
@@ -137,9 +158,9 @@ Institute of Telematics, Department of Informatics\\
 % \end{exampleblock}
 % \end{frame}
 
-% \begin{frame}{Literatur}
-%     \printbibliography
-% \end{frame}
+\begin{frame}{Literatur}
+    \printbibliography
+\end{frame}
 
 \section{Farben}
 \backupend
