@@ -163,7 +163,17 @@ In addition, accuracy can be affected by reflective surfaces or atmospheric cond
 
 \subsubsection{MLX}
 \label{Background:TemperatureSensors:OpticalTS:MLX}
-% https://www.mouser.de/datasheet/2/734/MLX90632_Datasheet_Melexis-1595868.pdf
+% * ist ein Infrarot-Thermosäulen-Temperatursensor
+% * misst Temperatur ohne Berührung, also mit Infarot.
+% * mikroelektromechanischen Systems (MEMS) und arbeitet, indem es die von einem Objekt emittierte Wärmestrahlung im Infrarotspektrum erfasst.
+% * kleiner formfaktor
+% * geringer Stromverbrauch -> gut für kleine geräte
+% * hohe Genauigkeit von +- 0.5 grad von -20 grad bis 100 grad in auflösung von 0.02 grad schritten.
+% * man kann 2 temperaturen gleichzeitig messen, da 2 sensorelemente verbaut sind.
+% * somit kann man körper und umgebungstemperatur z.B gleichzeitig messen, oder von 2 versch. körperteilen
+% * I2C-Schnittstelle mit einem Mikrocontroller kommunizieren
+
+% Insgesamt bietet der Sensor MLX90632 eine vielseitige und genaue Lösung für die berührungslose Temperaturmessung in einer Vielzahl von Anwendungen, einschließlich Medizin-, Industrie- und Unterhaltungselektronik.
 
 \subsection{Thermal Resistance Temperature Detectors}
 \label{Background:TemperatureSensors:ResistanceTD}
@@ -193,12 +203,21 @@ The research area was divided there into four categories (Figure \ref{fig:sensin
 \begin{figure}[t]
     \centering
     \includegraphics[scale=0.3525]{thesis-doc/images/sensing_with_earables_overview.png}
-    \caption{Overview map of sensing with earables. The map displays all phenomena current research is about divided into the main four categories. For each phenomena, there is a number (N), which describes the available articles and all the used sensors used to detect these phenomena.}
+    \caption{Overview map of sensing with earables. The map displays all phenomena current research is about divided into the main four categories. For each phenomena, there is a number (N), which describes the available articles and all the used sensors used to detect these phenomena \cite{roddigerSensingEarablesSystematic2022a}.}
     \label{fig:sensing_with_earables_overview}
 \end{figure}
 
 \subsection{Physiological Monitoring and Health}
 \label{Background:SensingWithEarables:Physiological}
+
+\paragraph{Body temperature}
+\label{Background:SensingWithEarables:Physiological:BodyTemperature}
+Bestbier and Fourie \cite{bestbierDevelopmentVitalSigns2018a} applied the principle to a wearable form factor and achieved a small mean error of only $0.02$ $\pm$ $0.52 ^\circ C$. 
+However, user-defined calibration is needed because the shape of the ear canal is different for each individual \cite{bestbierDevelopmentVitalSigns2018a, luekenPhotoplethysmographybasedInearSensor2017a, matsumotoEarbudtypeWearableHearable2019a}.
+Alternatively, surface skin temperature at the mastoid can be determined with high accuracy ($0.03 ^\circ C$ mean error) \cite{atallahErgonomicWearableCore2018Augmented Hearing Assistance for Elderly People}.
+A known factor for changes in body temperature is considered in Earable research to be the response to external weather conditions \cite{barralonAugmentedHearingAssistance2015, boanoNoninvasiveMeasurementCore2013, celikEvaluationBehindtheEarECG2016} and during physical activities \cite{boanoNoninvasiveMeasurementCore2013, 71, celikEvaluationBehindtheEarECG2016, matsumotoEarbudtypeWearableHearable2019a, sugimotoDevelopmentWirelessSensing2011}.
+These findings enable a number of applications that perform some important functions, such as alerting or vital signs and parameter tracking based on the identified relationships.
+In addition, the relationship between body temperature recorded at the ear and ovulation (see subsection 4.5.6) and sleep (see subsection 4.2.2) has been demonstrated.
 
 \subsection{Movement and Activity}
 \label{Background:SensingWithEarables:Movement}
