@@ -114,15 +114,6 @@ Brinnel and Cabanac proposed that the lower anterior quarter of the tympanic mem
 % TODO: \cite{kimComparisonBilateralEardrum2022}
 % TODO: \cite{childsTympanicMembraneTemperature1999}
 
-\section{Temperature Sensors}
-\label{Background:TemperatureSensors}
-\begin{figure}[t]
-    \centering
-    \includegraphics[scale=0.7]{thesis-doc/images/introduction/temp_sensor_types.png}
-    \caption{Caption}
-    \label{fig:temperature_sensors}
-\end{figure}
-
 Temperature sensors are used to measure the temperature of a particular object or environment.
 They are widely used in many applications, such as industrial, medical or scientific contexts.
 Temperature sensors detect changes in temperature and convert this into a measurable signal.
@@ -163,17 +154,19 @@ In addition, accuracy can be affected by reflective surfaces or atmospheric cond
 
 \subsubsection{MLX}
 \label{Background:TemperatureSensors:OpticalTS:MLX}
-% * ist ein Infrarot-Thermosäulen-Temperatursensor
-% * misst Temperatur ohne Berührung, also mit Infarot.
-% * mikroelektromechanischen Systems (MEMS) und arbeitet, indem es die von einem Objekt emittierte Wärmestrahlung im Infrarotspektrum erfasst.
-% * kleiner formfaktor
-% * geringer Stromverbrauch -> gut für kleine geräte
-% * hohe Genauigkeit von +- 0.5 grad von -20 grad bis 100 grad in auflösung von 0.02 grad schritten.
-% * man kann 2 temperaturen gleichzeitig messen, da 2 sensorelemente verbaut sind.
-% * somit kann man körper und umgebungstemperatur z.B gleichzeitig messen, oder von 2 versch. körperteilen
-% * I2C-Schnittstelle mit einem Mikrocontroller kommunizieren
-
-% Insgesamt bietet der Sensor MLX90632 eine vielseitige und genaue Lösung für die berührungslose Temperaturmessung in einer Vielzahl von Anwendungen, einschließlich Medizin-, Industrie- und Unterhaltungselektronik.
+The MLX90632 sensor is an infrared thermopile temperature sensor.
+It measures temperature without requiring contact with the skin. 
+This is done by means of an infrared sensor. 
+The sensor is based on a microelectromechanical system (MEMS), which is used to detect thermal radiation in the infrared spectrum emitted by the object to be measured \cite{melexisMLX90632FIRSensor2021}.
+The MLX90632 has a small form factor and low power consumption, which is well-suited for small devices.
+In addition, the sensor has a very high accuracy of $\pm 0.5 ^\circ C$ from $-20 ^\circ C$  to $100 ^\circ C$.
+Here the sensor can resolve in $0.02 ^\circ C$ steps.
+Another immense advantage is the simultaneous measurement of 2 temperature values at the same time.
+This is possible because 2 sensor elements are directly installed in the MLX90632.
+This enables the measurement of one object, such as the skin temperature, and the ambient temperature.
+However, it is also possible to measure 2 different body parts at the same time.
+In order to be able to integrate the sensor optimally into a system, an I2C interface is available so that a microcontroller can communicate easily.
+Overall, the MLX90632 sensor provides a versatile and accurate solution for non-contact temperature measurement in a variety of applications, including medical, industrial, and consumer electronics.
 
 \subsection{Thermal Resistance Temperature Detectors}
 \label{Background:TemperatureSensors:ResistanceTD}
@@ -209,31 +202,62 @@ The research area was divided there into four categories (Figure \ref{fig:sensin
 
 \subsection{Physiological Monitoring and Health}
 \label{Background:SensingWithEarables:Physiological}
+The first categorical classification of sensing with earables is physiological parameters and health.
+The use of ear-worn sensors to track and maintain personal health by monitoring various physiological parameters is considered.
+The parameters are categorized according to human body functions such as the cardio-respiratory system, nervous system, thermoregulation, mental status, and health monitoring.
+The cardio-respiratory system is divided into the areas of heart rate, blood oxygen saturation, respiration, and blood pressure.
+All these areas can be classified, for example, with a PPG (photoplethysmography). 
+When determining the heart rate, a microphone, an accelerometer, an infrared thermometer, the piezoelectric, or an EEG (electrocardiography) can be used.
+The nervous system includes the classification of brain activity, sleep, or drowsiness. 
+All are determined using an EEG. When classifying sleep, an infrared thermometer can also be used for classification. 
+The most researched area here in the context of earables is brain activity.
+The 3rd subcategory in the physiological parameters and health represents the mental state.
+This has not yet been researched that far in the context of earables with 6 reference papers.
+Emotions can be recognized using an EEG, a microphone, or an accelerometer, and even stress using a PPG.
+Another subcategory is health which is divided into bruxism, coughing, face touching, sleep apnea, epilepsy, and ovulation.
+Sensors such as an accelerometer, a gyroscope, a microphone, an EEG, PPG, or an infrared thermometer are used here.
+For further details please refer to the original paper \cite{roddigerSensingEarablesSystematic2022a}.
+The last part of the physiological parameters and health is the thermal regulation. A distinction is made here between body temperature and perspiration. An EDA (electrodermal activity) and a hygrometer are used for sweating.
+When classifying body temperature, an infrared thermometer and a thermistor are used.
+Due to the body temperature being the most crucial part in this thesis, this part will now be focused in more detail.
 
 \paragraph{Body temperature}
 \label{Background:SensingWithEarables:Physiological:BodyTemperature}
-Bestbier and Fourie \cite{bestbierDevelopmentVitalSigns2018a} applied the principle to a wearable form factor and achieved a small mean error of only $0.02$ $\pm$ $0.52 ^\circ C$. 
-However, user-defined calibration is needed because the shape of the ear canal is different for each individual \cite{bestbierDevelopmentVitalSigns2018a, luekenPhotoplethysmographybasedInearSensor2017a, matsumotoEarbudtypeWearableHearable2019a}.
-Alternatively, surface skin temperature at the mastoid can be determined with high accuracy ($0.03 ^\circ C$ mean error) \cite{atallahErgonomicWearableCore2018Augmented Hearing Assistance for Elderly People}.
-A known factor for changes in body temperature is considered in Earable research to be the response to external weather conditions \cite{barralonAugmentedHearingAssistance2015, boanoNoninvasiveMeasurementCore2013, celikEvaluationBehindtheEarECG2016} and during physical activities \cite{boanoNoninvasiveMeasurementCore2013, 71, celikEvaluationBehindtheEarECG2016, matsumotoEarbudtypeWearableHearable2019a, sugimotoDevelopmentWirelessSensing2011}.
+Bestbier and Fourie \cite{bestbierDevelopmentVitalSigns2018} applied the principle to a wearable form factor and achieved a small mean error of only $0.02$ $\pm$ $0.52 ^\circ C$. 
+They used the TMP006 infrared sensor, which points directly at the eardrum. 
+The thermophilic voltage and the temperature sensor were made digitally available via hardware registers, from which the object temperature can be calculated. 
+This reflects the temperature of the tympanic membrane after calibration.
+However, the accuracy varies greatly between individual positions, which is attributed to the orientation of the sensor due to a wide variety of auditory canals.
+This problem was solved by implementing intraparticipant calibration.
+This should allow the sensor to self-calibrate automatically and improves the standard error by $56\%$ (from $0.5125 ^\circ C$ to $0.29 ^\circ C$) and the correlation coefficient from $0.4667$ to $0.8684$.
+
+However, user-defined calibration is needed because the shape of the ear canal is different for each individual \cite{bestbierDevelopmentVitalSigns2018, luekenPhotoplethysmographybasedInearSensor2017, matsumotoEarbudtypeWearableHearable2019}.
+Luken et al. integrated TI's TMP007 into the proposed measurement system to obtain information about human core temperature variation at a rate of $33 Hz$ \cite{luekenPhotoplethysmographybasedInearSensor2017}.
+For individual calibration purposes, the voltage difference of the thermopile element and the chip temperature were transmitted in addition to the recorded object temperature.
+However, the temperature was not further calibrated or processed in this work \cite{luekenPhotoplethysmographybasedInearSensor2017}.
+Alternatively, surface skin temperature at the mastoid can be determined with high accuracy ($0.03 ^\circ C$ mean error) \cite{atallahErgonomicWearableCore2018}.
+% TODO: read atallahErgonomicWearableCore2018 paper and insert content
+A known factor for changes in body temperature is considered in earable research to be the response to external weather conditions \cite{barralonAugmentedHearingAssistance2015, boanoNoninvasiveMeasurementCore2013, celikEvaluationBehindtheEarECG2016} and during physical activities \cite{boanoNoninvasiveMeasurementCore2013, chagllae.MeasurementCoreBody2018, celikEvaluationBehindtheEarECG2016, matsumotoEarbudtypeWearableHearable2019, sugimotoDevelopmentWirelessSensing2011}.
+% TODO: read all the previous papers and explain a lot more here!
 These findings enable a number of applications that perform some important functions, such as alerting or vital signs and parameter tracking based on the identified relationships.
 In addition, the relationship between body temperature recorded at the ear and ovulation (see subsection 4.5.6) and sleep (see subsection 4.2.2) has been demonstrated.
+% TODO: remove the above sentence and insert content from sections mentioned
 
 \subsection{Movement and Activity}
 \label{Background:SensingWithEarables:Movement}
+% TODO: Go into more detail for each section here
 
 \subsection{Interaction}
 \label{Background:SensingWithEarables:Interaction}
+% TODO: Go into more detail for each section here
 
 \subsection{Authentication and Identification}
 \label{Background:SensingWithEarables:Authentication}
+% TODO: Go into more detail for each section here
 
 \subsection{Sensing Platforms}
 \label{Background:SensingWithEarables:SensingPlatforms}
 % TODO: Hier abschnitt zu sensing platforms, wie z.B OpenEarable
-
-
-
 
 % https://media.digikey.com/pdf/Data%20Sheets/Excelitas%20PDFs/TPiS_1S_1385.pdf
 
