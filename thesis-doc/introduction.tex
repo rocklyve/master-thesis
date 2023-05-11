@@ -19,8 +19,8 @@ Earables are located near the brain and the major blood vessels on the head and 
 
 % body temperature
 One important aspect of sensing data with earables is the ability to detect changes in body temperature \cite{dolsonWearableSensorTechnology2022, bonziAccuracyPeripheralThermometers2016, NovelWearableDevice2021}. 
-Earables equipped with temperature sensors can provide accurate measurements of body temperature throughout the day, which can be used to track patterns and identify potential health issues. 
-By monitoring temperature over time, individuals can gain valuable insights into their health and identify potential issues early on.
+Earables equipped with temperature sensors can provide accurate measurements of body temperature throughout the day, which can be used to track patterns and identify potential health issues \cite{rajbhandaryFeasibilityContinuousMonitoring2020a}.
+By monitoring temperature over time, individuals can gain valuable insights into their health and identify potential issues early on \cite{mrozekBrainTemperaturePhysiology2012}.
 Knowing a person's exact core body temperature can provide important health insights and information about the person's physiological state.
 For example, core body temperature can be an important indicator of fever, as well as infection or inflammation. 
 Monitoring this data can provide early insights and enable rapid treatment steps \cite{NovelWearableDevice2021}.
@@ -41,9 +41,10 @@ In the ear canal, the tympanic membrane is located.
 The tympanic is supplied with blood by the branches of the internal carotid artery, which supply blood to the thermoregulation center in the hypothalamus of the brain \cite{moranCoreTemperatureMeasurement2002a}.
 Therefore the ear provides high potential in measuring body temperature.
 
-However, the optimal sensor placement and measurement methodology for ear-based temperature monitoring is still an open research question. 
+However, the sensor placement and measurement methodology for ear-based temperature monitoring is still an open research question. 
 The optimal position for temperature measurement on the ear is quite obvious: the tympanic membrane \cite{childsTympanicMembraneTemperature1999, kimComparisonBilateralEardrum2022, mumaComparisonRectalAxillary1991}.
-However, it is not easy to align the infrared sensor with the eardrum. In addition, influencing factors such as ear wax can affect measurement results. 
+However, it is not easy to align the infrared sensor with the tympanic membrane.
+In addition, influencing factors such as ear wax can affect measurement results. 
 This raises the question of how measurement results differ at different measurement points on and in the ear. 
 By using an alternative measuring point, various influencing factors would be eliminated.
 It may also be interesting to see whether the combination of several sensors stabilizes the measurement results.
@@ -54,32 +55,29 @@ With additional sensors, for example, an IMU, it would be possible to detect mov
 \section{Problem}
 Recent research studies have revealed various problems in measuring temperature in the ear.
 Discrepancies in temperature-based measurement in the ear have been reported due to factors such as sensor location, skin contact, and calibration \cite{rohrbergTemperatureMeasurementEar1997, gasimAccuracyTympanicTemperature2013, amoateng-adjepongAccuracyInfraredTympanic1999a, hookerScreeningFeverAdult1996a, cattaneoAccuracyPrecisionBody2000}.
-The main problem is that the accuracy and reliability of ear temperature measurements can be affected by several factors. 
-Measuring temperature at the eardrum is quite complicated to set up since the temperature sensor in the ear canal must be properly aligned. 
+The main problem is that the accuracy and reliability of ear temperature measurements can be affected by several factors \cite{gasimAccuracyTympanicTemperature2013}. 
+Measuring temperature at the tympanic membrane is quite complicated to set up since the temperature sensor in the ear canal must be properly aligned \cite{amoateng-adjepongAccuracyInfraredTympanic1999a, gasimAccuracyTympanicTemperature2013}. 
 Due to the wide variety of ear canal shapes of different individuals, this cannot always be guaranteed.
-In addition, influencing factors such as earwax can affect the path to the eardrum and thus also the temperature measurement and all the advantages of measuring the temperature there.
-In particular, it is unclear what effect different measurement positions have on measurement accuracy and reliability.
-To address these issues, we will test several hypotheses. 
-For example, we may hypothesize that combining signals from different sensors will improve measurement accuracy and reliability.
-In addition, it is conceivable that other signals like IMU can be used to detect measurement errors, sports activities, or the like.
-Various metrics are used to evaluate the accuracy and reliability of ear temperature measurements, such as Mean Squared Deviation and correlation.
-Through our studies, we hope to help improve the accuracy and reliability of temperature-based measurements in the ear and thus contribute to medical diagnostics.
+In addition, influencing factors such as earwax can affect the path to the tympanic membrane and thus also the temperature measurement and all the advantages of measuring the temperature there \cite{gasimAccuracyTympanicTemperature2013}.
+
 
 \section{Question}
 This master's thesis examines temperature sensors, each placed at different locations in and around the ear canal comparing the sensor measurements with those of a medically certified thermometer, considered here as the ground truth.
 The research objective is to combine and/or compare different positions for temperature-based measurement in and around the ear and investigate how this affects the accuracy and stability of the measurements.
 Additionally, it is interesting to see if other sensor information can be used to filter out potential errors and optimize results. These include, for example, audio signals or an IMU signal. The resulting location or combined locations for the measurement will then be taken as a basis to detect a temperature-dependent event of the body and evaluate if this provides conclusive results.
 Various metrics such as Mean Squared Deviation and correlation are used to measure the accuracy and stability of the measurements.
-% TODO: maybe more metrics
-It is hoped that combining different positions for measurement in the ear will lead to more accurate and stable measurements and that using other sensor information to filter errors may help to further improve the results. It is also expected that the identified optimal location for measurement will be able to detect a temperature-dependent event of the body with high accuracy.
 
-% Wenn du etwas mehr gelesen hast was man konkret mit temperatur machen kann dann können wir mal darüber reden was davon in frage kommt für eine mögliche application. Sollte aber evtl. eher optional sein, je nach aufwand der application (z.b. zyklus tracking zu gefährlich für MA wegen knapper Zeit vs. mind 2 bis 3 Monate tracken für sinnvolle daten)
-
-% TODO: Hypothesen hier
+In particular, it is unclear what effect different measurement positions have on measurement accuracy and reliability.
+To address these issues, we will test several hypotheses. 
+For example, we may hypothesize that combining signals from different sensors will improve measurement accuracy and reliability.
+In addition, it is conceivable that other signals like IMU can be used to detect measurement errors, sports activities, or the like.
+Various metrics are used to evaluate the accuracy and reliability of ear temperature measurements, such as Mean Squared Deviation and correlation.
+Through our studies, we hope to help improve the accuracy and reliability of temperature-based measurements in the ear and thus contribute to medical diagnostics.
+% TODO: check, if all hypotheses are mentioned here
 
 \section{Planned Approach}
 We will use the OpenEarable platform to attach various temperature sensors to the ear canal. 
-The sensors will be placed at various locations including the concha, inside the ear canal, one pointing to the eardrum, and behind the pinna.
+The sensors will be placed at various locations including the concha, inside the ear canal, one pointing to the tympanic membrane and behind the pinna.
 The exact positions can be explored in figure \ref{fig:ear_measurement_positions}.
 Participants will be asked to wear the sensors on one ear in a study under laboratory conditions.
 The resulting data will be collected and analyzed afterward to determine the best sensor position for ear-based temperature measurement. 
