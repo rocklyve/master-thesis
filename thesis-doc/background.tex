@@ -192,8 +192,10 @@ Earables belong to the class of wearables and are a type of wearable device that
 They typically have a number of sensors that allow them to collect data about the wearer's physiology and activity. 
 The most common sensors in earables include accelerometers, gyroscopes, and heart rate monitors. 
 These sensors can be used to track the wearer's movements, monitor their heart rate, and provide other types of health data.
-Earables are portable, lightweight, and small, which allows them to be worn easily for long periods of the day \cite{roddigerSensingEarablesSystematic2022a}. Thus, data can be tracked over a longer period of time. In addition, earables have the advantage of being worn on the ear, which together with the head are automatically stabilized during movements and thus have less motion disturbances and artifacts \cite{grossmanFrequencyVelocityRotational1988, kavanaghRoleNeckTrunk2006a}.
-The position on the ear brings a lot of potential. For one thing, the ear is very close to the brain and blood vessels, which allows accurate measurement of brain activity, cyclic blood flow, and related properties \cite{ferliniInEarPPGVital2022}.
+Earables are portable, lightweight, and small, which allows them to be worn easily for long periods of the day \cite{roddigerSensingEarablesSystematic2022a}. 
+Thus, data can be tracked over a longer period of time. In addition, earables have the advantage of being worn on the ear, which together with the head are automatically stabilized during movements and thus have less motion disturbances and artifacts \cite{grossmanFrequencyVelocityRotational1988, kavanaghRoleNeckTrunk2006a}.
+The position on the ear brings a lot of potential. 
+For one thing, the ear is very close to the brain and blood vessels, which allows accurate measurement of brain activity, cyclic blood flow, and related properties \cite{ferliniInEarPPGVital2022}.
 In addition, it is possible to detect the perception of a variety of facial, neck, and eye muscle activations \cite{andoCanalSenseFaceRelatedMovement2017}, as well as the input of head movements \cite{andoCanalSenseFaceRelatedMovement2017}, facial gestures \cite{matthiesEarFieldSensingNovelInEar2017}, mouth movements \cite{sunTeethTapRecognizingDiscrete2021a}, and instantaneous \cite{bleichnerConcealedUnobtrusiveEarCentered2017, phamWAKEBehindtheearWearable2020}. 
 Because of the ease of accessibility with the hand \cite{kikuchiEarTouchTurningEar2017, xuEarBuddyEnablingOnFace2020}, interactions with the hand on the ear can be used to trigger actions \cite{lissermannEarPutAugmentingEarworn2014}.
 In summary, earables are capable of triggering a variety of processes of the skeleton (e.g., gait \cite{atallahGaitAsymmetryDetection2014}), muscles (e.g., facial expressions \cite{matthiesEarFieldSensingNovelInEar2017}), nerves (e.g. Brain activity \cite{debenerUnobtrusiveAmbulatoryEEG2015}), endocrine system (e.g. , emotions \cite{athavipachWearableInEarEEG2019}), cardiovascular system (e.g. , blood pressure \cite{atallahValidationEarwornSensor2012}), respiratory system (e.g. , breathing \cite{roddigerRespirationRateMonitoring2020}), and digestive system (e.g. , food intake \cite{gaoIHearFoodEating2016}).
@@ -202,7 +204,7 @@ In 2022, Röddiger et al. noted the current state of research on sensing with ea
 A systematic literature review of 271 peer-reviewed research articles was made receiving a better understanding of the current state of research on this topic.
 The research area was divided there into four categories (Figure \ref{fig:sensing_with_earables_overview}), which will now be explained in more detail.
 
-\begin{figure}[t]
+\begin{figure}[t!]
     \centering
     \includegraphics[scale=0.3525]{thesis-doc/images/sensing_with_earables_overview.png}
     \caption{Overview map of sensing with earables. The map displays all phenomena current research is about divided into the main four categories. For each phenomena, there is a number (N), which describes the available articles and all the used sensors used to detect these phenomena \cite{roddigerSensingEarablesSystematic2022a}.}
@@ -254,15 +256,36 @@ In addition, the relationship between body temperature recorded at the ear and o
 
 \subsection{Movement and Activity}
 \label{Background:SensingWithEarables:Movement}
-% TODO: Go into more detail for each section here
+Another categorical classification of sensing with earables is movement and activity.
+Here, the focus is on detecting user movements and deriving insights about activities performed by the user. 
+Movements detected at the ear can be classified into discrete classes, such as a user's posture, their movement, and also the type of activity. 
+Beyond simply classifying sensor data, the project also explored how physical quantities can be derived from the user's movement to provide useful information for a variety of applications, including fitness tracking, gait analysis,
+food and beverage consumption, and inertial navigation.
+Most of the findings are recorded with the accelerometer and the gyroscope.
+Activity recognition is recognized with it, but also with an EEG. Accelerometers and gyroscopes are also used as a basis for the fitness tracking and support subcategory, and the EEG for sensor performance.
+When measuring the gait, the signal from the accelerometer is sufficient.
+Significantly more sensors are used for classification when eating. While only one microphone signal was used for the drinking detection, a series of signals is used for the eating detection. 
+Here the microphone, accelerometer, gyroscope, magnetometer, proximity sensor, piezoelectric, EMG, pressure sensor and also the PPG are used.
+When brushing teeth is detected, a microphone signal is evaluated.
+In addition, the accelerometer and gyroscope signal as well as a magnetometer are also used for navigation.
 
 \subsection{Interaction}
 \label{Background:SensingWithEarables:Interaction}
-% TODO: Go into more detail for each section here
+Interaction is another categorical classification of sensing with earables.
+Since earables have a lot of different sensors, there are exciting possibilities for unique and novel interactions.
+So far, attempts have been made to recognize inputs on the ear, but also on other parts of the body that can be recognized by sensors on the ear.
+% TODO: Go into more detail for each subsection here
 
 \subsection{Authentication and Identification}
 \label{Background:SensingWithEarables:Authentication}
-% TODO: Go into more detail for each section here
+The final categorical classification of sensing with earables is authentication and identification. 
+For secure access to sensitive data, mobile devices often use biometrics such as fingerprints. 
+Earable technologies have explored biometric authentication based on unique ear, skull, or body features, as well as brain activity and body movement. 
+Passcode-based authentication methods that use rhythmic patterns have also been proposed. 
+The two main approaches are verification and identification, where performance is often measured using equal error rate (ERR) to balance false acceptance and false rejection rates.
+In this cathegorical classification, the microphone and emitted sound are used as the basis in shape-based authentication and identification on the ear, the microphone and voice are used in the skull, and impedance is used in the body.
+The EEG is the basis for recognition in brain activity-based authentication and identification.
+When the individual movement is used for authentication and identification, the accelerometer and the microphone are used, in the passcode protected authentication and identification only the accelerometer signal is used.
 
 \subsection{Sensing Platforms}
 \label{Background:SensingWithEarables:SensingPlatforms}
