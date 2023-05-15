@@ -74,7 +74,7 @@ Measurements on the skin that cannot be easily influenced, such as the armpits, 
 In General, the temperature of a human body will be measured with a thermometer.
 There are multiple techniques available on which the temperature value will be calculated. 
 These are divided into contact and non-contact thermometers.
-For a detailed overview, take a look at chapter \ref{Background:TemperatureSensors}.
+For a detailed overview, take a look at chapters \ref{Background:TemperatureSensors:OpticalTS} and \ref{Background:TemperatureSensors:ResistanceTD}.
 Body temperature is often measured in the armpit, mouth, rectum, ear, or forehead.
 The temperature in the armpit is typically $36.6^\circ C$, in the mouth $36.9^\circ C$, and $37.1^\circ C$ in the ear \cite{dolibogComparativeAnalysisHuman2022}.
 The rectal temperature testing method is the most accurate of all measurements, while non-contact forehead thermometers are considered the least accurate, and measurements are taken with them should be confirmed by other methods.
@@ -198,7 +198,7 @@ The position on the ear brings a lot of potential.
 For one thing, the ear is very close to the brain and blood vessels, which allows accurate measurement of brain activity, cyclic blood flow, and related properties \cite{ferliniInEarPPGVital2022}.
 In addition, it is possible to detect the perception of a variety of facial, neck, and eye muscle activations \cite{andoCanalSenseFaceRelatedMovement2017}, as well as the input of head movements \cite{andoCanalSenseFaceRelatedMovement2017}, facial gestures \cite{matthiesEarFieldSensingNovelInEar2017}, mouth movements \cite{sunTeethTapRecognizingDiscrete2021a}, and instantaneous \cite{bleichnerConcealedUnobtrusiveEarCentered2017, phamWAKEBehindtheearWearable2020}. 
 Because of the ease of accessibility with the hand \cite{kikuchiEarTouchTurningEar2017, xuEarBuddyEnablingOnFace2020}, interactions with the hand on the ear can be used to trigger actions \cite{lissermannEarPutAugmentingEarworn2014}.
-In summary, earables are capable of triggering a variety of processes of the skeleton (e.g., gait \cite{atallahGaitAsymmetryDetection2014}), muscles (e.g., facial expressions \cite{matthiesEarFieldSensingNovelInEar2017}), nerves (e.g. Brain activity \cite{debenerUnobtrusiveAmbulatoryEEG2015}), endocrine system (e.g. , emotions \cite{athavipachWearableInEarEEG2019}), cardiovascular system (e.g. , blood pressure \cite{atallahValidationEarwornSensor2012}), respiratory system (e.g. , breathing \cite{roddigerRespirationRateMonitoring2020}), and digestive system (e.g. , food intake \cite{gaoIHearFoodEating2016}).
+In summary, earables are capable of triggering a variety of processes of the skeleton (e.g., gait \cite{atallahGaitAsymmetryDetection2014}), muscles (e.g., facial expressions \cite{matthiesEarFieldSensingNovelInEar2017}), nerves (e.g. Brain activity \cite{debenerUnobtrusiveAmbulatoryEEG2015}), endocrine system (e.g., emotions \cite{athavipachWearableInEarEEG2019}), cardiovascular system (e.g., blood pressure \cite{atallahValidationEarwornSensor2012}), respiratory system (e.g., breathing \cite{roddigerRespirationRateMonitoring2020}), and digestive system (e.g., food intake \cite{gaoIHearFoodEating2016}).
 
 In 2022, Röddiger et al. noted the current state of research on sensing with earables \cite{roddigerSensingEarablesSystematic2022a}.
 A systematic literature review of 271 peer-reviewed research articles was made receiving a better understanding of the current state of research on this topic.
@@ -213,7 +213,7 @@ The research area was divided there into four categories (Figure \ref{fig:sensin
 
 \subsection{Physiological Monitoring and Health}
 \label{Background:SensingWithEarables:Physiological}
-The first categorical classification of sensing with earables is physiological parameters and health.
+The first categorical classification of sensing with earables is physiological parameters and health \cite{roddigerSensingEarablesSystematic2022a}.
 The use of ear-worn sensors to track and maintain personal health by monitoring various physiological parameters is considered.
 The parameters are categorized according to human body functions such as the cardio-respiratory system, nervous system, thermoregulation, mental status, and health monitoring.
 The cardio-respiratory system is divided into the areas of heart rate, blood oxygen saturation, respiration, and blood pressure.
@@ -222,7 +222,7 @@ When determining the heart rate, a microphone, an accelerometer, an infrared the
 The nervous system includes the classification of brain activity, sleep, or drowsiness. 
 All are determined using an EEG. When classifying sleep, an infrared thermometer can also be used for classification. 
 The most researched area here in the context of earables is brain activity.
-The 3rd subcategory in the physiological parameters and health represents the mental state.
+The third subcategory in the physiological parameters and health represents the mental state.
 This has not yet been researched that far in the context of earables with 6 reference papers.
 Emotions can be recognized using an EEG, a microphone, or an accelerometer, and even stress using a PPG.
 Another subcategory is health which is divided into bruxism, coughing, face touching, sleep apnea, epilepsy, and ovulation.
@@ -256,7 +256,7 @@ In addition, the relationship between body temperature recorded at the ear and o
 
 \subsection{Movement and Activity}
 \label{Background:SensingWithEarables:Movement}
-Another categorical classification of sensing with earables is movement and activity.
+Another categorical classification of sensing with earables is movement and activity \cite{roddigerSensingEarablesSystematic2022a}.
 Here, the focus is on detecting user movements and deriving insights about activities performed by the user. 
 Movements detected at the ear can be classified into discrete classes, such as a user's posture, their movement, and also the type of activity. 
 Beyond simply classifying sensor data, the project also explored how physical quantities can be derived from the user's movement to provide useful information for a variety of applications, including fitness tracking, gait analysis,
@@ -265,31 +265,68 @@ Most of the findings are recorded with the accelerometer and the gyroscope.
 Activity recognition is recognized with it, but also with an EEG. Accelerometers and gyroscopes are also used as a basis for the fitness tracking and support subcategory, and the EEG for sensor performance.
 When measuring the gait, the signal from the accelerometer is sufficient.
 Significantly more sensors are used for classification when eating. While only one microphone signal was used for the drinking detection, a series of signals is used for the eating detection. 
-Here the microphone, accelerometer, gyroscope, magnetometer, proximity sensor, piezoelectric, EMG, pressure sensor and also the PPG are used.
+Here the microphone, accelerometer, gyroscope, magnetometer, proximity sensor, piezoelectric, EMG, pressure sensor, and also the PPG is used.
 When brushing teeth is detected, a microphone signal is evaluated.
 In addition, the accelerometer and gyroscope signal as well as a magnetometer are also used for navigation.
 
 \subsection{Interaction}
 \label{Background:SensingWithEarables:Interaction}
-Interaction is another categorical classification of sensing with earables.
+Interaction is another categorical classification of sensing with earables \cite{roddigerSensingEarablesSystematic2022a}.
 Since earables have a lot of different sensors, there are exciting possibilities for unique and novel interactions.
 So far, attempts have been made to recognize inputs on the ear, but also on other parts of the body that can be recognized by sensors on the ear.
-% TODO: Go into more detail for each subsection here
+Subfields of interaction include ear or earable input, hand gestures or hand position, head gestures or orientations, eye tracking, mouth-based tracking, facial expressions, brain-computer interface, and actuation.
+The most common tracking techniques are pressure or proximity sensors, accelerometer and gyroscope, the microphone, and EEG and EMG.
+There are various input options for the ear-based or earable-based input. These include button inputs, touch or shape changes, and others.
+Mouth-based interactions can be divided into jaw activities, tongue gestures, tooth activities, and silent speech input.
 
 \subsection{Authentication and Identification}
 \label{Background:SensingWithEarables:Authentication}
-The final categorical classification of sensing with earables is authentication and identification. 
+The final categorical classification of sensing with earables is authentication and identification \cite{roddigerSensingEarablesSystematic2022a}. 
 For secure access to sensitive data, mobile devices often use biometrics such as fingerprints. 
-Earable technologies have explored biometric authentication based on unique ear, skull, or body features, as well as brain activity and body movement. 
+Earable technologies have explored biometric authentication based on the unique ear, skull, or body features, as well as brain activity and body movement. 
 Passcode-based authentication methods that use rhythmic patterns have also been proposed. 
-The two main approaches are verification and identification, where performance is often measured using equal error rate (ERR) to balance false acceptance and false rejection rates.
-In this cathegorical classification, the microphone and emitted sound are used as the basis in shape-based authentication and identification on the ear, the microphone and voice are used in the skull, and impedance is used in the body.
+The two main approaches are verification and identification, where performance is often measured using an equal error rate (ERR) to balance false acceptance and false rejection rates.
+In this categorical classification, the microphone and emitted sound are used as the basis in shape-based authentication and identification on the ear, the microphone and voice are used in the skull, and impedance is used in the body.
 The EEG is the basis for recognition in brain activity-based authentication and identification.
-When the individual movement is used for authentication and identification, the accelerometer and the microphone are used, in the passcode protected authentication and identification only the accelerometer signal is used.
+When the individual movement is used for authentication and identification, the accelerometer and the microphone are used, in the passcode-protected authentication and identification only the accelerometer signal is used.
 
 \subsection{Sensing Platforms}
 \label{Background:SensingWithEarables:SensingPlatforms}
-% TODO: Hier abschnitt zu sensing platforms, wie z.B OpenEarable
+Ear-based sensing platforms have gained considerable attention in the wearable technology field due to their potential for multiple applications and benefits. 
+This chapter examines different types of ear-based sensor platforms, discusses their technical aspects and characteristics, captures their application, and examines the challenges and future directions in this field.
+One type of ear-based sensor platform is the in-ear sensor, in which sensors are placed directly in the ear canal. Examples of in-ear sensors are earphones with integrated sensors that can monitor various physiological parameters \cite{maseHearablesNewPerspectives2020}. 
+Another type is the on-ear sensor, which is placed on the outer ear or earlobe. 
+These sensors can be in the form of clip-on devices or wearable ear accessories to collect specific data.
+Behind-the-ear sensors represent another category of ear-based sensor platforms \cite{phamWAKEBehindtheearWearable2020, gilSmartWirelessEarWorn2019, biWearableSensorEating2017}.
+These sensors are positioned behind the ear and are often found in hearing aids or smart ear tags. 
+Finally, there are ear-worn wearables, which are wearable devices designed to be worn on the ear \cite{biWearableSensorEating2017, gilSmartWirelessEarWorn2019}. 
+These include smart earbuds or earbuds that have sensors to monitor various health and activity-related metrics.
+Technical aspects and features play a critical role in ear-based sensor platforms. 
+Sensor technologies vary by platform, and each has its own advantages and limitations.
+Connectivity and data transfer methods are essential for seamless integration with other devices or networks \cite{perezRecentAdvancesWearable2021}. 
+Power management strategies are used to optimize battery life and ensure the longer use of ear-based sensor platforms \cite{nguyenInearBiosignalRecording2016}.
+Ear-based sensor platforms find applications in various fields. 
+In the area of health and wellness monitoring, these platforms enable the tracking of vital signs such as heart rate and body temperature \cite{roddigerRespirationRateMonitoring2020, atallahErgonomicWearableCore2018, maseHearablesNewPerspectives2020, rajbhandaryFeasibilityContinuousMonitoring2020a}.
+They also facilitate the monitoring of sleep quality, stress levels, and other health-related parameters \cite{luekenPhotoplethysmographybasedInearSensor2017, wendtThermoregulationExerciseHeat2007}. 
+In human-computer interaction, ear-based sensor platforms can serve as input modalities for gesture recognition or control interfaces, making them suitable for augmented reality, virtual reality, and gaming environments. 
+In addition, ear-based biometrics are being explored for biometric identification and secure authentication purposes, offering an alternative to traditional authentication methods \cite{roddigerSensingEarablesSystematic2022a}.
+Despite the potential benefits, ear-based sensor platforms face certain challenges. 
+These include ensuring the accuracy and reliability of measurements, addressing convenience and usability concerns, and addressing privacy and data security issues \cite{bockAccuracyNewInfrared2005, roddigerRespirationRateMonitoring2020, bonziAccuracyPeripheralThermometers2016, gasimAccuracyTympanicTemperature2013, amoateng-adjepongAccuracyInfraredTympanic1999a, ericksonComparisonEarbasedBladder1993, chagllae.MeasurementCoreBody2018}. 
+Future research and development efforts will focus on overcoming these challenges, exploring new applications, and advancing the capabilities of ear-based sensor platforms.
+In summary, ear-based sensor platforms have emerged as promising tools in wearable technology. 
+They offer a range of applications, from health monitoring to human-computer interaction to biometric authentication. 
+By leveraging the unique properties of the ear, these platforms provide valuable insights and contribute to the advancement of wearable technology as a whole.
+
+% OpenEarable
+OpenEarable is an open source Arduino-based platform for ear-based sensor applications. 
+It supports a number of sensors and actuators \cite{roddigerOpenEarableOpenHardware2022}.
+For one, a 9-axis inertial measurement unit (IMU) is connected, which can be used to read gyroscope and accelerometer. 
+Furthermore, an inward-facing ultrasonic microphone, a push button, a loudspeaker and a controllable LED are installed in addition to an ear canal pressure and temperature sensor. 
+OpenEarable is designed as a development platform, not a finished product.
+It is intended to be used by developers to create new ear-based sensing applications. 
+The platform is open source, so developers can customize the hardware and software to meet their specific needs.
+OpenEarable can be used for a variety of applications, such as health monitoring, authentication, identification and human-computer interaction.
+The platform is still under development, but has the potential to be used for a wide range of applications. OpenEarable is a valuable resource for developers interested in creating new ear-based sensing applications.
 
 % https://media.digikey.com/pdf/Data%20Sheets/Excelitas%20PDFs/TPiS_1S_1385.pdf
 
