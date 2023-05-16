@@ -12,9 +12,8 @@ By measuring temperature, one gains information about the internal energy of an 
 From the biophysical point of view, temperature measurement determines the changes in physical quantities that occur in a thermodynamic system \cite{dolibogComparativeAnalysisHuman2022}.
 Temperature can be expressed in different scales.
 These include Celsius, Fahrenheit, Kelvin, and Rankine \cite{grodzinskyUnderstandingFeverBody2020}.
-The human body temperature range is usually between $36.5-37.5^\circ C$ ($97.7-99.5^\circ F$) \cite{hutchisonHypothermiaTherapyTraumatic2008}.
-However, body temperature varies constantly and is dependent on many influencing factors such as gender, age, time of day, and many others \cite{sund-levanderNormalOralRectal2002}.
-Likewise, the state of consciousness and emotions are decisive factor that significantly influences the body temperature \cite{barbosaescobarTemperatureEmotions2021}.
+The human body temperature range is usually between $36.5-37.5^\circ C$ \cite{hutchisonHypothermiaTherapyTraumatic2008}, varies constantly, and depends on many influencing factors such as gender, age, time of day, and many others \cite{sund-levanderNormalOralRectal2002}.
+Likewise, the state of consciousness and emotions are a decisive factor that significantly influences the body temperature \cite{barbosaescobarTemperatureEmotions2021}.
 In addition, the position at which the body temperature is measured is crucial \cite{Physiologie9783137960072ZVAB}.
 In order to keep the body temperature within the normal temperature range through internal and external factors, the body uses thermoregulation, through which the temperature is constantly adjusted by signals from the central nervous system.
 
@@ -22,12 +21,11 @@ In order to keep the body temperature within the normal temperature range throug
 \label{Background:BodyTemperature:ThermalRegulation}
 A vital body function is the possibility of regulation from the exchange of body heat \cite{grodzinskyUnderstandingFeverBody2020}.
 Regulation occurs through a neural feedback system. 
-In many parts of the body, sensory means detect cold and heat and transmit them via the central nervous system to the hypothalamus.
-This then responds to potential temperature adjustments by triggering physiological activity. 
+In many body parts, sensory means detect cold and heat and transmit them via the central nervous system to the hypothalamus reacting to potential temperature adjustments by triggering physiological activity. 
 This can be associated with a gain or loss of heat, which maintains body temperature.
 Major players in regulating body temperature are the cardiovascular system, the sudomotor control system, and skeletal muscles. 
-The goal is to maintain body temperature within the range of $25^\circ C$ ($95^\circ F$) to $41^\circ C$ ($105.8^\circ F$) \cite{pierauTemperatursensibilitaet2001}. 
-An excessive rise in body temperature (hyperthermia or hyperpyrexia), in which temperature regulation is no longer functioning, must be treated as a medical emergency.
+The goal is to maintain body temperature within the range of $35^\circ C$ to $41^\circ C$ \cite{pierauTemperatursensibilitaet2001}. 
+An excessive rise in body temperature (hyperthermia or hyperpyrexia), in which temperature regulation is no longer working, must be treated as a medical emergency.
 The same applies if the body temperature drops below $35^\circ C$.
 
 \subsection{Core Body Temperature}
@@ -39,16 +37,15 @@ However, the gold standard is different.
 The core body temperature of a healthy human body differs almost little from the temperature of the blood flowing in the pulmonary artery \cite{krizanacFemoroiliacalArteryPulmonary2013, holtzclawMonitoringBodyTemperature1993}.
 This is exactly what is used as the gold standard for measuring body core temperature \cite{krizanacFemoroiliacalArteryPulmonary2013, holtzclawMonitoringBodyTemperature1993, fulbrookCoreBodyTemperature1997, maxtonEstimatingCoreTemperature2004}.
 However, this comes with a few critical points.
-Measuring the temperature of the blood flowing in the pulmonary artery involves an invasive and risky procedure that requires the insertion of an apulmonary artery catheter \cite{yeohRevisitingTympanicMembrane2017}.
+Measuring the temperature of the blood flowing in the pulmonary artery involves an invasive and risky procedure that requires the insertion of a pulmonary artery catheter \cite{yeohRevisitingTympanicMembrane2017}.
 This is strongly recommended in a medical hospital and nowhere else.
-All of the previously mentioned methods are not comfortable for humans. 
-In addition, it is difficult to make a measurement over a longer period of time with these in everyday life.
+All of the previously mentioned methods are not comfortable for humans when measuring over a long period of time in everyday life.
 
 Body temperature can also be measured non-invasive.
 The following methods are much more convenient, but the measurement accuracy suffers somewhat.
 Measuring the body temperature non-invasive can be done on the axilla, the tympanic membrane, and the body surface \cite{moranCoreTemperatureMeasurement2002a}.
 Usually, core body temperature is constant only in the body core and consequently cannot be determined outside only by temperature sensors \cite{niedermannPredictionHumanCore2014}.
-Due to this, it is necessary to use several other values for the calculation of the core body temperature. 
+Due to this, it is necessary to use several other values for the calculation of the core body temperature in order to approximate the true temperature value. 
 These can include e.g. skin temperature and skin heat fluxes or the heart rate.
 Niedermann achieved a root mean square deviation (rmsd) ranging from $0.28 ^\circ C$ to $0.34 ^\circ C$ for all environmental conditions in 2014 \cite{niedermannPredictionHumanCore2014}.
 Therefore, a principal component analysis (PCA) was performed to extract uncorrelated variables that were subsequently used in a linear regression model. 
@@ -57,9 +54,9 @@ The predictive power of these components for estimating core body temperature wa
 
 \subsection{Skin Temperature}
 \label{Background:BodyTemperature:SkinTemperature}
-When measuring body temperature, skin temperature is often used to measure body temperature.
-This is the result of a dynamic equilibrium between the heat released during metabolic processes and transferred to the skin layer by thermal conduction and convection, the heat extracted from the environment, and the heat transferred to the environment by radiation, convection, and evaporation \cite{dolibogComparativeAnalysisHuman2022}.
-The skin temperature can be measured by various sensors. 
+Skin temperature is often used to measure body temperature.
+Skin temperature in general is the result of a dynamic equilibrium between the heat released during metabolic processes and transferred to the skin layer by thermal conduction and convection, the heat extracted from the environment, and the heat transferred to the environment by radiation, convection, and evaporation \cite{dolibogComparativeAnalysisHuman2022}.
+Various sensors are used to measure skin temperature. 
 These include the infrared sensors, but also the thermistors. 
 Both are equal for purposes of clinical electrodiagnostic readings.
 Thermistors offer better responsiveness and sensitivity in measurements.
@@ -77,6 +74,7 @@ These are divided into contact and non-contact thermometers.
 For a detailed overview, take a look at chapters \ref{Background:TemperatureSensors:OpticalTS} and \ref{Background:TemperatureSensors:ResistanceTD}.
 Body temperature is often measured in the armpit, mouth, rectum, ear, or forehead.
 The temperature in the armpit is typically $36.6^\circ C$, in the mouth $36.9^\circ C$, and $37.1^\circ C$ in the ear \cite{dolibogComparativeAnalysisHuman2022}.
+% TODO: wie siehts bei Rectal aus?
 The rectal temperature testing method is the most accurate of all measurements, while non-contact forehead thermometers are considered the least accurate, and measurements are taken with them should be confirmed by other methods.
 The minimum value of the standard error for the above methods is $0.1^\circ C$ [9].
 Ear readings are assumed to be of similar accuracy when compared to the rectal method, which is most commonly used in infants, the correct value is usually $37.1^\circ C$ \cite{dolibogComparativeAnalysisHuman2022}.
@@ -123,13 +121,13 @@ Temperature sensors are used to measure the temperature of a particular object o
 They are widely used in many applications, such as industrial, medical, or scientific contexts.
 Temperature sensors detect changes in temperature and convert this into a measurable signal.
 There are various types of temperature sensors, including contact and non-contact sensors.
-
+% Contact sensors
 Contact sensors measure temperature by maintaining physical contact with an object and measuring the temperature there.
 Contact sensors can be divided into 3 types: Thermocouples, Thermistors, and Resistance Temperature Detectors (RTDs). 
 Thermocouples measure the voltage generated by two different metals when they are exposed to different temperatures.
 RTDs measure changes in the electrical resistance of a metal wire when it has temperature changes.
 Thermistors are semiconductor devices whose electrical resistance changes with temperature.
-
+% Non-contact sensors
 Non-contact sensors, on the other hand, do not require contact with the object being measured. They are also known as infrared sensors.
 Non-contact sensors measure the emitted infrared radiation from an object and convert it into a measurable signal.
 Most often, the sensors are used when contact with an object is not desirable or practical, such as can often be useful in a medical or scientific research context. 
@@ -194,7 +192,8 @@ The most common sensors in earables include accelerometers, gyroscopes, and hear
 These sensors can be used to track the wearer's movements, monitor their heart rate, and provide other types of health data.
 Earables are portable, lightweight, and small, which allows them to be worn easily for long periods of the day \cite{roddigerSensingEarablesSystematic2022a}. 
 Thus, data can be tracked over a longer period of time. In addition, earables have the advantage of being worn on the ear, which together with the head are automatically stabilized during movements and thus have less motion disturbances and artifacts \cite{grossmanFrequencyVelocityRotational1988, kavanaghRoleNeckTrunk2006a}.
-The position on the ear brings a lot of potential. 
+% Why the position of the ear is important
+The position on the ear provides a lot of potential. 
 For one thing, the ear is very close to the brain and blood vessels, which allows accurate measurement of brain activity, cyclic blood flow, and related properties \cite{ferliniInEarPPGVital2022}.
 In addition, it is possible to detect the perception of a variety of facial, neck, and eye muscle activations \cite{andoCanalSenseFaceRelatedMovement2017}, as well as the input of head movements \cite{andoCanalSenseFaceRelatedMovement2017}, facial gestures \cite{matthiesEarFieldSensingNovelInEar2017}, mouth movements \cite{sunTeethTapRecognizingDiscrete2021a}, and instantaneous \cite{bleichnerConcealedUnobtrusiveEarCentered2017, phamWAKEBehindtheearWearable2020}. 
 Because of the ease of accessibility with the hand \cite{kikuchiEarTouchTurningEar2017, xuEarBuddyEnablingOnFace2020}, interactions with the hand on the ear can be used to trigger actions \cite{lissermannEarPutAugmentingEarworn2014}.
@@ -294,7 +293,7 @@ When the individual movement is used for authentication and identification, the 
 \label{Background:SensingWithEarables:SensingPlatforms}
 Ear-based sensing platforms have gained considerable attention in the wearable technology field due to their potential for multiple applications and benefits. 
 This chapter examines different types of ear-based sensor platforms, discusses their technical aspects and characteristics, captures their application, and examines the challenges and future directions in this field.
-One type of ear-based sensor platform is the in-ear sensor, in which sensors are placed directly in the ear canal. Examples of in-ear sensors are earphones with integrated sensors that can monitor various physiological parameters \cite{maseHearablesNewPerspectives2020}. 
+One type of ear-based sensor platform is the in-ear sensor, in which sensors are placed directly in the ear canal. Examples of in-ear sensors are earphones with integrated sensors that can monitor various physiological parameters \cite{maseHearablesNewPerspectives2020, bestbierDevelopmentVitalSigns2018, luekenPhotoplethysmographybasedInearSensor2017}. 
 Another type is the on-ear sensor, which is placed on the outer ear or earlobe. 
 These sensors can be in the form of clip-on devices or wearable ear accessories to collect specific data.
 Behind-the-ear sensors represent another category of ear-based sensor platforms \cite{phamWAKEBehindtheearWearable2020, gilSmartWirelessEarWorn2019, biWearableSensorEating2017}.
@@ -317,7 +316,12 @@ In summary, ear-based sensor platforms have emerged as promising tools in wearab
 They offer a range of applications, from health monitoring to human-computer interaction to biometric authentication. 
 By leveraging the unique properties of the ear, these platforms provide valuable insights and contribute to the advancement of wearable technology as a whole.
 
+\paragraph{Earables: Temperature Measurement}
+This has to be done
+% TODO: Do this!
+
 % OpenEarable
+\paragraph{OpenEarable Platform}
 OpenEarable is an open source Arduino-based platform for ear-based sensor applications. 
 It supports a number of sensors and actuators \cite{roddigerOpenEarableOpenHardware2022}.
 For one, a 9-axis inertial measurement unit (IMU) is connected, which can be used to read gyroscope and accelerometer. 
