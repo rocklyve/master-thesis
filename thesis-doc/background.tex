@@ -4,8 +4,11 @@
 
 \chapter{Background \& Related Work}
 \label{ch:Background}
-Section 2 geht über ... hier einleitungstext schreiben
-% TODO: do this
+This chapter first introduces important aspects of body temperature and then sensing with earables.
+For body temperature, a distinction is made between core body temperature and skin temperature. 
+In addition, the focus is on how the temperature can be measured. 
+In the subchapter on sensing with earables, the recording of data on the ear is generally introduced. 
+Here a division of Röddiger \cite{roddigerSensingEarablesSystematic2022a} is explained.
 
 \section{Body Temperature}
 \label{Background:BodyTemperature}
@@ -236,7 +239,7 @@ Due to the body temperature being the most crucial part of this thesis, this par
 \paragraph{Body temperature}
 \label{Background:SensingWithEarables:Physiological:BodyTemperature}
 Bestbier and Fourie \cite{bestbierDevelopmentVitalSigns2018} applied the principle to a wearable form factor and achieved a small mean error of only $0.02$ $\pm$ $0.52 ^\circ C$. 
-They used the TMP006 infrared sensor, which points directly at the eardrum. 
+They used the TMP006 infrared sensor, which points directly at the tympanic membrane. 
 The thermophilic voltage and the temperature sensor were made digitally available via hardware registers, from which the object temperature can be calculated. 
 This reflects the temperature of the tympanic membrane after calibration.
 However, the accuracy varies greatly between individual positions, which is attributed to the orientation of the sensor due to a wide variety of auditory canals.
@@ -338,7 +341,7 @@ The results showed that the temperature differed by about $ 1-2 ^\circ C$ from t
 In addition, the variation in measurements at the external auditory canal is also significantly larger than the variation in measurements at the tympanic membrane $ \pm 0.78-2.82 ^\circ C$ \cite{nakadaDevelopmentMethodEstimating2017a}.
 This is explained by the ambient temperature and other radiations.
 With increasing ambient temperature and reduced radiation, the difference from the comparison measurement and also the fluctuations could be minimized.
-However, the most commonly used measurement point on the ear for temperature is the eardrum. 
+However, the most commonly used measurement point on the ear for temperature is the tympanic membrane. 
 The advantages of measuring temperature at the eardrum have already been explained in chapter \ref{Background:BodyTemperature:TemperatureMeasurements}.
 Already in 2013, Boano et. al used the eardrum to measure temperature with an ear-based wearable \cite{boanoNoninvasiveMeasurementCore2013}. 
 Here, the progression of temperature during a marathon run was tracked for the complete duration.
@@ -353,16 +356,45 @@ In the end, this resulted in few dependencies among the test subjects.
 Also considered were the temperature conditions that prevailed on site. 
 After the end of the run, the temperature dropped back to normal.
 In addition to the temperature observation of the marathon run, the temperature was also observed over a whole day \cite{boanoNoninvasiveMeasurementCore2013}.
-Body temperature is significantly lower at night than during the day, even nearly $1 ^\circ C$ difference at peak.
+Body temperature is significantly lower at night than during the day, even with nearly $1 ^\circ C$ difference at peak.
 Other temperature increases were detected during eating (about $0.4 ^\circ C$) and when the outdoor temperature was $0 ^\circ C$ during walking.
-
-% TODO: die hier noch machen!
-% \cite{bestbierDevelopmentVitalSigns2018}
-% \cite{luekenPhotoplethysmographybasedInearSensor2017}
-% \cite{matsumotoEarbudtypeWearableHearable2019}
-% \cite{chagllae.MeasurementCoreBody2018}
-% \cite{chenInearThermometerWearable2020}
-
+Another work that looks at measuring the temperature at the tympanic membrane was Bestbier in 2018 \cite{bestbierDevelopmentVitalSigns2018}.
+Bestbier has developed a wearable that uses a self-built device on the ear to measure temperature with an infrared sensor (TMP006) pointed at the tympanic membrane.
+The rest of the components were attached to a headband, such as the battery and also the computing units.
+Accuracy varies significantly from person to person due to different ear canals.
+However, Bestbier has solved this with an in-person calibration by having the sensor self-calibrate.
+This improves the standard error by $56\%$ from $0.5125 ^\circ C$ to $0.29 ^\circ C$. The interclass correlation coefficient (ICC) also improves from $0.4667$ to $0.8684$.
+Lueken designed an earplug in 2017 that also measures temperature using an infrared sensor on the eardrum \cite{luekenPhotoplethysmographybasedInearSensor2017}.
+In addition to temperature, ACC and PPG were also measured.
+However, the ACC signal was used to optimize the PPG signal rather than the temperature signal. 
+This is to make the signal resistant to head motion.
+Lueken integrated TI's TMP007 into his system to obtain information about variations in human core temperature. 
+Here, the temperature was recorded at $33 Hz$.
+For individual calibration purposes, the voltage difference between the thermopile element and the chip temperature was recorded in addition to the acquired object temperature.
+In another study in 2018, Chaglla E. et. al looked at developing a novel sensor to measure core body temperature \cite{chagllae.MeasurementCoreBody2018}. 
+The sensor is based on a graphene-inked infrared thermopile sensor positioned on the eardrum. 
+The graphene coating on the active surface of the sensor improves sensitivity and performance. 
+The measurement principle is based on the acquisition of electrical signals from the sensor.
+Two different studies were conducted in this regard. 
+In addition to a laboratory study, a field study with physical activity was also conducted.
+In the laboratory study, seated and resting test subjects were examined over a period of 10 minutes at intervals of 60 seconds using a total of four different devices. 
+The in-house device with the graphene-inked thermopile sensor and an infrared drum thermometer (IRTT) ThermoScan 7 Age Precision-IRT6520 (Braun GmbH, Kronberg, Germany) were referenced.
+In the field study, a 26-year-old man was examined during activity on a cross-trainer in an outdoor gym. The measurements lasted 25 minutes and took place on a cloudy day at a temperature of 21 degrees Celsius. 
+Additionally, the temperature information of the cross trainer was recorded as well, the Cosinuss One (Cosinuss GmbH, Munich, Germany) was used for this purpose.
+The results showed that the graphene-inked thermopile sensor measurements provided better results than the Cosinuss One \cite{chagllae.MeasurementCoreBody2018}. 
+The latter seemed to be more sensitive to external parameters. 
+It was noted that the sensors were very comfortable during wear. 
+In addition, it was observed that the sensors required a calibration period at the beginning and provided relevant measurement results after about 8 minutes. 
+However, in the laboratory study, the measurements were taken only for a period of 10 minutes.
+In another work, the temperature at the ear was also measured in 2020 \cite{chenInearThermometerWearable2020}.
+Here, an infrared sensor also recorded the temperature. 
+The focus of this work was to design a wearable device that can be worn over a longer period of time. 
+Here the focus was on size, weight, and battery life.
+An app was also developed to transfer the data.
+The ground truth is a conventional thermometer on the ear.
+During activities, the results were 0.15 degrees below those of the ground truth, but this is explained by the presence of sweat.
+The range of error was $\pm 0.16 ^\circ C$.
+The correlation is $0.9438$, and the average accuracy $99\%$.
 
 % OpenEarable
 \paragraph{OpenEarable Platform}
