@@ -2,8 +2,11 @@
 
 - TITUS: 
 	- helps me with temperature sensors
+	- tried to fix wrong sensor, but without success, maybe pcb design is wrong
 - DYLAN: 
 	- helps me with SD_Logger and temperature sensors
+	- SD_Logger -> success
+	- Temp-sensors -> Failure
 
 Temperature sensors:
 - defect sensor 4 (Titus and I looked at it, without success)
@@ -15,10 +18,13 @@ SD_Logging:
 
 3D Prints:
 - AirPods design ready
-- 3d Back case is ready as well
+- 3d Back case is ready
 
 
 ### TODO:
 
 Finalize everything
+
+
+### Questions: What to do with PCB?
 
