@@ -92,36 +92,28 @@ void loop() {
     
     // now save to SD card
     unsigned int timestamp = millis();
+    
+    // print data
     Serial.print("Data: ");
-    Serial.print(data[1]);
-    Serial.print(", ");
-    Serial.print(data[2]);
-    Serial.print(", ");
-    Serial.print(data[3]);
-    Serial.print(", ");
-    Serial.print(data[4]);
-    Serial.print(", ");
-    Serial.println(data[5]);
+    for (int i = 1; i <= 5; i++) {
+      Serial.print(data[i]);
+      if (i != 5) {
+        Serial.print(", ");
+      }
+    }
+    Serial.println();
+
     Serial.print("IMU [");
-    Serial.print(data[6]);
-    Serial.print(", ");
-    Serial.print(data[7]);
-    Serial.print(", ");
-    Serial.print(data[8]);
-    Serial.print(", ");
-    Serial.print(data[9]);
-    Serial.print(", ");
-    Serial.print(data[10]);
-    Serial.print(", ");
-    Serial.print(data[11]);
-    Serial.print(", ");
-    Serial.print(data[12]);
-    Serial.print(", ");
-    Serial.print(data[13]);
-    Serial.print(", ");
-    Serial.print(data[14]);
+    for (int i = 6; i <= 14; i++) {
+      Serial.print(data[i]);
+      if (i != 14) {
+        Serial.print(", ");
+      }
+    }
     Serial.println("]");
     Serial.println("");
+    
+    // save data
     logger->data_callback(1, timestamp, (uint8_t*) data);
   }
 }
