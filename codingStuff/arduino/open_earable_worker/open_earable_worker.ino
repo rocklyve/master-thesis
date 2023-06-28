@@ -9,14 +9,15 @@ Protocentral_MLX90632 mlx[5];
 const uint8_t MLX_CHANNELS[] = {0, 1, 2, 4, 5};
 
 bool isDebugMode = false;
-unsigned long buttonPressTime = 0;
-const int debounceDelay = 50; // Debounce delay in milliseconds
 const int buttonPin = 5; // Button pin connected to D5
 
-volatile bool buttonPressedFlag = false; // Volatile flag used in the interrupt routine
+volatile bool stopMeasurementButtonPressedFlag = false; // Volatile flag used in the interrupt routine
 
 SD_Logger *logger;
 IMU_Sensor imu;
+
+const unsigned long doubleClickTimeframe = 2000;  // Timeframe for double click in milliseconds
+unsigned long lastButtonPressTime = 0;  // Stores the timestamp of the last button press
 
 /*****************************************  setup() *************************************************/
 void setup() {
@@ -25,8 +26,8 @@ void setup() {
 
   pinMode(buttonPin, INPUT_PULLUP); // Set button pin as input with internal pull-up resistor
 
-  // Attach interrupt to the button pin, trigger on CHANGE (both rising and falling edges)
-  attachInterrupt(digitalPinToInterrupt(buttonPin), buttonPressed, CHANGE);
+  // Attach interrupt to the button pin, trigger on FALLING edge
+  attachInterrupt(digitalPinToInterrupt(buttonPin), buttonPressed, FALLING);
 
   // WIRE SETUP
   Wire.begin();
@@ -63,18 +64,13 @@ void loop() {
   int data[amount_of_data_columns + 1];
   data[0] = amount_of_data_columns;  // Number of data elements
 
-  if (buttonPressedFlag) {
-    // Check if button was pressed twice within 2 seconds
-    if (millis() - buttonPressTime < 2000) {
-      unsigned int timestamp = millis();
-      logger->data_callback(-1, timestamp, nullptr);
-      // Logging the data
-      logger->end();
-      Serial.println("Pressed stop, now finished");
-      while (true);
-    } else {
-      buttonPressedFlag = false; // Reset the flag if not meeting the conditions
-    }
+  if (stopMeasurementButtonPressedFlag) {
+    unsigned int timestamp = millis();
+    logger->data_callback(-1, timestamp, nullptr);
+    // Logging the data
+    logger->end();
+    Serial.println("Pressed stop, now finished");
+    while (true);
   }
 
   // Get the current timestamp
@@ -134,9 +130,15 @@ void loop() {
 
 /*****************************************  Button Interrupt Handling *************************************************/
 void buttonPressed() {
-  // Debounce the button
-  if (millis() - buttonPressTime > debounceDelay) {
-    buttonPressTime = millis();
-    buttonPressedFlag = true;
+  unsigned long currentButtonPressTime = millis();  // Current timestamp of the button press
+
+  // Check if the time between the current and last button press is within the double click timeframe (2 seconds)
+  if (currentButtonPressTime - lastButtonPressTime < doubleClickTimeframe) {
+    // Double click detected within the timeframe
+    stopMeasurementButtonPressedFlag = true;  // Set the flag to indicate a double click
+    lastButtonPressTime = 0;  // Reset the last button press time
+  } else {
+    // Single click detected, record the current button press time
+    lastButtonPressTime = currentButtonPressTime;
   }
 }
