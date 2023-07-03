@@ -629,22 +629,33 @@ MLX90632::status MLX90632::writeRegister16(uint16_t addr, uint16_t val)
 //the sensor is recording the new EEPROM.
 void MLX90632::writeEEPROM(uint16_t addr, uint16_t val)
 {
-  Serial.println("[writeEEPROM func]: write EEPROM start");
+  bool debugEnabled = false;
+  if (debugEnabled) {
+    Serial.println("[writeEEPROM func]: write EEPROM start");
+  }
   //Put device into halt mode (page 15)
   uint8_t originalMode = getMode();
   setMode(MODE_SLEEP);
 
-  Serial.print("[writeEEPROM func]: Now in mode sleep with previous mode: ");
-  Serial.print(originalMode);
-  Serial.println(getMode());
+  if (debugEnabled) { 
+    Serial.print("[writeEEPROM func]: Now in mode sleep with previous mode: ");
+    Serial.print(originalMode);
+    Serial.println(getMode());
+  } 
 
   //Wait for complete
   // while (deviceBusy()) delay(1);
 
-  Serial.println("[writeEEPROM func]: wait for complete");
+  if (debugEnabled) {
+    Serial.println("[writeEEPROM func]: wait for complete");
+  }
+  
   //Magic unlock (page 17)
   writeRegister16(0x3005, 0x554C);
-  Serial.println("[writeEEPROM func]: wrote register with magic unlock");
+  if (debugEnabled) {
+    Serial.println("[writeEEPROM func]: wrote register with magic unlock");
+  }
+  
 
   //Wait for complete
   delay(100);
@@ -652,7 +663,9 @@ void MLX90632::writeEEPROM(uint16_t addr, uint16_t val)
   //Now we can write to one EEPROM word
   //Write 0x0000 to user's location (page 16) to erase
   writeRegister16(addr, 0x0000);
-  Serial.println("[writeEEPROM func]: wrote 0x00 to the addr.");
+  if (debugEnabled) {
+    Serial.println("[writeEEPROM func]: wrote 0x00 to the addr.");
+  }
 
   //Wait for complete
   delay(100);
@@ -661,14 +674,18 @@ void MLX90632::writeEEPROM(uint16_t addr, uint16_t val)
 
   //Magic unlock again
   writeRegister16(0x3005, 0x554C);
-  Serial.println("[writeEEPROM func]: wrote register with magic unlock");
+  if (debugEnabled) {
+    Serial.println("[writeEEPROM func]: wrote register with magic unlock");
+  }
 
   //Wait for complete
   delay(100);
 
   //Now we can write to one EEPROM word
   writeRegister16(addr, val);
-  Serial.println("[writeEEPROM func]: actural write");
+  if (debugEnabled) {
+    Serial.println("[writeEEPROM func]: actural write");
+  }
 
   //Wait for complete
   delay(100);
@@ -677,6 +694,8 @@ void MLX90632::writeEEPROM(uint16_t addr, uint16_t val)
 
   //Return to original mode
   setMode(originalMode);
-  Serial.println("[writeEEPROM func]: set mode back to original");
+  if (debugEnabled) {
+    Serial.println("[writeEEPROM func]: set mode back to original");
+  }
 }
 

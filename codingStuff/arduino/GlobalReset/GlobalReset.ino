@@ -11,31 +11,13 @@ const uint16_t EE_MEAS_1_ADDR = 0x24E1;
 const uint16_t EE_MEAS_1_32HZ_VALUE = 0x860D;
 const uint16_t EE_MEAS_2_ADDR = 0x24E2;
 const uint16_t EE_MEAS_2_32HZ_VALUE = 0x861D;
-const uint16_t REFRESH_RATE_VALUE = 6; // Value for 32Hz refresh rate
-
-const uint16_t GLOBAL_TMP_SENSOR_RESET_ADDRESS = 0x0000;
-const uint16_t GLOBAL_TMP_SENSOR_RESET_VALUE   = 0x0000;
-
-const uint16_t TMP_SENSOR_ADDRESS = 0x0000;
-const uint16_t TMP_SENSOR_VALUE   = 0x0000;
 
 bool isDebugMode = false;
-const int buttonPin = 5; // Button pin connected to D5
-
-volatile bool stopMeasurementButtonPressedFlag = false; // Volatile flag used in the interrupt routine
-
-const unsigned long doubleClickTimeframe = 2000;  // Timeframe for double click in milliseconds
-unsigned long lastButtonPressTime = 0;
 
 /*****************************************  setup() *************************************************/
 void setup() {
   Serial.begin(9600);
   while (!Serial) {};
-
-  // pinMode(buttonPin, INPUT_PULLUP); // Set button pin as input with internal pull-up resistor
-
-  // Attach interrupt to the button pin, trigger on FALLING edge
-  // attachInterrupt(digitalPinToInterrupt(buttonPin), buttonPressed, FALLING);
 
   // WIRE SETUP
   Wire.begin();
@@ -55,85 +37,92 @@ void setup() {
       Serial.println(" not found. Check wiring or address.");
     } else {
       if (i == 1) {
-
-      
-      mlx[i].enableDebugging(Serial);
-        // Serial.println("Now make global reset");
-        // Wire.beginTransmission(GLOBAL_TMP_SENSOR_RESET_ADDRESS);
-        // Wire.write(GLOBAL_TMP_SENSOR_RESET_VALUE);
-        // delay(1000);
-        // uint8_t transmissionResult = Wire.endTransmission();
-
-        // Serial.print("Transmission Result: ");
-        // Serial.println(transmissionResult);
-
-        // ********************* write EE_MEAS_1 *************************************
-
-        //readRegister16 returns a status value not the value found at the memory location
-        //We have to pass in a container for readRegister to store the data into
-        uint16_t valueInMemory; //Create a container
-        mlx[i].readRegister16(EE_MEAS_1_ADDR, valueInMemory);
-        Serial.print("Value stored in EE_MEAS_1_ADDR: 0x");
-        Serial.println(valueInMemory, HEX);
-
-        //Write a new value to EE_MEAS_1_ADDR register.
-        mlx[i].writeRegister16(0x0000, 0x0000);
-        delay(1000);
-
-        mlx[i].readRegister16(EE_MEAS_1_ADDR, valueInMemory);
-        Serial.print("New value stored in EE_MEAS_1_ADDR (should be 0x860D): 0x");
-        Serial.println(valueInMemory, HEX);
-
-
-        // ********************* write EE_MEAS_2 *************************************
-
-
-        uint16_t valueInMemory2; //Create a container
-        mlx[i].readRegister16(EE_MEAS_2_ADDR, valueInMemory);
-        Serial.print("Value stored in EE_MEAS_2_ADDR: 0x");
-        Serial.println(valueInMemory2, HEX);
-
-        //Write a new value to EE_MEAS_2_ADDR register.
-        mlx[i].writeRegister16(0x0000, 0x0000);
-        delay(1000);
-
-        mlx[i].readRegister16(EE_MEAS_2_ADDR, valueInMemory2);
-        Serial.print("New value stored in EE_MEAS_2_ADDR (should be 0x861D): 0x");
-        Serial.println(valueInMemory2, HEX);
-
-        Serial.println("Done");
+        readEEPROM(mlx[i]);
+        // sendAddressedReset(mlx[i]);
+        // sendGlobalReset(mlx[i]);
+        // writeEEPROM(mlx[i]);
+        readEEPROM(mlx[i]);
+      }
     }
-    }
+  }
+}
+
+void writeEEPROM(MLX90632 &sensor) {
+  // ********************* write EE_MEAS_1 *************************************
+  sensor.writeEEPROM(EE_MEAS_1_ADDR, EE_MEAS_1_32HZ_VALUE);
+  delay(100);
+
+  // ********************* write EE_MEAS_2 *************************************
+  sensor.writeEEPROM(EE_MEAS_2_ADDR, EE_MEAS_2_32HZ_VALUE);
+  delay(100);
+}
+
+void readEEPROM(MLX90632 &sensor) {
+  uint8_t originalMode = sensor.getMode();
+  sensor.setMode(MODE_SLEEP);
+
+  sensor.enableDebugging(Serial);
+
+  // ********************* write EE_MEAS_1 *************************************
+  uint16_t valueInMemory; //Create a container
+  sensor.readRegister16(EE_MEAS_1_ADDR, valueInMemory);
+  Serial.print("Value stored in EE_MEAS_1_ADDR: 0x");
+  Serial.println(valueInMemory, HEX);
+  delay(100);
+
+  // ********************* write EE_MEAS_2 *************************************
+  uint16_t valueInMemory2; //Create a container
+  sensor.readRegister16(EE_MEAS_2_ADDR, valueInMemory2);
+  Serial.print("Value stored in EE_MEAS_2_ADDR: 0x");
+  Serial.println(valueInMemory2, HEX);
+  delay(100);
+
+  sensor.setMode(originalMode);
+}
+
+void sendGlobalReset(MLX90632 &sensor) {
+  uint8_t originalMode = sensor.getMode();
+  sensor.setMode(MODE_SLEEP);
+
+  sendAddressedSignal(0x00, 0x00);
+  sendAddressedSignal(0x00, 0x06);
+  Serial.println("Addressed reset send successfully");
+  
+  sensor.setMode(originalMode);
+}
+
+void sendAddressedReset(MLX90632 &sensor) {
+  uint8_t originalMode = sensor.getMode();
+  sensor.setMode(MODE_SLEEP);
+
+  sendAddressedSignal(0x3A, 0x3A);
+  sendAddressedSignal(0x3A, 0x30);
+  sendAddressedSignal(0x3A, 0x05);
+  sendAddressedSignal(0x3A, 0x00);
+  sendAddressedSignal(0x3A, 0x06);
+  
+  sensor.setMode(originalMode);
+  Serial.println("Addressed reset send successfully");
+}
+
+void sendAddressedSignal(uint8_t address, uint8_t value) {
+  Wire.beginTransmission(address);
+  Wire.write(value);
+  
+  // Check if the device is available at the address
+  uint8_t deviceStatus = Wire.requestFrom(address, (uint8_t)1);
+  if (deviceStatus == 0) {
+    Serial.println("Device not found at the specified address.");
+    return;
+  }
+  
+  uint8_t transmissionStatus = Wire.endTransmission();
+  if (transmissionStatus != 0) {
+    Serial.print("Error sending addressed signal. Status: ");
+    Serial.println(transmissionStatus);
   }
 }
 
 /*****************************************  loop() *************************************************/
 void loop() {
-  // int amount_of_data_columns = 5; 
-  // int data[amount_of_data_columns + 1];
-  // data[0] = amount_of_data_columns;  // Number of data elements
-
-  // if (stopMeasurementButtonPressedFlag) {
-  //   unsigned int timestamp = millis();
-  //   Serial.println("Pressed stop, now finished");
-  //   while (true);
-  // }
-
-  // // Get the current timestamp
-  // for (uint8_t i = 0; i < 5; i++) {
-  //   mux.closeAll();
-  //   mux.openChannel(MLX_CHANNELS[i]);
-
-  //   data[i + 1] = mlx[i].getObjectTemp() * 100;
-  // }
-
-  // // print data
-  // Serial.print("Data: ");
-  // for (int i = 1; i <= 5; i++) {
-  //   Serial.print(data[i]);
-  //   if (i != 5) {
-  //     Serial.print(", ");
-  //   }
-  // }
-  // Serial.println();
 }

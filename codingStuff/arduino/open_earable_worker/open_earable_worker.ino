@@ -28,8 +28,8 @@ unsigned long lastButtonPressTime = 0;  // Stores the timestamp of the last butt
 
 // Function prototypes
 void setupSensors();
+void setupButtonInterrupt();
 void initializeMLXSensor(Protocentral_MLX90632 &sensor, uint8_t index);
-void configureRefreshRate(Protocentral_MLX90632 &sensor, uint8_t index);
 void initializeIMU();
 void readSensorData(int data[]);
 void saveDataToSDCard(int data[]);
@@ -41,12 +41,7 @@ void setup() {
   Serial.begin(9600);
   while (!Serial) {};
 
-  pinMode(buttonPin, INPUT_PULLUP); // Set button pin as input with internal pull-up resistor
-
-  // Attach interrupt to the button pin, trigger on FALLING edge
-  attachInterrupt(digitalPinToInterrupt(buttonPin), buttonPressed, FALLING);
-
-  // WIRE SETUP  
+  setupButtonInterrupt();
   initializeIMU();
   setupSensors();
 
@@ -107,6 +102,11 @@ void setupSensors() {
   for (uint8_t i = 0; i < 5; i++) {
     initializeMLXSensor(mlx[i], i);
   }
+}
+
+void setupButtonInterrupt() {
+  pinMode(buttonPin, INPUT_PULLUP); // Set button pin as input with internal pull-up resistor
+  attachInterrupt(digitalPinToInterrupt(buttonPin), buttonPressed, FALLING); // Attach interrupt to the button pin, trigger on FALLING edge
 }
 
 void initializeMLXSensor(Protocentral_MLX90632 &sensor, uint8_t index) {
