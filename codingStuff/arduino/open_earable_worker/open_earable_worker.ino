@@ -53,63 +53,6 @@ void setup() {
       Serial.print("Sensor ");
       Serial.print(i);
       Serial.println(" not found. Check wiring or address.");
-    } else {
-      uint16_t registerAddr1 = EE_MEAS_1_ADDR;  // Address of the register to read
-      uint16_t registerValue1;
-      Protocentral_MLX90632::status statusRead1 = mlx[i].readRegister16(registerAddr1, registerValue1);
-      uint16_t registerAddr2 = EE_MEAS_2_ADDR;  // Address of the register to read
-      uint16_t registerValue2; 
-      Protocentral_MLX90632::status statusRead2 = mlx[i].readRegister16(registerAddr2, registerValue2);
-      if (statusRead1 == Protocentral_MLX90632::SENSOR_SUCCESS && statusRead2 == Protocentral_MLX90632::SENSOR_SUCCESS) {
-        if (registerValue1 == 0x860D && registerValue2 == 0x861D) {
-          Serial.println("Both registers already correct, return!");
-        } else {
-          // mlx[i].setMode(2);
-          // uint8_t mode = mlx[i].getMode();
-          // Serial.print("Mode should be changed to 2, now it's: ");
-          // Serial.println(mode);
-          // Set the refresh rate for the first measurement
-
-          // Erase the specific EEPROM address location
-          Protocentral_MLX90632::status eraseStatus1 = mlx[i].writeRegister16(EE_MEAS_1_ADDR, 0x0000);
-          Protocentral_MLX90632::status eraseStatus2 = mlx[i].writeRegister16(EE_MEAS_2_ADDR, 0x0000);
-
-          // Check if erasing the EEPROM addresses was successful
-          if (eraseStatus1 == Protocentral_MLX90632::SENSOR_SUCCESS && eraseStatus2 == Protocentral_MLX90632::SENSOR_SUCCESS) {
-            // Set the refresh rate for the first measurement
-            Protocentral_MLX90632::status status1 = mlx[i].writeRegister16(EE_MEAS_1_ADDR, EE_MEAS_1_32HZ_VALUE);
-
-            // Set the refresh rate for the second measurement
-            Protocentral_MLX90632::status status2 = mlx[i].writeRegister16(EE_MEAS_2_ADDR, EE_MEAS_2_32HZ_VALUE);
-
-            // Check if both register writes were successful
-            if (status1 == Protocentral_MLX90632::SENSOR_SUCCESS && status2 == Protocentral_MLX90632::SENSOR_SUCCESS) {
-              Serial.print("Refresh rate set successfully for sensor ");
-              Serial.println(i);
-            } else {
-              Serial.print("Error setting refresh rate for sensor ");
-              Serial.println(i);
-            }
-          } else {
-            Serial.print("Error erasing EEPROM addresses for sensor ");
-            Serial.println(i);
-          }
-
-          uint16_t registerAddr = EE_MEAS_1_ADDR;  // Address of the register to read
-
-          uint16_t registerValue;  // Variable to store the read register value
-          Protocentral_MLX90632::status statusRead = mlx[i].readRegister16(registerAddr, registerValue);
-
-          if (statusRead == Protocentral_MLX90632::SENSOR_SUCCESS) {
-            Serial.print("Register value at address 0x");
-            Serial.print(registerAddr, HEX);
-            Serial.print(": 0x");
-            Serial.println(registerValue, HEX);
-          } else {
-            Serial.println("Error reading register.");
-          }
-        }
-      }
     }
   }
 
