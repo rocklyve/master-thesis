@@ -26,6 +26,16 @@ IMU_Sensor imu;
 const unsigned long doubleClickTimeframe = 2000;  // Timeframe for double click in milliseconds
 unsigned long lastButtonPressTime = 0;  // Stores the timestamp of the last button press
 
+// Function prototypes
+void setupSensors();
+void initializeMLXSensor(Protocentral_MLX90632 &sensor, uint8_t index);
+void configureRefreshRate(Protocentral_MLX90632 &sensor, uint8_t index);
+void initializeIMU();
+void readSensorData(int data[]);
+void saveDataToSDCard(int data[]);
+void checkButtonPress();
+void handleButtonPress();
+
 /*****************************************  setup() *************************************************/
 void setup() {
   Serial.begin(9600);
@@ -36,25 +46,9 @@ void setup() {
   // Attach interrupt to the button pin, trigger on FALLING edge
   attachInterrupt(digitalPinToInterrupt(buttonPin), buttonPressed, FALLING);
 
-  // WIRE SETUP
-  Wire.begin();
-  Wire.setClock(400000);
-  // Initialize the multiplexer
-  mux.begin();
-  imu.start();
-
-  // Select the multiplexer channel for each sensor
-  for (uint8_t i = 0; i < 5; i++) {
-    mux.closeAll();
-    mux.openChannel(MLX_CHANNELS[i]);
-
-    // Initialize the sensor on the selected channel
-    if (!mlx[i].begin()) {
-      Serial.print("Sensor ");
-      Serial.print(i);
-      Serial.println(" not found. Check wiring or address.");
-    }
-  }
+  // WIRE SETUP  
+  initializeIMU();
+  setupSensors();
 
   logger = new SD_Logger();
   // logger->set_name("data.csv");  // Set the name of the log file
@@ -73,15 +67,65 @@ void loop() {
   data[0] = amount_of_data_columns;  // Number of data elements
 
   if (stopMeasurementButtonPressedFlag) {
-    unsigned int timestamp = millis();
-    logger->data_callback(-1, timestamp, nullptr);
+    saveDataToSDCard(data, -1);
     // Logging the data
     logger->end();
     Serial.println("Pressed stop, now finished");
     while (true);
   }
+  checkButtonPress(); 
+  readSensorData(data);
+  saveDataToSDCard(data, 1);
 
-  // Get the current timestamp
+  // print data
+  Serial.print("Data: ");
+  for (int i = 1; i <= 5; i++) {
+    Serial.print(data[i]);
+    if (i != 5) {
+      Serial.print(", ");
+    }
+  }
+  Serial.println();
+
+  Serial.print("IMU [");
+  for (int i = 6; i <= 14; i++) {
+    Serial.print(data[i]);
+    if (i != 14) {
+      Serial.print(", ");
+    }
+  }
+  Serial.println("]");
+  Serial.println("");
+}
+
+void setupSensors() {
+  Wire.begin();
+  Wire.setClock(400000);
+  // Initialize the multiplexer
+  mux.begin();
+  // Initialize MLX sensors...
+  for (uint8_t i = 0; i < 5; i++) {
+    initializeMLXSensor(mlx[i], i);
+  }
+}
+
+void initializeMLXSensor(Protocentral_MLX90632 &sensor, uint8_t index) {
+  mux.closeAll();
+  mux.openChannel(MLX_CHANNELS[index]);
+
+  if (!sensor.begin()) {
+    Serial.print("Sensor ");
+    Serial.print(index);
+    Serial.println(" not found. Check wiring or address.");
+  }
+}
+
+void initializeIMU() {
+  imu.start();
+}
+
+void readSensorData(int data[]) {
+  // Read MLX sensor data...
   for (uint8_t i = 0; i < 5; i++) {
     mux.closeAll();
     mux.openChannel(MLX_CHANNELS[i]);
@@ -108,45 +152,36 @@ void loop() {
   data[12] = magX * 100;
   data[13] = magY * 100;
   data[14] = magZ * 100;
-
-  // now save to SD card
-  unsigned int timestamp = millis();
-
-  // print data
-  Serial.print("Data: ");
-  for (int i = 1; i <= 5; i++) {
-    Serial.print(data[i]);
-    if (i != 5) {
-      Serial.print(", ");
-    }
-  }
-  Serial.println();
-
-  Serial.print("IMU [");
-  for (int i = 6; i <= 14; i++) {
-    Serial.print(data[i]);
-    if (i != 14) {
-      Serial.print(", ");
-    }
-  }
-  Serial.println("]");
-  Serial.println("");
-
-  // save data
-  logger->data_callback(1, timestamp, (uint8_t*) data);
 }
 
-/*****************************************  Button Interrupt Handling *************************************************/
-void buttonPressed() {
-  unsigned long currentButtonPressTime = millis();  // Current timestamp of the button press
+void saveDataToSDCard(int data[], int id) {
+  unsigned int timestamp = millis();
+  logger->data_callback(id, timestamp, (uint8_t*) data);
+}
 
-  // Check if the time between the current and last button press is within the double click timeframe (2 seconds)
+void checkButtonPress() {
+  if (stopMeasurementButtonPressedFlag) {
+    handleButtonPress();
+  }
+}
+
+void handleButtonPress() {
+  unsigned int timestamp = millis();
+  logger->data_callback(-1, timestamp, nullptr);
+  // Logging the data
+
+  logger->end();
+  Serial.println("Pressed stop, now finished");
+  while (true);
+}
+
+void buttonPressed() {
+  unsigned long currentButtonPressTime = millis();
+
   if (currentButtonPressTime - lastButtonPressTime < doubleClickTimeframe) {
-    // Double click detected within the timeframe
-    stopMeasurementButtonPressedFlag = true;  // Set the flag to indicate a double click
-    lastButtonPressTime = 0;  // Reset the last button press time
+    stopMeasurementButtonPressedFlag = true;
+    lastButtonPressTime = 0;
   } else {
-    // Single click detected, record the current button press time
     lastButtonPressTime = currentButtonPressTime;
   }
 }
