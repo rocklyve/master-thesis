@@ -645,6 +645,7 @@ void MLX90632::writeEEPROM(uint16_t addr, uint16_t val)
 
   //Wait for complete
   // while (deviceBusy()) delay(1);
+  delay(200);
 
   if (debugEnabled) {
     Serial.println("[writeEEPROM func]: wait for complete");

@@ -38,23 +38,43 @@ void setup() {
     } else {
       if (i == 1) {
         readEEPROM(mlx[i]);
+        
+        readMemoryMap(mlx[i]);
+        
         // sendAddressedReset(mlx[i]);
         // sendGlobalReset(mlx[i]);
+        
+        // readMemoryMap(mlx[i]);
         // writeEEPROM(mlx[i]);
+        
         readEEPROM(mlx[i]);
       }
     }
   }
 }
 
+void readMemoryMap(MLX90632 &sensor) {
+  Serial.println();
+  Serial.println(readValueFromRegister(sensor, EE_Ha, "EE_Ha"));
+  Serial.println(readValueFromRegister(sensor, EE_Hb, "EE_Hb"));
+  Serial.println(readValueFromRegister(sensor, EE_CONTROL, "EE_CONTROL"));
+  Serial.println(readValueFromRegister(sensor, EE_I2C_ADDRESS, "EE_I2C_ADDRESS"));
+  Serial.println(readValueFromRegister(sensor, EE_MEAS_1_ADDR, "EE_MEAS_1"));
+  Serial.println(readValueFromRegister(sensor, EE_MEAS_2_ADDR, "EE_MEAS_2"));
+  Serial.println(readValueFromRegister(sensor, REG_I2C_ADDRESS, "REG_I2C_ADDRESS"));
+  Serial.println(readValueFromRegister(sensor, REG_STATUS, "REG_STATUS"));
+  Serial.println(readValueFromRegister(sensor, REG_CONTROL, "REG_CONTROL"));
+  Serial.println();
+}
+
 void writeEEPROM(MLX90632 &sensor) {
   // ********************* write EE_MEAS_1 *************************************
   sensor.writeEEPROM(EE_MEAS_1_ADDR, EE_MEAS_1_32HZ_VALUE);
-  delay(100);
+  delay(1000);
 
   // ********************* write EE_MEAS_2 *************************************
   sensor.writeEEPROM(EE_MEAS_2_ADDR, EE_MEAS_2_32HZ_VALUE);
-  delay(100);
+  delay(1000);
 }
 
 void readEEPROM(MLX90632 &sensor) {
@@ -80,6 +100,15 @@ void readEEPROM(MLX90632 &sensor) {
   sensor.setMode(originalMode);
 }
 
+String readValueFromRegister(MLX90632 &sensor, uint16_t address, String name) {
+  uint16_t valueInMemory;
+  sensor.readRegister16(address, valueInMemory);
+  String result = "address 0x" + String(address, HEX) + ": 0x" + String(valueInMemory, HEX) + ", Name: " + name;
+  delay(100);
+
+  return result;
+}
+
 void sendGlobalReset(MLX90632 &sensor) {
   uint8_t originalMode = sensor.getMode();
   sensor.setMode(MODE_SLEEP);
@@ -95,11 +124,13 @@ void sendAddressedReset(MLX90632 &sensor) {
   uint8_t originalMode = sensor.getMode();
   sensor.setMode(MODE_SLEEP);
 
-  sendAddressedSignal(0x3A, 0x3A);
-  sendAddressedSignal(0x3A, 0x30);
-  sendAddressedSignal(0x3A, 0x05);
-  sendAddressedSignal(0x3A, 0x00);
-  sendAddressedSignal(0x3A, 0x06);
+  sensor.writeRegister16(0x3005, 0x0006);
+  delay(200);
+  // sendAddressedSignal(0x3A, 0x3A);
+  // sendAddressedSignal(0x3A, 0x30);
+  // sendAddressedSignal(0x3A, 0x05);
+  // sendAddressedSignal(0x3A, 0x00);
+  // sendAddressedSignal(0x3A, 0x06);
   
   sensor.setMode(originalMode);
   Serial.println("Addressed reset send successfully");
