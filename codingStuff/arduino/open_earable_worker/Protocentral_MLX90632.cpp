@@ -313,10 +313,19 @@ Protocentral_MLX90632::status Protocentral_MLX90632::readRegister16(uint16_t add
   _i2cPort->write(addr >> 8); 
   _i2cPort->write(addr & 0xFF); 
   //_i2cPort->endTransmission(false); 
-  if (_i2cPort->endTransmission(false) != 0) 
+  uint8_t transmissionResult = _i2cPort->endTransmission(false);
+  if (transmissionResult != 0) 
   {
     
-    if (_printDebug) _debugPort->println(F("I2C Error: End transmission"));
+    if (_printDebug) {
+      _debugPort->print(F("I2C Error: End transmission on register 0x"));
+      _debugPort->print(addr, HEX);
+      _debugPort->print(F(" and _deviceAddr: 0x"));
+      _debugPort->print(_deviceAddress, HEX);
+      _debugPort->print(F(", Transmission result: "));
+      _debugPort->println(transmissionResult);
+    }
+    
     returnError = SENSOR_I2C_ERROR;
   }
 

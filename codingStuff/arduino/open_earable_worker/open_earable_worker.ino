@@ -5,7 +5,9 @@
 #include "IMU_Sensor.h"
 
 TCA9548A mux;
-Protocentral_MLX90632 mlx[5];
+
+const uint8_t amount_of_sensors = 5;
+Protocentral_MLX90632 mlx[amount_of_sensors];
 const uint8_t MLX_CHANNELS[] = {0, 1, 2, 4, 5};
 
 // Refresh rate configuration values
@@ -57,7 +59,7 @@ void setup() {
 
 /*****************************************  loop() *************************************************/
 void loop() {
-  int amount_of_data_columns = 5 + 9; 
+  int amount_of_data_columns = amount_of_sensors + 9; 
   int data[amount_of_data_columns + 1];
   data[0] = amount_of_data_columns;  // Number of data elements
 
@@ -74,9 +76,9 @@ void loop() {
 
   // print data
   Serial.print("Data: ");
-  for (int i = 1; i <= 5; i++) {
+  for (int i = 1; i <= amount_of_sensors; i++) {
     Serial.print(data[i]);
-    if (i != 5) {
+    if (i != amount_of_sensors) {
       Serial.print(", ");
     }
   }
@@ -99,7 +101,7 @@ void setupSensors() {
   // Initialize the multiplexer
   mux.begin();
   // Initialize MLX sensors...
-  for (uint8_t i = 0; i < 5; i++) {
+  for (uint8_t i = 0; i < amount_of_sensors; i++) {
     initializeMLXSensor(mlx[i], i);
   }
 }
@@ -126,7 +128,7 @@ void initializeIMU() {
 
 void readSensorData(int data[]) {
   // Read MLX sensor data...
-  for (uint8_t i = 0; i < 5; i++) {
+  for (uint8_t i = 0; i < amount_of_sensors; i++) {
     mux.closeAll();
     mux.openChannel(MLX_CHANNELS[i]);
 
