@@ -125,7 +125,7 @@ class Protocentral_MLX90632 {
     TwoWire *_i2cPort; 
     uint8_t _deviceAddress; 
 
-    Stream *_debugPort; 
-    boolean _printDebug = false; 
+    Stream *_debugPort = &Serial; 
+    boolean _printDebug = true; 
 
 };
