@@ -41,16 +41,11 @@ void setup() {
   for (uint8_t i = 0; i < 5; i++) {
     mux.closeAll();
     mux.openChannel(MLX_CHANNELS[i]);
-
-    if (i == 1) {
-// Initialize the sensor on the selected channel
     if (!mlx[i].begin()) {
       Serial.print("Sensor ");
       Serial.print(i);
       Serial.println(" not found. Check wiring or address.");
     }
-    }
-    
   }
 }
 
@@ -70,12 +65,7 @@ void loop() {
   for (uint8_t i = 0; i < 5; i++) {
     mux.closeAll();
     mux.openChannel(MLX_CHANNELS[i]);
-
-    if (i == 1) {
-      data[i + 1] = mlx[i].getObjectTemp() * 100;
-    } else {
-      data[i+1] = 390;
-    }
+    data[i + 1] = mlx[i].getObjectTemp() * 100;
   }
 
   // print data
