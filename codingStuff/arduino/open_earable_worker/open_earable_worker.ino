@@ -75,7 +75,8 @@ void loop() {
   saveDataToSDCard(data, 1);
 
   // print data
-  Serial.print("Data: ");
+  if (data[1] != -1) {
+    Serial.print("Data: ");
   for (int i = 1; i <= amount_of_sensors; i++) {
     Serial.print(data[i]);
     if (i != amount_of_sensors) {
@@ -93,6 +94,7 @@ void loop() {
   }
   Serial.println("]");
   Serial.println("");
+  }
 }
 
 void setupSensors() {
