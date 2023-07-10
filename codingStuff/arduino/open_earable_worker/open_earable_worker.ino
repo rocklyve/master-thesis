@@ -120,6 +120,8 @@ void initializeMLXSensor(Protocentral_MLX90632 &sensor, uint8_t index) {
     Serial.print(index);
     Serial.println(" not found. Check wiring or address.");
   }
+
+  sensor.pre_get_Temp();
 }
 
 void initializeIMU() {
@@ -131,11 +133,12 @@ void readSensorData(int data[]) {
   for (uint8_t i = 0; i < amount_of_sensors; i++) {
     mux.closeAll();
     mux.openChannel(MLX_CHANNELS[i]);
-
-    if (i==1 || i == 0 || i == 3 || i == 4) {
-      data[i + 1] = mlx[i].getObjectTemp() * 100;
+    
+    if (mlx[i].dataAvailable()) {
+      data[i + 1] = mlx[i].get_Temp() * 100;
+      mlx[i].pre_get_Temp();
     } else {
-      data[i + 1] = 999;
+      data[i + 1] = -1;
     }
   }
   // now store IMU data

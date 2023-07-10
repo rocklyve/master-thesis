@@ -116,12 +116,10 @@ void Protocentral_MLX90632::pre_get_Temp() {
 }
 
  float Protocentral_MLX90632::get_Temp() {
-   Protocentral_MLX90632::status returnError;
-   gatherSensorTemp(returnError);
-  if (returnError != SENSOR_SUCCESS)
-  {
-    if (_printDebug)
-    {
+  Protocentral_MLX90632::status returnError;
+  gatherSensorTemp(returnError);
+  if (returnError != SENSOR_SUCCESS){
+    if (_printDebug) {
       _debugPort->println(F("Sensor temperature not found"));
       if(returnError == SENSOR_TIMEOUT_ERROR) _debugPort->println(F("Timeout"));
     }
@@ -137,8 +135,7 @@ void Protocentral_MLX90632::pre_get_Temp() {
   readRegister16(RAM_9, (uint16_t&)nineRAM);
 
   //Object temp requires 3 iterations
-  for (uint8_t i = 0 ; i < 3 ; i++)
-  {
+  for (uint8_t i = 0 ; i < 3 ; i++) {
     double VRta = nineRAM + Gb * (sixRAM / 12.0);
 
     double AMB = (sixRAM / 12.0) / VRta * pow(2, 19);
