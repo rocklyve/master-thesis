@@ -132,7 +132,11 @@ void readSensorData(int data[]) {
     mux.closeAll();
     mux.openChannel(MLX_CHANNELS[i]);
 
-    data[i + 1] = mlx[i].getObjectTemp() * 100;
+    if (i==1 || i == 0 || i == 3 || i == 4) {
+      data[i + 1] = mlx[i].getObjectTemp() * 100;
+    } else {
+      data[i + 1] = 999;
+    }
   }
   // now store IMU data
   float accelX, accelY, accelZ;

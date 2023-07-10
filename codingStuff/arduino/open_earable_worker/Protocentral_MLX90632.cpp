@@ -109,6 +109,62 @@ boolean Protocentral_MLX90632::begin(uint8_t deviceAddress, TwoWire &wirePort, s
   return (true);
 }
 
+void Protocentral_MLX90632::pre_get_Temp() {
+  if(getMode() != MODE_CONTINUOUS) setSOC();
+
+  clearNewData();
+}
+
+ float Protocentral_MLX90632::get_Temp() {
+   Protocentral_MLX90632::status returnError;
+   gatherSensorTemp(returnError);
+  if (returnError != SENSOR_SUCCESS)
+  {
+    if (_printDebug)
+    {
+      _debugPort->println(F("Sensor temperature not found"));
+      if(returnError == SENSOR_TIMEOUT_ERROR) _debugPort->println(F("Timeout"));
+    }
+    return (0.0); //Error
+  }
+
+  int16_t lowerRAM = 0;
+  int16_t upperRAM = 0;
+
+  int16_t sixRAM;
+  readRegister16(RAM_6, (uint16_t&)sixRAM);
+  int16_t nineRAM;
+  readRegister16(RAM_9, (uint16_t&)nineRAM);
+
+  //Object temp requires 3 iterations
+  for (uint8_t i = 0 ; i < 3 ; i++)
+  {
+    double VRta = nineRAM + Gb * (sixRAM / 12.0);
+
+    double AMB = (sixRAM / 12.0) / VRta * pow(2, 19);
+
+    double sensorTemp = P_O + (AMB - P_R) / P_G + P_T * pow((AMB - P_R), 2);
+
+    float S = (float)(lowerRAM + upperRAM) / 2.0;
+    double VRto = nineRAM + Ka * (sixRAM / 12.0);
+    double Sto = (S / 12.0) / VRto * (double)pow(2, 19);
+
+    double TAdut = (AMB - Eb) / Ea + 25.0;
+
+    double ambientTempK = TAdut + 273.15;
+
+    double bigFraction = Sto / (1 * Fa * Ha * (1 + Ga * (TOdut - TO0) + Fb * (TAdut - TA0)));
+
+    double objectTemp = bigFraction + pow(ambientTempK, 4);
+    objectTemp = pow(objectTemp, 0.25); //Take 4th root
+    objectTemp = objectTemp - 273.15 - Hb;
+    TO0 = objectTemp;
+  }
+
+  return (TO0);
+ }
+
+
 float Protocentral_MLX90632::getObjectTemp()
 {
   Protocentral_MLX90632::status returnError;

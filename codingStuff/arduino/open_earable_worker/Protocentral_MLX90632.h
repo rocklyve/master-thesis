@@ -100,13 +100,17 @@ class Protocentral_MLX90632 {
 
     status readRegister32(uint16_t addr, uint32_t &outputPointer);
 
+    void pre_get_Temp();
+    bool dataAvailable();
+    float get_Temp();
+
     float getObjectTemp();
     float getObjectTemp(status &returnError);
     float getObjectTempF();
     float getSensorTemp();
     float getSensorTemp(status &returnError);
+    float gatherSensorTemp(status &returnError);
 
-    bool dataAvailable();
     void clearNewData();
     uint16_t getStatus();
     uint16_t getStatus(status &returnError);
@@ -118,14 +122,10 @@ class Protocentral_MLX90632 {
     Protocentral_MLX90632::status setSOC(); 
 
   private:
-
-    float gatherSensorTemp(status &returnError);
-
-
     TwoWire *_i2cPort; 
     uint8_t _deviceAddress; 
 
     Stream *_debugPort = &Serial; 
-    boolean _printDebug = true; 
+    boolean _printDebug = false; 
 
 };
