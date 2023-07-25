@@ -26,7 +26,7 @@ For each of the parts, the housing was printed with a 3D printer after being cre
 
 \subsubsection{Temperature measurements behind the ear}
 
-The temperature behind the ear is measured at 3 positions, as can be seen in figure \ref{TODO REF}.
+The temperature behind the ear is measured at 3 positions, as can be seen in Figure \ref{fig:design:pcb_description}.
 To position the temperature sensors at the locations, a PCB was developed that has the sensors installed at the appropriate locations. 
 The PCB is located at the very bottom directly on the case so that the sensors can measure the temperature through the locations exposed on the case.
 The sensor used requires an angle of $ 50 ^ \circ$ around itself for the temperature to be reliably measured. 
@@ -39,6 +39,13 @@ These can now be addressed and read out individually.
 The PCB also has 3 more sensors connected via the multiplexer, but they lead away from the PCB.
 Via an 8-pin connector, a cable leads a connection to the second component, the earpiece.
 Here 3 more temperature sensors are connected, which can also be addressed with the multiplexer.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=\textwidth]{thesis-doc/images/prototype/PCB_Description.png}
+    \caption{Representation of the front and back of the PCB. The multiplexer can be seen on the front, which is controlled by the OpenEarable via the 4-pin connector. The three other MLX90632 are then connected by the FlexPCB via the 8-pin connector. In addition, an LED is connected to the front, which lights up green if no short circuit is generated. The temperature sensors can be seen on the back, but only three of the five connections visible in the design are used.}
+    \label{fig:design:pcb_description}
+\end{figure}
 
 \subsubsection{Temperature measurements in the ear}
 
