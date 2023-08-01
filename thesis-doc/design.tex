@@ -41,7 +41,7 @@ The 4-pin connector is used to connect to the OpenEarable. This connection allow
 To be able to control the second component (the earpiece) via I2C later on as well, the 8-pin connector was added to establish a connection to the second component.
 Via I2C, the built-in multiplexer is addressed, with which one of the eight possible applied lines can be switched and read out. The eight possible through-connections of the multiplexer are connected to all temperature sensors, including those of the FlexPCB via the 8-pin connector.
 In addition, an LED is installed on the PCB to directly indicate a possible short circuit.
-For each temperature sensor, the signals Ground, Power (3.3V) as well as SCL (clock signal) and SDA (data transmission) are required, as shown in figure \ref{fig:design:pcb_description}. Communication with the multiplexer can be handled through the 4-pin connector.
+For each temperature sensor, the signals Ground, Power (3.3V) as well as SCL (clock signal) and SDA (data transmission) are required, as shown in Figure \ref{fig:design:pcb_description}. Communication with the multiplexer can be handled through the 4-pin connector.
 To connect the 3 temperature sensors of the FlexPCB, a total of 12 signals are required, which can be reduced somewhat. For this purpose, the ground and power signals can be used together, resulting in a total of 8 signals being transmitted.
 
 A case has now been developed around the OpenEarable and the custom-made PCB to enable a comfortable fit.
