@@ -107,9 +107,14 @@ Overall, infrared temperature sensing capabilities, accuracy, easy availability,
 \subsection{Platform: OpenEarable}
 \label{ch:Design:Prototype:OpenEarable}
 
-In chapter \ref{Background:SensingWithEarables:OpenEarable} the OpenEarable platform is described in detail. 
-Here, the interaction with the other components is focused.
-
+In Chapter \ref{Background:SensingWithEarables:OpenEarable}, the OpenEarable platform is thoroughly described, emphasizing its interaction with other components. 
+The OpenEarable was designed for rapid prototyping and exploration of novel Earable applications, and this thesis successfully utilized it as the foundation for the prototype. 
+Figure \ref{fig:design:prototype_connection} illustrates the seamless collaboration between all components. 
+Leveraging an Arduino Nano 33 BLE, the OpenEarable enables the deployment of Arduino-based software, and its connection to both the PCB and FlexPCB is facilitated via the 4-pin connector. 
+The developed software gathers data from the temperature sensors and effectively utilizes the OpenEarable's resources. 
+The study data is persistently stored on the SD card, and the study termination is triggered by a double-click on the push button.
+In summary, the OpenEarable platform proved to be a versatile and effective foundation for the prototype, enabling seamless interaction between its components and facilitating data collection from the temperature sensors. 
+By leveraging Arduino-based features and user-friendly design, OpenEarable was successfully used in this study to explore novel Earable applications and conduct the user study easily and efficiently.
 % TODO: Auch explizit die Pin belegung mit beschreiben
 
 % TODO: Grafik mit mit PCB, wie die alle connected sind über die PIN anschlüsse

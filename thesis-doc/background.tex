@@ -353,7 +353,7 @@ Also considered were the temperature conditions that prevailed on site.
 After the end of the run, the temperature dropped back to normal.
 In addition to the temperature observation of the marathon run, the temperature was also observed over a whole day \cite{boanoNoninvasiveMeasurementCore2013}.
 Body temperature is significantly lower at night than during the day, even with nearly $1 ^\circ C$ difference at peak.
-Other temperature increases were detected during eating (about $0.4 ^\circ C$) and when the outdoor temperature was $0 ^\circ C$ during walking.
+Other increases in temperature were detected during eating (about $0.4 ^\circ C$) and when the outside temperature was $0 ^\circ C$ during walking.
 Another work that looks at measuring the temperature at the tympanic membrane was Bestbier in 2018 \cite{bestbierDevelopmentVitalSigns2018}.
 Bestbier has developed a wearable that uses a self-built device on the ear to measure temperature with an infrared sensor (TMP006) pointed at the tympanic membrane.
 The rest of the components were attached to a headband, such as the battery and also the computing units.
@@ -373,14 +373,14 @@ The graphene coating on the active surface of the sensor improves sensitivity an
 The measurement principle is based on the acquisition of electrical signals from the sensor.
 Two different studies were conducted in this regard. 
 In addition to a laboratory study, a field study with physical activity was also conducted.
-In the laboratory study, seated and resting test subjects were examined over a period of 10 minutes at intervals of 60 seconds using a total of four different devices. 
+In the laboratory study, seated and resting test subjects were examined for a period of 10 minutes at 60 seconds using a total of four different devices. 
 The in-house device with the graphene-inked thermopile sensor and an infrared drum thermometer (IRTT) ThermoScan 7 Age Precision-IRT6520 (Braun GmbH, Kronberg, Germany) were referenced.
 In the field study, a 26-year-old man was examined during activity on a cross-trainer in an outdoor gym. The measurements lasted 25 minutes and took place on a cloudy day at a temperature of 21 degrees Celsius. 
 Additionally, the temperature information of the cross trainer was recorded as well, the Cosinuss One (Cosinuss GmbH, Munich, Germany) was used for this purpose.
 The results showed that the graphene-inked thermopile sensor measurements provided better results than the Cosinuss One \cite{chagllae.MeasurementCoreBody2018}. 
 The latter seemed to be more sensitive to external parameters. 
 It was noted that the sensors were very comfortable during wear. 
-In addition, it was observed that the sensors required a calibration period at the beginning and provided relevant measurement results after about 8 minutes. 
+Additionally, it was observed that the sensors required a calibration period at the beginning and provided relevant measurement results after about 8 minutes. 
 However, in the laboratory study, the measurements were taken only for a period of 10 minutes.
 In another work, the temperature at the ear was also measured in 2020 \cite{chenInearThermometerWearable2020}.
 Here, an infrared sensor also recorded the temperature. 
@@ -388,22 +388,36 @@ The focus of this work was to design a wearable device that can be worn over a l
 Here the focus was on size, weight, and battery life.
 An app was also developed to transfer the data.
 The ground truth is a conventional thermometer on the ear.
-During activities, the results were 0.15 degrees below those of the ground truth, but this is explained by the presence of sweat.
+During activities, the results were 0.15 degrees below those of ground truth, but this is explained by the presence of sweat.
 The range of error was $\pm 0.16 ^\circ C$.
-The correlation is $0.9438$, and the average accuracy $99\%$.
+The correlation is $0.9438$, and the average accuracy is $99\%$.
 
 % OpenEarable
 \paragraph{OpenEarable Platform}
 \label{Background:SensingWithEarables:OpenEarable}
-OpenEarable is an open source Arduino-based platform for ear-based sensor applications. 
-It supports a number of sensors and actuators \cite{roddigerOpenEarableOpenHardware2022}.
-For one, a 9-axis inertial measurement unit (IMU) is connected, which can be used to read gyroscope and accelerometer. 
-Furthermore, an inward-facing ultrasonic microphone, a push button, a loudspeaker and a controllable LED are installed in addition to an ear canal pressure and temperature sensor. 
-OpenEarable is designed as a development platform, not a finished product.
-It is intended to be used by developers to create new ear-based sensing applications. 
-The platform is open source, so developers can customize the hardware and software to meet their specific needs.
+The OpenEarable serves as the core sensing platform for this thesis. 
+It is an open source hardware and software platform for the development of multisensory audible devices, originally introduced by Röddiger et al. in 2021 \cite{roddigerOpenEarableOpenHardware2022}. 
+The OpenEarable was developed at KIT and enables rapid prototyping and exploration of novel earable applications. 
+It was not developed as a finished product, but serves as a platform for future projects.
+
+The OpenEarable hardware design is based on the Arduino Nano33 BLE, which includes the Bluetooth SoC nRF52840 from Nordic Semiconductor.
+This chip integrates a 32-bit ARM Cortex M4F processor with 256 KB of RAM and supports Bluetooth 5.4 connectivity. 
+For audio detection, the OpenEarable features a high-performance STMicroelectronics LSM6DSRTR low-power digital microphone. 
+This enables high dynamic range audio sampling up to 44 kHz. 
+Motion and orientation tracking is provided by the 9-axis inertial measurement unit (IMU), which combines a 3-axis gyroscope, a 3-axis accelerometer and a 3-axis magnetometer. 
+In addition, a push button and a controllable LED are built into the circuit board.
+In addition to the main circuit board, an earpiece has also been designed. 
+This also features an ear canal pressure and temperature sensor, an inward-facing ultrasonic microphone, and a speaker.
+However, the earpiece was not used in the context of this master thesis
+Finally, a rechargeable 90 mAh lithium-ion polymer battery powers the platform.
+This combination of sensors enables the OpenEarable device to collect and analyze audio, motion, environmental, and biometric data in real time. The nRF52840 SoC also provides sufficient processing capabilities for integrated machine learning inferencing. 
+Multiple peripherals can also be connected via the available GPIOs and I2C bus. 
+An integrated microSD card slot enables storage and buffering of sensor data.
+By building on the OpenEarable hardware and software architecture, the development time to create a custom multimodal ear sensing device can be dramatically reduced compared to designing a new platform from scratch. 
+
 OpenEarable can be used for a variety of applications, such as health monitoring, authentication, identification and human-computer interaction.
-The platform is still under development, but has the potential to be used for a wide range of applications. OpenEarable is a valuable resource for developers interested in creating new ear-based sensing applications.
+The platform is still under development, but has the potential to be used for a wide range of applications. 
+OpenEarable's capabilities for rapid prototyping, flexible extension, and sensor fusion were key enablers for the research presented in this paper.
 % TODO: reference the chapter for more details on the general interaction of all components, how everything works together.
 
 % https://media.digikey.com/pdf/Data%20Sheets/Excelitas%20PDFs/TPiS_1S_1385.pdf
