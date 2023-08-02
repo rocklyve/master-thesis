@@ -4,10 +4,16 @@
 %% ==============================
 \chapter{Design}
 \label{ch:Design}
+This master thesis aims to compare different positions on the ear for body temperature measurement. 
+To achieve this, a prototype was developed in this master thesis, which allows temperature measurements at different positions in and around the ear. 
+Subsequently, studies were conducted to collect temperature data at different locations in and around the ear and analyze the collected data.
+At the beginning of this section, the development and procedure of designing the prototype is described.
+In addition, the detailed methodology and procedures of the study are described.
+The study results are not described here, any details are described in chapter \ref{ch:Evaluation}. 
 
 \section{Prototype}
 \label{ch:Design:Prototype}
-In order to measure the temperature as planned in Section \ref{ch:Introduction:PlannedApproach}, a custom-built prototype was developed as part of this master thesis.
+To measure the temperature as planned in Section \ref{ch:Introduction:PlannedApproach}, a custom-built prototype was developed as part of this master thesis.
 The prototype consists of two components: an earpiece that resembles an in-ear headphone and a component placed behind the ear that resembles a hearing aid. TECO's OpenEarable platform for ear-based observations is integrated into the behind-the-ear component. This component serves as the central interface and houses the Arduino on which all code is executed. Additionally, a circuit board with three temperature sensors is connected to measure the temperature behind the ear.
 The second component is placed in the ear and is also controlled by the OpenEarable via the Arduino Nano33 BLE installed there. The OpenEarable acts as the basis for reading and storing data from the sensors connected via I2C. The relationship and interaction of the components are visually represented in Figure \ref{fig:design:prototype_connection}.
 To ensure functionality and protection of the hardware, custom 3D-printed enclosures were created for both the behind-the-ear component and the in-the-ear component. 
@@ -31,7 +37,14 @@ The use of the 8-pin cable effectively connects the two components, additionally
     \label{fig:design:prototype_connection}
 \end{figure}
 
-\subsubsection{Temperature Measurements Behind the Ear}
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{thesis-doc/images/prototype/PCB_Description.png}
+    \caption{Representation of the front and back of the PCB. The multiplexer can be seen on the front, which is controlled by the OpenEarable via the 4-pin connector. The three other MLX90632 are then connected by the FlexPCB via the 8-pin connector. In addition, an LED is connected to the front, which lights up green if no short circuit is generated. The temperature sensors can be seen on the back, but only three of the five connections visible in the design are used.}
+    \label{fig:design:pcb_description}
+\end{figure}
+
+\subsection{Temperature Measurements Behind the Ear}
 \label{ch:Design:Prototype:BehindEar}
 
 The temperature behind the ear is measured at 3 positions, as can be seen in Figure \ref{fig:design:pcb_description} on the back of the PCB.
@@ -50,14 +63,7 @@ The OpenEarable is placed above this.
 The dimensions of the PCB are exactly the same as the OpenEarable to keep the case as small and compact as possible.
 The sensor used requires an angle of $ 50 ^ \circ$ around itself for the temperature to be reliably measured. 
 This was taken into account.
-The layered representation for visualization can be seen in Figure \ref{TODO:addfig}.
-
-\begin{figure}
-    \centering
-    \includegraphics[width=\textwidth]{thesis-doc/images/prototype/PCB_Description.png}
-    \caption{Representation of the front and back of the PCB. The multiplexer can be seen on the front, which is controlled by the OpenEarable via the 4-pin connector. The three other MLX90632 are then connected by the FlexPCB via the 8-pin connector. In addition, an LED is connected to the front, which lights up green if no short circuit is generated. The temperature sensors can be seen on the back, but only three of the five connections visible in the design are used.}
-    \label{fig:design:pcb_description}
-\end{figure}
+The layered representation for visualization can be seen in Figure \ref{fig:design:prototype_behind_head_layered_view}.
 
 \begin{figure}
     \centering
@@ -66,7 +72,7 @@ The layered representation for visualization can be seen in Figure \ref{TODO:add
     \label{fig:design:prototype_behind_head_layered_view}
 \end{figure}
 
-\subsubsection{Temperature Measurements in the Ear}
+\subsection{Temperature Measurements in the Ear}
 \label{ch:Design:Prototype:Earpiece}
 
 The second component now enables temperature measurement in the ear area. The FlexPCB itself is only equipped with components on the front side. Thereby, the 8-pin connector that connects the FlexPCB to the PCB is located, as described in section \ref{ch:Design:Prototype:BehindEar}. Additionally, three temperature sensors are placed on the FlexPCB to sense the positions in the ear and pinna described in section \ref{ch:Introduction:PlannedApproach} and Figure \ref{fig:ear_measurement_positions}.
@@ -91,12 +97,18 @@ The sketch shows the first idea of how the FlexPCB has to be designed so that it
 Based on research and experience at the TECO Institute, the MLX90632 sensor was selected for its suitability for our project.
 
 The MLX90632 sensor is an infrared temperature sensor known for its high accuracy in temperature measurements. This enables reliable applications where precise temperature tracking is needed.
-Furthermore, non-contact temperature measurement is a huge advantage. The MLX90632 can measure temperature without physical contact with the object or body part, providing a non-invasive and convenient ear temperature monitoring option.
-In order to place the temperature sensors in the necessary locations to measure temperature, the sensors must be appropriately small. Since the MLX90632 has a small form factor, this is optimal for the application needed.
-Additionally, the MLX90632 is readily available on the market and has existing Arduino libraries. This availability and compatibility with Arduino simplify the integration process and save valuable development time.
-In addition, the sensor is designed for low power consumption, making it suitable for battery-powered devices. Given the small battery size in the developed prototype, low power consumption is critical for extended operation during the study.
-The MLX90632 offers fast response times and allows for real-time temperature monitoring and fast updates. Some difficulties arose when writing the EEPROM, so the default value was left at 2Hz.
-The intention of adjusting the measuring rate was the implementation details of the library, which was finally solved by adjusting the library. This process is described in more detail in the chapter \ref{TODO: ann ref}.
+Furthermore, non-contact temperature measurement is a huge advantage. 
+The MLX90632 can measure temperature without physical contact with the object or body part, providing a non-invasive and convenient ear temperature monitoring option.
+In order to place the temperature sensors in the necessary locations to measure temperature, the sensors must be appropriately small. 
+Since the MLX90632 has a small form factor, this is optimal for the application needed.
+Additionally, the MLX90632 is readily available on the market and has existing Arduino libraries. 
+This availability and compatibility with Arduino simplify the integration process and save valuable development time.
+In addition, the sensor is designed for low power consumption, making it suitable for battery-powered devices. 
+Given the small battery size in the developed prototype, low power consumption is critical for extended operation during the study.
+The MLX90632 offers fast response times and allows for real-time temperature monitoring and fast updates. 
+Some difficulties arose when writing the EEPROM, so the default value was left at 2Hz.
+The intention of adjusting the measuring rate was the implementation details of the library, which was finally solved by adjusting the library. 
+This process is described in more detail in the chapter \ref{TODO: ann ref}.
 The high sensitivity to temperature changes allows the MLX90632 to accurately detect even minor variations. This sensitivity is advantageous for precise temperature tracking.
 In addition, the sensor has applications in both the consumer and industrial markets due to its accuracy and reliability. This versatility makes it an excellent choice for our master's thesis project, which involves working with an Arduino Nano 33 BLE.
 
@@ -124,3 +136,22 @@ PCB Design, FlexPCB, how everything interacts, especially with OpenEarable.
 
 \section{Study}
 \label{ch:Design:Study}
+This study aims to evaluate the accuracy of measuring core body temperature using an earable form factor device compared to a medical reference device.
+
+Participants will be healthy adults. Demographic data like age, gender, weight, and size will be collected. Ear measurements like size and fit of the earbud sensors will also be noted.
+
+Participants will first enter the room and sit still for 20 minutes to allow the sensors to calibrate and reach equilibrium \cite{chagllae.MeasurementCoreBody2018}. The room temperature will be fixed.
+
+Data will be collected in three 10 minute phases:
+\begin{enumerate}
+\item Sitting
+\item Walking outdoors
+\item Sitting again
+\end{enumerate}
+
+Body temperature will be measured every 60 seconds using the earable device and a medical infrared tympanic thermometer for comparison \cite{chagllae.MeasurementCoreBody2018,boanoNoninvasiveMeasurementCore2013}.
+
+\subsection{Data Analysis}
+The accuracy of the earable device will be evaluated by comparing its temperature measurements to the medical reference device. Variability between different ear sensor positions will also be examined.
+
+Environmental factors like ambient temperature, humidity, and subject motion will be analyzed for their impact on measurement accuracy and artifact reduction.

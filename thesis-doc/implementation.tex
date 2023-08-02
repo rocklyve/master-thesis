@@ -1,8 +1,10 @@
-\chapter{Implementation of your Project}
+\chapter{Implementation}
 \label{ch:Implementation}
+This chapter describes the implementation details of the prototype, as well as the analysis of the data collected from the studies.
+To implement the prototype, Arduino software was developed that measures temperature sensor values and IMU data and saves them to a microSD card along with a timestamp.
+Implementation details for evaluating and analyzing the collected data are then described.
 
 \section{Prototype}
-
 The prototype is controlled by OpenEarable, which has been programmed to be controlled via Arduino code. An Arduino Nano33 BLE is built into the OpenEarable, which makes this customization easy. The main task of the prototype is to collect data from the temperature sensors and an IMU and store them in a CSV file on the SD card, which has a dedicated slot in the OpenEarable. Similarly to conventional Arduino code, the prototype's code consists of a \texttt{setup()} and a \texttt{loop()} method.
 
 In the \texttt{setup()} method, all the required components are initialized. This includes the sensors, the IMU, the SD card logger, and the button interrupt. The latter is used to ensure that a measurement is terminated within two seconds if a button is pressed twice. When the sensors are initialized, a \texttt{Wire} connection is established and the multiplexer is triggered. The multiplexer is crucial when reading out the sensors, as each sensor is read out in the same way, but before that, the multiplexer is triggered to enable access to the next sensor. The multiplexer makes it possible that always only one of the 8 possible ports is free for reading. Thus each access is opened once and the sensor is initialized.
