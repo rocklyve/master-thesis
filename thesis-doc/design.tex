@@ -7,9 +7,50 @@
 This master thesis aims to compare different positions on the ear for body temperature measurement. 
 To achieve this, a prototype was developed in this master thesis, which allows temperature measurements at different positions in and around the ear. 
 Subsequently, studies were conducted to collect temperature data at different locations in and around the ear and analyze the collected data.
-At the beginning of this section, the development and procedure of designing the prototype is described.
-In addition, the detailed methodology and procedures of the study are described.
-The study results are not described here, any details are described in chapter \ref{ch:Evaluation}. 
+At the beginning of this section, the OpenEarable platform is described. This is the basis of the prototype and forms the basis for understanding. Then, the sensors are explained, since they are essential for the temperature measurement.
+After laying the groundwork for understanding the prototype, the development and approach to designing the prototype is described.
+In addition, the detailed methodology and procedure of the study are described.
+The study results are not described here, all details are described in the \ref{ch:Evaluation} chapter.
+
+\section{Platform: OpenEarable}
+\label{ch:Design:Prototype:OpenEarable}
+
+In Chapter \ref{Background:SensingWithEarables:OpenEarable}, the OpenEarable platform is thoroughly described, emphasizing its interaction with other components. 
+The OpenEarable was designed for rapid prototyping and exploration of novel Earable applications, and this thesis successfully utilized it as the foundation for the prototype. 
+Figure \ref{fig:design:prototype_connection} illustrates the seamless collaboration between all components. 
+Leveraging an Arduino Nano 33 BLE, the OpenEarable enables the deployment of Arduino-based software, and its connection to both the PCB and FlexPCB is facilitated via the 4-pin connector. 
+The developed software gathers data from the temperature sensors and effectively utilizes the OpenEarable's resources. 
+The study data is persistently stored on the SD card, and the study termination is triggered by a double-click on the push button.
+In summary, the OpenEarable platform proved to be a versatile and effective foundation for the prototype, enabling seamless interaction between its components and facilitating data collection from the temperature sensors. 
+By leveraging Arduino-based features and user-friendly design, OpenEarable was successfully used in this study to explore novel Earable applications and conduct the user study easily and efficiently.
+
+% TODO: PCB Schematic in den Anhang vermutlich packen, sehr wichtig!!!
+
+\section{Sensors}
+\label{ch:Design:Prototype:Sensors}
+
+Based on research and experience at the TECO Institute, the MLX90632 sensor was selected for its suitability for our project.
+
+The MLX90632 sensor is an infrared temperature sensor known for its high accuracy in temperature measurements. This enables reliable applications where precise temperature tracking is needed.
+Furthermore, non-contact temperature measurement is a huge advantage. 
+The MLX90632 can measure temperature without physical contact with the object or body part, providing a non-invasive and convenient ear temperature monitoring option.
+In order to place the temperature sensors in the necessary locations to measure temperature, the sensors must be appropriately small. 
+Since the MLX90632 has a small form factor, this is optimal for the application needed.
+Additionally, the MLX90632 is readily available on the market and has existing Arduino libraries. 
+This availability and compatibility with Arduino simplify the integration process and save valuable development time.
+In addition, the sensor is designed for low power consumption, making it suitable for battery-powered devices. 
+Given the small battery size in the developed prototype, low power consumption is critical for extended operation during the study.
+The MLX90632 offers fast response times and allows for real-time temperature monitoring and fast updates. 
+Some difficulties arose when writing the EEPROM, so the default value was left at 2Hz.
+The intention of adjusting the measuring rate was the implementation details of the library, which was finally solved by adjusting the library. 
+This process is described in more detail in the chapter \ref{TODO: ann ref}.
+The high sensitivity to temperature changes allows the MLX90632 to accurately detect even minor variations. This sensitivity is advantageous for precise temperature tracking.
+In addition, the sensor has applications in both the consumer and industrial markets due to its accuracy and reliability. This versatility makes it an excellent choice for our master's thesis project, which involves working with an Arduino Nano 33 BLE.
+
+The MLX90632 has 4 pins that must be connected. Beside 3.3V and Ground the MLX90632 has a SCL and SDA connector. SCL stands for the clock signal, and SDA for the data flow.
+
+Overall, infrared temperature sensing capabilities, accuracy, easy availability, non-invasive measurement, compact size, and compatibility with Arduino make the MLX90632 an ideal choice for the developing ear temperature monitoring system.
+
 
 \section{Prototype}
 \label{ch:Design:Prototype}
@@ -78,7 +119,7 @@ The layered representation for visualization can be seen in Figure \ref{fig:desi
 The second component now enables temperature measurement in the ear area. The FlexPCB itself is only equipped with components on the front side. Thereby, the 8-pin connector that connects the FlexPCB to the PCB is located, as described in section \ref{ch:Design:Prototype:BehindEar}. Additionally, three temperature sensors are placed on the FlexPCB to sense the positions in the ear and pinna described in section \ref{ch:Introduction:PlannedApproach} and Figure \ref{fig:ear_measurement_positions}.
 The FlexPCB was designed to extend through the component. On the one hand, the 8-pin connector protrudes outward to connect to the PCB. On the other hand, the PCB runs along the outside of the housing to the earbud, allowing the FlexPCB to snake through. The tip of the FlexPCB also contains a temperature sensor mounted in the earplug and aimed directly at the eardrum. Another temperature sensor is aimed at the ear canal and is located on the outer edge of the earplug. The third temperature sensor is aimed at the pinna.
 The component was modeled on the design of an AirPod, but heavily modified afterward. The original AirPods design is freely available on TinkerCAD and was used as the basis for the component shape. The inside of the design was completely hollowed out to allow cables to be routed through the case. Additionally, an adapter was added to the side to fit the redesigned earpod. An earbud can be attached here to ensure that the earbud penetrates further into the ear than usual compared to conventional in-ear headphones. This enables precise temperature measurement in the direction of the eardrum. A temperature sensor is attached to the tip of the earbud to perform basic temperature measurements.
-The three temperature sensors on the FlexPCB can be switched via the multiplexer that is connected to the PCB. This allows precise selection and acquisition of the desired measurements. Figure \ref{fig:design:prototype_earpiece_views} shows a sketch and other images of the final component.
+The three temperature sensors on the FlexPCB can be switched via the multiplexer that is connected to the PCB. This allows for precise selection and acquisition of the desired measurements. Figure \ref{fig:design:prototype_earpiece_views} shows a sketch and other images of the final component.
 
 \begin{figure}[!h]
     \centering
@@ -90,49 +131,6 @@ The three temperature sensors on the FlexPCB can be switched via the multiplexer
 The sketch shows the first idea of how the FlexPCB has to be designed so that it gets through the earplug to the tip to measure in the direction of the tympanic membrane. The real views provide an impression of how the component is composed. Also can see the routing of the FlexPCB.}
     \label{fig:design:prototype_earpiece_views}
 \end{figure}
-
-\subsection{Sensors}
-\label{ch:Design:Prototype:Sensors}
-
-Based on research and experience at the TECO Institute, the MLX90632 sensor was selected for its suitability for our project.
-
-The MLX90632 sensor is an infrared temperature sensor known for its high accuracy in temperature measurements. This enables reliable applications where precise temperature tracking is needed.
-Furthermore, non-contact temperature measurement is a huge advantage. 
-The MLX90632 can measure temperature without physical contact with the object or body part, providing a non-invasive and convenient ear temperature monitoring option.
-In order to place the temperature sensors in the necessary locations to measure temperature, the sensors must be appropriately small. 
-Since the MLX90632 has a small form factor, this is optimal for the application needed.
-Additionally, the MLX90632 is readily available on the market and has existing Arduino libraries. 
-This availability and compatibility with Arduino simplify the integration process and save valuable development time.
-In addition, the sensor is designed for low power consumption, making it suitable for battery-powered devices. 
-Given the small battery size in the developed prototype, low power consumption is critical for extended operation during the study.
-The MLX90632 offers fast response times and allows for real-time temperature monitoring and fast updates. 
-Some difficulties arose when writing the EEPROM, so the default value was left at 2Hz.
-The intention of adjusting the measuring rate was the implementation details of the library, which was finally solved by adjusting the library. 
-This process is described in more detail in the chapter \ref{TODO: ann ref}.
-The high sensitivity to temperature changes allows the MLX90632 to accurately detect even minor variations. This sensitivity is advantageous for precise temperature tracking.
-In addition, the sensor has applications in both the consumer and industrial markets due to its accuracy and reliability. This versatility makes it an excellent choice for our master's thesis project, which involves working with an Arduino Nano 33 BLE.
-
-The MLX90632 has 4 pins that must be connected. Beside 3.3V and Ground the MLX90632 has a SCL and SDA connector. SCL stands for the clock signal, and SDA for the data flow.
-
-Overall, infrared temperature sensing capabilities, accuracy, easy availability, non-invasive measurement, compact size, and compatibility with Arduino make the MLX90632 an ideal choice for the developing ear temperature monitoring system.
-
-\subsection{Platform: OpenEarable}
-\label{ch:Design:Prototype:OpenEarable}
-
-In Chapter \ref{Background:SensingWithEarables:OpenEarable}, the OpenEarable platform is thoroughly described, emphasizing its interaction with other components. 
-The OpenEarable was designed for rapid prototyping and exploration of novel Earable applications, and this thesis successfully utilized it as the foundation for the prototype. 
-Figure \ref{fig:design:prototype_connection} illustrates the seamless collaboration between all components. 
-Leveraging an Arduino Nano 33 BLE, the OpenEarable enables the deployment of Arduino-based software, and its connection to both the PCB and FlexPCB is facilitated via the 4-pin connector. 
-The developed software gathers data from the temperature sensors and effectively utilizes the OpenEarable's resources. 
-The study data is persistently stored on the SD card, and the study termination is triggered by a double-click on the push button.
-In summary, the OpenEarable platform proved to be a versatile and effective foundation for the prototype, enabling seamless interaction between its components and facilitating data collection from the temperature sensors. 
-By leveraging Arduino-based features and user-friendly design, OpenEarable was successfully used in this study to explore novel Earable applications and conduct the user study easily and efficiently.
-% TODO: Auch explizit die Pin belegung mit beschreiben
-
-% TODO: Grafik mit mit PCB, wie die alle connected sind über die PIN anschlüsse
-
-PCB Design, FlexPCB, how everything interacts, especially with OpenEarable.
-% TODO: PCB Schematic in den Anhang vermutlich packen, sehr wichtig!!!
 
 \section{Study}
 \label{ch:Design:Study}
