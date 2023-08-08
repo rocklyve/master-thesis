@@ -2,7 +2,7 @@
 
 void setup()
 {
-  Wire1.begin();
+  Wire.begin();
 
   Serial.begin(9600);
   while (!Serial);            
@@ -19,8 +19,8 @@ void loop()
   for(address = 1; address < 127; address++ ) 
   {
 
-    Wire1.beginTransmission(address);
-    error = Wire1.endTransmission();
+    Wire.beginTransmission(address);
+    error = Wire.endTransmission();
 
     if (error == 0)
     {

@@ -5,7 +5,7 @@
 #define TCA9548A_I2C_ADDRESS 0x70
 
 /* The channels which are connected to an MLX90632 sensor */
-const uint8_t MLX_CHANNELS[] = {0, 1, 2, 4, 5};
+const uint8_t MLX_CHANNELS[] = {6, 7};
 const uint8_t NUM_MLX_CHANNELS = sizeof(MLX_CHANNELS);
 
 bool isDebugMode = true;

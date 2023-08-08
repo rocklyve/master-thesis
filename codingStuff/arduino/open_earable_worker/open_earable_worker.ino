@@ -6,9 +6,10 @@
 
 TCA9548A mux;
 
-const uint8_t amount_of_sensors = 5;
+const uint8_t MLX_CHANNELS[] = {0,1,2,3,4,5,6,7};
+const uint8_t amount_of_sensors = sizeof(MLX_CHANNELS);
 Protocentral_MLX90632 mlx[amount_of_sensors];
-const uint8_t MLX_CHANNELS[] = {0, 1, 2, 4, 5};
+
 
 // Refresh rate configuration values
 const uint16_t EE_MEAS_1_ADDR = 0x24E1;
@@ -121,13 +122,17 @@ void initializeMLXSensor(Protocentral_MLX90632 &sensor, uint8_t index) {
     Serial.print("Sensor ");
     Serial.print(index);
     Serial.println(" not found. Check wiring or address.");
+  } else {
+    Serial.print("Sensor ");
+    Serial.print(index);
+    Serial.println(" found!");
   }
 
   sensor.pre_get_Temp();
 }
 
 void initializeIMU() {
-  imu.start();
+    imu.start();
 }
 
 void readSensorData(int data[]) {
