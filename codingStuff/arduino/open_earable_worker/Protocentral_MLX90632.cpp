@@ -200,7 +200,7 @@ float Protocentral_MLX90632::getObjectTemp(status& returnError)
     return (0.0); //Error
   }
 
- int16_t lowerRAM = 0;
+  int16_t lowerRAM = 0;
   int16_t upperRAM = 0;
 
   int16_t sixRAM;

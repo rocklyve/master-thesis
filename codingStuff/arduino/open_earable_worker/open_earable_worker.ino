@@ -5,27 +5,18 @@
 #include "IMU_Sensor.h"
 
 TCA9548A mux;
-
-const uint8_t MLX_CHANNELS[] = {0,1,2,3,4,5,6,7};
-const uint8_t amount_of_sensors = sizeof(MLX_CHANNELS);
-Protocentral_MLX90632 mlx[amount_of_sensors];
-
-
-// Refresh rate configuration values
-const uint16_t EE_MEAS_1_ADDR = 0x24E1;
-const uint16_t EE_MEAS_1_32HZ_VALUE = 0x860D;
-const uint16_t EE_MEAS_2_ADDR = 0x24E2;
-const uint16_t EE_MEAS_2_32HZ_VALUE = 0x861D;
-const uint16_t REFRESH_RATE_VALUE = 6; // Value for 32Hz refresh rate
-
-bool isDebugMode = false;
-const int buttonPin = 5; // Button pin connected to D5
-
-volatile bool stopMeasurementButtonPressedFlag = false; // Volatile flag used in the interrupt routine
-
 SD_Logger *logger;
 IMU_Sensor imu;
 
+bool isDebugMode = false;
+
+const uint8_t MLX_CHANNELS[] = {4,6,7};
+const uint8_t amount_of_sensors = sizeof(MLX_CHANNELS);
+Protocentral_MLX90632 mlx[amount_of_sensors];
+int last_data_temp_line[amount_of_sensors];
+
+const int buttonPin = 5; // Button pin connected to D5
+volatile bool stopMeasurementButtonPressedFlag = false; // Volatile flag used in the interrupt routine
 const unsigned long doubleClickTimeframe = 2000;  // Timeframe for double click in milliseconds
 unsigned long lastButtonPressTime = 0;  // Stores the timestamp of the last button press
 
@@ -115,7 +106,6 @@ void setupButtonInterrupt() {
 }
 
 void initializeMLXSensor(Protocentral_MLX90632 &sensor, uint8_t index) {
-  mux.closeAll();
   mux.openChannel(MLX_CHANNELS[index]);
 
   if (!sensor.begin()) {
@@ -126,9 +116,11 @@ void initializeMLXSensor(Protocentral_MLX90632 &sensor, uint8_t index) {
     Serial.print("Sensor ");
     Serial.print(index);
     Serial.println(" found!");
+    last_data_temp_line[index] = 0;
+    // sensor.pre_get_Temp();
+    // delay(50);
   }
-
-  sensor.pre_get_Temp();
+  mux.closeChannel(MLX_CHANNELS[index]);
 }
 
 void initializeIMU() {
@@ -138,15 +130,26 @@ void initializeIMU() {
 void readSensorData(int data[]) {
   // Read MLX sensor data...
   for (uint8_t i = 0; i < amount_of_sensors; i++) {
-    mux.closeAll();
     mux.openChannel(MLX_CHANNELS[i]);
+    delay(1);
+    int new_temp_value = mlx[i].get_Temp() * 100;
     
-    if (mlx[i].dataAvailable()) {
-      data[i + 1] = mlx[i].get_Temp() * 100;
-      mlx[i].pre_get_Temp();
-    } else {
-      data[i + 1] = -1;
-    }
+    // if (mlx[i].dataAvailable()) {
+    //   mlx_data_fetch_counter[i] = 0;
+    //   data[i + 1] = mlx[i].get_Temp() * 100;
+    //   delay(50);
+    //   mlx[i].pre_get_Temp();
+    //   delay(50);
+    // } else {
+    //   mlx_data_fetch_counter[i] = mlx_data_fetch_counter[i] + 1;
+    //   if (mlx_data_fetch_counter[i] > MLX_TIMEOUT) {
+    //     mlx[i].pre_get_Temp();
+    //     Serial.print("Timeout reached, clear data for mlx ");
+    //     Serial.println(MLX_CHANNELS[i]);
+    //   }
+    //   data[i + 1] = -1;
+    // }
+    mux.closeChannel(MLX_CHANNELS[i]);
   }
   // now store IMU data
   float accelX, accelY, accelZ;
