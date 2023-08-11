@@ -132,7 +132,7 @@ void readSensorData(int data[]) {
   for (uint8_t i = 0; i < amount_of_sensors; i++) {
     mux.openChannel(MLX_CHANNELS[i]);
     delay(1);
-    int new_temp_value = mlx[i].get_Temp() * 100;
+    data [i + 1] = mlx[i].get_Temp() * 100;
     
     // if (mlx[i].dataAvailable()) {
     //   mlx_data_fetch_counter[i] = 0;
@@ -149,6 +149,7 @@ void readSensorData(int data[]) {
     //   }
     //   data[i + 1] = -1;
     // }
+    delay(1);
     mux.closeChannel(MLX_CHANNELS[i]);
   }
   // now store IMU data
