@@ -66,6 +66,7 @@ void loop() {
     saveDataToSDCard(data, -1);
     // Logging the data
     logger->end();
+    changeLEDColor(-1);
     Serial.println("Pressed stop, now finished");
     while (true);
   }
@@ -223,18 +224,20 @@ void incrementMeasurementState() {
 }
 
 void changeLEDColor(int id) {
-  int redValue = 0;
-  int greenValue = 0;
-  int blueValue = 0;
+  int redValue = 255;
+  int greenValue = 255;
+  int blueValue = 255;
 
   // Adjust color values based on measurement_state (id)
-  if (id % 3 == 0) { // Every third state (1, 4, 7, etc.) - Red
-    redValue = 255;
+  if (id != -1) {
+if (id % 3 == 0) { // Every third state (1, 4, 7, etc.) - Red
+    redValue = 0;
   } else if (id % 3 == 1) { // Every third state + 1 (2, 5, 8, etc.) - Green
-    greenValue = 255;
+    greenValue = 0;
   } else { // Every third state + 2 (3, 6, 9, etc.) - Blue
-    blueValue = 255;
+    blueValue = 0;
   }
+  } 
 
   analogWrite(LED_R_PIN, redValue); // GPIO 16 (A7)
   analogWrite(LED_G_PIN, greenValue); // GPIO 17 (A6)
