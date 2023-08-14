@@ -20,6 +20,12 @@ volatile bool stopMeasurementButtonPressedFlag = false; // Volatile flag used in
 const unsigned long doubleClickTimeframe = 2000;  // Timeframe for double click in milliseconds
 unsigned long lastButtonPressTime = 0;  // Stores the timestamp of the last button press
 
+const int LED_R_PIN = A7; // GPIO 16
+const int LED_G_PIN = A6; // GPIO 17
+const int LED_B_PIN = A0; // GPIO 25
+
+int measurement_state = 1; // Initial measurement state
+
 // Function prototypes
 void setupSensors();
 void setupButtonInterrupt();
@@ -36,6 +42,7 @@ void setup() {
   while (!Serial) {};
 
   setupButtonInterrupt();
+  changeLEDColor(measurement_state); // Change LED color based on initial measurement state
   initializeIMU();
   setupSensors();
 
@@ -64,7 +71,7 @@ void loop() {
   }
   checkButtonPress(); 
   readSensorData(data);
-  saveDataToSDCard(data, 1);
+  saveDataToSDCard(data, measurement_state);
 
   // print data
   if (data[1] != -1) {
@@ -206,5 +213,30 @@ void buttonPressed() {
     lastButtonPressTime = 0;
   } else {
     lastButtonPressTime = currentButtonPressTime;
+    incrementMeasurementState();
+    changeLEDColor(measurement_state);
   }
+}
+
+void incrementMeasurementState() {
+  measurement_state++;
+}
+
+void changeLEDColor(int id) {
+  int redValue = 0;
+  int greenValue = 0;
+  int blueValue = 0;
+
+  // Adjust color values based on measurement_state (id)
+  if (id % 3 == 0) { // Every third state (1, 4, 7, etc.) - Red
+    redValue = 255;
+  } else if (id % 3 == 1) { // Every third state + 1 (2, 5, 8, etc.) - Green
+    greenValue = 255;
+  } else { // Every third state + 2 (3, 6, 9, etc.) - Blue
+    blueValue = 255;
+  }
+
+  analogWrite(LED_R_PIN, redValue); // GPIO 16 (A7)
+  analogWrite(LED_G_PIN, greenValue); // GPIO 17 (A6)
+  analogWrite(LED_B_PIN, blueValue); // GPIO 25 (A0)
 }
