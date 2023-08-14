@@ -87,6 +87,8 @@ void loop() {
   Serial.println("]");
   Serial.println("");
   }
+
+  delay(20);
 }
 
 void setupSensors() {
@@ -153,25 +155,26 @@ void readSensorData(int data[]) {
     mux.closeChannel(MLX_CHANNELS[i]);
   }
   // now store IMU data
+  int imu_muliplicator = 10000;
   float accelX, accelY, accelZ;
   imu.get_acc(accelX, accelY, accelZ);
-  data[6] = accelX * 100;
-  data[7] = accelY * 100;
-  data[8] = accelZ * 100;
+  data[6] = accelX * imu_muliplicator;
+  data[7] = accelY * imu_muliplicator;
+  data[8] = accelZ * imu_muliplicator;
 
   // Get gyroscope data
   float gyroX, gyroY, gyroZ;
   imu.get_gyro(gyroX, gyroY, gyroZ);
-  data[9] = gyroX * 100;
-  data[10] = gyroY * 100;
-  data[11] = gyroZ * 100;
+  data[9] = gyroX * imu_muliplicator;
+  data[10] = gyroY * imu_muliplicator;
+  data[11] = gyroZ * imu_muliplicator;
 
   // Get magnetometer data
   float magX, magY, magZ;
   imu.get_mag(magX, magY, magZ);
-  data[12] = magX * 100;
-  data[13] = magY * 100;
-  data[14] = magZ * 100;
+  data[12] = magX * imu_muliplicator;
+  data[13] = magY * imu_muliplicator;
+  data[14] = magZ * imu_muliplicator;
 }
 
 void saveDataToSDCard(int data[], int id) {
