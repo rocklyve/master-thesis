@@ -62,7 +62,7 @@ void setup() {
 
 /*****************************************  loop() *************************************************/
 void loop() {
-  int amount_of_data_columns = amount_of_sensors + 9; 
+  int amount_of_data_columns = 2 * amount_of_sensors + 9; 
   int data[amount_of_data_columns + 1];
   data[0] = amount_of_data_columns;  // Number of data elements
 
@@ -80,7 +80,7 @@ void loop() {
 
   // print data
   if (data[1] != -1) {
-    Serial.print("Data: ");
+    Serial.print("Object Temperature: ");
     for (int i = 1; i <= amount_of_sensors; i++) {
       Serial.print(data[i]);
       if (i != amount_of_sensors) {
@@ -89,10 +89,19 @@ void loop() {
     }
     Serial.println();
 
-    Serial.print("IMU [");
-    for (int i = amount_of_sensors+1; i <= amount_of_sensors+9; i++) {
+    Serial.print("Sensor Temperature: ");
+    for (int i = amount_of_sensors + 1; i <= 2 * amount_of_sensors; i++) {
       Serial.print(data[i]);
-      if (i != amount_of_sensors+9) {
+      if (i != 2 * amount_of_sensors) {
+        Serial.print(", ");
+      }
+    }
+    Serial.println();
+
+    Serial.print("IMU [");
+    for (int i = 2 * amount_of_sensors+1; i <= 2 * amount_of_sensors+9; i++) {
+      Serial.print(data[i]);
+      if (i != 2 * amount_of_sensors+9) {
         Serial.print(", ");
       }
     }
@@ -146,7 +155,8 @@ void readSensorData(int data[]) {
   for (uint8_t i = 0; i < amount_of_sensors; i++) {
     mux.openChannel(MLX_CHANNELS[i]);
     delay(1);
-    data [i + 1] = mlx[i].get_Temp() * 100;
+    data[i + 1] = mlx[i].get_Temp() * 100;
+    data[amount_of_sensors + i + 1] = mlx[i].get_sensor_temp() * 100;
     
     // if (mlx[i].dataAvailable()) {
     //   mlx_data_fetch_counter[i] = 0;
@@ -170,23 +180,23 @@ void readSensorData(int data[]) {
   int imu_muliplicator = 10000;
   float accelX, accelY, accelZ;
   imu.get_acc(accelX, accelY, accelZ);
-  data[amount_of_sensors + 1] = accelX * imu_muliplicator;
-  data[amount_of_sensors + 2] = accelY * imu_muliplicator;
-  data[amount_of_sensors + 3] = accelZ * imu_muliplicator;
+  data[2*amount_of_sensors + 1] = accelX * imu_muliplicator;
+  data[2*amount_of_sensors + 2] = accelY * imu_muliplicator;
+  data[2*amount_of_sensors + 3] = accelZ * imu_muliplicator;
 
   // Get gyroscope data
   float gyroX, gyroY, gyroZ;
   imu.get_gyro(gyroX, gyroY, gyroZ);
-  data[amount_of_sensors + 4] = gyroX * imu_muliplicator;
-  data[amount_of_sensors + 5] = gyroY * imu_muliplicator;
-  data[amount_of_sensors + 6] = gyroZ * imu_muliplicator;
+  data[2*amount_of_sensors + 4] = gyroX * imu_muliplicator;
+  data[2*amount_of_sensors + 5] = gyroY * imu_muliplicator;
+  data[2*amount_of_sensors + 6] = gyroZ * imu_muliplicator;
 
   // Get magnetometer data
   float magX, magY, magZ;
   imu.get_mag(magX, magY, magZ);
-  data[amount_of_sensors + 7] = magX * imu_muliplicator;
-  data[amount_of_sensors + 8] = magY * imu_muliplicator;
-  data[amount_of_sensors + 9] = magZ * imu_muliplicator;
+  data[2*amount_of_sensors + 7] = magX * imu_muliplicator;
+  data[2*amount_of_sensors + 8] = magY * imu_muliplicator;
+  data[2*amount_of_sensors + 9] = magZ * imu_muliplicator;
 }
 
 void saveDataToSDCard(int data[], int id) {
@@ -234,13 +244,13 @@ void changeLEDColor(int id) {
 
   // Adjust color values based on measurement_state (id)
   if (id != -1) {
-if (id % 3 == 0) { // Every third state (1, 4, 7, etc.) - Red
-    redValue = 0;
-  } else if (id % 3 == 1) { // Every third state + 1 (2, 5, 8, etc.) - Green
-    greenValue = 0;
-  } else { // Every third state + 2 (3, 6, 9, etc.) - Blue
-    blueValue = 0;
-  }
+    if (id % 3 == 0) { // Every third state (1, 4, 7, etc.) - Red
+      redValue = 0;
+    } else if (id % 3 == 1) { // Every third state + 1 (2, 5, 8, etc.) - Green
+      greenValue = 0;
+    } else { // Every third state + 2 (3, 6, 9, etc.) - Blue
+      blueValue = 0;
+    }
   } 
 
   analogWrite(LED_R_PIN, redValue); // GPIO 16 (A7)

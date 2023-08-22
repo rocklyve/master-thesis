@@ -115,6 +115,21 @@ void Protocentral_MLX90632::pre_get_Temp() {
   clearNewData();
 }
 
+float Protocentral_MLX90632::get_sensor_temp() {
+  int16_t sixRAM;
+  readRegister16(RAM_6, (uint16_t&)sixRAM);
+  int16_t nineRAM;
+  readRegister16(RAM_9, (uint16_t&)nineRAM);
+
+  double VRta = nineRAM + Gb * (sixRAM / 12.0);
+
+  double AMB = (sixRAM / 12.0) / VRta * pow(2, 19);
+
+  double sensorTemp = P_O + (AMB - P_R) / P_G + P_T * pow((AMB - P_R), 2);
+
+  return(sensorTemp);
+}
+
  float Protocentral_MLX90632::get_Temp() {
   Protocentral_MLX90632::status returnError;
   gatherSensorTemp(returnError);
