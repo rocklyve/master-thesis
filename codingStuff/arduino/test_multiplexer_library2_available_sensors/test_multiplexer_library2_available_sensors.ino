@@ -20,7 +20,7 @@ void setup()
 // Now lets assume, the address is 0x70 of the multiplexer... lets search for connected sensors
 void loop() {
   mux.reset();
-  delay(100);
+  delay(20);
   Serial.println();
   Serial.println();
   Serial.println();
@@ -36,5 +36,5 @@ void loop() {
     mux.disableChannel(channel);
   }
 
-  delay(5000);
+  delay(500);
 }

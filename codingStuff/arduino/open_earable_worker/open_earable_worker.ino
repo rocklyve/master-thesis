@@ -2,6 +2,7 @@
 #include "Protocentral_MLX90632.h"
 #include "TCA9548A.h"
 #include "SD_Logger.h"
+#include "Arduino.h"
 #include "IMU_Sensor.h"
 
 TCA9548A mux;
@@ -10,10 +11,11 @@ IMU_Sensor imu;
 
 bool isDebugMode = false;
 
-const uint8_t MLX_CHANNELS[] = {4,6,7};
+const uint8_t MLX_CHANNELS[] = {1,2,3,4,6,7};
+// PCB is 4,6,7
+// FlexPCB is 1,2,3
 const uint8_t amount_of_sensors = sizeof(MLX_CHANNELS);
 Protocentral_MLX90632 mlx[amount_of_sensors];
-int last_data_temp_line[amount_of_sensors];
 
 const int buttonPin = 5; // Button pin connected to D5
 volatile bool stopMeasurementButtonPressedFlag = false; // Volatile flag used in the interrupt routine
@@ -46,8 +48,10 @@ void setup() {
   initializeIMU();
   setupSensors();
 
+  // Create the new filename
   logger = new SD_Logger();
-  // logger->set_name("data.csv");  // Set the name of the log file
+  // logger->set_name("data" + String(random(1, 10001)) + ".csv");  // Set the name of the log file
+  delay(100);
   if (!logger->begin()) {
     Serial.println("SD Logger initialization failed!");
     while (1);  // Stop execution if SD Logger initialization fails
@@ -68,7 +72,7 @@ void loop() {
     logger->end();
     changeLEDColor(-1);
     Serial.println("Pressed stop, now finished");
-    while (true);
+    while(true);
   }
   checkButtonPress(); 
   readSensorData(data);
@@ -77,23 +81,23 @@ void loop() {
   // print data
   if (data[1] != -1) {
     Serial.print("Data: ");
-  for (int i = 1; i <= amount_of_sensors; i++) {
-    Serial.print(data[i]);
-    if (i != amount_of_sensors) {
-      Serial.print(", ");
+    for (int i = 1; i <= amount_of_sensors; i++) {
+      Serial.print(data[i]);
+      if (i != amount_of_sensors) {
+        Serial.print(", ");
+      }
     }
-  }
-  Serial.println();
+    Serial.println();
 
-  Serial.print("IMU [");
-  for (int i = 6; i <= 14; i++) {
-    Serial.print(data[i]);
-    if (i != 14) {
-      Serial.print(", ");
+    Serial.print("IMU [");
+    for (int i = amount_of_sensors+1; i <= amount_of_sensors+9; i++) {
+      Serial.print(data[i]);
+      if (i != amount_of_sensors+9) {
+        Serial.print(", ");
+      }
     }
-  }
-  Serial.println("]");
-  Serial.println("");
+    Serial.println("]");
+    Serial.println("");
   }
 
   delay(20);
@@ -122,11 +126,11 @@ void initializeMLXSensor(Protocentral_MLX90632 &sensor, uint8_t index) {
     Serial.print("Sensor ");
     Serial.print(index);
     Serial.println(" not found. Check wiring or address.");
+    while(true);
   } else {
     Serial.print("Sensor ");
     Serial.print(index);
     Serial.println(" found!");
-    last_data_temp_line[index] = 0;
     // sensor.pre_get_Temp();
     // delay(50);
   }
@@ -166,23 +170,23 @@ void readSensorData(int data[]) {
   int imu_muliplicator = 10000;
   float accelX, accelY, accelZ;
   imu.get_acc(accelX, accelY, accelZ);
-  data[6] = accelX * imu_muliplicator;
-  data[7] = accelY * imu_muliplicator;
-  data[8] = accelZ * imu_muliplicator;
+  data[amount_of_sensors + 1] = accelX * imu_muliplicator;
+  data[amount_of_sensors + 2] = accelY * imu_muliplicator;
+  data[amount_of_sensors + 3] = accelZ * imu_muliplicator;
 
   // Get gyroscope data
   float gyroX, gyroY, gyroZ;
   imu.get_gyro(gyroX, gyroY, gyroZ);
-  data[9] = gyroX * imu_muliplicator;
-  data[10] = gyroY * imu_muliplicator;
-  data[11] = gyroZ * imu_muliplicator;
+  data[amount_of_sensors + 4] = gyroX * imu_muliplicator;
+  data[amount_of_sensors + 5] = gyroY * imu_muliplicator;
+  data[amount_of_sensors + 6] = gyroZ * imu_muliplicator;
 
   // Get magnetometer data
   float magX, magY, magZ;
   imu.get_mag(magX, magY, magZ);
-  data[12] = magX * imu_muliplicator;
-  data[13] = magY * imu_muliplicator;
-  data[14] = magZ * imu_muliplicator;
+  data[amount_of_sensors + 7] = magX * imu_muliplicator;
+  data[amount_of_sensors + 8] = magY * imu_muliplicator;
+  data[amount_of_sensors + 9] = magZ * imu_muliplicator;
 }
 
 void saveDataToSDCard(int data[], int id) {

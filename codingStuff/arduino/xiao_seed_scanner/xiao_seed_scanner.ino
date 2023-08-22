@@ -16,7 +16,7 @@ void loop()
   for (int addr = 1; addr < 128; addr++)
   {
     wi->beginTransmission(addr);
-    if ( 0 == wi->endTransmission() )
+    if (0 == wi->endTransmission())
     {
       Serial.print("Found: 0x");
       Serial.print(addr, HEX);
@@ -24,5 +24,5 @@ void loop()
     }
   }
 
-  delay(5000);
+  delay(500);
 }
