@@ -3,14 +3,31 @@ import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 
 # Read the CSV file into a DataFrame
-data = pd.read_csv('Logging.csv')
+data = pd.read_csv('Logging_xminKüche.csv')
+# data = pd.read_csv('Logging_30minKühlschrankAndTisch.csv')
+# data = pd.read_csv('Logging_30minKühlschrankAndTisch.csv', skiprows=range(1, 22879))
+# data = data[:27000]
+data = data[5000:]
 
 # Adjust the temperature values by dividing by 100 to get the actual temperature
 temperature_columns = ['Temp01', 'Temp02', 'Temp03', 'Temp04', 'Temp05', 'Temp06']
+temperature_sensor_columns = ['ObjTemp01', 'ObjTemp02', 'ObjTemp03', 'ObjTemp04', 'ObjTemp05', 'ObjTemp06']
 data[temperature_columns] = data[temperature_columns] / 100.0
+# data[temperature_columns] = data[temperature_columns].rolling(window=100, min_periods=25, center=True).mean()
+data[temperature_sensor_columns] = data[temperature_sensor_columns] / 100.0
+
 
 # Create a new column for the average temperature across Temp01-Temp06
-data['AverageTemp'] = data[temperature_columns].mean(axis=1)
+# data['AverageTempDiff12'] = data["Temp01"] - data["Temp02"]
+# data['AverageTempDiff13'] = data["Temp01"] - data["Temp03"]
+# data['AverageTempDiff14'] = data["Temp01"] - data["Temp04"]
+# data['AverageTempDiff15'] = data["Temp01"] - data["Temp05"]
+# data['AverageTempDiff16'] = data["Temp01"] - data["Temp06"]
+# data['AverageTempDiff02'] = data[["Temp01", "ObjTemp02"]].mean(axis=1)
+# data['AverageTempDiff03'] = data[["Temp01", "ObjTemp03"]].mean(axis=1)
+# data['AverageTempDiff04'] = data[["Temp01", "ObjTemp04"]].mean(axis=1)
+# data['AverageTempDiff05'] = data[["Temp01", "ObjTemp05"]].mean(axis=1)
+# data['AverageTempDiff06'] = data[["Temp01", "ObjTemp06"]].mean(axis=1)
 
 # Set the timestamp as the index (converting from milliseconds to seconds)
 data['TIMESTAMP'] = pd.to_datetime(data['TIMESTAMP'], unit='ms')
@@ -31,27 +48,56 @@ for i, phase_id in enumerate(phase_ids):
     ax.axvspan(start_timestamp, end_timestamp, facecolor=f'C{i}', alpha=0.2, label=f'Phase {phase_id}')
 
 # Plot temperature data
-lines = plt.plot(data.index, data[temperature_columns])
-plt.plot(data.index, data['AverageTemp'], color='black', linestyle='dashed', label='Average Temp')
+to_plot = [
+        "Temp01",
+"Temp01",
+"Temp03",
+"Temp04",
+"Temp05",
+"Temp06",
+        # "AverageTempDiff12",
+        # "AverageTempDiff13",
+        # "AverageTempDiff14",
+        # "AverageTempDiff15",
+        # "AverageTempDiff16",
+
+     # "AverageTempDiff02",
+     # "AverageTempDiff03",
+     # "AverageTempDiff04",
+     # "AverageTempDiff05",
+     # "AverageTempDiff06",
+    ]
+lines = plt.plot(data.index, data[
+    to_plot
+])
+# plt.plot(data.index, data['AverageTemp'], color='black', linestyle='dashed', label='Average Temp')
 
 plt.xlabel('Timestamp')
 plt.ylabel('Temperature (°C)')
 plt.title('Temperature Measurements')
-plt.ylim(27, 37)  # Set y-axis limits
+plt.ylim(28, 30)  # Set y-axis limits
 
 # Use AutoDateLocator for automatic x-axis ticks
 ax.xaxis.set_major_locator(mdates.AutoDateLocator(minticks=5, maxticks=20))
 ax.xaxis.set_major_formatter(mdates.DateFormatter('%M:%S'))
 
 # Add legend for temperature sensors
-plt.legend(lines + [line for line in plt.plot([], [], color='black', linestyle='dashed')], temperature_columns + ['Average Temp'], loc='upper right')
+plt.legend(lines + [line for line in plt.plot([], [], color='black', linestyle='dashed')], to_plot, loc='upper right')
 
 # Add phase legend separately
 handles, labels = ax.get_legend_handles_labels()
 unique_labels = list(set(labels))
-phase_legend = ax.legend([handle for handle, label in zip(handles, labels) if label.startswith('Phase')], unique_labels, loc='upper left')
-ax.add_artist(phase_legend)
+# phase_legend = ax.legend([handle for handle, label in zip(handles, labels) if label.startswith('Phase')], unique_labels, loc='upper left')
+# ax.add_artist(phase_legend)
 
 plt.xticks(rotation=45)
 plt.tight_layout()
+plt.savefig('output.png')
 plt.show()
+
+temperature_columns = ['Temp01', 'Temp02', 'Temp03', 'Temp04', 'Temp05', 'Temp06']
+temperature_data = data[temperature_columns]
+correlation_matrix = temperature_data.corr()
+
+print("Correlation Matrix All:")
+print(correlation_matrix)
