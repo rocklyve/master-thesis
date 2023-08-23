@@ -116,6 +116,7 @@ void Protocentral_MLX90632::pre_get_Temp() {
 }
 
 float Protocentral_MLX90632::get_sensor_temp() {
+  //Get RAM_6 and RAM_9
   int16_t sixRAM;
   readRegister16(RAM_6, (uint16_t&)sixRAM);
   int16_t nineRAM;
@@ -126,6 +127,20 @@ float Protocentral_MLX90632::get_sensor_temp() {
   double AMB = (sixRAM / 12.0) / VRta * pow(2, 19);
 
   double sensorTemp = P_O + (AMB - P_R) / P_G + P_T * pow((AMB - P_R), 2);
+
+  if (_printDebug)
+  {
+    _debugPort->print(F("sixRAM: "));
+    _debugPort->println(sixRAM);
+    _debugPort->print(F("nineRAM: "));
+    _debugPort->println(nineRAM);
+    _debugPort->print(F("VRta: "));
+    _debugPort->println(VRta, 7);
+    _debugPort->print(F("AMB: "));
+    _debugPort->println(AMB, 10);
+    _debugPort->print(F("sensorTemp (Ta): "));
+    _debugPort->println(sensorTemp, 4);
+  }
 
   return(sensorTemp);
 }
@@ -144,13 +159,39 @@ float Protocentral_MLX90632::get_sensor_temp() {
   int16_t lowerRAM = 0;
   int16_t upperRAM = 0;
 
+  //Get RAM_6 and RAM_9
   int16_t sixRAM;
   readRegister16(RAM_6, (uint16_t&)sixRAM);
   int16_t nineRAM;
   readRegister16(RAM_9, (uint16_t&)nineRAM);
 
+  //Read cycle_pos to get measurement pointer
+  int cyclePosition = getCyclePosition();
+
+  //If cycle_pos = 1
+  //Calculate TA and TO based on RAM_4, RAM_5, RAM_6, RAM_9
+  if (cyclePosition == 1)
+  {
+    readRegister16(RAM_4, (uint16_t&)lowerRAM);
+    readRegister16(RAM_5, (uint16_t&)upperRAM);
+  }
+  //If cycle_pos = 2
+  //Calculate TA and TO based on RAM_7, RAM_8, RAM_6, RAM_9
+  else if (cyclePosition == 2)
+  {
+    readRegister16(RAM_7, (uint16_t&)lowerRAM);
+    readRegister16(RAM_8, (uint16_t&)upperRAM);
+  }
+  else
+  {
+    if (_printDebug) _debugPort->println(F("Found a cycle position that was not 1 or 2"));
+    readRegister16(RAM_4, (uint16_t&)lowerRAM);
+    readRegister16(RAM_5, (uint16_t&)upperRAM);
+  }
+
   //Object temp requires 3 iterations
-  for (uint8_t i = 0 ; i < 3 ; i++) {
+  for (uint8_t i = 0 ; i < 3 ; i++)
+  {
     double VRta = nineRAM + Gb * (sixRAM / 12.0);
 
     double AMB = (sixRAM / 12.0) / VRta * pow(2, 19);
@@ -170,11 +211,47 @@ float Protocentral_MLX90632::get_sensor_temp() {
     double objectTemp = bigFraction + pow(ambientTempK, 4);
     objectTemp = pow(objectTemp, 0.25); //Take 4th root
     objectTemp = objectTemp - 273.15 - Hb;
+
     TO0 = objectTemp;
+
+    if (_printDebug)
+    {
+      _debugPort->println();
+      _debugPort->print(F("VRta: "));
+      _debugPort->println(VRta);
+      _debugPort->print(F("AMB: "));
+      _debugPort->println(AMB, 10);
+      _debugPort->print(F("sensorTemp (Ta): "));
+      _debugPort->println(sensorTemp, 4);
+      _debugPort->print(F("S: "));
+      _debugPort->println(S);
+      _debugPort->print(F("VRto: "));
+      _debugPort->println(VRto);
+      _debugPort->print(F("Sto: "));
+      _debugPort->println(Sto);
+      _debugPort->print(F("TAdut: "));
+      _debugPort->println(TAdut, 10);
+      _debugPort->print(F("ambientTempK: "));
+      _debugPort->println(ambientTempK, 10);
+      _debugPort->print(F("bigFraction: "));
+      _debugPort->println(bigFraction, 4);
+
+      _debugPort->print(F("Object temp "));
+      _debugPort->print(i);
+      _debugPort->print(F(": "));
+      _debugPort->println(objectTemp, 7);
+    }
   }
 
   return (TO0);
  }
+
+ //Returns the cycle_pos from status register. cycle_pos is 0 to 31
+uint8_t Protocentral_MLX90632::getCyclePosition() {
+  uint16_t status = getStatus() >> BIT_CYCLE_POS; //Shave off last two bits
+  status &= 0x1F; //Get lower 5 bits.
+  return (status);
+}
 
 
 float Protocentral_MLX90632::getObjectTemp()

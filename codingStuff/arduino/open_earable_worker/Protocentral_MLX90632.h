@@ -104,6 +104,7 @@ class Protocentral_MLX90632 {
     bool dataAvailable();
     float get_Temp();
     float get_sensor_temp();
+    uint8_t getCyclePosition();
 
     float getObjectTemp();
     float getObjectTemp(status &returnError);
