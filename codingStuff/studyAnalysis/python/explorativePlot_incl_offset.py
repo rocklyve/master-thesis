@@ -8,7 +8,7 @@ import matplotlib.dates as mdates
 # data = pd.read_csv('data/Logging_08_28_KühlschrankUndTisch_Metall.csv')
 # data = pd.read_csv('data/Logging_08_26_Offenburg_Boden_Metall.csv')
 # data = pd.read_csv('data/Logging_08_25_Küchentisch_Metall.csv')
-data = pd.read_csv('data/Logging_08_29_Backofen.csv')
+data = pd.read_csv('data/Logging_08_29_Backofen_Metall.csv')
 # data = data[55000:]
 # data = data[10000:]
 # data = data[:45000]
@@ -17,7 +17,7 @@ data = pd.read_csv('data/Logging_08_29_Backofen.csv')
 temperature_columns = ['Temp01', 'Temp02', 'Temp03', 'Temp04', 'Temp05', 'Temp06']
 temperature_sensor_columns = ['ObjTemp01', 'ObjTemp02', 'ObjTemp03', 'ObjTemp04', 'ObjTemp05', 'ObjTemp06']
 data[temperature_columns] = data[temperature_columns] / 100.0
-data[temperature_columns] = data[temperature_columns].rolling(window=100, min_periods=25, center=True).mean()
+data[temperature_columns] = data[temperature_columns].rolling(window=int(len(data.index)/50), min_periods=int(len(data.index)/200), center=True).mean()
 data[temperature_sensor_columns] = data[temperature_sensor_columns] / 100.0
 
 
@@ -87,10 +87,7 @@ lines = plt.plot(data.index, data[
 plt.xlabel('Timestamp')
 plt.ylabel('Temperature (°C)')
 plt.title('Temperature Measurements')
-# plt.ylim(26, 30)
-# plt.ylim(8,10)
-# plt.ylim(7, 11)
-plt.ylim(30, 47)
+plt.ylim(data[temperature_columns].min().min(), data[temperature_columns].max().max())  # Set y-axis limits
 
 # Use AutoDateLocator for automatic x-axis ticks
 ax.xaxis.set_major_locator(mdates.AutoDateLocator(minticks=5, maxticks=20))
@@ -109,3 +106,6 @@ plt.xticks(rotation=45)
 plt.tight_layout()
 plt.savefig('output.png')
 plt.show()
+
+# terminate program
+exit(0)

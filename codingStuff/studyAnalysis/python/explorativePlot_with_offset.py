@@ -4,8 +4,10 @@ import matplotlib.dates as mdates
 
 # Read the CSV file into a DataFrame
 # data = pd.read_csv('data/Logging_08_25_Boden_hoch.csv')
-data = pd.read_csv('data/Logging_08_29_Backofen.csv')
+# data = pd.read_csv('data/Logging_08_26_Offenburg_Boden_Metall.csv')
 # data = pd.read_csv('data/Logging_08_25_Kühlschrank_Metall.csv')
+data = pd.read_csv('data/Logging_08_29_Ultimaker_45_degree_Metall.csv')
+data = data[4000:]
 # data = data[11000:]
 # data = data[:25000]
 
@@ -13,12 +15,12 @@ data = pd.read_csv('data/Logging_08_29_Backofen.csv')
 temperature_columns = ['Temp01', 'Temp02', 'Temp03', 'Temp04', 'Temp05', 'Temp06']
 temperature_sensor_columns = ['ObjTemp01', 'ObjTemp02', 'ObjTemp03', 'ObjTemp04', 'ObjTemp05', 'ObjTemp06']
 data[temperature_columns] = data[temperature_columns] / 100.0
-data[temperature_columns] = data[temperature_columns].rolling(window=100, min_periods=25, center=True).mean()
+data[temperature_columns] = data[temperature_columns].rolling(window=int(len(data.index)/50), min_periods=int(len(data.index)/200), center=True).mean()
 data[temperature_sensor_columns] = data[temperature_sensor_columns] / 100.0
 
 
 # Create a new column for the average temperature across Temp01-Temp06
-data['RealTemperature'] = data[['Temp01', 'Temp02', 'Temp03', 'Temp04', 'Temp05', 'Temp06']].mean(axis=1)
+data["MeanTemperature"] = data[temperature_columns].mean(axis=1)
 
 offsets = {}
 std_devs = {}
@@ -28,7 +30,7 @@ data_means = {}
 # Calculate the offset, standard deviation, and variance for each sensor based on the difference from the real temperature mean
 for col in temperature_columns:
     data_mean = data[col].mean()
-    offset = data['RealTemperature'].mean() - data_mean
+    offset = data["MeanTemperature"].mean() - data_mean
     std_dev = data[col].std()
     variance = data[col].var()
 
@@ -79,18 +81,15 @@ for i, phase_id in enumerate(phase_ids):
     ax.axvspan(start_timestamp, end_timestamp, facecolor=f'C{i}', alpha=0.2, label=f'Phase {phase_id}')
 
 # Plot temperature data
-to_plot = temperature_columns
-        # "AverageTempDiff12",
-        # "AverageTempDiff13",
-        # "AverageTempDiff14",
-        # "AverageTempDiff15",
-        # "AverageTempDiff16",
-
-     # "AverageTempDiff02",
-     # "AverageTempDiff03",
-     # "AverageTempDiff04",
-     # "AverageTempDiff05",
-     # "AverageTempDiff06",
+to_plot = [
+    "Temp01",
+    "Temp02",
+    "Temp03",
+    "Temp04",
+    "Temp05",
+    "Temp06",
+    "MeanTemperature"
+]
 
 lines = plt.plot(data.index, data[
     to_plot
@@ -100,9 +99,7 @@ lines = plt.plot(data.index, data[
 plt.xlabel('Timestamp')
 plt.ylabel('Temperature (°C)')
 plt.title('Temperature Measurements')
-plt.ylim(30, 47)  # Set y-axis limits
-# plt.ylim(6, 25.5)  # Set y-axis limits
-# plt.ylim(8.5, 9.5)  # Set y-axis limits
+plt.ylim(data[temperature_columns].min().min(), data[temperature_columns].max().max())  # Set y-axis limits
 
 # Use AutoDateLocator for automatic x-axis ticks
 ax.xaxis.set_major_locator(mdates.AutoDateLocator(minticks=5, maxticks=20))
@@ -121,3 +118,6 @@ plt.xticks(rotation=45)
 plt.tight_layout()
 plt.savefig('output.png')
 plt.show()
+
+# terminate program
+exit(0)

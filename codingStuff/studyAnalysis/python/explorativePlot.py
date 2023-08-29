@@ -3,17 +3,18 @@ import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 
 # Read the CSV file into a DataFrame
-data = pd.read_csv('data/Logging_08_29_Backofen.csv')
+# data = pd.read_csv('data/Logging_08_29_Backofen_Metall.csv')
+data = pd.read_csv('data/Logging_08_29_Ultimaker_45_degree_Metall.csv')
 # data = pd.read_csv('Logging_30minKühlschrankAndTisch.csv')
 # data = pd.read_csv('Logging_30minKühlschrankAndTisch.csv', skiprows=range(1, 22879))
 # data = data[:30000]
-# data = data[5000:]
+data = data[4000:]
 
 # Adjust the temperature values by dividing by 100 to get the actual temperature
 temperature_columns = ['Temp01', 'Temp02', 'Temp03', 'Temp04', 'Temp05', 'Temp06']
 temperature_sensor_columns = ['ObjTemp01', 'ObjTemp02', 'ObjTemp03', 'ObjTemp04', 'ObjTemp05', 'ObjTemp06']
 data[temperature_columns] = data[temperature_columns] / 100.0
-data[temperature_columns] = data[temperature_columns].rolling(window=100, min_periods=25, center=True).mean()
+data[temperature_columns] = data[temperature_columns].rolling(window=int(len(data.index)/50), min_periods=int(len(data.index)/200), center=True).mean()
 data[temperature_sensor_columns] = data[temperature_sensor_columns] / 100.0
 
 
@@ -63,7 +64,7 @@ lines = plt.plot(data.index, data[
 plt.xlabel('Timestamp')
 plt.ylabel('Temperature (°C)')
 plt.title('Temperature Measurements')
-plt.ylim(30, 47)  # Set y-axis limits
+plt.ylim(data[temperature_columns].min().min(), data[temperature_columns].max().max())  # Set y-axis limits
 
 # Use AutoDateLocator for automatic x-axis ticks
 ax.xaxis.set_major_locator(mdates.AutoDateLocator(minticks=5, maxticks=20))
