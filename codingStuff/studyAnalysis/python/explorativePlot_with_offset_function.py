@@ -37,16 +37,17 @@ def calibrate2(index):
 # Read the CSV file into a DataFrame
 # data = pd.read_csv('data/Logging_08_29_Backofen_Metall.csv')
 # data = pd.read_csv('data/Logging_08_26_Offenburg_Boden_Metall.csv')
-data = pd.read_csv('data/Logging_08_29_Ultimaker_40_degree_Metall.csv')
-data2 = pd.read_csv('data/Logging_08_29_Ultimaker_45_degree_Metall.csv')
+data = pd.read_csv('data/Logging_08_29_Ultimaker_35_degree_Metall.csv')
+# data = pd.read_csv('data/Logging_08_29_Ultimaker_40_degree_Metall.csv')
+# data = pd.read_csv('data/Logging_08_29_Ultimaker_45_degree_Metall.csv')
 
 data = data[100:-100]
-data2 = data[100:-100]
+# data2 = data[100:-100]
 
 # add max timestamp of data to data2
-data2['TIMESTAMP'] = data['TIMESTAMP'].max() + data2['TIMESTAMP']
+# data2['TIMESTAMP'] = data['TIMESTAMP'].max() + data2['TIMESTAMP']
 # combine data and data2
-data = pd.concat([data, data2])
+# data = pd.concat([data, data2])
 
 # Adjust the temperature values by dividing by 100 to get the actual temperature
 temperature_columns = ['Temp01', 'Temp02', 'Temp03', 'Temp04', 'Temp05', 'Temp06']
@@ -103,8 +104,7 @@ lines = plt.plot(data.index, data[
 plt.xlabel('Timestamp')
 plt.ylabel('Temperature (°C)')
 plt.title('Temperature Measurements')
-# plt.ylim(data[temperature_columns].min().min(), data[temperature_columns].max().max())  # Set y-axis limits
-plt.ylim(36, data[temperature_columns].max().max())  # Set y-axis limits
+plt.ylim(data[temperature_columns].min().min(), data[temperature_columns].max().max())  # Set y-axis limits
 
 # Use AutoDateLocator for automatic x-axis ticks
 ax.xaxis.set_major_locator(mdates.AutoDateLocator(minticks=5, maxticks=20))
