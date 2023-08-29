@@ -3,31 +3,19 @@ import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 
 # Read the CSV file into a DataFrame
-data = pd.read_csv('Logging_xminKüche.csv')
+data = pd.read_csv('data/Logging_08_29_Backofen.csv')
 # data = pd.read_csv('Logging_30minKühlschrankAndTisch.csv')
 # data = pd.read_csv('Logging_30minKühlschrankAndTisch.csv', skiprows=range(1, 22879))
-# data = data[:27000]
-data = data[5000:]
+# data = data[:30000]
+# data = data[5000:]
 
 # Adjust the temperature values by dividing by 100 to get the actual temperature
 temperature_columns = ['Temp01', 'Temp02', 'Temp03', 'Temp04', 'Temp05', 'Temp06']
 temperature_sensor_columns = ['ObjTemp01', 'ObjTemp02', 'ObjTemp03', 'ObjTemp04', 'ObjTemp05', 'ObjTemp06']
 data[temperature_columns] = data[temperature_columns] / 100.0
-# data[temperature_columns] = data[temperature_columns].rolling(window=100, min_periods=25, center=True).mean()
+data[temperature_columns] = data[temperature_columns].rolling(window=100, min_periods=25, center=True).mean()
 data[temperature_sensor_columns] = data[temperature_sensor_columns] / 100.0
 
-
-# Create a new column for the average temperature across Temp01-Temp06
-# data['AverageTempDiff12'] = data["Temp01"] - data["Temp02"]
-# data['AverageTempDiff13'] = data["Temp01"] - data["Temp03"]
-# data['AverageTempDiff14'] = data["Temp01"] - data["Temp04"]
-# data['AverageTempDiff15'] = data["Temp01"] - data["Temp05"]
-# data['AverageTempDiff16'] = data["Temp01"] - data["Temp06"]
-# data['AverageTempDiff02'] = data[["Temp01", "ObjTemp02"]].mean(axis=1)
-# data['AverageTempDiff03'] = data[["Temp01", "ObjTemp03"]].mean(axis=1)
-# data['AverageTempDiff04'] = data[["Temp01", "ObjTemp04"]].mean(axis=1)
-# data['AverageTempDiff05'] = data[["Temp01", "ObjTemp05"]].mean(axis=1)
-# data['AverageTempDiff06'] = data[["Temp01", "ObjTemp06"]].mean(axis=1)
 
 # Set the timestamp as the index (converting from milliseconds to seconds)
 data['TIMESTAMP'] = pd.to_datetime(data['TIMESTAMP'], unit='ms')
@@ -50,11 +38,11 @@ for i, phase_id in enumerate(phase_ids):
 # Plot temperature data
 to_plot = [
         "Temp01",
-"Temp01",
-"Temp03",
-"Temp04",
-"Temp05",
-"Temp06",
+        "Temp02",
+        "Temp03",
+        "Temp04",
+        "Temp05",
+        "Temp06",
         # "AverageTempDiff12",
         # "AverageTempDiff13",
         # "AverageTempDiff14",
@@ -75,7 +63,7 @@ lines = plt.plot(data.index, data[
 plt.xlabel('Timestamp')
 plt.ylabel('Temperature (°C)')
 plt.title('Temperature Measurements')
-plt.ylim(28, 30)  # Set y-axis limits
+plt.ylim(30, 47)  # Set y-axis limits
 
 # Use AutoDateLocator for automatic x-axis ticks
 ax.xaxis.set_major_locator(mdates.AutoDateLocator(minticks=5, maxticks=20))

@@ -12,6 +12,7 @@ IMU_Sensor imu;
 bool isDebugMode = false;
 
 const uint8_t MLX_CHANNELS[] = {1,2,3,4,6,7};
+int found_sensor_counter = 0;
 // PCB is 4,6,7
 // FlexPCB is 1,2,3
 const uint8_t amount_of_sensors = sizeof(MLX_CHANNELS);
@@ -44,7 +45,6 @@ void setup() {
   while (!Serial) {};
 
   setupButtonInterrupt();
-  changeLEDColor(measurement_state); // Change LED color based on initial measurement state
   initializeIMU();
   setupSensors();
 
@@ -62,54 +62,59 @@ void setup() {
 
 /*****************************************  loop() *************************************************/
 void loop() {
-  int amount_of_data_columns = 2 * amount_of_sensors + 9; 
-  int data[amount_of_data_columns + 1];
-  data[0] = amount_of_data_columns;  // Number of data elements
+  if (found_sensor_counter != amount_of_sensors) {
+    setupSensors();
+    delay(2000);
+  } else {
+    int amount_of_data_columns = 2 * amount_of_sensors + 9; 
+    int data[amount_of_data_columns + 1];
+    data[0] = amount_of_data_columns;  // Number of data elements
 
-  if (stopMeasurementButtonPressedFlag) {
-    saveDataToSDCard(data, -1);
-    // Logging the data
-    logger->end();
-    changeLEDColor(-1);
-    Serial.println("Pressed stop, now finished");
-    while(true);
+    if (stopMeasurementButtonPressedFlag) {
+      saveDataToSDCard(data, -1);
+      // Logging the data
+      logger->end();
+      changeLEDColor(-1);
+      Serial.println("Pressed stop, now finished");
+      while(true);
+    }
+    checkButtonPress(); 
+    readSensorData(data);
+    saveDataToSDCard(data, measurement_state);
+
+    // print data
+    if (data[1] != -1) {
+      Serial.print("Object Temperature: ");
+      for (int i = 1; i <= amount_of_sensors; i++) {
+        Serial.print(data[i]);
+        if (i != amount_of_sensors) {
+          Serial.print(", ");
+        }
+      }
+      Serial.println();
+
+      Serial.print("Sensor Temperature: ");
+      for (int i = amount_of_sensors + 1; i <= 2 * amount_of_sensors; i++) {
+        Serial.print(data[i]);
+        if (i != 2 * amount_of_sensors) {
+          Serial.print(", ");
+        }
+      }
+      Serial.println();
+
+      Serial.print("IMU [");
+      for (int i = 2 * amount_of_sensors+1; i <= 2 * amount_of_sensors+9; i++) {
+        Serial.print(data[i]);
+        if (i != 2 * amount_of_sensors+9) {
+          Serial.print(", ");
+        }
+      }
+      Serial.println("]");
+      Serial.println("");
+    }
+
+    delay(20);
   }
-  checkButtonPress(); 
-  readSensorData(data);
-  saveDataToSDCard(data, measurement_state);
-
-  // print data
-  if (data[1] != -1) {
-    Serial.print("Object Temperature: ");
-    for (int i = 1; i <= amount_of_sensors; i++) {
-      Serial.print(data[i]);
-      if (i != amount_of_sensors) {
-        Serial.print(", ");
-      }
-    }
-    Serial.println();
-
-    Serial.print("Sensor Temperature: ");
-    for (int i = amount_of_sensors + 1; i <= 2 * amount_of_sensors; i++) {
-      Serial.print(data[i]);
-      if (i != 2 * amount_of_sensors) {
-        Serial.print(", ");
-      }
-    }
-    Serial.println();
-
-    Serial.print("IMU [");
-    for (int i = 2 * amount_of_sensors+1; i <= 2 * amount_of_sensors+9; i++) {
-      Serial.print(data[i]);
-      if (i != 2 * amount_of_sensors+9) {
-        Serial.print(", ");
-      }
-    }
-    Serial.println("]");
-    Serial.println("");
-  }
-
-  delay(20);
 }
 
 void setupSensors() {
@@ -118,8 +123,14 @@ void setupSensors() {
   // Initialize the multiplexer
   mux.begin();
   // Initialize MLX sensors...
+  found_sensor_counter = 0;
   for (uint8_t i = 0; i < amount_of_sensors; i++) {
     initializeMLXSensor(mlx[i], i);
+  }
+  if (found_sensor_counter == amount_of_sensors) {
+    changeLEDColor(measurement_state); // Change LED color based on initial measurement state
+  } else {
+    changeLEDColor(-1);
   }
 }
 
@@ -135,11 +146,11 @@ void initializeMLXSensor(Protocentral_MLX90632 &sensor, uint8_t index) {
     Serial.print("Sensor ");
     Serial.print(index);
     Serial.println(" not found. Check wiring or address.");
-    while(true);
   } else {
     Serial.print("Sensor ");
     Serial.print(index);
     Serial.println(" found!");
+    found_sensor_counter = found_sensor_counter + 1;
     // sensor.pre_get_Temp();
     // delay(50);
   }
@@ -244,10 +255,14 @@ void changeLEDColor(int id) {
 
   // Adjust color values based on measurement_state (id)
   if (id != -1) {
-    if (id % 3 == 0) { // Every third state (1, 4, 7, etc.) - Red
+    if (id % 4 == 0) { // Every third state (1, 4, 7, etc.) - Red
       redValue = 0;
-    } else if (id % 3 == 1) { // Every third state + 1 (2, 5, 8, etc.) - Green
+    } else if (id % 4 == 1) { // Every third state + 1 (2, 5, 8, etc.) - Green
       greenValue = 0;
+    } else if (id % 4 == 2) { // Every third state + 1 (2, 5, 8, etc.) - Green
+      int redValue = 100;
+      int greenValue = 100;
+      int blueValue = 100;
     } else { // Every third state + 2 (3, 6, 9, etc.) - Blue
       blueValue = 0;
     }

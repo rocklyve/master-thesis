@@ -43,6 +43,8 @@ double TO0 = 25.0; //object temp from previous calculation
 double TA0 = 25.0; //ambient temp from previous calculation
 double sensorTemp; //Internal temp of the MLX sensor
 
+double emissivity = 0.98;
+
 boolean Protocentral_MLX90632::begin()
 {
   uint8_t deviceAddress = MLX90632_ADDRESS;
@@ -206,7 +208,7 @@ float Protocentral_MLX90632::get_sensor_temp() {
 
     double ambientTempK = TAdut + 273.15;
 
-    double bigFraction = Sto / (1 * Fa * Ha * (1 + Ga * (TOdut - TO0) + Fb * (TAdut - TA0)));
+    double bigFraction = Sto / (emissivity * Fa * Ha * (1 + Ga * (TOdut - TO0) + Fb * (TAdut - TA0)));
 
     double objectTemp = bigFraction + pow(ambientTempK, 4);
     objectTemp = pow(objectTemp, 0.25); //Take 4th root
