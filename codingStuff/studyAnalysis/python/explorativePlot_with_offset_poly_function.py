@@ -3,21 +3,20 @@ import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 import numpy as np
 
-def calibrate(x, y):
+def calibrate_polynomial(x, y, degree):
     """
-   Calibrate one series of temperature readings (x) against another (y).
+    Calibrate one series of temperature readings (x) against another (y) using a polynomial fit.
 
-   Args:
-       x (list or numpy array): First series of temperature readings.
-       y (list or numpy array): Second series of temperature readings.
+    Args:
+        x (list or numpy array): First series of temperature readings.
+        y (list or numpy array): Second series of temperature readings.
+        degree (int): Degree of the polynomial fit.
 
-   Returns:
-       a (float): Slope of the linear fit.
-       b (float): Intercept of the linear fit.
-   """
-    A = np.vstack([x, np.ones(len(x))]).T
-    a, b = np.linalg.lstsq(A, y, rcond=None)[0]
-    return a, b
+    Returns:
+        coeffs (numpy array): Coefficients of the polynomial fit.
+    """
+    coeffs = np.polyfit(x, y, degree)
+    return coeffs
 
 
 def calibrate2(index):
@@ -59,13 +58,24 @@ data[temperature_sensor_columns] = data[temperature_sensor_columns] / 100.0
 # Create a new column for the average temperature across Temp01-Temp06
 data["MeanTemperature"] = data[temperature_columns].mean(axis=1)
 
+# calibrated_temps = {}
+# for col in temperature_columns:
+#     a, b = calibrate(data[col], data["MeanTemperature"])
+#     degree = 2  # Example polynomial degree
+#     # poly_coeffs = calibrate_polynomial(data[col], data["MeanTemperature"], degree)
+#     # a, b = calibrate2(int(col[-2:]))
+#     calibrated_temps[col] = data[col] * a + b
+#     data[col] = calibrated_temps[col]
+#     print(f"For {col}: a = {a:.4f}, b = {b:.4f}")
+
 calibrated_temps = {}
+degree = 2  # Example polynomial degree
+
 for col in temperature_columns:
-    a, b = calibrate(data[col], data["MeanTemperature"])
-    # a, b = calibrate2(int(col[-2:]))
-    calibrated_temps[col] = data[col] * a + b
+    coeffs = calibrate_polynomial(data[col], data["MeanTemperature"], degree)
+    calibrated_temps[col] = np.polyval(coeffs, data[col])
     data[col] = calibrated_temps[col]
-    print(f"For {col}: a = {a:.4f}, b = {b:.4f}")
+    print(f"For {col}: Coefficients = {coeffs}")
 
 # Set the timestamp as the index (converting from milliseconds to seconds)
 data['TIMESTAMP'] = pd.to_datetime(data['TIMESTAMP'], unit='ms')
