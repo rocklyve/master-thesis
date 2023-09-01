@@ -42,7 +42,7 @@ void handleButtonPress();
 /*****************************************  setup() *************************************************/
 void setup() {
   Serial.begin(9600);
-  while (!Serial) {};
+  // while (!Serial) {};
 
   setupButtonInterrupt();
   initializeIMU();
