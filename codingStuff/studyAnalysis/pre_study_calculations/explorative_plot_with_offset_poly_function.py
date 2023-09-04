@@ -5,7 +5,7 @@ import numpy as np
 
 
 class ExplorativePlotWithOffsetPolyFunction:
-    def calibrate_polynomial(x, y, degree):
+    def calibrate_polynomial(self, x, y, degree):
         """
         Calibrate one series of temperature readings (x) against another (y) using a polynomial fit.
 
@@ -21,7 +21,7 @@ class ExplorativePlotWithOffsetPolyFunction:
         return coeffs
 
 
-    def calibrate2(index):
+    def calibrate2(self, index):
         # depending on index between 1 and 6, different a and b values should be returned
         #For Temp01: a = 0.9312, b = 2.4677
         #For Temp02: a = 0.9134, b = 2.7736
@@ -35,7 +35,7 @@ class ExplorativePlotWithOffsetPolyFunction:
         return a[index - 1], b[index - 1]
 
 
-    def execute(self):
+    def execute(self, plot_name: str):
         # Read the CSV file into a DataFrame
         # data = pd.read_csv('data/Logging_08_29_Backofen_Metall.csv')
         # data = pd.read_csv('data/Logging_08_26_Offenburg_Boden_Metall.csv')
@@ -137,9 +137,6 @@ class ExplorativePlotWithOffsetPolyFunction:
 
         plt.xticks(rotation=45)
         plt.tight_layout()
-        plt.savefig('output.png')
+        plt.savefig('target/' + plot_name + '.png')
         plt.show()
-
-        # terminate program
-        exit(0)
         pass

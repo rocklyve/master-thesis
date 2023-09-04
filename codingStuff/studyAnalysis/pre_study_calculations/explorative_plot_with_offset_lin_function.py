@@ -5,7 +5,7 @@ import numpy as np
 
 
 class ExplorativePlotWithOffsetLinFunction:
-    def calibrate(x, y):
+    def calibrate(self, x, y):
         """
        Calibrate one series of temperature readings (x) against another (y).
 
@@ -22,7 +22,7 @@ class ExplorativePlotWithOffsetLinFunction:
         return a, b
 
 
-    def calibrate2(index):
+    def calibrate2(self, index):
         # depending on index between 1 and 6, different a and b values should be returned
         #For Temp01: a = 0.9312, b = 2.4677
         #For Temp02: a = 0.9134, b = 2.7736
@@ -36,7 +36,7 @@ class ExplorativePlotWithOffsetLinFunction:
         return a[index - 1], b[index - 1]
 
 
-    def execute(self):
+    def execute(self, plot_name: str):
         # Read the CSV file into a DataFrame
         # data = pd.read_csv('data/Logging_08_29_Backofen_Metall.csv')
         # data = pd.read_csv('data/Logging_08_26_Offenburg_Boden_Metall.csv')
@@ -66,7 +66,7 @@ class ExplorativePlotWithOffsetLinFunction:
 
         calibrated_temps = {}
         for col in temperature_columns:
-            a, b = calibrate(data[col], data["MeanTemperature"])
+            a, b = self.calibrate(data[col], data["MeanTemperature"])
             # a, b = calibrate2(int(col[-2:]))
             calibrated_temps[col] = data[col] * a + b
             data[col] = calibrated_temps[col]
@@ -127,9 +127,6 @@ class ExplorativePlotWithOffsetLinFunction:
 
         plt.xticks(rotation=45)
         plt.tight_layout()
-        plt.savefig('output.png')
+        plt.savefig('target/' + plot_name + '.png')
         plt.show()
-
-        # terminate program
-        exit(0)
         pass

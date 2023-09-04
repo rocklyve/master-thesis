@@ -4,7 +4,7 @@ import matplotlib.dates as mdates
 
 
 class ExplorativePlot:
-    def execute(self):
+    def execute(self, plot_name: str):
         # Read the CSV file into a DataFrame
         # data = pd.read_csv('data/Logging_08_29_Backofen_Metall.csv')
         data = pd.read_csv('data/Logging_08_29_Ultimaker_45_degree_Metall.csv')
@@ -86,7 +86,7 @@ class ExplorativePlot:
 
         plt.xticks(rotation=45)
         plt.tight_layout()
-        plt.savefig('output.png')
+        plt.savefig('target/' + plot_name + '.png')
         plt.show()
 
         temperature_columns = ['Temp01', 'Temp02', 'Temp03', 'Temp04', 'Temp05', 'Temp06']
@@ -95,5 +95,4 @@ class ExplorativePlot:
 
         print("Correlation Matrix All:")
         print(correlation_matrix)
-        exit(0)
         pass

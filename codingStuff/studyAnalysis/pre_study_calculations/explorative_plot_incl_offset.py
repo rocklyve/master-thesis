@@ -4,7 +4,7 @@ import matplotlib.dates as mdates
 
 class ExplorativePlotInclOffset:
 
-    def execute(self):
+    def execute(self, plot_name: str):
         # Read the CSV file into a DataFrame
         # data = pd.read_csv('data/Logging_08_25_Küchentisch_Metall.csv')
         # data = pd.read_csv('data/Logging_08_25_Kühlschrank_Metall.csv')
@@ -109,9 +109,6 @@ class ExplorativePlotInclOffset:
 
         plt.xticks(rotation=45)
         plt.tight_layout()
-        plt.savefig('output.png')
+        plt.savefig('target/' + plot_name + '.png')
         plt.show()
-
-        # terminate program
-        exit(0)
         pass

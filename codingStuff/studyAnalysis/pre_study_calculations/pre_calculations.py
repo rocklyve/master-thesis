@@ -19,15 +19,16 @@ class PreCalculations:
         self.explorative_plot_mean_offset = ExplorativePlotMeanOffset()
 
     def execute(self):
-        # self.explorative_plot.execute()
-        self.explorative_plot_concat.execute()
-        # self.explorative_plot_incl_offset.execute()
-        # self.explorative_plot_with_offset.execute()
-        # self.explorative_plot_with_offset_lin_function.execute()
-        # self.explorative_plot_with_offset_poly_function.execute()
+        # self.explorative_plot.execute("explorative_plot")
+        self.explorative_plot_concat.execute("explorative_plot_concat")
+        # self.explorative_plot_incl_offset.execute("explorative_plot_incl_offset")
+        # self.explorative_plot_with_offset.execute("explorative_plot_with_offset")
+        # self.explorative_plot_with_offset_lin_function.execute("explorative_plot_with_offset_lin_function")
+        # self.explorative_plot_with_offset_poly_function.execute("explorative_plot_with_offset_poly_function")
         # self.explorative_plot_mean_offset.execute()
 
 
 if __name__ == "__main__":
     main_instance = PreCalculations()
     main_instance.execute()
+    exit(0)

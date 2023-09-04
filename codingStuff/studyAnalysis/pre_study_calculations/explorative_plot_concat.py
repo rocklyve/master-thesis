@@ -3,9 +3,56 @@ import os
 import numpy as np
 import matplotlib.pyplot as plt
 
+
 # List of CSV files containing measurements
 class ExplorativePlotConcat:
-    def execute(self):
+    def calibrate_polynomial(self, x, y, degree):
+        """
+        Calibrate one series of temperature readings (x) against another (y) using a polynomial fit.
+
+        Args:
+            x (list or numpy array): First series of temperature readings.
+            y (list or numpy array): Second series of temperature readings.
+            degree (int): Degree of the polynomial fit.
+
+        Returns:
+            coeffs (numpy array): Coefficients of the polynomial fit.
+        """
+        coeffs = np.polyfit(x, y, degree)
+        return coeffs
+
+    def calibrate(self, x, y):
+        """
+       Calibrate one series of temperature readings (x) against another (y).
+
+       Args:
+           x (list or numpy array): First series of temperature readings.
+           y (list or numpy array): Second series of temperature readings.
+
+       Returns:
+           a (float): Slope of the linear fit.
+           b (float): Intercept of the linear fit.
+       """
+        A = np.vstack([x, np.ones(len(x))]).T
+        a, b = np.linalg.lstsq(A, y, rcond=None)[0]
+        return a, b
+
+    def fetch_data(self, csv_files):
+        # Load data from CSV files into separate DataFrames
+        data_frames = []
+        for file in csv_files:
+            file_path = os.path.join(file)  # Update with the actual folder path
+            df = pd.read_csv(file_path)
+            data_frames.append(df)
+
+        # Concatenate DataFrames vertically
+        concatenated_data = pd.concat(data_frames, ignore_index=True)
+
+        # Exclude Time Column from calculations
+        concatenated_data = concatenated_data.drop('TIMESTAMP', axis=1)
+        return concatenated_data
+
+    def execute(self, plot_name: str):
         csv_files = [
             # 'data/Logging_08_29_Ultimaker_25_degree_Metall.csv',
             # 'data/Logging_08_29_Ultimaker_30_degree_Metall.csv',
@@ -21,53 +68,7 @@ class ExplorativePlotConcat:
 
         temperature_columns = ['Temp01', 'Temp02', 'Temp03', 'Temp04', 'Temp05', 'Temp06']
 
-        def calibrate_polynomial(x, y, degree):
-            """
-            Calibrate one series of temperature readings (x) against another (y) using a polynomial fit.
-
-            Args:
-                x (list or numpy array): First series of temperature readings.
-                y (list or numpy array): Second series of temperature readings.
-                degree (int): Degree of the polynomial fit.
-
-            Returns:
-                coeffs (numpy array): Coefficients of the polynomial fit.
-            """
-            coeffs = np.polyfit(x, y, degree)
-            return coeffs
-
-        def calibrate(x, y):
-            """
-           Calibrate one series of temperature readings (x) against another (y).
-
-           Args:
-               x (list or numpy array): First series of temperature readings.
-               y (list or numpy array): Second series of temperature readings.
-
-           Returns:
-               a (float): Slope of the linear fit.
-               b (float): Intercept of the linear fit.
-           """
-            A = np.vstack([x, np.ones(len(x))]).T
-            a, b = np.linalg.lstsq(A, y, rcond=None)[0]
-            return a, b
-
-        def fetch_data():
-            # Load data from CSV files into separate DataFrames
-            data_frames = []
-            for file in csv_files:
-                file_path = os.path.join(file)  # Update with the actual folder path
-                df = pd.read_csv(file_path)
-                data_frames.append(df)
-
-            # Concatenate DataFrames vertically
-            concatenated_data = pd.concat(data_frames, ignore_index=True)
-
-            # Exclude Time Column from calculations
-            concatenated_data = concatenated_data.drop('TIMESTAMP', axis=1)
-            return concatenated_data
-
-        data = fetch_data()
+        data = self.fetch_data(csv_files)
         data[temperature_columns] = data[temperature_columns] / 100.0
         data[temperature_columns] = data[temperature_columns].rolling(window=int(len(data.index) / 50),
                                                                       min_periods=int(len(data.index) / 200),
@@ -88,7 +89,7 @@ class ExplorativePlotConcat:
         degree = 2  # Example polynomial degree
 
         for col in temperature_columns:
-            coeffs = calibrate_polynomial(data[col], data["MeanTemperature"], degree)
+            coeffs = self.calibrate_polynomial(data[col], data["MeanTemperature"], degree)
             calibrated_temps[col] = np.polyval(coeffs, data[col])
             data[col] = calibrated_temps[col]
             print(f"For {col}: Coefficients = {coeffs}")
@@ -148,9 +149,7 @@ class ExplorativePlotConcat:
 
         plt.xticks(rotation=45)
         plt.tight_layout()
-        plt.savefig('output.png')
+        plt.savefig('target/' + plot_name + '.png')
         plt.show()
 
-        # terminate program
-        exit(0)
         pass
