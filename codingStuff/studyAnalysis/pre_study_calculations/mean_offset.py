@@ -3,8 +3,6 @@ import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 
 class ExplorativePlotMeanOffset:
-    def __init__(self):
-        self.__init__()
 
     def execute(self):
         # Define the offset measurements for each sensor
@@ -23,3 +21,4 @@ class ExplorativePlotMeanOffset:
         # Print the mean offsets for each sensor
         for i, mean_offset in enumerate(mean_offsets, start=1):
             print(f"Mean Offset Temp{i:02d}: {mean_offset:.6f}")
+        pass

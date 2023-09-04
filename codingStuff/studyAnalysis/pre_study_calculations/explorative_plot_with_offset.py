@@ -4,9 +4,6 @@ import matplotlib.dates as mdates
 
 
 class ExplorativePlotWithOffset:
-    def __init__(self):
-        self.__init__()
-
     def execute(self):
         # Read the CSV file into a DataFrame
         # data = pd.read_csv('data/Logging_08_25_Boden_hoch.csv')
@@ -127,3 +124,4 @@ class ExplorativePlotWithOffset:
 
         # terminate program
         exit(0)
+        pass

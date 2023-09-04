@@ -4,9 +4,6 @@ import matplotlib.dates as mdates
 
 
 class ExplorativePlot:
-    def __init__(self):
-        self.__init__()
-
     def execute(self):
         # Read the CSV file into a DataFrame
         # data = pd.read_csv('data/Logging_08_29_Backofen_Metall.csv')
@@ -98,3 +95,5 @@ class ExplorativePlot:
 
         print("Correlation Matrix All:")
         print(correlation_matrix)
+        exit(0)
+        pass

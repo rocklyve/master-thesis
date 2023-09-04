@@ -5,9 +5,6 @@ import matplotlib.pyplot as plt
 
 # List of CSV files containing measurements
 class ExplorativePlotConcat:
-    def __init__(self):
-        self.__init__()
-
     def execute(self):
         csv_files = [
             # 'data/Logging_08_29_Ultimaker_25_degree_Metall.csv',
@@ -156,3 +153,4 @@ class ExplorativePlotConcat:
 
         # terminate program
         exit(0)
+        pass

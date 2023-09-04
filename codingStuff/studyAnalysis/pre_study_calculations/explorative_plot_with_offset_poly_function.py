@@ -5,8 +5,6 @@ import numpy as np
 
 
 class ExplorativePlotWithOffsetPolyFunction:
-    def __init__(self):
-        self.__init__()
     def calibrate_polynomial(x, y, degree):
         """
         Calibrate one series of temperature readings (x) against another (y) using a polynomial fit.
@@ -79,7 +77,7 @@ class ExplorativePlotWithOffsetPolyFunction:
         degree = 2  # Example polynomial degree
 
         for col in temperature_columns:
-            coeffs = calibrate_polynomial(data[col], data["MeanTemperature"], degree)
+            coeffs = self.calibrate_polynomial(data[col], data["MeanTemperature"], degree)
             calibrated_temps[col] = np.polyval(coeffs, data[col])
             data[col] = calibrated_temps[col]
             print(f"For {col}: Coefficients = {coeffs}")
@@ -144,3 +142,4 @@ class ExplorativePlotWithOffsetPolyFunction:
 
         # terminate program
         exit(0)
+        pass

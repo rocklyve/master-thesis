@@ -3,8 +3,6 @@ import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 
 class ExplorativePlotInclOffset:
-    def __init__(self):
-        self.__init__()
 
     def execute(self):
         # Read the CSV file into a DataFrame
@@ -116,3 +114,4 @@ class ExplorativePlotInclOffset:
 
         # terminate program
         exit(0)
+        pass

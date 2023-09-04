@@ -5,8 +5,6 @@ import numpy as np
 
 
 class ExplorativePlotWithOffsetLinFunction:
-    def __init__(self):
-        self.__init__()
     def calibrate(x, y):
         """
        Calibrate one series of temperature readings (x) against another (y).
@@ -134,3 +132,4 @@ class ExplorativePlotWithOffsetLinFunction:
 
         # terminate program
         exit(0)
+        pass
