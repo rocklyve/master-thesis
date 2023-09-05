@@ -1,11 +1,11 @@
 # Description: This file contains the pre-calculations for the study
-from explorative_plot import ExplorativePlot
-from explorative_plot_concat import ExplorativePlotConcat
-from explorative_plot_incl_offset import ExplorativePlotInclOffset
-from explorative_plot_with_offset import ExplorativePlotWithOffset
-from explorative_plot_with_offset_lin_function import ExplorativePlotWithOffsetLinFunction
-from explorative_plot_with_offset_poly_function import ExplorativePlotWithOffsetPolyFunction
-from mean_offset import ExplorativePlotMeanOffset
+from src.explorative_plot import ExplorativePlot
+from src.explorative_plot_concat import ExplorativePlotConcat
+from src.explorative_plot_incl_offset import ExplorativePlotInclOffset
+from src.explorative_plot_with_offset import ExplorativePlotWithOffset
+from src.explorative_plot_with_offset_lin_function import ExplorativePlotWithOffsetLinFunction
+from src.explorative_plot_with_offset_poly_function import ExplorativePlotWithOffsetPolyFunction
+from src.mean_offset import ExplorativePlotMeanOffset
 
 
 class PreCalculations:
