@@ -233,6 +233,9 @@ void handleButtonPress() {
 
 void buttonPressed() {
   unsigned long currentButtonPressTime = millis();
+  if (stopMeasurementButtonPressedFlag == true) {
+    return;
+  }
 
   if (currentButtonPressTime - lastButtonPressTime < doubleClickTimeframe) {
     stopMeasurementButtonPressedFlag = true;
@@ -253,20 +256,54 @@ void changeLEDColor(int id) {
   int greenValue = 255;
   int blueValue = 255;
 
-  // Adjust color values based on measurement_state (id)
+  // Check if id is not -1
   if (id != -1) {
-    if (id % 4 == 0) { // Every third state (1, 4, 7, etc.) - Red
-      redValue = 0;
-    } else if (id % 4 == 1) { // Every third state + 1 (2, 5, 8, etc.) - Green
-      greenValue = 0;
-    } else if (id % 4 == 2) { // Every third state + 1 (2, 5, 8, etc.) - Green
-      int redValue = 100;
-      int greenValue = 100;
-      int blueValue = 100;
-    } else { // Every third state + 2 (3, 6, 9, etc.) - Blue
-      blueValue = 0;
+    // Determine the color based on id
+    int colorSegment = id % 10;
+
+    // Assign colors to different segments
+    switch (colorSegment) {
+      case 0:
+        redValue = 0;
+        break;
+      case 1:
+        greenValue = 0;
+        break;
+      case 2:
+        blueValue = 0;
+        break;
+      case 3:
+        redValue = 0;
+        greenValue = 0;
+        break;
+      case 4:
+        redValue = 0;
+        blueValue = 0;
+        break;
+      case 5:
+        greenValue = 0;
+        blueValue = 0;
+        break;
+      case 6:
+        redValue = 0;
+        greenValue = 128;
+        break;
+      case 7:
+        redValue = 128;
+        greenValue = 2055;
+        break;
+      case 8:
+        greenValue = 0;
+        blueValue = 128;
+        break;
+      case 9:
+        redValue = 128;
+        blueValue = 0;
+        break;
+      default:
+        break;
     }
-  } 
+  }
 
   analogWrite(LED_R_PIN, redValue); // GPIO 16 (A7)
   analogWrite(LED_G_PIN, greenValue); // GPIO 17 (A6)
