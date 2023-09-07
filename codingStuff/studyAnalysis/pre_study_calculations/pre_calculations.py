@@ -5,6 +5,7 @@ from src.explorative_plot_incl_offset import ExplorativePlotInclOffset
 from src.explorative_plot_with_offset import ExplorativePlotWithOffset
 from src.explorative_plot_with_offset_lin_function import ExplorativePlotWithOffsetLinFunction
 from src.explorative_plot_with_offset_poly_function import ExplorativePlotWithOffsetPolyFunction
+from src.calibration_pipeline.calibration_pipeline import CalibrationPipeline
 from src.mean_offset import ExplorativePlotMeanOffset
 
 
@@ -19,8 +20,21 @@ class PreCalculations:
         self.explorative_plot_mean_offset = ExplorativePlotMeanOffset()
 
     def execute(self):
+        file_paths = [
+            'data/Logging_08_30_Ultimaker_25_degree_Metall.csv',
+            'data/Logging_08_30_Ultimaker_30_degree_Metall.csv',
+            'data/Logging_08_30_Ultimaker_35_degree_Metall.csv',
+            'data/Logging_08_30_Ultimaker_40_degree_Metall.csv',
+            'data/Logging_08_30_Ultimaker_45_degree_Metall.csv'
+        ]
+
+        temp_columns = ['Temp01', 'Temp02', 'Temp03', 'Temp04', 'Temp05', 'Temp06']
+
+        pipeline = CalibrationPipeline(file_paths, temp_columns)
+        pipeline.run_pipeline()
+
         # self.explorative_plot.execute("explorative_plot")
-        self.explorative_plot_concat.execute("explorative_plot_concat")
+        # self.explorative_plot_concat.execute("explorative_plot_concat")
         # self.explorative_plot_incl_offset.execute("explorative_plot_incl_offset")
         # self.explorative_plot_with_offset.execute("explorative_plot_with_offset")
         # self.explorative_plot_with_offset_lin_function.execute("explorative_plot_with_offset_lin_function")
