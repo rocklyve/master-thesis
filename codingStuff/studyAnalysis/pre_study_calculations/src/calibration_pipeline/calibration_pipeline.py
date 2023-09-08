@@ -110,6 +110,61 @@ class CalibrationPipeline:
                                self.temp_columns])
             self.mae_and_variance[name] = {'MAE': mae, 'Variance': variance}
 
+    def plot_all_fits_together(self):
+        # Create a subplot layout
+        num_subplots = 1 + len(self.calibrated_data_dict)  # 1 for raw data + number of fits
+        fig, axs = plt.subplots(4, 2, sharex=True, figsize=(12, 16), dpi=300)  # Adjusted for A4 and high DPI
+
+        axs = axs.flatten()  # Flatten the 2D array to 1D for easy indexing
+
+        # Plot raw data
+        axs[0].plot(self.smoothed_data)
+        axs[0].text(0.05, 0.9, 'Smoothed Raw Data', transform=axs[0].transAxes)  # Custom title
+
+        # Plot each fit
+        for i, (name, calibrated_data) in enumerate(self.calibrated_data_dict.items(), start=1):
+            axs[i].plot(calibrated_data)
+            axs[i].text(0.05, 0.9, f"{name} Fit", transform=axs[i].transAxes)  # Custom title
+
+        # Common labels and title
+        for ax in axs:
+            ax.set_xlabel('Sample Index')
+        axs[0].set_ylabel('Temperature (°C)')
+
+        # Add legend to the last subplot only
+        axs[-1].legend(self.temp_columns, loc='lower right')
+
+        # Save the plot
+        plt.tight_layout()
+
+        # Save the plot with high DPI
+        plt.savefig("target/concatenated_all_fits.png", dpi=300)  # Increased DPI for higher resolution
+
+    def print_fit_parameters(self):
+        print("Fit Parameters:")
+
+        # Constant Fit (it's just an offset, so one parameter)
+        print("\nConstant Fit:")
+        overall_mean = self.mean_temp.mean()
+        for col in self.temp_columns:
+            curve_mean = self.smoothed_data[col].mean()
+            offset = overall_mean - curve_mean
+            print(f"{col}: Offset = {offset}")
+
+        # Linear Fit (two parameters: slope and intercept)
+        print("\nLinear Fit:")
+        for col in self.temp_columns:
+            slope, intercept = np.polyfit(self.smoothed_data[col].dropna(), self.mean_temp.dropna(), 1)
+            print(f"{col}: Slope = {slope}, Intercept = {intercept}")
+
+        # Polynomial Fits (coefficients)
+        selected_degrees = [2, 4, 8, 16, 32]
+        for degree in selected_degrees:
+            print(f"\nPolynomial Fit (degree {degree}):")
+            for col in self.temp_columns:
+                coefficients = np.polyfit(self.smoothed_data[col].dropna(), self.mean_temp.dropna(), degree)
+                print(f"{col}: Coefficients = {coefficients}")
+
     def run_pipeline(self):
         self.read_and_concatenate_data()
         self.plot_raw_data()
@@ -120,6 +175,8 @@ class CalibrationPipeline:
         self.plot_mae_boxplot()
         self.calculate_correlation()
         self.calculate_mae_and_variance()
+        self.plot_all_fits_together()
+        self.print_fit_parameters()
 
         print("MAE values:", self.mae_values)
         print("Correlation values:", self.correlation_values)
