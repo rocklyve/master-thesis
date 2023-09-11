@@ -4,10 +4,11 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 from sklearn.metrics import mean_absolute_error
+import json
 
 
 class CalibrationPipeline:
-    def __init__(self, file_paths, temp_columns):
+    def __init__(self, file_paths, temp_columns, json_path):
         self.file_paths = file_paths
         self.temp_columns = temp_columns
         self.concatenated_df = None
@@ -17,6 +18,7 @@ class CalibrationPipeline:
         self.mae_values = {}
         self.correlation_values = {}
         self.mae_and_variance = {}
+        self.json_path = json_path
 
     def read_and_concatenate_data(self):
         self.concatenated_df = pd.DataFrame()
@@ -47,10 +49,17 @@ class CalibrationPipeline:
         constant_calibrated = self.smoothed_data.copy()
         overall_mean = self.mean_temp.mean()  # Mean of the average temperature at each time point
 
+        self.fit_parameters = {
+            'offsets': {},
+            'linear': {},
+            'poly': {}
+        }
+
         for col in self.temp_columns:
             curve_mean = self.smoothed_data[col].mean()  # Mean of this particular curve
             offset = overall_mean - curve_mean  # Offset to adjust this curve's mean to the overall mean
             constant_calibrated[col] = self.smoothed_data[col] + offset  # Apply the offset
+            self.fit_parameters['offsets'][col] = offset
 
         self.calibrated_data_dict['Constant'] = constant_calibrated
         linear_calibrated = self.smoothed_data.copy()
@@ -58,14 +67,17 @@ class CalibrationPipeline:
         for col in self.temp_columns:
             slope, intercept = np.polyfit(self.smoothed_data[col].dropna(), self.mean_temp.dropna(), 1)
             linear_calibrated[col] = slope * self.smoothed_data[col] + intercept
+            self.fit_parameters['linear'][col] = {'Slope': slope, 'Intercept': intercept}
 
         self.calibrated_data_dict['Linear'] = linear_calibrated
 
         for degree in selected_degrees:
             poly_calibrated = self.smoothed_data.copy()
+            self.fit_parameters['poly'][str(degree)] = {}
             for col in self.temp_columns:
                 np_polyfit = np.polyfit(self.smoothed_data[col].dropna(), self.mean_temp.dropna(), degree)
                 poly_calibrated[col] = np.polyval(np_polyfit, self.smoothed_data[col])
+                self.fit_parameters['poly'][str(degree)][col] = np_polyfit.tolist()
             self.calibrated_data_dict[f'Poly_{degree}'] = poly_calibrated
 
     def plot_calibrated_data(self):
@@ -140,6 +152,18 @@ class CalibrationPipeline:
         # Save the plot with high DPI
         plt.savefig("target/concatenated_all_fits.png", dpi=300)  # Increased DPI for higher resolution
 
+    def build_json_parameters(self, json_path):
+        fit_parameters = {
+            'precomputed_offsets': self.fit_parameters.get('offsets', {}),
+            'precomputed_params': self.fit_parameters.get('linear', {}),
+            'coefficients': self.fit_parameters.get('poly', {})
+        }
+
+        # Save to JSON file
+        with open(json_path, 'w') as file:
+            json.dump(fit_parameters, file)
+
+
     def print_fit_parameters(self):
         print("Fit Parameters:")
 
@@ -176,7 +200,8 @@ class CalibrationPipeline:
         self.calculate_correlation()
         self.calculate_mae_and_variance()
         self.plot_all_fits_together()
-        self.print_fit_parameters()
+        self.build_json_parameters(self.json_path)
+        # self.print_fit_parameters()
 
         print("MAE values:", self.mae_values)
         print("Correlation values:", self.correlation_values)

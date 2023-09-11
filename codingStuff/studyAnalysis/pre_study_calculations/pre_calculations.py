@@ -8,7 +8,6 @@ from src.explorative_plot_with_offset_poly_function import ExplorativePlotWithOf
 from src.calibration_pipeline.calibration_pipeline import CalibrationPipeline
 from src.mean_offset import ExplorativePlotMeanOffset
 
-
 class PreCalculations:
     def __init__(self):
         self.explorative_plot = ExplorativePlot()
@@ -27,19 +26,10 @@ class PreCalculations:
             'data/Logging_08_30_Ultimaker_40_degree_Metall.csv',
             'data/Logging_08_30_Ultimaker_45_degree_Metall.csv'
         ]
-
         temp_columns = ['Temp01', 'Temp02', 'Temp03', 'Temp04', 'Temp05', 'Temp06']
-
-        pipeline = CalibrationPipeline(file_paths, temp_columns)
+        # Create and run the pipeline
+        pipeline = CalibrationPipeline(file_paths, temp_columns, 'target/fit_parameters.json')
         pipeline.run_pipeline()
-
-        # self.explorative_plot.execute("explorative_plot")
-        # self.explorative_plot_concat.execute("explorative_plot_concat")
-        # self.explorative_plot_incl_offset.execute("explorative_plot_incl_offset")
-        # self.explorative_plot_with_offset.execute("explorative_plot_with_offset")
-        # self.explorative_plot_with_offset_lin_function.execute("explorative_plot_with_offset_lin_function")
-        # self.explorative_plot_with_offset_poly_function.execute("explorative_plot_with_offset_poly_function")
-        # self.explorative_plot_mean_offset.execute()
 
 
 if __name__ == "__main__":
