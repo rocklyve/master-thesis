@@ -72,7 +72,8 @@ void SD_Logger::dump_to_sd() {
 
 void SD_Logger::write_header() {
     _index = 0;
-    String header = "ID,TIMESTAMP,Temp01,Temp02,Temp03,Temp04,Temp05,Temp06,ObjTemp01,ObjTemp02,ObjTemp03,ObjTemp04,ObjTemp05,ObjTemp06,ACC_X,ACC_Y,ACC_Z,GYRO_X,GYRO_Y,GYRO_Z,MAG_X,MAG_Y,MAG_Z\n\r";
+    // String header = "ID,TIMESTAMP,Temp01,Temp02,Temp03,Temp04,Temp05,Temp06,ObjTemp01,ObjTemp02,ObjTemp03,ObjTemp04,ObjTemp05,ObjTemp06,ACC_X,ACC_Y,ACC_Z,GYRO_X,GYRO_Y,GYRO_Z,MAG_X,MAG_Y,MAG_Z\n\r";
+    String header = "ID,TIMESTAMP,TympanicMembrane,Concha,EarCanal,Out_Bottom,Out_Top,Out_Middle,ObjTympanicMembrane,ObjConcha,ObjEarCanal,ObjOut_Bottom,ObjOut_Top,ObjOut_Middle,ACC_X,ACC_Y,ACC_Z,GYRO_X,GYRO_Y,GYRO_Z,MAG_X,MAG_Y,MAG_Z\n\r";
     header.toCharArray(&(_buffer[_index]), header.length());
     _index += header.length() - 1; // -1 to remove null terminator
 

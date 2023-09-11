@@ -26,7 +26,7 @@ class PreCalculations:
             'data/Logging_08_30_Ultimaker_40_degree_Metall.csv',
             'data/Logging_08_30_Ultimaker_45_degree_Metall.csv'
         ]
-        temp_columns = ['Temp01', 'Temp02', 'Temp03', 'Temp04', 'Temp05', 'Temp06']
+        temp_columns = ['TympanicMembrane', 'Concha', 'EarCanal', 'Out_Bottom', 'Out_Top', 'Out_Middle']
         # Create and run the pipeline
         pipeline = CalibrationPipeline(file_paths, temp_columns, 'target/fit_parameters.json')
         pipeline.run_pipeline()

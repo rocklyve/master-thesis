@@ -17,7 +17,7 @@ class ExplorativePlotInclOffset:
         # data = data[:45000]
 
         # Adjust the temperature values by dividing by 100 to get the actual temperature
-        temperature_columns = ['Temp01', 'Temp02', 'Temp03', 'Temp04', 'Temp05', 'Temp06']
+        temperature_columns = ['TympanicMembrane', 'Concha', 'EarCanal', 'Out_Bottom', 'Out_Top', 'Out_Middle']
         temperature_sensor_columns = ['ObjTemp01', 'ObjTemp02', 'ObjTemp03', 'ObjTemp04', 'ObjTemp05', 'ObjTemp06']
         data[temperature_columns] = data[temperature_columns] / 100.0
         data[temperature_columns] = data[temperature_columns].rolling(window=int(len(data.index) / 50),
@@ -26,30 +26,30 @@ class ExplorativePlotInclOffset:
         data[temperature_sensor_columns] = data[temperature_sensor_columns] / 100.0
 
         # Create a new column for the average temperature across Temp01-Temp06
-        data['RealTemperature'] = data[['Temp01', 'Temp02', 'Temp03']].mean(axis=1)
+        data['RealTemperature'] = data[['TympanicMembrane', 'Concha', 'EarCanal']].mean(axis=1)
 
-        # data['Temp01'] += -0.034911
-        # data['Temp02'] += -0.142163
-        # data['Temp03'] += 0.177074
-        # data['Temp04'] += 0.147627
-        # data['Temp05'] += 0.245508
-        # data['Temp06'] += 0.506864
+        # data['TympanicMembrane'] += -0.034911
+        # data['Concha'] += -0.142163
+        # data['EarCanal'] += 0.177074
+        # data['Out_Bottom'] += 0.147627
+        # data['Out_Top'] += 0.245508
+        # data['Out_Middle'] += 0.506864
 
         # Küchentisch + Kühlschrank mittel metall 1,2,3
-        data['Temp01'] += -0.045
-        data['Temp02'] += -0.53
-        data['Temp03'] += -0.144
-        data['Temp04'] += 0.25
-        data['Temp05'] += 0.24
-        data['Temp06'] += 0.359
+        data['TympanicMembrane'] += -0.045
+        data['Concha'] += -0.53
+        data['EarCanal'] += -0.144
+        data['Out_Bottom'] += 0.25
+        data['Out_Top'] += 0.24
+        data['Out_Middle'] += 0.359
 
         # Küchentisch hoch offset
-        # data['Temp01'] += 0.12127261477536777
-        # data['Temp02'] += -0.2621983026124006
-        # data['Temp03'] += 0.14092568783702575
-        # data['Temp04'] += 0.01745440118097008
-        # data['Temp05'] += 0.19111562727098885
-        # data['Temp06'] += 0.43423879157126066
+        # data['TympanicMembrane'] += 0.12127261477536777
+        # data['Concha'] += -0.2621983026124006
+        # data['EarCanal'] += 0.14092568783702575
+        # data['Out_Bottom'] += 0.01745440118097008
+        # data['Out_Top'] += 0.19111562727098885
+        # data['Out_Middle'] += 0.43423879157126066
 
         # Set the timestamp as the index (converting from milliseconds to seconds)
         data['TIMESTAMP'] = pd.to_datetime(data['TIMESTAMP'], unit='ms')

@@ -17,6 +17,7 @@ class TemperatureCalibration:
         self.raw_data = df
         self.temp_columns = temp_columns
         self.raw_data[temp_columns] = self.raw_data[temp_columns] / 100.0
+        self.raw_data['TIMESTAMP'] = (self.raw_data['TIMESTAMP'] - self.raw_data['TIMESTAMP'].min()) / 1000.0 / 60.0
         self.mean_temp = self.raw_data[temp_columns].mean(axis=1)
         self.calibrated_data_dict = {}
         self.source_filename = source_filename
@@ -81,15 +82,15 @@ class TemperatureCalibration:
             colors = plt.cm.jet(np.linspace(0, 1, len(unique_ids)))
             for i, unique_id in enumerate(unique_ids):
                 id_data = self.raw_data[self.raw_data['ID'] == unique_id]
-                ax.axvspan(id_data.index.min(), id_data.index.max(), facecolor=colors[i], alpha=0.2,
+                ax.axvspan(id_data['TIMESTAMP'].min(), id_data['TIMESTAMP'].max(), facecolor=colors[i], alpha=0.2,
                            label=f'ID {unique_id}')
 
         # Create a plot for the smoothed raw data
         plt.figure(figsize=(8, 6), dpi=300)
         ax = plt.gca()
-        plt.plot(smoothed_plot_data)
+        plt.plot(self.raw_data['TIMESTAMP'], smoothed_plot_data)
         add_background_color(ax)
-        plt.xlabel('Sample Index')
+        plt.xlabel('Time (min)')
         plt.ylabel('Temperature (°C)')
         plt.title('Smoothed Raw Data')
         plt.legend(self.temp_columns, loc='lower right')
@@ -99,9 +100,9 @@ class TemperatureCalibration:
         if fit_type == FitType.CONSTANT:
             plt.figure(figsize=(8, 6), dpi=300)
             ax = plt.gca()
-            plt.plot(self.calibrated_data_dict["Constant"])
+            plt.plot(self.raw_data['TIMESTAMP'], self.calibrated_data_dict["Constant"])
             add_background_color(ax)
-            plt.xlabel('Sample Index')
+            plt.xlabel('Time (min)')
             plt.ylabel('Temperature (°C)')
             plt.title('Constant Fit')
             plt.legend(self.temp_columns, loc='lower right')
@@ -111,9 +112,9 @@ class TemperatureCalibration:
         elif fit_type == FitType.LINEAR:
             plt.figure(figsize=(8, 6), dpi=300)
             ax = plt.gca()
-            plt.plot(self.calibrated_data_dict["Linear"])
+            plt.plot(self.raw_data['TIMESTAMP'], self.calibrated_data_dict["Linear"])
             add_background_color(ax)
-            plt.xlabel('Sample Index')
+            plt.xlabel('Time (min)')
             plt.ylabel('Temperature (°C)')
             plt.title('Linear Fit')
             plt.legend(self.temp_columns, loc='lower right')
@@ -135,11 +136,11 @@ class TemperatureCalibration:
                     calibrated_data = self.calibrated_data_dict.get(column_name, None)
 
                     if calibrated_data is not None:
-                        plt.plot(calibrated_data)
+                        plt.plot(self.raw_data['TIMESTAMP'], calibrated_data)
 
                 add_background_color(ax)
 
-                plt.xlabel('Sample Index')
+                plt.xlabel('Time (min)')
                 plt.ylabel('Temperature (°C)')
                 plt.title(f"Polynomial Fit Degree {degree}")
                 plt.legend(self.temp_columns, loc='lower right')
@@ -167,7 +168,9 @@ class AnalysisPipeline:
     def process_file(self, file_path, target_path):
         print(f"Processing file: {file_path}")
         df = pd.read_csv(file_path)
-        temp_columns = ['Temp01', 'Temp02', 'Temp03', 'Temp04', 'Temp05', 'Temp06']
+        df = df.iloc[3000:]
+        df = df.iloc[:-500]
+        temp_columns = ['TympanicMembrane', 'Concha', 'EarCanal', 'Out_Bottom', 'Out_Top', 'Out_Middle']
 
         # Get only the directory path for the target
         target_dir = os.path.dirname(target_path)

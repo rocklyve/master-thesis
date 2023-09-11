@@ -14,7 +14,7 @@ class ExplorativePlot:
         data = data[4000:]
 
         # Adjust the temperature values by dividing by 100 to get the actual temperature
-        temperature_columns = ['Temp01', 'Temp02', 'Temp03', 'Temp04', 'Temp05', 'Temp06']
+        temperature_columns = ['TympanicMembrane', 'Concha', 'EarCanal', 'Out_Bottom', 'Out_Top', 'Out_Middle']
         temperature_sensor_columns = ['ObjTemp01', 'ObjTemp02', 'ObjTemp03', 'ObjTemp04', 'ObjTemp05', 'ObjTemp06']
         data[temperature_columns] = data[temperature_columns] / 100.0
         data[temperature_columns] = data[temperature_columns].rolling(window=int(len(data.index) / 50),
@@ -89,7 +89,7 @@ class ExplorativePlot:
         plt.savefig('target/' + plot_name + '.png')
         plt.show()
 
-        temperature_columns = ['Temp01', 'Temp02', 'Temp03', 'Temp04', 'Temp05', 'Temp06']
+        temperature_columns = ['TympanicMembrane', 'Concha', 'EarCanal', 'Out_Bottom', 'Out_Top', 'Out_Middle']
         temperature_data = data[temperature_columns]
         correlation_matrix = temperature_data.corr()
 

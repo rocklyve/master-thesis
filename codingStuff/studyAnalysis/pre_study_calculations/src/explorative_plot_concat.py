@@ -66,7 +66,7 @@ class ExplorativePlotConcat:
             'data/Logging_08_30_Ultimaker_45_degree_Metall.csv'
         ]
 
-        temperature_columns = ['Temp01', 'Temp02', 'Temp03', 'Temp04', 'Temp05', 'Temp06']
+        temperature_columns = ['TympanicMembrane', 'Concha', 'EarCanal', 'Out_Bottom', 'Out_Top', 'Out_Middle']
 
         data = self.fetch_data(csv_files)
         data[temperature_columns] = data[temperature_columns] / 100.0

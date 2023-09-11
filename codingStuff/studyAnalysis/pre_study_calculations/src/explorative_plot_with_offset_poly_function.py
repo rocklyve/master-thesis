@@ -52,8 +52,8 @@ class ExplorativePlotWithOffsetPolyFunction:
         # data = pd.concat([data, data2])
 
         # Adjust the temperature values by dividing by 100 to get the actual temperature
-        temperature_columns = ['Temp01', 'Temp02', 'Temp03', 'Temp04', 'Temp05', 'Temp06']
-        temperature_sensor_columns = ['ObjTemp01', 'ObjTemp02', 'ObjTemp03', 'ObjTemp04', 'ObjTemp05', 'ObjTemp06']
+        temperature_columns = ['TympanicMembrane', 'Concha', 'EarCanal', 'Out_Bottom', 'Out_Top', 'Out_Middle']
+        temperature_sensor_columns = ['ObjTympanicMembrane', 'ObjConcha', 'ObjEarCanal', 'ObjOut_Bottom', 'ObjOut_Top', 'ObjOut_Middle']
         data[temperature_columns] = data[temperature_columns] / 100.0
         data[temperature_columns] = data[temperature_columns].rolling(window=int(len(data.index) / 50),
                                                                       min_periods=int(len(data.index) / 200),
