@@ -23,6 +23,9 @@ volatile bool stopMeasurementButtonPressedFlag = false; // Volatile flag used in
 const unsigned long doubleClickTimeframe = 2000;  // Timeframe for double click in milliseconds
 unsigned long lastButtonPressTime = 0;  // Stores the timestamp of the last button press
 
+unsigned long previousMillis = 0;  // Stores last time data was sampled
+const long interval = 20;  // Sampling interval in milliseconds (50Hz)
+
 const int LED_R_PIN = A7; // GPIO 16
 const int LED_G_PIN = A6; // GPIO 17
 const int LED_B_PIN = A0; // GPIO 25
@@ -62,58 +65,63 @@ void setup() {
 
 /*****************************************  loop() *************************************************/
 void loop() {
-  if (found_sensor_counter != amount_of_sensors) {
-    setupSensors();
-    delay(2000);
-  } else {
-    int amount_of_data_columns = 2 * amount_of_sensors + 9; 
-    int data[amount_of_data_columns + 1];
-    data[0] = amount_of_data_columns;  // Number of data elements
+  unsigned long currentMillis = millis();  // Grab current time
 
-    if (stopMeasurementButtonPressedFlag) {
-      saveDataToSDCard(data, -1);
-      // Logging the data
-      logger->end();
-      changeLEDColor(-1);
-      Serial.println("Pressed stop, now finished");
-      while(true);
+  if (currentMillis - previousMillis >= interval) {
+    // Save the last time data was sampled
+    previousMillis = currentMillis;
+
+    if (found_sensor_counter != amount_of_sensors) {
+      setupSensors();
+      delay(2000);
+    } else {
+      int amount_of_data_columns = 2 * amount_of_sensors + 9; 
+      int data[amount_of_data_columns + 1];
+      data[0] = amount_of_data_columns;  // Number of data elements
+
+      if (stopMeasurementButtonPressedFlag) {
+        saveDataToSDCard(data, -1);
+        // Logging the data
+        logger->end();
+        changeLEDColor(-1);
+        Serial.println("Pressed stop, now finished");
+        while(true);
+      }
+      checkButtonPress(); 
+      readSensorData(data);
+      saveDataToSDCard(data, measurement_state);
+
+      // print data
+      if (data[1] != -1) {
+        Serial.print("Object Temperature: ");
+        for (int i = 1; i <= amount_of_sensors; i++) {
+          Serial.print(data[i]);
+          if (i != amount_of_sensors) {
+            Serial.print(", ");
+          }
+        }
+        Serial.println();
+
+        Serial.print("Sensor Temperature: ");
+        for (int i = amount_of_sensors + 1; i <= 2 * amount_of_sensors; i++) {
+          Serial.print(data[i]);
+          if (i != 2 * amount_of_sensors) {
+            Serial.print(", ");
+          }
+        }
+        Serial.println();
+
+        Serial.print("IMU [");
+        for (int i = 2 * amount_of_sensors+1; i <= 2 * amount_of_sensors+9; i++) {
+          Serial.print(data[i]);
+          if (i != 2 * amount_of_sensors+9) {
+            Serial.print(", ");
+          }
+        }
+        Serial.println("]");
+        Serial.println("");
+      }
     }
-    checkButtonPress(); 
-    readSensorData(data);
-    saveDataToSDCard(data, measurement_state);
-
-    // print data
-    if (data[1] != -1) {
-      Serial.print("Object Temperature: ");
-      for (int i = 1; i <= amount_of_sensors; i++) {
-        Serial.print(data[i]);
-        if (i != amount_of_sensors) {
-          Serial.print(", ");
-        }
-      }
-      Serial.println();
-
-      Serial.print("Sensor Temperature: ");
-      for (int i = amount_of_sensors + 1; i <= 2 * amount_of_sensors; i++) {
-        Serial.print(data[i]);
-        if (i != 2 * amount_of_sensors) {
-          Serial.print(", ");
-        }
-      }
-      Serial.println();
-
-      Serial.print("IMU [");
-      for (int i = 2 * amount_of_sensors+1; i <= 2 * amount_of_sensors+9; i++) {
-        Serial.print(data[i]);
-        if (i != 2 * amount_of_sensors+9) {
-          Serial.print(", ");
-        }
-      }
-      Serial.println("]");
-      Serial.println("");
-    }
-
-    delay(20);
   }
 }
 
