@@ -93,7 +93,7 @@ class TemperatureCalibration:
         plt.ylabel('Temperature (°C)')
         plt.title('Smoothed Raw Data')
         plt.legend(self.temp_columns, loc='lower right')
-        plt.savefig(os.path.join(self.target_folder, f"{source_filename_suffix}_smoothed_raw_data.png"), dpi=300)
+        plt.savefig(os.path.join(self.target_folder, f"{source_filename_suffix}_0smoothed_raw_data.png"), dpi=300)
         plt.close()
 
         if fit_type == FitType.CONSTANT:
@@ -190,6 +190,13 @@ class AnalysisPipeline:
 if __name__ == '__main__':
     data_dir = 'data'
     target_dir = 'target'
-    fit_type = FitType.POLY
+
+    fit_type = FitType.CONSTANT
     pipeline = AnalysisPipeline(data_dir, target_dir, fit_type)
+    pipeline.process_directory(data_dir, target_dir)
+
+    pipeline.fit_type = FitType.LINEAR
+    pipeline.process_directory(data_dir, target_dir)
+
+    pipeline.fit_type = FitType.POLY
     pipeline.process_directory(data_dir, target_dir)

@@ -48,8 +48,6 @@ void setup() {
   // while (!Serial) {};
 
   setupButtonInterrupt();
-  initializeIMU();
-  setupSensors();
 
   // Create the new filename
   logger = new SD_Logger();
@@ -57,9 +55,13 @@ void setup() {
   delay(100);
   if (!logger->begin()) {
     Serial.println("SD Logger initialization failed!");
+    changeLEDColor(-1);
     while (1);  // Stop execution if SD Logger initialization fails
   } else {
     Serial.println("Logger initialized and CSV name set.");
+
+    initializeIMU();
+    setupSensors();
   }
 }
 
