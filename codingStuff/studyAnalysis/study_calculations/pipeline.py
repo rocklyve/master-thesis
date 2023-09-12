@@ -168,8 +168,9 @@ class AnalysisPipeline:
     def process_file(self, file_path, target_path):
         print(f"Processing file: {file_path}")
         df = pd.read_csv(file_path)
-        df = df.iloc[3000:]
-        df = df.iloc[:-500]
+        # this was used to remove the first minute and last 10 seconds rows
+        # df = df.iloc[3000:]
+        # df = df.iloc[:-500]
         temp_columns = ['TympanicMembrane', 'Concha', 'EarCanal', 'Out_Bottom', 'Out_Top', 'Out_Middle']
 
         # Get only the directory path for the target
