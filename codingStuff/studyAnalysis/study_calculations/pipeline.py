@@ -199,8 +199,8 @@ if __name__ == '__main__':
     pipeline = AnalysisPipeline(data_dir, target_dir, fit_type)
     pipeline.process_directory(data_dir, target_dir)
 
-    pipeline.fit_type = FitType.LINEAR
-    pipeline.process_directory(data_dir, target_dir)
-
-    pipeline.fit_type = FitType.POLY
-    pipeline.process_directory(data_dir, target_dir)
+    # pipeline.fit_type = FitType.LINEAR
+    # pipeline.process_directory(data_dir, target_dir)
+    #
+    # pipeline.fit_type = FitType.POLY
+    # pipeline.process_directory(data_dir, target_dir)

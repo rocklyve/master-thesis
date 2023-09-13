@@ -47,6 +47,9 @@ void setup() {
   Serial.begin(9600);
   // while (!Serial) {};
 
+  // setup the random generator for better randomness
+  randomSeed(analogRead(0));
+
   setupButtonInterrupt();
 
   // Create the new filename
@@ -69,9 +72,9 @@ void setup() {
 void loop() {
   unsigned long currentMillis = millis();  // Grab current time
 
-  if (currentMillis - previousMillis >= interval) {
-    // Save the last time data was sampled
-    previousMillis = currentMillis;
+  // if (currentMillis - previousMillis >= interval) {
+  //   // Save the last time data was sampled
+  //   previousMillis = currentMillis;
 
     if (found_sensor_counter != amount_of_sensors) {
       setupSensors();
@@ -124,7 +127,7 @@ void loop() {
         Serial.println("");
       }
     }
-  }
+  // }
 }
 
 void setupSensors() {
