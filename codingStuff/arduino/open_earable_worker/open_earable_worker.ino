@@ -48,13 +48,16 @@ void setup() {
   // while (!Serial) {};
 
   // setup the random generator for better randomness
-  randomSeed(analogRead(0));
+  // randomSeed(analogRead(0));
 
   setupButtonInterrupt();
 
   // Create the new filename
   logger = new SD_Logger();
-  // logger->set_name("data" + String(random(1, 10001)) + ".csv");  // Set the name of the log file
+  // int randSuffix = random(1, 10001);  // Generate a random integer between 1 and 10000
+  // String file_name = String("Logging") + "_" + String(randSuffix) + ".csv";  // Append suffix
+  // logger->set_name(file_name.c_str());  // Set the name of the log file
+
   delay(100);
   if (!logger->begin()) {
     Serial.println("SD Logger initialization failed!");
@@ -77,6 +80,7 @@ void loop() {
     previousMillis = currentMillis;
 
     if (found_sensor_counter != amount_of_sensors) {
+      Serial.println("Not enough sensors found, reexecute setupSensors()");
       setupSensors();
       delay(2000);
     } else {
@@ -94,6 +98,7 @@ void loop() {
       }
       checkButtonPress(); 
       readSensorData(data);
+
       saveDataToSDCard(data, measurement_state);
 
       // print data
@@ -178,6 +183,7 @@ void readSensorData(int data[]) {
   // Read MLX sensor data...
   for (uint8_t i = 0; i < amount_of_sensors; i++) {
     mux.openChannel(MLX_CHANNELS[i]);
+    
     delay(1);
     data[i + 1] = mlx[i].get_Temp() * 100;
     data[amount_of_sensors + i + 1] = mlx[i].get_sensor_temp() * 100;
@@ -198,6 +204,7 @@ void readSensorData(int data[]) {
     //   data[i + 1] = -1;
     // }
     delay(1);
+
     mux.closeChannel(MLX_CHANNELS[i]);
   }
   // now store IMU data

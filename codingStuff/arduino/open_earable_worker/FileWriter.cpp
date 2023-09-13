@@ -28,11 +28,8 @@ void FileWriter::setName(String name) {
 
 void FileWriter::openFile() {
     if (_is_open) return;
-    int randSuffix = random(1, 10001);  // Generate a random integer between 1 and 10000
-    String new_name = String(_name) + "_" + String(randSuffix);  // Append suffix
-
-    file = sd->open(new_name.c_str(), FILE_WRITE);  // Use c_str() to convert to const char*
-    // file = sd->open(_name, FILE_WRITE);  // Use c_str() to convert to const char*
+    
+    file = sd->open(_name, FILE_WRITE);  // Use c_str() to convert to const char*
     _is_open = true;
 }
 
