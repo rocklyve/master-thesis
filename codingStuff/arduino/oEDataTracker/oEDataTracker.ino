@@ -49,10 +49,10 @@ void handleButtonPress();
 /*****************************************  setup() *************************************************/
 void setup()
 {
-  Serial.begin(115200);
-  while (!Serial)
-  {
-  };
+  if (isDebugMode) {
+    Serial.begin(115200);
+    while (!Serial) {};
+  }
 
   // setup the random generator for better randomness
   randomSeed(analogRead(0));
@@ -68,14 +68,18 @@ void setup()
   delay(500);
   if (!logger->begin(file_name))
   {
-    Serial.println("SD Logger initialization failed!");
+    if (isDebugMode) {
+      Serial.println("SD Logger initialization failed!");
+    }
     ledManager.changeLEDColor(-1);
     while (1)
       ; // Stop execution if SD Logger initialization fails
   }
   else
   {
-    Serial.println("Logger initialized and CSV name set.");
+    if (isDebugMode) {
+      Serial.println("Logger initialized and CSV name set.");
+    }
     initializeIMU();
     setupSensors();
   }
@@ -132,7 +136,9 @@ void loop()
         // Logging the data
         logger->end();
         ledManager.changeLEDColor(-1);
-        Serial.println("Pressed stop, now finished");
+        if (isDebugMode) {
+          Serial.println("Pressed stop, now finished");
+        }
         while (true)
           ;
       }
@@ -224,18 +230,20 @@ void initializeMLXSensor(Protocentral_MLX90632 &sensor, uint8_t index)
 
   if (!sensor.begin())
   {
-    Serial.print("Sensor ");
-    Serial.print(index);
-    Serial.println(" not found. Check wiring or address.");
+    if (isDebugMode) {
+      Serial.print("Sensor ");
+      Serial.print(index);
+      Serial.println(" not found. Check wiring or address.");
+    }
   }
   else
   {
-    Serial.print("Sensor ");
-    Serial.print(index);
-    Serial.println(" found!");
+    if (isDebugMode) {
+      Serial.print("Sensor ");
+      Serial.print(index);
+      Serial.println(" found!");
+    }
     found_sensor_counter = found_sensor_counter + 1;
-    // sensor.pre_get_Temp();
-    // delay(50);
   }
   mux.closeChannel(MLX_CHANNELS[index]);
 }
@@ -255,8 +263,10 @@ void readSensorData(int *data)
     logger->end();
     ledManager.changeLEDColor(-1);
 
-    Serial.println("Receiving too many 0 data, save file and restart");
-    delay(500);
+    if (isDebugMode) {
+      Serial.println("Receiving too many 0 data, save file and restart");
+    }
+    delay(100);
     NVIC_SystemReset();
   }
   else
@@ -270,8 +280,6 @@ void readSensorData(int *data)
       if (data[i + 1] == 0)
       {
         amount_of_0_found++;
-        Serial.print("Increasing counter to ");
-        Serial.println(amount_of_0_found);
       }
 
       mux.closeChannel(MLX_CHANNELS[i]);
@@ -321,7 +329,9 @@ void handleButtonPress()
   logger->data_callback(-1, timestamp, nullptr);
 
   logger->end();
-  Serial.println("Pressed stop, now finished");
+  if (isDebugMode) {
+    Serial.println("Pressed stop, now finished");
+  }
   while (true)
     ;
 }
