@@ -135,6 +135,7 @@ void loop()
     }
     // else
     // {
+    memset(data, 0, sizeof(data));
     data[0] = amount_of_data_columns; // Number of data elements
 
     if (stopMeasurementButtonPressedFlag)
@@ -145,10 +146,10 @@ void loop()
     readSensorData(data);
     saveDataToSDCard(data, measurement_state);
     // print data
-    if (isDebugMode)
-    {
-      print_data(data, amount_of_data_columns);
-    }
+    // if (isDebugMode)
+    // {
+    //   print_data(data, amount_of_data_columns);
+    // }
     // }
   }
 }
@@ -286,19 +287,6 @@ void readTemperatureSensorData(int *data)
     //   data[i + 1] = 0;
     //   data[amount_of_sensors + i + 1] = 0;
     // }
-    data[1] = 0;
-    data[2] = 0;
-    data[3] = 0;
-    data[4] = 0;
-    data[5] = 0;
-    data[6] = 0;
-
-    data[7] = 0;
-    data[8] = 0;
-    data[9] = 0;
-    data[10] = 0;
-    data[11] = 0;
-    data[12] = 0;
 
     mux.openChannel(MLX_CHANNELS[sensor_index_to_read]);
     data[sensor_index_to_read + 1] = mlx[sensor_index_to_read].get_Temp() * 100;
