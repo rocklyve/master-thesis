@@ -13,6 +13,7 @@ bool isDebugMode = false;
 
 const uint8_t MLX_CHANNELS[] = {1,2,3,4,6,7};
 int found_sensor_counter = 0;
+int amount_of_0_found = 0;
 // PCB is 4,6,7
 // FlexPCB is 1,2,3
 const uint8_t amount_of_sensors = sizeof(MLX_CHANNELS);
@@ -48,24 +49,23 @@ void setup() {
   // while (!Serial) {};
 
   // setup the random generator for better randomness
-  // randomSeed(analogRead(0));
+  randomSeed(analogRead(0));
 
   setupButtonInterrupt();
 
   // Create the new filename
   logger = new SD_Logger();
-  // int randSuffix = random(1, 10001);  // Generate a random integer between 1 and 10000
-  // String file_name = String("Logging") + "_" + String(randSuffix) + ".csv";  // Append suffix
-  // logger->set_name(file_name.c_str());  // Set the name of the log file
 
-  delay(100);
-  if (!logger->begin()) {
+  int randSuffix = random(1, 10001);  // Generate a random integer between 1 and 10000
+  String file_name = String("Logging") + "_" + String(randSuffix) + ".csv";  // Append suffix
+
+  delay(500);
+  if (!logger->begin(file_name)) {
     Serial.println("SD Logger initialization failed!");
     changeLEDColor(-1);
     while (1);  // Stop execution if SD Logger initialization fails
   } else {
     Serial.println("Logger initialized and CSV name set.");
-
     initializeIMU();
     setupSensors();
   }
@@ -181,32 +181,36 @@ void initializeIMU() {
 
 void readSensorData(int data[]) {
   // Read MLX sensor data...
-  for (uint8_t i = 0; i < amount_of_sensors; i++) {
-    mux.openChannel(MLX_CHANNELS[i]);
-    
-    delay(1);
-    data[i + 1] = mlx[i].get_Temp() * 100;
-    data[amount_of_sensors + i + 1] = mlx[i].get_sensor_temp() * 100;
-    
-    // if (mlx[i].dataAvailable()) {
-    //   mlx_data_fetch_counter[i] = 0;
-    //   data[i + 1] = mlx[i].get_Temp() * 100;
-    //   delay(50);
-    //   mlx[i].pre_get_Temp();
-    //   delay(50);
-    // } else {
-    //   mlx_data_fetch_counter[i] = mlx_data_fetch_counter[i] + 1;
-    //   if (mlx_data_fetch_counter[i] > MLX_TIMEOUT) {
-    //     mlx[i].pre_get_Temp();
-    //     Serial.print("Timeout reached, clear data for mlx ");
-    //     Serial.println(MLX_CHANNELS[i]);
-    //   }
-    //   data[i + 1] = -1;
-    // }
-    delay(1);
+  if (amount_of_0_found >= 6) {
+    saveDataToSDCard(data, -1);
+    // Logging the data
+    logger->end();
+    changeLEDColor(-1);
 
-    mux.closeChannel(MLX_CHANNELS[i]);
+    Serial.println("Receiving too many 0 data, save file and restart");
+    delay(500);
+    NVIC_SystemReset();
+  } else {
+    for (uint8_t i = 0; i < amount_of_sensors; i++) {
+      mux.openChannel(MLX_CHANNELS[i]);
+      
+      delay(1);
+      data[i + 1] = mlx[i].get_Temp() * 100;
+      delay(1);
+      data[amount_of_sensors + i + 1] = mlx[i].get_sensor_temp() * 100;
+      delay(1);
+      
+      
+      if (data[i+1] == 0) {
+        amount_of_0_found++;
+        Serial.print("Increasing counter to ");
+        Serial.println(amount_of_0_found);
+      }
+
+      mux.closeChannel(MLX_CHANNELS[i]);
+    }
   }
+  
   // now store IMU data
   int imu_muliplicator = 10000;
   float accelX, accelY, accelZ;

@@ -7,7 +7,7 @@
 
 class SD_Logger {
 public:
-    static bool begin();
+    static bool begin(String file_name);
     static void end();
 
     static void set_name(String name);

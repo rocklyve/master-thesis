@@ -6,9 +6,10 @@ FileWriter * SD_Logger::writer;
 char SD_Logger::_buffer[LOGGER_BUFFER_SIZE];
 int SD_Logger::_index = 0;
 
-bool SD_Logger::begin() {
+bool SD_Logger::begin(String file_name) {
     writer = new FileWriter();
     _index = 0;
+    set_name(file_name);
     bool status = writer->begin();
     writer->cleanFile();
     write_header();
