@@ -37,8 +37,8 @@ void setupSensors();
 void setupButtonInterrupt();
 void initializeMLXSensor(Protocentral_MLX90632 &sensor, uint8_t index);
 void initializeIMU();
-void readSensorData(int data[]);
-void saveDataToSDCard(int data[]);
+void readSensorData(int *data);
+void saveDataToSDCard(int *data, int id);
 void checkButtonPress();
 void handleButtonPress();
 
@@ -113,42 +113,54 @@ void loop()
       saveDataToSDCard(data, measurement_state);
 
       // print data
-      if (data[1] != -1)
+      print_data(data, amount_of_data_columns);
+    }
+  }
+  else
+  {
+    Serial.println("Wait for timer");
+  }
+}
+
+void print_data(int *data, int amount_of_data_columns)
+{
+  if (isDebugMode)
+  {
+    if (data[1] != -1)
+    {
+      Serial.print("Object Temperature: ");
+      for (int i = 1; i <= amount_of_sensors; i++)
       {
-        Serial.print("Object Temperature: ");
-        for (int i = 1; i <= amount_of_sensors; i++)
+        Serial.print(data[i]);
+        if (i != amount_of_sensors)
         {
-          Serial.print(data[i]);
-          if (i != amount_of_sensors)
-          {
-            Serial.print(", ");
-          }
+          Serial.print(", ");
         }
-        Serial.println();
-
-        Serial.print("Sensor Temperature: ");
-        for (int i = amount_of_sensors + 1; i <= 2 * amount_of_sensors; i++)
-        {
-          Serial.print(data[i]);
-          if (i != 2 * amount_of_sensors)
-          {
-            Serial.print(", ");
-          }
-        }
-        Serial.println();
-
-        Serial.print("IMU [");
-        for (int i = 2 * amount_of_sensors + 1; i <= 2 * amount_of_sensors + 9; i++)
-        {
-          Serial.print(data[i]);
-          if (i != 2 * amount_of_sensors + 9)
-          {
-            Serial.print(", ");
-          }
-        }
-        Serial.println("]");
-        Serial.println("");
       }
+      Serial.println();
+
+      Serial.print("Sensor Temperature: ");
+      for (int i = amount_of_sensors + 1; i <= 2 * amount_of_sensors; i++)
+      {
+        Serial.print(data[i]);
+        if (i != 2 * amount_of_sensors)
+        {
+          Serial.print(", ");
+        }
+      }
+      Serial.println();
+
+      Serial.print("IMU [");
+      for (int i = 2 * amount_of_sensors + 1; i <= 2 * amount_of_sensors + 9; i++)
+      {
+        Serial.print(data[i]);
+        if (i != 2 * amount_of_sensors + 9)
+        {
+          Serial.print(", ");
+        }
+      }
+      Serial.println("]");
+      Serial.println("");
     }
   }
 }
@@ -208,7 +220,7 @@ void initializeIMU()
   imu.start();
 }
 
-void readSensorData(int data[])
+void readSensorData(int *data)
 {
   // Read MLX sensor data...
   if (amount_of_0_found >= 6)
@@ -268,7 +280,7 @@ void readSensorData(int data[])
   data[2 * amount_of_sensors + 9] = magZ * imu_muliplicator;
 }
 
-void saveDataToSDCard(int data[], int id)
+void saveDataToSDCard(int *data, int id)
 {
   unsigned int timestamp = millis();
   logger->data_callback(id, timestamp, (uint8_t *)data);
