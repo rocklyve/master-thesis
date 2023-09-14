@@ -12,6 +12,7 @@ IMU_Sensor imu;
 
 LEDManager ledManager;
 
+// if true, the code waits until serial is available
 bool isDebugMode = false;
 
 // PCB is 4,6,7
@@ -19,8 +20,11 @@ bool isDebugMode = false;
 const uint8_t MLX_CHANNELS[] = {1, 2, 3, 4, 6, 7};
 int found_sensor_counter = 0;
 int amount_of_0_found = 0;
+int sensor_index_to_read = 0;
 const uint8_t amount_of_sensors = sizeof(MLX_CHANNELS);
 Protocentral_MLX90632 mlx[amount_of_sensors];
+const int amount_of_data_columns = 2 * amount_of_sensors + 9;
+int data[amount_of_data_columns + 1];
 
 int loopCounter = 0;         // Counts the number of loop iterations that meet the condition
 unsigned long startTime = 0; // Time when we start counting
@@ -43,16 +47,18 @@ void initializeMLXSensor(Protocentral_MLX90632 &sensor, uint8_t index);
 void initializeIMU();
 void readSensorData(int *data);
 void saveDataToSDCard(int *data, int id);
-void checkButtonPress();
-void handleButtonPress();
+void stopMeasurement();
 
 /*****************************************  setup() *************************************************/
 void setup()
 {
-  if (isDebugMode) {
-    Serial.begin(115200);
-    while (!Serial) {};
-  }
+  // if (isDebugMode)
+  // {
+  Serial.begin(115200);
+  while (!Serial)
+  {
+  };
+  // }
 
   // setup the random generator for better randomness
   randomSeed(analogRead(0));
@@ -68,7 +74,8 @@ void setup()
   delay(500);
   if (!logger->begin(file_name))
   {
-    if (isDebugMode) {
+    if (isDebugMode)
+    {
       Serial.println("SD Logger initialization failed!");
     }
     ledManager.changeLEDColor(-1);
@@ -77,7 +84,8 @@ void setup()
   }
   else
   {
-    if (isDebugMode) {
+    if (isDebugMode)
+    {
       Serial.println("Logger initialized and CSV name set.");
     }
     initializeIMU();
@@ -90,8 +98,8 @@ void loop()
 {
   unsigned long currentMillis = millis(); // Grab current time
 
-  // if (currentMillis - previousMillis >= interval)
-  // {
+  if (currentMillis - previousMillis >= interval)
+  {
     // Save the last time data was sampled
     previousMillis = currentMillis;
 
@@ -122,77 +130,66 @@ void loop()
     {
       Serial.println("Not enough sensors found, reexecute setupSensors()");
       setupSensors();
-      delay(2000);
+      ledManager.changeLEDColor(-1);
+      delay(10000);
     }
-    else
+    // else
+    // {
+    data[0] = amount_of_data_columns; // Number of data elements
+
+    if (stopMeasurementButtonPressedFlag)
     {
-      int amount_of_data_columns = 2 * amount_of_sensors + 9;
-      int data[amount_of_data_columns + 1];
-      data[0] = amount_of_data_columns; // Number of data elements
+      stopMeasurement();
+    }
 
-      if (stopMeasurementButtonPressedFlag)
-      {
-        // saveDataToSDCard(data, -1);
-        // Logging the data
-        logger->end();
-        ledManager.changeLEDColor(-1);
-        if (isDebugMode) {
-          Serial.println("Pressed stop, now finished");
-        }
-        while (true)
-          ;
-      }
-      checkButtonPress();
-      readSensorData(data);
-
-      // saveDataToSDCard(data, measurement_state);
-
-      // print data
+    readSensorData(data);
+    saveDataToSDCard(data, measurement_state);
+    // print data
+    if (isDebugMode)
+    {
       print_data(data, amount_of_data_columns);
     }
-  // }
+    // }
+  }
 }
 
 void print_data(int *data, int amount_of_data_columns)
 {
-  if (isDebugMode)
+  if (data[1] != -1)
   {
-    if (data[1] != -1)
+    Serial.print("Object Temperature: ");
+    for (int i = 1; i <= amount_of_sensors; i++)
     {
-      Serial.print("Object Temperature: ");
-      for (int i = 1; i <= amount_of_sensors; i++)
+      Serial.print(data[i]);
+      if (i != amount_of_sensors)
       {
-        Serial.print(data[i]);
-        if (i != amount_of_sensors)
-        {
-          Serial.print(", ");
-        }
+        Serial.print(", ");
       }
-      Serial.println();
-
-      Serial.print("Sensor Temperature: ");
-      for (int i = amount_of_sensors + 1; i <= 2 * amount_of_sensors; i++)
-      {
-        Serial.print(data[i]);
-        if (i != 2 * amount_of_sensors)
-        {
-          Serial.print(", ");
-        }
-      }
-      Serial.println();
-
-      Serial.print("IMU [");
-      for (int i = 2 * amount_of_sensors + 1; i <= 2 * amount_of_sensors + 9; i++)
-      {
-        Serial.print(data[i]);
-        if (i != 2 * amount_of_sensors + 9)
-        {
-          Serial.print(", ");
-        }
-      }
-      Serial.println("]");
-      Serial.println("");
     }
+    Serial.println();
+
+    Serial.print("Sensor Temperature: ");
+    for (int i = amount_of_sensors + 1; i <= 2 * amount_of_sensors; i++)
+    {
+      Serial.print(data[i]);
+      if (i != 2 * amount_of_sensors)
+      {
+        Serial.print(", ");
+      }
+    }
+    Serial.println();
+
+    Serial.print("IMU [");
+    for (int i = 2 * amount_of_sensors + 1; i <= 2 * amount_of_sensors + 9; i++)
+    {
+      Serial.print(data[i]);
+      if (i != 2 * amount_of_sensors + 9)
+      {
+        Serial.print(", ");
+      }
+    }
+    Serial.println("]");
+    Serial.println("");
   }
 }
 
@@ -230,7 +227,8 @@ void initializeMLXSensor(Protocentral_MLX90632 &sensor, uint8_t index)
 
   if (!sensor.begin())
   {
-    if (isDebugMode) {
+    if (isDebugMode)
+    {
       Serial.print("Sensor ");
       Serial.print(index);
       Serial.println(" not found. Check wiring or address.");
@@ -238,7 +236,8 @@ void initializeMLXSensor(Protocentral_MLX90632 &sensor, uint8_t index)
   }
   else
   {
-    if (isDebugMode) {
+    if (isDebugMode)
+    {
       Serial.print("Sensor ");
       Serial.print(index);
       Serial.println(" found!");
@@ -255,6 +254,12 @@ void initializeIMU()
 
 void readSensorData(int *data)
 {
+  readTemperatureSensorData(data);
+  readIMUSensorData(data);
+}
+
+void readTemperatureSensorData(int *data)
+{
   // Read MLX sensor data...
   if (amount_of_0_found >= 6)
   {
@@ -263,7 +268,8 @@ void readSensorData(int *data)
     logger->end();
     ledManager.changeLEDColor(-1);
 
-    if (isDebugMode) {
+    if (isDebugMode)
+    {
       Serial.println("Receiving too many 0 data, save file and restart");
     }
     delay(100);
@@ -271,22 +277,46 @@ void readSensorData(int *data)
   }
   else
   {
-    for (uint8_t i = 0; i < amount_of_sensors; i++)
+    if (sensor_index_to_read >= amount_of_sensors)
     {
-      mux.openChannel(MLX_CHANNELS[i]);
-      data[i + 1] = mlx[i].get_Temp() * 100;
-      data[amount_of_sensors + i + 1] = mlx[i].get_sensor_temp() * 100;
-
-      if (data[i + 1] == 0)
-      {
-        amount_of_0_found++;
-      }
-
-      mux.closeChannel(MLX_CHANNELS[i]);
+      sensor_index_to_read = 0;
     }
-  }
+    // for (uint8_t i = 0; i < amount_of_sensors; i++)
+    // {
+    //   data[i + 1] = 0;
+    //   data[amount_of_sensors + i + 1] = 0;
+    // }
+    data[1] = 0;
+    data[2] = 0;
+    data[3] = 0;
+    data[4] = 0;
+    data[5] = 0;
+    data[6] = 0;
 
-  // now store IMU data
+    data[7] = 0;
+    data[8] = 0;
+    data[9] = 0;
+    data[10] = 0;
+    data[11] = 0;
+    data[12] = 0;
+
+    mux.openChannel(MLX_CHANNELS[sensor_index_to_read]);
+    data[sensor_index_to_read + 1] = mlx[sensor_index_to_read].get_Temp() * 100;
+    data[amount_of_sensors + sensor_index_to_read + 1] = mlx[sensor_index_to_read].get_sensor_temp() * 100;
+
+    if (data[sensor_index_to_read + 1] == 0)
+    {
+      amount_of_0_found++;
+    }
+
+    mux.closeChannel(MLX_CHANNELS[sensor_index_to_read]);
+    sensor_index_to_read++;
+    // }
+  }
+}
+
+void readIMUSensorData(int *data)
+{
   int imu_muliplicator = 10000;
   float accelX, accelY, accelZ;
   imu.get_acc(accelX, accelY, accelZ);
@@ -315,21 +345,15 @@ void saveDataToSDCard(int *data, int id)
   logger->data_callback(id, timestamp, (uint8_t *)data);
 }
 
-void checkButtonPress()
-{
-  if (stopMeasurementButtonPressedFlag)
-  {
-    handleButtonPress();
-  }
-}
-
-void handleButtonPress()
+void stopMeasurement()
 {
   unsigned int timestamp = millis();
   logger->data_callback(-1, timestamp, nullptr);
 
   logger->end();
-  if (isDebugMode) {
+  ledManager.changeLEDColor(-1);
+  if (isDebugMode)
+  {
     Serial.println("Pressed stop, now finished");
   }
   while (true)
