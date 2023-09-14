@@ -22,6 +22,10 @@ int amount_of_0_found = 0;
 const uint8_t amount_of_sensors = sizeof(MLX_CHANNELS);
 Protocentral_MLX90632 mlx[amount_of_sensors];
 
+int loopCounter = 0;         // Counts the number of loop iterations that meet the condition
+unsigned long startTime = 0; // Time when we start counting
+const int N = 100;           // Number of iterations to count before calculating frequency
+
 const int buttonPin = 5;                                // Button pin connected to D5
 volatile bool stopMeasurementButtonPressedFlag = false; // Volatile flag used in the interrupt routine
 const unsigned long doubleClickTimeframe = 2000;        // Timeframe for double click in milliseconds
@@ -46,7 +50,9 @@ void handleButtonPress();
 void setup()
 {
   Serial.begin(115200);
-  // while (!Serial) {};
+  while (!Serial)
+  {
+  };
 
   // setup the random generator for better randomness
   randomSeed(analogRead(0));
@@ -84,6 +90,29 @@ void loop()
   {
     // Save the last time data was sampled
     previousMillis = currentMillis;
+
+    // Start the timer when the first sample is taken
+    if (loopCounter == 0)
+    {
+      startTime = currentMillis;
+    }
+
+    // Update the loop counter
+    loopCounter++;
+
+    // Calculate frequency every N iterations
+    if (loopCounter >= N)
+    {
+      unsigned long elapsedTime = currentMillis - startTime; // Time for N iterations in milliseconds
+      float frequency = (float)N / (elapsedTime / 1000.0);   // Calculate frequency in Hz
+
+      Serial.print("Frequency: ");
+      Serial.print(frequency);
+      Serial.println(" Hz");
+
+      // Reset variables
+      loopCounter = 0;
+    }
 
     if (found_sensor_counter != amount_of_sensors)
     {
