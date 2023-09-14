@@ -250,7 +250,7 @@ void readSensorData(int *data)
   // Read MLX sensor data...
   if (amount_of_0_found >= 6)
   {
-    // saveDataToSDCard(data, -1);
+    saveDataToSDCard(data, -1);
     // Logging the data
     logger->end();
     ledManager.changeLEDColor(-1);
