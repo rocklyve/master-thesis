@@ -86,8 +86,8 @@ void loop()
 {
   unsigned long currentMillis = millis(); // Grab current time
 
-  if (currentMillis - previousMillis >= interval)
-  {
+  // if (currentMillis - previousMillis >= interval)
+  // {
     // Save the last time data was sampled
     previousMillis = currentMillis;
 
@@ -128,7 +128,7 @@ void loop()
 
       if (stopMeasurementButtonPressedFlag)
       {
-        saveDataToSDCard(data, -1);
+        // saveDataToSDCard(data, -1);
         // Logging the data
         logger->end();
         ledManager.changeLEDColor(-1);
@@ -139,16 +139,12 @@ void loop()
       checkButtonPress();
       readSensorData(data);
 
-      saveDataToSDCard(data, measurement_state);
+      // saveDataToSDCard(data, measurement_state);
 
       // print data
       print_data(data, amount_of_data_columns);
     }
-  }
-  else
-  {
-    Serial.println("Wait for timer");
-  }
+  // }
 }
 
 void print_data(int *data, int amount_of_data_columns)
@@ -254,7 +250,7 @@ void readSensorData(int *data)
   // Read MLX sensor data...
   if (amount_of_0_found >= 6)
   {
-    saveDataToSDCard(data, -1);
+    // saveDataToSDCard(data, -1);
     // Logging the data
     logger->end();
     ledManager.changeLEDColor(-1);
@@ -268,12 +264,8 @@ void readSensorData(int *data)
     for (uint8_t i = 0; i < amount_of_sensors; i++)
     {
       mux.openChannel(MLX_CHANNELS[i]);
-
-      delay(1);
       data[i + 1] = mlx[i].get_Temp() * 100;
-      delay(1);
       data[amount_of_sensors + i + 1] = mlx[i].get_sensor_temp() * 100;
-      delay(1);
 
       if (data[i + 1] == 0)
       {
