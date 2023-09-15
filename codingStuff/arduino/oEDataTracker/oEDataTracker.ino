@@ -103,32 +103,6 @@ void loop()
 
   if (currentMillis - previousMillis >= interval)
   {
-    // // Save the last time data was sampled
-    // previousMillis = currentMillis;
-
-    // // Start the timer when the first sample is taken
-    // if (loopCounter == 0)
-    // {
-    //   startTime = currentMillis;
-    // }
-
-    // // Update the loop counter
-    // loopCounter++;
-
-    // // Calculate frequency every N iterations
-    // if (loopCounter >= N)
-    // {
-    //   unsigned long elapsedTime = currentMillis - startTime; // Time for N iterations in milliseconds
-    //   float frequency = (float)N / (elapsedTime / 1000.0);   // Calculate frequency in Hz
-
-    //   Serial.print("Frequency: ");
-    //   Serial.print(frequency);
-    //   Serial.println(" Hz");
-
-    //   // Reset variables
-    //   loopCounter = 0;
-    // }
-
     if (found_sensor_counter != amount_of_sensors)
     {
       Serial.println("Not enough sensors found, reexecute setupSensors()");
@@ -150,11 +124,10 @@ void loop()
     readSensorData(data);
     saveDataToSDCard(data, measurement_state);
     // print data
-    // if (isDebugMode)
-    // {
-    //   print_data(data, amount_of_data_columns);
-    // }
-    // }
+    if (isDebugMode)
+    {
+      print_data(data, amount_of_data_columns);
+    }
   }
 }
 
@@ -341,7 +314,7 @@ void saveDataToSDCard(int *data, int id)
 String convert_int_to_string(int *data)
 {
   String data_string = "";
-  for (int i = 0; i < amount_of_data_columns + 1; ++i)
+  for (int i = 1; i < amount_of_data_columns + 1; ++i)
   {
     data_string += String(data[i]);
     if (i < amount_of_data_columns)

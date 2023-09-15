@@ -1,7 +1,7 @@
 import pandas as pd
 
 # Read CSV file
-df = pd.read_csv("data/hz_test/hz_rate_test03.csv")
+df = pd.read_csv("data/hz_test/hz_rate_test06.csv")
 
 # Calculate time differences between consecutive samples
 df['time_diff'] = df['TIMESTAMP'].diff()

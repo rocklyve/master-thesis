@@ -4,7 +4,7 @@ ExFatFile SD_Logger::_file;
 bool SD_Logger::_opened = false;
 char SD_Logger::_buffer[LOGGER_BUFFER_SIZE];
 int SD_Logger::_index = 0;
-String SD_Logger::_name = "Log.csv";
+String SD_Logger::_name = "Logging.csv";
 
 bool SD_Logger::begin()
 {
@@ -40,8 +40,8 @@ void SD_Logger::data_callback(int id, unsigned int timestamp, const String &data
     };
 
     String text = String(id);
-    text += ", " + String(timestamp);
-    text += ", " + data_string;
+    text += "," + String(timestamp);
+    text += "," + data_string;
     text += "\r\n";
 
     if (text.length() + _index > LOGGER_BUFFER_SIZE)
