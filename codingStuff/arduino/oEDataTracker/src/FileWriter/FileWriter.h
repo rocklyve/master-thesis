@@ -12,7 +12,8 @@
 #define SPI_SPEED SD_SCK_MHZ(50)
 #define SPI_CC 27
 
-class FileWriter {
+class FileWriter
+{
 public:
     FileWriter();
     ~FileWriter();
@@ -27,8 +28,9 @@ public:
 
     bool write_block(uint8_t *block, int size);
     void contained_write_block(uint8_t *block, int size);
+
 private:
-    SdExFat * sd;
+    SdExFat *sd;
     ExFatFile file;
 
     bool _is_open = false;
@@ -36,5 +38,4 @@ private:
     String _name = "Logging.csv";
 };
 
-
-#endif //OPEN_EARABLE_FILEWRITER_H
+#endif // OPEN_EARABLE_FILEWRITER_H

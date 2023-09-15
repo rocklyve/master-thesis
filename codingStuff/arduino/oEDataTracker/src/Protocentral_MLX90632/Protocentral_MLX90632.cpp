@@ -21,7 +21,6 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////////////////////
 
-
 #include "Protocentral_MLX90632.h"
 
 double P_R;
@@ -38,10 +37,10 @@ double Ka;
 double Ha;
 double Hb;
 
-double TOdut = 25.0; //Assume 25C for first iteration
-double TO0 = 25.0; //object temp from previous calculation
-double TA0 = 25.0; //ambient temp from previous calculation
-double sensorTemp; //Internal temp of the MLX sensor
+double TOdut = 25.0; // Assume 25C for first iteration
+double TO0 = 25.0;   // object temp from previous calculation
+double TA0 = 25.0;   // ambient temp from previous calculation
+double sensorTemp;   // Internal temp of the MLX sensor
 
 double emissivity = 0.98;
 
@@ -58,8 +57,8 @@ boolean Protocentral_MLX90632::begin()
 boolean Protocentral_MLX90632::begin(uint8_t deviceAddress, TwoWire &wirePort, status &returnError)
 {
   returnError = SENSOR_SUCCESS;
-  _deviceAddress = deviceAddress; //Get the I2C address from user
-  _i2cPort = &wirePort; //Grab which port the user wants us to use
+  _deviceAddress = deviceAddress; // Get the I2C address from user
+  _i2cPort = &wirePort;           // Grab which port the user wants us to use
 
   uint16_t thisAddress;
   returnError = readRegister16(EE_I2C_ADDRESS, thisAddress);
@@ -74,55 +73,58 @@ boolean Protocentral_MLX90632::begin(uint8_t deviceAddress, TwoWire &wirePort, s
       _debugPort->println();
     }
     returnError = SENSOR_ID_ERROR;
-    return (false); //Error
+    return (false); // Error
   }
 
-  //Load all the static calibration factors
+  // Load all the static calibration factors
   int16_t tempValue16;
   int32_t tempValue32;
-  readRegister32(EE_P_R, (uint32_t&)tempValue32);
+  readRegister32(EE_P_R, (uint32_t &)tempValue32);
   P_R = (double)tempValue32 * pow(2, -8);
-  readRegister32(EE_P_G, (uint32_t&)tempValue32);
+  readRegister32(EE_P_G, (uint32_t &)tempValue32);
   P_G = (double)tempValue32 * pow(2, -20);
-  readRegister32(EE_P_T, (uint32_t&)tempValue32);
+  readRegister32(EE_P_T, (uint32_t &)tempValue32);
   P_T = (double)tempValue32 * pow(2, -44);
-  readRegister32(EE_P_O, (uint32_t&)tempValue32);
+  readRegister32(EE_P_O, (uint32_t &)tempValue32);
   P_O = (double)tempValue32 * pow(2, -8);
-  readRegister32(EE_Ea, (uint32_t&)tempValue32);
+  readRegister32(EE_Ea, (uint32_t &)tempValue32);
   Ea = (double)tempValue32 * pow(2, -16);
-  readRegister32(EE_Eb, (uint32_t&)tempValue32);
+  readRegister32(EE_Eb, (uint32_t &)tempValue32);
   Eb = (double)tempValue32 * pow(2, -8);
-  readRegister32(EE_Fa, (uint32_t&)tempValue32);
+  readRegister32(EE_Fa, (uint32_t &)tempValue32);
   Fa = (double)tempValue32 * pow(2, -46);
-  readRegister32(EE_Fb, (uint32_t&)tempValue32);
+  readRegister32(EE_Fb, (uint32_t &)tempValue32);
   Fb = (double)tempValue32 * pow(2, -36);
-  readRegister32(EE_Ga, (uint32_t&)tempValue32);
+  readRegister32(EE_Ga, (uint32_t &)tempValue32);
   Ga = (double)tempValue32 * pow(2, -36);
-  
-  readRegister16(EE_Gb, (uint16_t&)tempValue16);
+
+  readRegister16(EE_Gb, (uint16_t &)tempValue16);
   Gb = (double)tempValue16 * pow(2, -10);
-  readRegister16(EE_Ka, (uint16_t&)tempValue16);
+  readRegister16(EE_Ka, (uint16_t &)tempValue16);
   Ka = (double)tempValue16 * pow(2, -10);
-  readRegister16(EE_Ha, (uint16_t&)tempValue16);
-  Ha = (double)tempValue16 * pow(2, -14); //Ha!
-  readRegister16(EE_Hb, (uint16_t&)tempValue16);
+  readRegister16(EE_Ha, (uint16_t &)tempValue16);
+  Ha = (double)tempValue16 * pow(2, -14); // Ha!
+  readRegister16(EE_Hb, (uint16_t &)tempValue16);
   Hb = (double)tempValue16 * pow(2, -14);
 
   return (true);
 }
 
-void Protocentral_MLX90632::pre_get_Temp() {
-  if(getMode() != MODE_CONTINUOUS) setSOC();
+void Protocentral_MLX90632::pre_get_Temp()
+{
+  if (getMode() != MODE_CONTINUOUS)
+    setSOC();
 
   clearNewData();
 }
 
-float Protocentral_MLX90632::get_sensor_temp() {
-  //Get RAM_6 and RAM_9
+float Protocentral_MLX90632::get_sensor_temp()
+{
+  // Get RAM_6 and RAM_9
   int16_t sixRAM;
-  readRegister16(RAM_6, (uint16_t&)sixRAM);
+  readRegister16(RAM_6, (uint16_t &)sixRAM);
   int16_t nineRAM;
-  readRegister16(RAM_9, (uint16_t&)nineRAM);
+  readRegister16(RAM_9, (uint16_t &)nineRAM);
 
   double VRta = nineRAM + Gb * (sixRAM / 12.0);
 
@@ -144,55 +146,60 @@ float Protocentral_MLX90632::get_sensor_temp() {
     _debugPort->println(sensorTemp, 4);
   }
 
-  return(sensorTemp);
+  return (sensorTemp);
 }
 
- float Protocentral_MLX90632::get_Temp() {
+float Protocentral_MLX90632::get_Temp()
+{
   Protocentral_MLX90632::status returnError;
   gatherSensorTemp(returnError);
-  if (returnError != SENSOR_SUCCESS){
-    if (_printDebug) {
+  if (returnError != SENSOR_SUCCESS)
+  {
+    if (_printDebug)
+    {
       _debugPort->println(F("Sensor temperature not found"));
-      if(returnError == SENSOR_TIMEOUT_ERROR) _debugPort->println(F("Timeout"));
+      if (returnError == SENSOR_TIMEOUT_ERROR)
+        _debugPort->println(F("Timeout"));
     }
-    return (0.0); //Error
+    return (0.0); // Error
   }
 
   int16_t lowerRAM = 0;
   int16_t upperRAM = 0;
 
-  //Get RAM_6 and RAM_9
+  // Get RAM_6 and RAM_9
   int16_t sixRAM;
-  readRegister16(RAM_6, (uint16_t&)sixRAM);
+  readRegister16(RAM_6, (uint16_t &)sixRAM);
   int16_t nineRAM;
-  readRegister16(RAM_9, (uint16_t&)nineRAM);
+  readRegister16(RAM_9, (uint16_t &)nineRAM);
 
-  //Read cycle_pos to get measurement pointer
+  // Read cycle_pos to get measurement pointer
   int cyclePosition = getCyclePosition();
 
-  //If cycle_pos = 1
-  //Calculate TA and TO based on RAM_4, RAM_5, RAM_6, RAM_9
+  // If cycle_pos = 1
+  // Calculate TA and TO based on RAM_4, RAM_5, RAM_6, RAM_9
   if (cyclePosition == 1)
   {
-    readRegister16(RAM_4, (uint16_t&)lowerRAM);
-    readRegister16(RAM_5, (uint16_t&)upperRAM);
+    readRegister16(RAM_4, (uint16_t &)lowerRAM);
+    readRegister16(RAM_5, (uint16_t &)upperRAM);
   }
-  //If cycle_pos = 2
-  //Calculate TA and TO based on RAM_7, RAM_8, RAM_6, RAM_9
+  // If cycle_pos = 2
+  // Calculate TA and TO based on RAM_7, RAM_8, RAM_6, RAM_9
   else if (cyclePosition == 2)
   {
-    readRegister16(RAM_7, (uint16_t&)lowerRAM);
-    readRegister16(RAM_8, (uint16_t&)upperRAM);
+    readRegister16(RAM_7, (uint16_t &)lowerRAM);
+    readRegister16(RAM_8, (uint16_t &)upperRAM);
   }
   else
   {
-    if (_printDebug) _debugPort->println(F("Found a cycle position that was not 1 or 2"));
-    readRegister16(RAM_4, (uint16_t&)lowerRAM);
-    readRegister16(RAM_5, (uint16_t&)upperRAM);
+    if (_printDebug)
+      _debugPort->println(F("Found a cycle position that was not 1 or 2"));
+    readRegister16(RAM_4, (uint16_t &)lowerRAM);
+    readRegister16(RAM_5, (uint16_t &)upperRAM);
   }
 
-  //Object temp requires 3 iterations
-  for (uint8_t i = 0 ; i < 3 ; i++)
+  // Object temp requires 3 iterations
+  for (uint8_t i = 0; i < 3; i++)
   {
     double VRta = nineRAM + Gb * (sixRAM / 12.0);
 
@@ -211,7 +218,7 @@ float Protocentral_MLX90632::get_sensor_temp() {
     double bigFraction = Sto / (emissivity * Fa * Ha * (1 + Ga * (TOdut - TO0) + Fb * (TAdut - TA0)));
 
     double objectTemp = bigFraction + pow(ambientTempK, 4);
-    objectTemp = pow(objectTemp, 0.25); //Take 4th root
+    objectTemp = pow(objectTemp, 0.25); // Take 4th root
     objectTemp = objectTemp - 273.15 - Hb;
 
     TO0 = objectTemp;
@@ -246,15 +253,15 @@ float Protocentral_MLX90632::get_sensor_temp() {
   }
 
   return (TO0);
- }
-
- //Returns the cycle_pos from status register. cycle_pos is 0 to 31
-uint8_t Protocentral_MLX90632::getCyclePosition() {
-  uint16_t status = getStatus() >> BIT_CYCLE_POS; //Shave off last two bits
-  status &= 0x1F; //Get lower 5 bits.
-  return (status);
 }
 
+// Returns the cycle_pos from status register. cycle_pos is 0 to 31
+uint8_t Protocentral_MLX90632::getCyclePosition()
+{
+  uint16_t status = getStatus() >> BIT_CYCLE_POS; // Shave off last two bits
+  status &= 0x1F;                                 // Get lower 5 bits.
+  return (status);
+}
 
 float Protocentral_MLX90632::getObjectTemp()
 {
@@ -262,11 +269,12 @@ float Protocentral_MLX90632::getObjectTemp()
   return (getObjectTemp(returnError));
 }
 
-float Protocentral_MLX90632::getObjectTemp(status& returnError)
+float Protocentral_MLX90632::getObjectTemp(status &returnError)
 {
   returnError = SENSOR_SUCCESS;
 
-  if(getMode() != MODE_CONTINUOUS) setSOC();
+  if (getMode() != MODE_CONTINUOUS)
+    setSOC();
 
   clearNewData();
 
@@ -277,9 +285,10 @@ float Protocentral_MLX90632::getObjectTemp(status& returnError)
     counter++;
     if (counter == MAX_WAIT)
     {
-      if (_printDebug) _debugPort->println(F("Data available timeout"));
+      if (_printDebug)
+        _debugPort->println(F("Data available timeout"));
       returnError = SENSOR_TIMEOUT_ERROR;
-      return (0.0); 
+      return (0.0);
     }
   }
 
@@ -289,21 +298,22 @@ float Protocentral_MLX90632::getObjectTemp(status& returnError)
     if (_printDebug)
     {
       _debugPort->println(F("Sensor temperature not found"));
-      if(returnError == SENSOR_TIMEOUT_ERROR) _debugPort->println(F("Timeout"));
+      if (returnError == SENSOR_TIMEOUT_ERROR)
+        _debugPort->println(F("Timeout"));
     }
-    return (0.0); //Error
+    return (0.0); // Error
   }
 
   int16_t lowerRAM = 0;
   int16_t upperRAM = 0;
 
   int16_t sixRAM;
-  readRegister16(RAM_6, (uint16_t&)sixRAM);
+  readRegister16(RAM_6, (uint16_t &)sixRAM);
   int16_t nineRAM;
-  readRegister16(RAM_9, (uint16_t&)nineRAM);
+  readRegister16(RAM_9, (uint16_t &)nineRAM);
 
-  //Object temp requires 3 iterations
-  for (uint8_t i = 0 ; i < 3 ; i++)
+  // Object temp requires 3 iterations
+  for (uint8_t i = 0; i < 3; i++)
   {
     double VRta = nineRAM + Gb * (sixRAM / 12.0);
 
@@ -322,7 +332,7 @@ float Protocentral_MLX90632::getObjectTemp(status& returnError)
     double bigFraction = Sto / (1 * Fa * Ha * (1 + Ga * (TOdut - TO0) + Fb * (TAdut - TA0)));
 
     double objectTemp = bigFraction + pow(ambientTempK, 4);
-    objectTemp = pow(objectTemp, 0.25); //Take 4th root
+    objectTemp = pow(objectTemp, 0.25); // Take 4th root
     objectTemp = objectTemp - 273.15 - Hb;
     TO0 = objectTemp;
   }
@@ -333,8 +343,8 @@ float Protocentral_MLX90632::getObjectTemp(status& returnError)
 float Protocentral_MLX90632::getObjectTempF()
 {
   float tempC = getObjectTemp();
-  float tempF = tempC * 9.0/5.0 + 32.0;
-  return(tempF);
+  float tempF = tempC * 9.0 / 5.0 + 32.0;
+  return (tempF);
 }
 
 float Protocentral_MLX90632::getSensorTemp()
@@ -347,7 +357,8 @@ float Protocentral_MLX90632::getSensorTemp(status &returnError)
 {
   returnError = SENSOR_SUCCESS;
 
-  if(getMode() != MODE_CONTINUOUS) setSOC();
+  if (getMode() != MODE_CONTINUOUS)
+    setSOC();
 
   clearNewData();
 
@@ -359,7 +370,7 @@ float Protocentral_MLX90632::getSensorTemp(status &returnError)
     if (counter == MAX_WAIT)
     {
       returnError = SENSOR_TIMEOUT_ERROR;
-      return (0.0); 
+      return (0.0);
     }
   }
 
@@ -369,11 +380,11 @@ float Protocentral_MLX90632::getSensorTemp(status &returnError)
 float Protocentral_MLX90632::gatherSensorTemp(status &returnError)
 {
   returnError = SENSOR_SUCCESS;
-  
+
   int16_t sixRAM;
-  readRegister16(RAM_6, (uint16_t&)sixRAM);
+  readRegister16(RAM_6, (uint16_t &)sixRAM);
   int16_t nineRAM;
-  readRegister16(RAM_9, (uint16_t&)nineRAM);
+  readRegister16(RAM_9, (uint16_t &)nineRAM);
 
   double VRta = nineRAM + Gb * (sixRAM / 12.0);
 
@@ -381,19 +392,20 @@ float Protocentral_MLX90632::gatherSensorTemp(status &returnError)
 
   double sensorTemp = P_O + (AMB - P_R) / P_G + P_T * pow((AMB - P_R), 2);
 
-  return(sensorTemp);
+  return (sensorTemp);
 }
 
 bool Protocentral_MLX90632::dataAvailable()
 {
-  if (getStatus() & ((uint16_t)1 << BIT_NEW_DATA)) return (true);
+  if (getStatus() & ((uint16_t)1 << BIT_NEW_DATA))
+    return (true);
   return (false);
 }
 void Protocentral_MLX90632::clearNewData()
 {
-  uint16_t reg = getStatus(); //Get current bits
-  reg &= ~(1 << BIT_NEW_DATA); //Clear the bit
-  writeRegister16(REG_STATUS, reg); //Set the mode bits
+  uint16_t reg = getStatus();       // Get current bits
+  reg &= ~(1 << BIT_NEW_DATA);      // Clear the bit
+  writeRegister16(REG_STATUS, reg); // Set the mode bits
 }
 
 uint16_t Protocentral_MLX90632::getStatus()
@@ -402,7 +414,7 @@ uint16_t Protocentral_MLX90632::getStatus()
   return (getStatus(returnError));
 }
 
-uint16_t Protocentral_MLX90632::getStatus(status& returnError)
+uint16_t Protocentral_MLX90632::getStatus(status &returnError)
 {
   uint16_t deviceStatus;
   returnError = readRegister16(REG_STATUS, deviceStatus);
@@ -422,19 +434,19 @@ void Protocentral_MLX90632::continuousMode()
 Protocentral_MLX90632::status Protocentral_MLX90632::setSOC()
 {
   uint16_t reg;
-  Protocentral_MLX90632::status returnError = readRegister16(REG_CONTROL, reg); //Get current bits
-  reg |= (1 << 3); //Set the bit
-  writeRegister16(REG_CONTROL, reg); //Set the bit
+  Protocentral_MLX90632::status returnError = readRegister16(REG_CONTROL, reg); // Get current bits
+  reg |= (1 << 3);                                                              // Set the bit
+  writeRegister16(REG_CONTROL, reg);                                            // Set the bit
   return (returnError);
 }
 
 Protocentral_MLX90632::status Protocentral_MLX90632::setMode(uint8_t mode)
 {
   uint16_t reg;
-  Protocentral_MLX90632::status returnError = readRegister16(REG_CONTROL, reg); //Get current bits
-  reg &= ~(0x0003 << 1); //Clear the mode bits
-  reg |= (mode << 1); //Set the bits
-  writeRegister16(REG_CONTROL, reg); //Set the mode bits
+  Protocentral_MLX90632::status returnError = readRegister16(REG_CONTROL, reg); // Get current bits
+  reg &= ~(0x0003 << 1);                                                        // Clear the mode bits
+  reg |= (mode << 1);                                                           // Set the bits
+  writeRegister16(REG_CONTROL, reg);                                            // Set the mode bits
   return (returnError);
 }
 
@@ -447,24 +459,25 @@ uint8_t Protocentral_MLX90632::getMode()
 uint8_t Protocentral_MLX90632::getMode(status &returnError)
 {
   uint16_t mode;
-  returnError = readRegister16(REG_CONTROL, mode); 
-  mode = (mode >> 1) & 0x0003; 
+  returnError = readRegister16(REG_CONTROL, mode);
+  mode = (mode >> 1) & 0x0003;
   return (mode);
 }
 
 Protocentral_MLX90632::status Protocentral_MLX90632::readRegister16(uint16_t addr, uint16_t &outputPointer)
 {
-  Protocentral_MLX90632::status returnError = SENSOR_SUCCESS; 
+  Protocentral_MLX90632::status returnError = SENSOR_SUCCESS;
 
   _i2cPort->beginTransmission(_deviceAddress);
-  _i2cPort->write(addr >> 8); 
-  _i2cPort->write(addr & 0xFF); 
-  //_i2cPort->endTransmission(false); 
+  _i2cPort->write(addr >> 8);
+  _i2cPort->write(addr & 0xFF);
+  //_i2cPort->endTransmission(false);
   uint8_t transmissionResult = _i2cPort->endTransmission(false);
-  if (transmissionResult != 0) 
+  if (transmissionResult != 0)
   {
-    
-    if (_printDebug) {
+
+    if (_printDebug)
+    {
       _debugPort->print(F("I2C Error: End transmission on register 0x"));
       _debugPort->print(addr, HEX);
       _debugPort->print(F(" and _deviceAddr: 0x"));
@@ -472,7 +485,7 @@ Protocentral_MLX90632::status Protocentral_MLX90632::readRegister16(uint16_t add
       _debugPort->print(F(", Transmission result: "));
       _debugPort->println(transmissionResult);
     }
-    
+
     returnError = SENSOR_I2C_ERROR;
   }
 
@@ -486,25 +499,27 @@ Protocentral_MLX90632::status Protocentral_MLX90632::readRegister16(uint16_t add
   }
   else
   {
-    if (_printDebug) _debugPort->println(F("I2C Error: No read response"));
+    if (_printDebug)
+      _debugPort->println(F("I2C Error: No read response"));
     returnError = SENSOR_I2C_ERROR;
   }
 
-  return (returnError); 
+  return (returnError);
 }
 
 Protocentral_MLX90632::status Protocentral_MLX90632::readRegister32(uint16_t addr, uint32_t &outputPointer)
 {
-  Protocentral_MLX90632::status returnError = SENSOR_SUCCESS; 
+  Protocentral_MLX90632::status returnError = SENSOR_SUCCESS;
 
   _i2cPort->beginTransmission(_deviceAddress);
-  _i2cPort->write(addr >> 8); 
-  _i2cPort->write(addr & 0xFF); 
-  if (_i2cPort->endTransmission(false) != 0) 
+  _i2cPort->write(addr >> 8);
+  _i2cPort->write(addr & 0xFF);
+  if (_i2cPort->endTransmission(false) != 0)
   {
-    if (_printDebug) _debugPort->println(F("I2C Error: End transmission"));
+    if (_printDebug)
+      _debugPort->println(F("I2C Error: End transmission"));
     returnError = SENSOR_I2C_ERROR;
-  } 
+  }
   _i2cPort->requestFrom(_deviceAddress, (uint8_t)4);
   if (_i2cPort->available())
   {
@@ -512,10 +527,10 @@ Protocentral_MLX90632::status Protocentral_MLX90632::readRegister32(uint16_t add
     uint8_t lsb0 = _i2cPort->read();
     uint8_t msb1 = _i2cPort->read();
     uint8_t lsb1 = _i2cPort->read();
- 
+
     uint16_t lower = (uint16_t)msb0 << 8 | lsb0;
     uint16_t upper = (uint16_t)msb1 << 8 | lsb1;
- 
+
     outputPointer = (uint32_t)upper << 16 | lower;
   }
   return (returnError);
@@ -523,18 +538,19 @@ Protocentral_MLX90632::status Protocentral_MLX90632::readRegister32(uint16_t add
 
 Protocentral_MLX90632::status Protocentral_MLX90632::writeRegister16(uint16_t addr, uint16_t val)
 {
-  Protocentral_MLX90632::status returnError = SENSOR_SUCCESS; 
+  Protocentral_MLX90632::status returnError = SENSOR_SUCCESS;
 
   _i2cPort->beginTransmission(_deviceAddress);
-  _i2cPort->write(addr >> 8); //MSB
-  _i2cPort->write(addr & 0xFF); //LSB
-  _i2cPort->write(val >> 8); //MSB
-  _i2cPort->write(val & 0xFF); //LSB
+  _i2cPort->write(addr >> 8);   // MSB
+  _i2cPort->write(addr & 0xFF); // LSB
+  _i2cPort->write(val >> 8);    // MSB
+  _i2cPort->write(val & 0xFF);  // LSB
   if (_i2cPort->endTransmission() != 0)
   {
-    //Sensor did not ACK
-    if (_printDebug) _debugPort->println(F("I2C Error: End transmission"));
+    // Sensor did not ACK
+    if (_printDebug)
+      _debugPort->println(F("I2C Error: End transmission"));
     returnError = SENSOR_I2C_ERROR;
   }
-  return (returnError); 
+  return (returnError);
 }
