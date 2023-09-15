@@ -36,7 +36,7 @@ const unsigned long doubleClickTimeframe = 2000;        // Timeframe for double 
 unsigned long lastButtonPressTime = 0;                  // Stores the timestamp of the last button press
 
 unsigned long previousMillis = 0; // Stores last time data was sampled
-const long interval = 20;         // Sampling interval in milliseconds (50Hz)
+const int interval = 20;          // Sampling interval in milliseconds (50Hz)
 
 int measurement_state = 1; // Initial measurement state
 
@@ -52,13 +52,13 @@ void stopMeasurement();
 /*****************************************  setup() *************************************************/
 void setup()
 {
-  // if (isDebugMode)
-  // {
-  Serial.begin(115200);
-  while (!Serial)
+  if (isDebugMode)
   {
-  };
-  // }
+    Serial.begin(115200);
+    while (!Serial)
+    {
+    };
+  }
 
   // setup the random generator for better randomness
   randomSeed(analogRead(0));
@@ -133,6 +133,7 @@ void loop()
       ledManager.changeLEDColor(-1);
       delay(10000);
     }
+
     // else
     // {
     memset(data, 0, sizeof(data));
