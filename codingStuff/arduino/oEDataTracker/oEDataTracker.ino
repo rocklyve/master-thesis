@@ -71,8 +71,11 @@ void setup()
   int randSuffix = random(1, 10001);                                        // Generate a random integer between 1 and 10000
   String file_name = String("Logging") + "_" + String(randSuffix) + ".csv"; // Append suffix
 
-  delay(500);
-  if (!logger->begin(file_name))
+  delay(20);
+  logger->set_name(file_name);
+  delay(20);
+
+  if (!logger->begin())
   {
     if (isDebugMode)
     {
@@ -100,31 +103,31 @@ void loop()
 
   if (currentMillis - previousMillis >= interval)
   {
-    // Save the last time data was sampled
-    previousMillis = currentMillis;
+    // // Save the last time data was sampled
+    // previousMillis = currentMillis;
 
-    // Start the timer when the first sample is taken
-    if (loopCounter == 0)
-    {
-      startTime = currentMillis;
-    }
+    // // Start the timer when the first sample is taken
+    // if (loopCounter == 0)
+    // {
+    //   startTime = currentMillis;
+    // }
 
-    // Update the loop counter
-    loopCounter++;
+    // // Update the loop counter
+    // loopCounter++;
 
-    // Calculate frequency every N iterations
-    if (loopCounter >= N)
-    {
-      unsigned long elapsedTime = currentMillis - startTime; // Time for N iterations in milliseconds
-      float frequency = (float)N / (elapsedTime / 1000.0);   // Calculate frequency in Hz
+    // // Calculate frequency every N iterations
+    // if (loopCounter >= N)
+    // {
+    //   unsigned long elapsedTime = currentMillis - startTime; // Time for N iterations in milliseconds
+    //   float frequency = (float)N / (elapsedTime / 1000.0);   // Calculate frequency in Hz
 
-      Serial.print("Frequency: ");
-      Serial.print(frequency);
-      Serial.println(" Hz");
+    //   Serial.print("Frequency: ");
+    //   Serial.print(frequency);
+    //   Serial.println(" Hz");
 
-      // Reset variables
-      loopCounter = 0;
-    }
+    //   // Reset variables
+    //   loopCounter = 0;
+    // }
 
     if (found_sensor_counter != amount_of_sensors)
     {
@@ -331,13 +334,28 @@ void readIMUSensorData(int *data)
 void saveDataToSDCard(int *data, int id)
 {
   unsigned int timestamp = millis();
-  logger->data_callback(id, timestamp, (uint8_t *)data);
+  String data_string = convert_int_to_string(data);
+  logger->data_callback(id, timestamp, data_string);
+}
+
+String convert_int_to_string(int *data)
+{
+  String data_string = "";
+  for (int i = 0; i < amount_of_data_columns + 1; ++i)
+  {
+    data_string += String(data[i]);
+    if (i < amount_of_data_columns)
+    {
+      data_string += ",";
+    }
+  }
+  return data_string;
 }
 
 void stopMeasurement()
 {
   unsigned int timestamp = millis();
-  logger->data_callback(-1, timestamp, nullptr);
+  logger->data_callback(-1, timestamp, "");
 
   logger->end();
   ledManager.changeLEDColor(-1);
