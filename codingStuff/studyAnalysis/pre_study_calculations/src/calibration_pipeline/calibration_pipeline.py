@@ -24,6 +24,38 @@ class CalibrationPipeline:
         self.concatenated_df = pd.DataFrame()
         for file_path in self.file_paths:
             df = pd.read_csv(file_path)
+            # if first row temp_colums have a value equal to 0, then we have to remove the first 6 rows
+            if df[self.temp_columns].iloc[0].sum() <= 4000:
+                # Make sure we only keep complete sets of 6 rows
+                num_rows_to_keep = len(df) // 6 * 6
+                df = df.iloc[:num_rows_to_keep]
+
+                df['MEAN_TIMESTAMP'] = (df['TIMESTAMP'].groupby(df.index // 6).transform('mean') / 6).astype('int64')
+                majority_ids = df['ID'].groupby(df.index // 6).transform(lambda x: x.value_counts().idxmax())
+
+                df = df.groupby(df.index // 6).apply(lambda x: x.sum())
+
+                # Calculate the mean TIMESTAMP and use the most frequent ID
+                df['TIMESTAMP'] = df['MEAN_TIMESTAMP']
+                # df['ID'] = np.around(df['MAJORITY_ID']).astype('int') / 6
+                df['ID'] = majority_ids.groupby(majority_ids.index // 6).first()
+
+                df.drop([
+                    'MEAN_TIMESTAMP',
+                    'ACC_X',
+                    'ACC_Y',
+                    'ACC_Z',
+                    'GYRO_X',
+                    'GYRO_Y',
+                    'GYRO_Z',
+                    'MAG_X',
+                    'MAG_Y',
+                    'MAG_Z'
+                ], axis=1, inplace=True)
+
+                # modified_file_path = os.path.splitext(file_path)[0] + "_modified.csv"
+                # df.to_csv(modified_file_path, index=False)
+
             df[self.temp_columns] = df[self.temp_columns] / 100
             self.concatenated_df = pd.concat([self.concatenated_df, df[self.temp_columns]], ignore_index=True)
 
