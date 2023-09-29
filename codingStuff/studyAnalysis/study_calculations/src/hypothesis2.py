@@ -3,54 +3,45 @@ import numpy as np
 
 
 class Hypothesis2Analyzer:
-    def __init__(self, raw_data, temp_columns, hypothesis2_results_by_phase):
-        self.raw_data = raw_data
-        self.temp_columns = temp_columns
-        self.hypothesis2_results_by_phase = hypothesis2_results_by_phase
+    def __init__(self, all_calib_data):
+        self.all_calib_data = all_calib_data
 
-    def aggregate_results_for_hypothesis2(self, results_by_phase):
-        """
-        Aggregate results across all participants for hypothesis 2.
-        This includes calculating mean standard deviations for each condition (indoor and outdoor).
-        """
-        aggregated_results = {'Indoor': [], 'Outdoor': []}
+    def analyze(self):
+        variances_by_sensor = {'Indoor': {}, 'Outdoor': {}}
+        num_tests = 0  # Keep track of the number of tests
 
-        for participant, phase_results in results_by_phase.items():
-            for phase_id, stats in phase_results.items():
-                if stats['condition'] in ['Indoor', 'Outdoor']:
-                    aggregated_results[stats['condition']].append(stats['std_all'])
+        for calib_data in self.all_calib_data:
+            indoor_data = calib_data.raw_data[calib_data.raw_data['ID'] == 2]
+            outdoor_data = calib_data.raw_data[calib_data.raw_data['ID'] == 3]
 
-        aggregated_stats = {
-            'global_std_indoor': np.mean(aggregated_results['Indoor']),
-            'global_std_outdoor': np.mean(aggregated_results['Outdoor'])
-        }
+            for sensor in calib_data.temp_columns:
+                indoor_var = indoor_data[sensor].var()
+                outdoor_var = outdoor_data[sensor].var()
 
-        return aggregated_stats
+                if sensor not in variances_by_sensor['Indoor']:
+                    variances_by_sensor['Indoor'][sensor] = []
+                if sensor not in variances_by_sensor['Outdoor']:
+                    variances_by_sensor['Outdoor'][sensor] = []
 
-    def test_hypothesis2_by_phase(self):
-        """
-        Test the second hypothesis by phase:
-        The fluctuations in temperature readings are less indoors than outdoors.
+                variances_by_sensor['Indoor'][sensor].append(indoor_var)
+                variances_by_sensor['Outdoor'][sensor].append(outdoor_var)
 
-        Metrics:
-        - Standard Deviation
-        - t-test for significance of variance
-        """
-        results_by_phase = {}
+                num_tests += 1
 
-        # Get unique phase IDs
-        unique_ids = self.raw_data['ID'].unique()
+        alpha = 0.05
+        bonferroni_alpha = alpha / num_tests  # Bonferroni corrected alpha
 
-        for phase_id in unique_ids:
-            phase_data = self.raw_data[self.raw_data['ID'] == phase_id]
-            std_all = phase_data[self.temp_columns].std().mean()
+        for sensor in calib_data.temp_columns:
+            # Remove NaNs if present
+            indoor_var_clean = [x for x in variances_by_sensor['Indoor'][sensor] if not np.isnan(x)]
+            outdoor_var_clean = [x for x in variances_by_sensor['Outdoor'][sensor] if not np.isnan(x)]
 
-            # Condition (indoor or outdoor) based on phase ID
-            condition = 'Indoor' if phase_id == 2 else 'Outdoor' if phase_id == 3 else 'Unknown'
+            t_stat, p_value = stats.ttest_ind(indoor_var_clean, outdoor_var_clean)
 
-            results_by_phase[phase_id] = {
-                'std_all': std_all,
-                'condition': condition
-            }
+            if p_value < bonferroni_alpha:
+                print(f"Reject null hypothesis for {sensor}: p-value = {p_value}")
+            else:
+                print(f"Fail to reject null hypothesis for {sensor}: p-value = {p_value}")
 
-        return results_by_phase
+        print("Analyzing hypothesis 2")
+        print(variances_by_sensor)
