@@ -43,9 +43,6 @@ class TemperatureCalibration:
         # Create a plot for the smoothed raw data
         plt.figure(figsize=(8, 6), dpi=300)
         ax = plt.gca()
-        # remove the first 20000 rows of smoothed data
-        smoothed_plot_data = smoothed_plot_data.iloc[9000:]
-        self.raw_data = self.raw_data.iloc[9000:]
         plt.plot(self.raw_data['TIMESTAMP'], smoothed_plot_data)
         add_background_color(ax)
         plt.xlabel('Time (min)')

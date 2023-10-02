@@ -14,7 +14,7 @@ class HRVPipeline:
         RMSSD_THRESHOLD = 50
         LFHF_THRESHOLD = 2.0
 
-        rmssd = measures.get('RMSSD', 0)
+        rmssd = measures.get('rmssd', 0)
         lf_hf_ratio = measures.get('LF/HF', 1)
 
         is_stressed = False
@@ -29,6 +29,16 @@ class HRVPipeline:
 
         return is_stressed
 
+    def plot_results(self, working_data, measures, label, target_folder, txt_file):
+        plot_object = hp.plotter(working_data, measures, show=False)
+        ax = plot_object.gca()
+        x_ticks = ax.get_xticks()
+        ax.set_xticklabels(x_ticks / 60000)  # Convert ms to minutes for the x-axis labels
+        ax.set_xlabel('Time (min)')
+        plot_object.suptitle(f"{label}")
+        plot_object.savefig(os.path.join(target_folder, f"{os.path.splitext(txt_file)[0]}_{label}.png"))
+        plt.close()
+
     def process_files(self):
         txt_files = [f for f in os.listdir(self.folder_path) if f.endswith('.txt')]
 
@@ -41,23 +51,23 @@ class HRVPipeline:
                 print(f"Skipping empty file: {txt_file}")
                 continue
 
-            # Process RR-Intervals using heartpy
-            try:
-                working_data, measures = hp.process(rr_intervals, sample_rate=1000.0)
-                plot_object = hp.plotter(working_data, measures, show=False)
+            sample_rate = 1000.0
+            samples_15min = int(15 * 60)
+            samples_13min = int(13 * 60)
 
-                is_stressed = self.detect_stress(measures)
-                if is_stressed:
-                    print(f"Stress detected in {txt_file}")
-                else:
-                    print(f"No stress detected in {txt_file}")
+            rr_15min = rr_intervals[:samples_15min]
+            rr_13min = rr_intervals[samples_15min:samples_15min + samples_13min]
+            rr_rest = rr_intervals[samples_15min + samples_13min:]
 
-                # Get the Axes object and modify x-ticks to show time in minutes
-                ax = plot_object.gca()
-                x_ticks = ax.get_xticks()
-                ax.set_xticklabels(x_ticks * 10)  # Convert ms to minutes for the x-axis labels
-                ax.set_xlabel('Time (min)')
+            for segment, label in zip([rr_15min, rr_13min, rr_rest], ['First 15 min', 'Next 13 min', 'Rest']):
+                try:
+                    working_data, measures = hp.process(segment, sample_rate)
+                    print('rmssd: ', measures.get('rmssd', 0))
+                    is_stressed = self.detect_stress(measures)
+                    print(f"{label}: Stress detected" if is_stressed else f"{label}: No stress detected")
 
-                plot_object.savefig(os.path.join(self.target_folder, f"{os.path.splitext(txt_file)[0]}.png"))
-            except Exception as e:
-                print(f"Error processing {txt_file}: {e}")
+                    # Plot the results for this segment
+                    self.plot_results(working_data, measures, label, self.target_folder, txt_file)
+
+                except Exception as e:
+                    print(f"Error processing {txt_file} for {label}: {e}")

@@ -5,6 +5,10 @@ from study_calculations.src.TemperatureCalibration import TemperatureCalibration
 from study_calculations.src.hypothesis1 import Hypothesis1Analyzer
 from study_calculations.src.hypothesis2 import Hypothesis2Analyzer
 from study_calculations.src.hypothesis3 import Hypothesis3Analyzer
+from study_calculations.src.hypothesis4 import Hypothesis4Analyzer
+from study_calculations.src.hypothesis5 import Hypothesis5Analyzer
+from study_calculations.src.hypothesis6 import Hypothesis6Analyzer
+from study_calculations.src.hypothesis7 import Hypothesis7Analyzer
 
 
 class AnalysisPipeline:
@@ -107,12 +111,33 @@ if __name__ == '__main__':
     pipeline = AnalysisPipeline(data_dir, target_dir)
     pipeline.process_directory(data_dir, target_dir)
 
-    hypothesis1 = Hypothesis1Analyzer(pipeline.all_calib_data)
-    hypothesis1.analyze_mean_error()
-    hypothesis1.boxplot()
-
+    # print("Analyzing hypothesis 1")
+    # hypothesis1 = Hypothesis1Analyzer(pipeline.all_calib_data)
+    # hypothesis1.analyze_mean_error()
+    # hypothesis1.boxplot()
+    #
+    print("Analyzing hypothesis 2")
     hypothesis2 = Hypothesis2Analyzer(pipeline.all_calib_data)
     hypothesis2.analyze()
+    #
+    # print("Analyzing hypothesis 3")
+    # hypothesis3 = Hypothesis3Analyzer(pipeline.all_calib_data)
+    # hypothesis3.analyze()
+    # hypothesis3.generate_heatmap()
 
-    hypothesis3 = Hypothesis3Analyzer(pipeline.all_calib_data)
-    hypothesis3.analyze()
+    # print("Analyzing hypothesis 4")
+    # hypothesis4 = Hypothesis4Analyzer(pipeline.all_calib_data)
+    # results = hypothesis4.analyze()
+    # print(results)
+
+    # print("Analyzing hypothesis 5")
+    # hypothesis5 = Hypothesis5Analyzer(pipeline.all_calib_data)
+    # hypothesis5.analyze()
+    #
+    # print("Analyzing hypothesis 6")
+    # hypothesis6 = Hypothesis6Analyzer(pipeline.all_calib_data)
+    # hypothesis6.analyze(target_dir)
+    #
+    # print("Analyzing hypothesis 7")
+    # hypothesis7 = Hypothesis7Analyzer(pipeline.all_calib_data)
+    # hypothesis7.analyze()

@@ -5,6 +5,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 
+
 class Hypothesis1Analyzer:
     def __init__(self, all_calib_data):
         self.all_calib_data = all_calib_data
@@ -49,8 +50,6 @@ class Hypothesis1Analyzer:
             plt.close()
 
     def analyze_mean_error(self):
-        print("Analyzing hypothesis 1")
-
         # Initialize lists to store mean temperatures and errors for each location
         behind_ear_means = []
         in_ear_means = []
