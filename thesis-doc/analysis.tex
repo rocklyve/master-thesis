@@ -4,11 +4,13 @@
 \chapter{Analysis}
 \label{ch:Analysis}
 
+% maybe push after design
+Hinzu kommen noch die Einschränkungen
 
-bei analyse gehts drum: 
+\section{Calibration of MLX90632 Sensors for Consistency}
+In this research, multiple MLX90632 temperature sensors that are factory calibrated to have an accuracy of $\pm0.2^\circ$C are used. 
+However, initial self-testing indicated that the sensors varied by as much as 1.1$^\circ$C under controlled conditions. 
+To understand these discrepancies, all sensors were uniformly placed at the same distance from a temperature-controlled metal plate. 
+Despite these controlled conditions, significant variations among the sensor readings were observed, underscoring the need for an internal calibration mechanism to enhance data consistency across different measurement points.
+The calibration procedure is described in chapter \ref{ch:Implementation}.
 
-was sind die anforderungen
-
-wo sollen die sensoren z.B hin
-
-vllt noch einschränkungen
