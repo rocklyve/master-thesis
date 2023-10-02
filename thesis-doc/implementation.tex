@@ -15,6 +15,12 @@ One of the main tasks is to read data from the MLX90632 sensors and the IMU sens
 
 The collected data from one pass of the \texttt{loop()} function is then written to the SD card. Each line represents one run of the \texttt{loop()} function and contains the 6 temperature sensor values and the 9 IMU data as well as a time value and an ID.
 
-In addition, the "Protocentral\_MLX90632" library has been adapted to allow parallel measurement of IMU data. In the original library, the \texttt{getObjectTemp()} function waits for the temperature value to become available by waiting in a \texttt{while} loop for a register value to be set indicating newly available data. This resulted in an unacceptably long wait time, as the total wait time for all 6 sensors was three seconds at a refresh rate of 2 Hz. During this time, no IMU data signal could be read because the Arduino Nano33 BLE does not allow for parallelism. To address this issue, the \texttt{while} loop was incorporated into the \texttt{loop()} method of the Arduino code. This will check in each iteration of the \texttt{loop()} method if new data is available for the 6 sensors. Only if this is the case, the sensor value is read out and the parallel measurement of the IMU data remains possible.
+In addition, the "Protocentral\_MLX90632" library has been adapted to allow parallel measurement of IMU data. In the original library, the \texttt{getObjectTemp()} function waits for the temperature value to become available by waiting in a \texttt{while} loop for a register value to be set indicating newly available data. This resulted in an unacceptably long wait time, as the total wait time for all 6 sensors was three seconds at a refresh rate of 2 Hz. During this time, no IMU data signal could be read because the Arduino Nano33 BLE does not allow for parallelism. To address this issue, the check, if new data is available, will be ignored. 
+Instead, the temperature value is read out in each loop iteration. 
+This leads to the fact that the temperature value may not have updated yet. 
+However, the sampling rate is so high that this does not affect the final result.
+
+\section{Sensor Calibration Implementation in Arduino}
+The calibration was implemented using the Arduino platform, where the library for the MLX90632 sensors was modified to introduce an emissivity factor of $0.98$ as per the sensor datasheet. This value is optimized for human body temperature measurement and was also used for the metal plate during calibration. This emissivity factor allows the system to account for the natural variability in thermal radiation between different materials and provides a standardized reading that is consistent across different environments.
 
 \section{After data analyzation: Python stuff}
