@@ -6,8 +6,9 @@ from matplotlib import pyplot as plt
 
 class TemperatureCalibration:
 
-    def __init__(self, df, temp_columns, source_filename, data_folder, target_folder, real_temp_ground_truth):
+    def __init__(self, df, imu_df, temp_columns, source_filename, data_folder, target_folder, real_temp_ground_truth):
         self.raw_data = df
+        self.imu_df = imu_df
         self.real_temp_ground_truth = real_temp_ground_truth
         self.temp_columns = temp_columns
         self.raw_data[temp_columns] = self.raw_data[temp_columns] / 100.0

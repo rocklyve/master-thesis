@@ -16,6 +16,7 @@ class AnalysisPipeline:
         self.data_dir = data_dir
         self.target_dir = target_dir
         self.all_calib_data = []
+        self.all_imu_data = []
         self.ground_truth_temps = {
             '01': 36.4,
             '02': 36.5,
@@ -48,6 +49,11 @@ class AnalysisPipeline:
         df = pd.read_csv(file_path)
 
         temp_columns = ['TympanicMembrane', 'Concha', 'EarCanal', 'Out_Bottom', 'Out_Top', 'Out_Middle']
+        common_columns = ['ID', 'TIMESTAMP']
+        imu_columns = ['ACC_X', 'ACC_Y', 'ACC_Z', 'GYRO_X', 'GYRO_Y', 'GYRO_Z', 'MAG_X', 'MAG_Y', 'MAG_Z']
+
+        imu_df = df[common_columns + imu_columns].copy()
+        self.all_imu_data.append(imu_df)
 
         # if first row temp_columns have a value equal to 0, then we have to remove the first 6 rows
         if df[temp_columns].iloc[0].sum() <= 4000:
@@ -90,6 +96,7 @@ class AnalysisPipeline:
 
         calib = TemperatureCalibration(
             df,
+            imu_df,
             temp_columns,
             os.path.basename(file_path),
             os.path.dirname(file_path),
@@ -100,6 +107,7 @@ class AnalysisPipeline:
         calib.smooth_data()
         calib.plot_raw_data()
         self.all_calib_data.append(calib)
+
 
 
 if __name__ == '__main__':
@@ -127,7 +135,7 @@ if __name__ == '__main__':
     # hypothesis3.generate_heatmap()
 
     print("Analyzing hypothesis 4")
-    hypothesis4 = Hypothesis4Analyzer(pipeline.all_calib_data)
+    hypothesis4 = Hypothesis4Analyzer(pipeline.all_calib_data, pipeline.all_imu_data)
     results = hypothesis4.analyze()
     print(results)
 
