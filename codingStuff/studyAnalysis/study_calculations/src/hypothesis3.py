@@ -66,6 +66,33 @@ class Hypothesis3Analyzer:
         print(f"Average correlations for Phases 2 and 3: {avg_correlations}")
         self.avg_correlations = avg_correlations
 
+    def analyze_mad(self):
+        mad_by_sensor = {'Indoor': {}, 'Outdoor': {}}
+
+        for calib in self.all_calib_data:
+            for phase, phase_id in [('Indoor', 2), ('Outdoor', 3)]:
+                phase_data = calib.raw_data[calib.raw_data['ID'] == phase_id]
+                if phase_data.empty:
+                    continue
+
+                for sensor in calib.temp_columns:
+                    sensor_data = phase_data[sensor].dropna()  # Remove NaNs if any
+                    mad_value = np.mean(np.absolute(sensor_data - np.mean(sensor_data)))  # Compute MAD
+
+                    if sensor not in mad_by_sensor[phase]:
+                        mad_by_sensor[phase][sensor] = []
+
+                    mad_by_sensor[phase][sensor].append(mad_value)
+
+        # Compute average MAD for each sensor and phase
+        avg_mad_by_sensor = {}
+        for phase in ['Indoor', 'Outdoor']:
+            avg_mad_by_sensor[phase] = {}
+            for sensor, values in mad_by_sensor[phase].items():
+                avg_mad = np.mean(values)
+                avg_mad_by_sensor[phase][sensor] = avg_mad
+
+        print(f"Average MAD by sensor for Phases 2 (Indoor) and 3 (Outdoor): {avg_mad_by_sensor}")
 
     def calculate_relative_changes(self, readings):
         # Calculate relative changes for a single sensor

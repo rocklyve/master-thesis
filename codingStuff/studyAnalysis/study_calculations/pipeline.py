@@ -116,19 +116,20 @@ if __name__ == '__main__':
     # hypothesis1.analyze_mean_error()
     # hypothesis1.boxplot()
     #
-    print("Analyzing hypothesis 2")
-    hypothesis2 = Hypothesis2Analyzer(pipeline.all_calib_data)
-    hypothesis2.analyze()
+    # print("Analyzing hypothesis 2")
+    # hypothesis2 = Hypothesis2Analyzer(pipeline.all_calib_data)
+    # hypothesis2.analyze()
     #
     # print("Analyzing hypothesis 3")
     # hypothesis3 = Hypothesis3Analyzer(pipeline.all_calib_data)
     # hypothesis3.analyze()
+    # hypothesis3.analyze_mad()
     # hypothesis3.generate_heatmap()
 
-    # print("Analyzing hypothesis 4")
-    # hypothesis4 = Hypothesis4Analyzer(pipeline.all_calib_data)
-    # results = hypothesis4.analyze()
-    # print(results)
+    print("Analyzing hypothesis 4")
+    hypothesis4 = Hypothesis4Analyzer(pipeline.all_calib_data)
+    results = hypothesis4.analyze()
+    print(results)
 
     # print("Analyzing hypothesis 5")
     # hypothesis5 = Hypothesis5Analyzer(pipeline.all_calib_data)

@@ -39,6 +39,20 @@ class HRVPipeline:
         plot_object.savefig(os.path.join(target_folder, f"{os.path.splitext(txt_file)[0]}_{label}.png"))
         plt.close()
 
+    def process_directory(self, folder_path, target_folder):
+        # for each folder, process the files
+        # ignore the .DS_Store file on macOS
+        for folder in os.listdir(folder_path):
+            if folder == '.DS_Store':
+                continue
+            print("Processing folder:", folder)
+            self.folder_path = os.path.join(folder_path, folder)
+            self.target_folder = os.path.join(target_folder, folder)
+            # if the target folder doesn't exist, create it
+            if not os.path.exists(self.target_folder):
+                os.makedirs(self.target_folder, exist_ok=True)
+            self.process_files()
+
     def process_files(self):
         txt_files = [f for f in os.listdir(self.folder_path) if f.endswith('.txt')]
 
