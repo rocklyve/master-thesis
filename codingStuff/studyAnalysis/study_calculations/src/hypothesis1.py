@@ -42,7 +42,7 @@ class Hypothesis1Analyzer:
             plt.xlabel("Sensor")
             plt.ylabel("Delta Temperature (°C)")
 
-            plt.boxplot([phase_data[phase_data['Sensor'] == sensor]['Delta Temperature'] for sensor in
+            plt.boxplot([phase_data[phase_data['Sensor'] == sensor]['Delta Temperature'].dropna() for sensor in
                          phase_data['Sensor'].unique()],
                         labels=phase_data['Sensor'].unique())
 

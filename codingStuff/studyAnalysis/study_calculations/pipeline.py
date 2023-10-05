@@ -8,7 +8,6 @@ from study_calculations.src.hypothesis3 import Hypothesis3Analyzer
 from study_calculations.src.hypothesis4 import Hypothesis4Analyzer
 from study_calculations.src.hypothesis5 import Hypothesis5Analyzer
 from study_calculations.src.hypothesis6 import Hypothesis6Analyzer
-from study_calculations.src.hypothesis7 import Hypothesis7Analyzer
 
 
 class AnalysisPipeline:
@@ -48,44 +47,9 @@ class AnalysisPipeline:
         print(f"Processing file: {file_path}")
         df = pd.read_csv(file_path)
 
+        # Replace 0 with NaN in temperature columns
         temp_columns = ['TympanicMembrane', 'Concha', 'EarCanal', 'Out_Bottom', 'Out_Top', 'Out_Middle']
-        common_columns = ['ID', 'TIMESTAMP']
-        imu_columns = ['ACC_X', 'ACC_Y', 'ACC_Z', 'GYRO_X', 'GYRO_Y', 'GYRO_Z', 'MAG_X', 'MAG_Y', 'MAG_Z']
-
-        imu_df = df[common_columns + imu_columns].copy()
-        self.all_imu_data.append(imu_df)
-
-        # if first row temp_columns have a value equal to 0, then we have to remove the first 6 rows
-        if df[temp_columns].iloc[0].sum() <= 4000:
-            # Make sure we only keep complete sets of 6 rows
-            num_rows_to_keep = len(df) // 6 * 6
-            df = df.iloc[:num_rows_to_keep]
-
-            df['MEAN_TIMESTAMP'] = (df['TIMESTAMP'].groupby(df.index // 6).transform('mean') / 6).astype('int64')
-            majority_ids = df['ID'].groupby(df.index // 6).transform(lambda x: x.value_counts().idxmax())
-
-            df = df.groupby(df.index // 6).apply(lambda x: x.sum())
-
-            # Calculate the mean TIMESTAMP and use the most frequent ID
-            df['TIMESTAMP'] = df['MEAN_TIMESTAMP']
-            # df['ID'] = np.around(df['MAJORITY_ID']).astype('int') / 6
-            df['ID'] = majority_ids.groupby(majority_ids.index // 6).first()
-
-            df.drop([
-                'MEAN_TIMESTAMP',
-                'ACC_X',
-                'ACC_Y',
-                'ACC_Z',
-                'GYRO_X',
-                'GYRO_Y',
-                'GYRO_Z',
-                'MAG_X',
-                'MAG_Y',
-                'MAG_Z'
-            ], axis=1, inplace=True)
-
-            # modified_file_path = os.path.splitext(file_path)[0] + "_modified.csv"
-            # df.to_csv(modified_file_path, index=False)
+        df[temp_columns] = df[temp_columns].replace(0, np.nan)
 
         # Extract proband number from file name
         basename = os.path.basename(file_path)
@@ -96,7 +60,6 @@ class AnalysisPipeline:
 
         calib = TemperatureCalibration(
             df,
-            imu_df,
             temp_columns,
             os.path.basename(file_path),
             os.path.dirname(file_path),
@@ -123,7 +86,7 @@ if __name__ == '__main__':
     # hypothesis1 = Hypothesis1Analyzer(pipeline.all_calib_data)
     # hypothesis1.analyze_mean_error()
     # hypothesis1.boxplot()
-    #
+
     # print("Analyzing hypothesis 2")
     # hypothesis2 = Hypothesis2Analyzer(pipeline.all_calib_data)
     # hypothesis2.analyze()
@@ -133,20 +96,16 @@ if __name__ == '__main__':
     # hypothesis3.analyze()
     # hypothesis3.analyze_mad()
     # hypothesis3.generate_heatmap()
-
+    #
     print("Analyzing hypothesis 4")
     hypothesis4 = Hypothesis4Analyzer(pipeline.all_calib_data, pipeline.all_imu_data)
     results = hypothesis4.analyze()
     print(results)
-
+    #
     # print("Analyzing hypothesis 5")
     # hypothesis5 = Hypothesis5Analyzer(pipeline.all_calib_data)
     # hypothesis5.analyze()
     #
-    # print("Analyzing hypothesis 6")
-    # hypothesis6 = Hypothesis6Analyzer(pipeline.all_calib_data)
-    # hypothesis6.analyze(target_dir)
-    #
-    # print("Analyzing hypothesis 7")
-    # hypothesis7 = Hypothesis7Analyzer(pipeline.all_calib_data)
-    # hypothesis7.analyze()
+    print("Analyzing hypothesis 6")
+    hypothesis6 = Hypothesis6Analyzer(pipeline.all_calib_data)
+    hypothesis6.analyze(target_dir)

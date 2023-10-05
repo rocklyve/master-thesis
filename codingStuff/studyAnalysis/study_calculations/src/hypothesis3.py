@@ -8,6 +8,7 @@ from scipy.stats import pearsonr
 import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
+from scipy import stats
 
 
 class Hypothesis3Analyzer:
@@ -44,27 +45,37 @@ class Hypothesis3Analyzer:
             plt.close()
 
     def analyze(self):
-        correlations = {}
-        for calib in self.all_calib_data:
-            for phase in [2, 3]:  # Only consider Phases 2 and 3
-                phase_data = calib.raw_data[calib.raw_data['ID'] == phase]
-                if phase_data.empty:
-                    continue
-                for i, sensor1 in enumerate(calib.temp_columns):
-                    for j, sensor2 in enumerate(calib.temp_columns):
-                        if i >= j:
-                            continue
-                        key = f"{sensor1}-{sensor2}-Phase{phase}"
-                        corr, _ = pearsonr(phase_data[sensor1], phase_data[sensor2])
-                        if key in correlations:
-                            correlations[key].append(corr)
-                        else:
-                            correlations[key] = [corr]
+        self.avg_correlations = {}
 
-        # Calculate average correlations
-        avg_correlations = {k: np.mean(v) for k, v in correlations.items()}
-        print(f"Average correlations for Phases 2 and 3: {avg_correlations}")
-        self.avg_correlations = avg_correlations
+        for calib in self.all_calib_data:
+            for phase_id in [2, 3]:  # Phase 2 (Indoor), Phase 3 (Outdoor)
+                phase_data = calib.raw_data[calib.raw_data['ID'] == phase_id]
+
+                # Group every 6 rows and aggregate
+                grouped_data = phase_data.groupby(phase_data.index // 6)
+                aggregated_data = grouped_data.agg({
+                    'TIMESTAMP': 'mean',
+                    'ID': 'first',
+                    **{col: 'first' for col in calib.temp_columns}
+                }).dropna()
+
+                # Calculate correlations for this participant and phase
+                correlations = {}
+                for sensor1 in calib.temp_columns:
+                    for sensor2 in calib.temp_columns:
+                        if sensor1 >= sensor2:
+                            continue
+                        corr, _ = pearsonr(aggregated_data[sensor1], aggregated_data[sensor2])
+                        key = f"{sensor1}-{sensor2}-Phase{phase_id}"
+                        if key not in self.avg_correlations:
+                            self.avg_correlations[key] = []
+                        self.avg_correlations[key].append(corr)
+
+        # Average the correlations across all participants
+        for key, values in self.avg_correlations.items():
+            self.avg_correlations[key] = np.mean(values)
+
+        print(f"Average correlations for Phases 2 and 3: {self.avg_correlations}")
 
     def analyze_mad(self):
         mad_by_sensor = {'Indoor': {}, 'Outdoor': {}}

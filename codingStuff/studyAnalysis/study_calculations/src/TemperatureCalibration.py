@@ -6,9 +6,8 @@ from matplotlib import pyplot as plt
 
 class TemperatureCalibration:
 
-    def __init__(self, df, imu_df, temp_columns, source_filename, data_folder, target_folder, real_temp_ground_truth):
+    def __init__(self, df, temp_columns, source_filename, data_folder, target_folder, real_temp_ground_truth):
         self.raw_data = df
-        self.imu_df = imu_df
         self.real_temp_ground_truth = real_temp_ground_truth
         self.temp_columns = temp_columns
         self.raw_data[temp_columns] = self.raw_data[temp_columns] / 100.0
@@ -20,7 +19,7 @@ class TemperatureCalibration:
         self.target_folder = target_folder  # New attribute to store the target folder
 
     def smooth_data(self):
-        self.smoothed_data = self.raw_data.rolling(window=20).mean()
+        self.smoothed_data = self.raw_data.rolling(window=120, min_periods=1).mean()
 
     def plot_raw_data(self):
         # Determine the suffix of the source filename
@@ -44,7 +43,8 @@ class TemperatureCalibration:
         # Create a plot for the smoothed raw data
         plt.figure(figsize=(8, 6), dpi=300)
         ax = plt.gca()
-        plt.plot(self.raw_data['TIMESTAMP'], smoothed_plot_data)
+        if not smoothed_plot_data.isna().all().all():  # Check if all values are NaN
+            plt.plot(self.raw_data['TIMESTAMP'], smoothed_plot_data)
         add_background_color(ax)
         plt.xlabel('Time (min)')
         plt.ylabel('Temperature (°C)')
