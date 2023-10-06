@@ -67,7 +67,7 @@ class AnalysisPipeline:
         )
 
         calib.smooth_data()
-        calib.plot_raw_data()
+        # calib.plot_raw_data()
         self.all_calib_data.append(calib)
 
 
@@ -101,6 +101,5 @@ if __name__ == '__main__':
     # hypothesis4.analyze()
 
     print("Analyzing hypothesis 5")
-    hypothesis5 = Hypothesis5Analyzer(pipeline.all_calib_data)
-    hypothesis5.analyze(target_dir)
-    hypothesis5.analyze_all_participants(target_dir)
+    hypothesis5 = Hypothesis5Analyzer(pipeline.all_calib_data, target_dir)
+    hypothesis5.analyze()
