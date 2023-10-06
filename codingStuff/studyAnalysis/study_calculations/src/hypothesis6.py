@@ -1,52 +1,82 @@
+import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-from scipy.stats import pearsonr
-import matplotlib.pyplot as plt
-import seaborn as sns
 
 
 class Hypothesis6Analyzer:
     def __init__(self, all_calib_data):
         self.all_calib_data = all_calib_data
 
-    def calculate_magnitude(self, df, x, y, z):
-        return np.sqrt(df[x] ** 2 + df[y] ** 2 + df[z] ** 2)
+    def calculate_relative_change(self, series):
+        return np.abs(series.pct_change() * 100)
 
-    def analyze(self, target_folder):
-        aggregated_data = {'Indoor': [], 'Outdoor': []}
+    def analyze_all_participants(self, target_folder):
+        # Initialize accumulators for each sensor and for movement
+        sensor_data_accum = {sensor: [] for sensor in self.all_calib_data[0].temp_columns}
+        movement_data_accum = []
 
         for calib in self.all_calib_data:
-            for phase, phase_id in [("Indoor", 2), ("Outdoor", 3)]:
-                phase_data = calib.raw_data[calib.raw_data['ID'] == phase_id]
+            for sensor in calib.temp_columns:
+                sensor_data = calib.raw_data[sensor].dropna().reset_index(drop=True)
+                rel_change = self.calculate_relative_change(sensor_data)
+                sensor_data_accum[sensor].append(rel_change)
 
-                if phase_data.empty:
-                    continue
+            imu_columns = ['ACC_X', 'ACC_Y', 'ACC_Z', 'GYRO_X', 'GYRO_Y', 'GYRO_Z', 'MAG_X', 'MAG_Y', 'MAG_Z']
+            movement_data = np.sqrt((calib.raw_data[imu_columns] ** 2).sum(axis=1)).dropna().reset_index(drop=True)
+            movement_data_accum.append(movement_data)
 
-                acc_magnitude = self.calculate_magnitude(phase_data, 'ACC_X', 'ACC_Y', 'ACC_Z')
+        # Take the average across all participants
+        avg_sensor_data = {sensor: pd.concat(sensor_data_accum[sensor], axis=1).mean(axis=1).abs() for sensor in
+                           sensor_data_accum}
+        avg_movement_data = pd.concat(movement_data_accum, axis=1).mean(axis=1)
 
-                for sensor in calib.temp_columns:
-                    temp_data = phase_data[sensor].dropna()
+        # Plot the average data
+        fig, axs = plt.subplots(len(avg_sensor_data) + 1, 1, figsize=(15, 20))
 
-                    common_indices = temp_data.index.intersection(acc_magnitude.index)
+        for i, (sensor, data) in enumerate(avg_sensor_data.items()):
+            axs[i].plot(data.index, data)
+            axs[i].set_title(f"Average Rel Change {sensor}")
+            axs[i].set_xlabel('Time (min)')
+            axs[i].set_ylabel('Relative Change (%)')
 
-                    temp_data = temp_data.loc[common_indices]
-                    acc_magnitude = acc_magnitude.loc[common_indices]
+        axs[-1].plot(avg_movement_data.index, avg_movement_data, alpha=0.3)
+        axs[-1].set_title('Average Movement')
+        axs[-1].set_xlabel('Time (min)')
+        axs[-1].set_ylabel('Movement Magnitude')
 
-                    if len(common_indices) < 3:
-                        continue
+        plt.tight_layout()
+        plt.savefig(f"{target_folder}/hypothesis6_all_participants.png")
+        plt.close()
 
-                    aggregated_data[phase].append((acc_magnitude, temp_data))
+    def analyze(self, target_folder):
+        for i, calib in enumerate(self.all_calib_data):
+            fig, axs = plt.subplots(len(calib.temp_columns) + 1, 1, figsize=(15, 20))
 
-        for phase in ["Indoor", "Outdoor"]:
-            avg_acc_magnitude = pd.concat([x[0] for x in aggregated_data[phase]]).groupby(level=0).mean()
-            avg_temp_data = pd.concat([x[1] for x in aggregated_data[phase]]).groupby(level=0).mean()
+            # Loop over each sensor to plot its relative change
+            for j, sensor in enumerate(calib.temp_columns):
+                sensor_data = calib.raw_data[sensor].dropna().reset_index(drop=True)
+                timestamps = calib.raw_data.loc[sensor_data.index, 'TIMESTAMP']
+                rel_change = self.calculate_relative_change(sensor_data)
+                axs[j].plot(timestamps, rel_change)
+                axs[j].set_title(f"Rel Change {sensor}")
+                axs[j].set_xlabel('Time (min)')
+                axs[j].set_ylabel('Relative Change (%)')
 
-            plt.figure(figsize=(10, 6))
-            plt.scatter(avg_acc_magnitude, avg_temp_data)
-            plt.title(f"Average Relationship between Movement (ACC_Magnitude) and Temperature during {phase}")
-            plt.xlabel("ACC_Magnitude")
-            plt.ylabel("Average Temperature")
-            sns.regplot(x=avg_acc_magnitude, y=avg_temp_data, line_kws={"color": "red"})  # adding a best-fit line
+                # Add vertical lines for phase changes
+                phase_change_indices = calib.raw_data['ID'].diff().ne(0)
+                phase_change_times = calib.raw_data.loc[phase_change_indices, 'TIMESTAMP']
+                for phase_change_time in phase_change_times:
+                    axs[j].axvline(x=phase_change_time, color='r', linestyle='--')
 
-            plt.savefig(f"{target_folder}/avg_scatter_{phase}.png")
+            # Plot the movement in the last subplot
+            imu_columns = ['ACC_X', 'ACC_Y', 'ACC_Z', 'GYRO_X', 'GYRO_Y', 'GYRO_Z', 'MAG_X', 'MAG_Y', 'MAG_Z']
+            movement_data = np.sqrt((calib.raw_data[imu_columns] ** 2).sum(axis=1)).dropna().reset_index(drop=True)
+            axs[-1].plot(movement_data.index, movement_data, alpha=0.3)
+            axs[-1].set_title('Movement')
+            axs[-1].set_xlabel('Time (min)')
+            axs[-1].set_ylabel('Movement Magnitude')
+
+            # Save the figure
+            plt.tight_layout()
+            plt.savefig(f"{target_folder}/hypothesis6_participant_{i + 1}.png")
             plt.close()

@@ -109,3 +109,4 @@ if __name__ == '__main__':
     print("Analyzing hypothesis 6")
     hypothesis6 = Hypothesis6Analyzer(pipeline.all_calib_data)
     hypothesis6.analyze(target_dir)
+    hypothesis6.analyze_all_participants(target_dir)
