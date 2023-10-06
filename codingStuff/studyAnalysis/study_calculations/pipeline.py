@@ -7,7 +7,6 @@ from study_calculations.src.hypothesis2 import Hypothesis2Analyzer
 from study_calculations.src.hypothesis3 import Hypothesis3Analyzer
 from study_calculations.src.hypothesis4 import Hypothesis4Analyzer
 from study_calculations.src.hypothesis5 import Hypothesis5Analyzer
-from study_calculations.src.hypothesis6 import Hypothesis6Analyzer
 
 
 class AnalysisPipeline:
@@ -86,7 +85,7 @@ if __name__ == '__main__':
     # hypothesis1 = Hypothesis1Analyzer(pipeline.all_calib_data)
     # hypothesis1.analyze_mean_error()
     # hypothesis1.boxplot()
-
+    #
     # print("Analyzing hypothesis 2")
     # hypothesis2 = Hypothesis2Analyzer(pipeline.all_calib_data)
     # hypothesis2.analyze()
@@ -97,16 +96,11 @@ if __name__ == '__main__':
     # hypothesis3.analyze_mad()
     # hypothesis3.generate_heatmap()
     #
-    print("Analyzing hypothesis 4")
-    hypothesis4 = Hypothesis4Analyzer(pipeline.all_calib_data, pipeline.all_imu_data)
-    results = hypothesis4.analyze()
-    print(results)
-    #
-    # print("Analyzing hypothesis 5")
-    # hypothesis5 = Hypothesis5Analyzer(pipeline.all_calib_data)
-    # hypothesis5.analyze()
-    #
-    print("Analyzing hypothesis 6")
-    hypothesis6 = Hypothesis6Analyzer(pipeline.all_calib_data)
-    hypothesis6.analyze(target_dir)
-    hypothesis6.analyze_all_participants(target_dir)
+    # print("Analyzing hypothesis 4")
+    # hypothesis4 = Hypothesis4Analyzer(pipeline.all_calib_data)
+    # hypothesis4.analyze()
+
+    print("Analyzing hypothesis 5")
+    hypothesis5 = Hypothesis5Analyzer(pipeline.all_calib_data)
+    hypothesis5.analyze(target_dir)
+    hypothesis5.analyze_all_participants(target_dir)
