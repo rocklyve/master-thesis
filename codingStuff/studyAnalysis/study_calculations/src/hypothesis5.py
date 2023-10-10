@@ -64,7 +64,11 @@ class Hypothesis5Analyzer:
             fig, axes = plt.subplots(len(self.temp_columns) + 1, 1, figsize=(8.27, 11.69))  # DIN A4 size in inches
 
             for i, col in enumerate(self.temp_columns):
-                overall_mean_data = np.nanmean(all_participant_data[col], axis=0)
+                if len(all_participant_data[col]) > 0 and not np.all(np.isnan(all_participant_data[col])):
+                    overall_mean_data = np.nanmean(all_participant_data[col], axis=0)
+                else:
+                    # Handle the case where there's no valid data.
+                    overall_mean_data = None
                 # Multiply time value by 13.3333
                 axes[i].plot(np.linspace(0, min_length / (60 * 1000) * 115, min_length), overall_mean_data * 10)
                 axes[i].set_title(f"{col}: Overall Mean Relative Change")
