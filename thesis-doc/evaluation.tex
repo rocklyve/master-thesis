@@ -89,50 +89,156 @@ For example, the p-value for the tympanic sensor was significantly below the Bon
 This pattern is also seen for the other positions in and around the ear, providing extensive empirical support for the hypothesis.
 In summary, the data confirm the second hypothesis: temperature measurements with ear-based sensors have significantly lower deviations when taken indoors than outdoors.
 
-\begin{table}[ht]
+\begin{table}[t]
 \centering
-\begin{tabular}{|l|c|c|c|c|}
+\begin{tabular}{|p{2.5cm}|c|c|c|c|c|c|}
 \hline
-Sensor & \multicolumn{2}{c|}{Mean Variance} & \multicolumn{2}{c|}{Mean Diff. from} \\
-       & \multicolumn{2}{c|}{(in $^\circ\text{C}$)} & \multicolumn{2}{c|}{Ground Truth (in $^\circ\text{C}$)} \\
+Sensor & \multicolumn{2}{c|}{MAD (in \(^\circ\text{C}\))} & \multicolumn{2}{c|}{Mean Variance} & \multicolumn{2}{c|}{Mean Diff. from} \\
+ & \multicolumn{2}{c|}{} & \multicolumn{2}{c|}{} & \multicolumn{2}{c|}{Ground Truth (in \(^\circ\text{C}\))} \\
 \hline
- & Indoor & Outdoor & Indoor & Outdoor \\
+ & Indoor & Outdoor & Indoor & Outdoor & Indoor & Outdoor \\
 \hline
-TympanicMembrane & 0.00096 & 0.1074 & 0.0071 & -0.6077 \\
-Concha & 0.00307 & 1.1339 & -0.3805 & -2.5609 \\
-EarCanal & 0.00155 & 0.6456 & -0.3934 & -1.9584 \\
-Out\_Bottom & 0.0189 & 1.1098 & -0.7439 & -3.3107 \\
-Out\_Top & 0.00694 & 0.6499 & -0.6060 & -2.1198 \\
-Out\_Middle & 0.0198 & 1.0982 & -0.7452 & -2.7643 \\
+Tympanic Membrane & 0.025 & 0.258 & 0.00096 & 0.1074 & 0.0071 & -0.6077 \\
+Concha & 0.042 & 0.820 & 0.00307 & 1.1339 & -0.3805 & -2.5609 \\
+EarCanal & 0.030 & 0.624 & 0.00155 & 0.6456 & -0.3934 & -1.9584 \\
+Out\_Bottom & 0.095 & 0.800 & 0.0189 & 1.1098 & -0.7439 & -3.3107 \\
+Out\_Top & 0.062 & 0.663 & 0.00694 & 0.6499 & -0.6060 & -2.1198 \\
+Out\_Middle & 0.101 & 0.831 & 0.0198 & 1.0982 & -0.7452 & -2.7643 \\
 \hline
 \end{tabular}
-\caption{Mean variance and mean variance of deviation from ground truth for different sensors. Phases 2 (indoor) and 3 (outdoor) were considered. From this, the variances were calculated for each sensor and averaged over all subjects. In addition, the distance to ground truth was displayed to display the value of the accuracy of the variance.}
+\caption{Mean absolute deviation (MAD), mean variance, and mean distance from ground truth for different sensors. Phases 2 (inside) and 3 (outside) were considered. All values were calculated for each sensor and averaged over all subjects.}
 \label{subsec:Evaluation:Study2:Hypothesis2:mean_variance_table}
 \end{table}
 
 \subsection{Hypothesis 3: Relative Changes in Temperature Readings}
 \label{subsec:Evaluation:Study1:Hypothesis3}
-The third hypothesis examines the correlation between relative changes in temperature readings from different sensor locations at Phases 2 and 3.
-This is to understand the constancy between different sensor readings, especially in relation to changing weather conditions.
-Pearson's correlation coefficient is used for analysis.
-This is a way of determining the linear relationship between two variables and is used as a measure of the strength of the correlation. 
-The correlation coefficient takes values between $-1$ and $1$. 
-The calculation of the coefficient is performed for phase 2 and 3 per sensor pair. 
-The results of all subjects are then averaged and presented in the form of a heat map in Figure \ref{fig:eval:study1:hypothesis3_result}.
-It can be seen in Phase 2 that sensors located in a similar anatomical region show similar moderate to strong positive correlations. 
-However, between sensors inside the ear and outside the ear, the correlations are generally rather weak to partially negative, suggesting different behavior under the same environmental conditions.
-In contrast, phase 3 shows a high degree of positive correlation between all pairs of sensors, often exceeding a coefficient of 0.9.
-This high correlation indicates that all sensors exhibit remarkable consistency in their readings. 
-However, here the temperature dropped sharply as the users left the room and went for a walk outside. 
-The high temperature drop is then reflected in the correlation.
-As can be seen in table \ref{subsec:Evaluation:Study2:Hypothesis2:mean_variance_table}, the measured temperature drops by as much as $2.7643^\circ\text{C}$ in some cases.
-Due to this, the correlation in this case is not a good example.
-More informative here is the mean absolute deviation.
+The third hypothesis examines the correlation between the relative changes in temperature readings from different sensor locations in Phases 2 and 3.
+This is used to understand the consistency between the different sensor readings, particularly in relation to changing weather conditions.d
+Mean absolute deviation is used for analysis to better understand the consistency between the different temperature sensor readings. 
+Table \ref{subsec:Evaluation:Study2:Hypothesis2:mean_variance_table} shows the MAD value for each sensor location in phase 2 (indoor) and 3 (outdoor). 
+Increased variance is seen in the outdoor phase. 
+While the sensor measurement at the tympanic membrane is only $0.2 ^\circ\text{C}$, the other sensor locations have a mean absolute variance of about $0.6-0.8^\circ\text{C}$.
+This is mainly due to the fact that external influences such as wind, rain, or sunlight may play a large role here.
+When the subjects went for a walk, this was all represented, which explains the deviations here. 
+This shows that these sensor positions are not as stable to external environmental influences as the sensor directed at the eardrum.
+Similarly, this can be seen in the heatmap of Figure \ref{fig:eval:study1:hypothesis3_result}. 
+Here, the correlations in phase 2 (indoor) and phase 3 (outdoor) have been plotted as a heatmap. 
+Significant differences in the correlation of temperature values between the two phases 2 and 3 can be seen. 
+In phase 2, the correlations are generally slightly lower, especially the measurement of tympanic membrane is very different from the other results.
+This can be explained by variations in the subjects' sensor results, for example, when subjects readjust the sensor or move their head awkwardly, especially for the sensors behind the ear. 
+In contrast, the correlations in Phase 3 are higher than average, often exceeding $0.9$. 
+This suggests that all sensors respond equally to external environmental changes.
+The reason for this is that during outdoor activities, conditions such as wind and sunlight affect all sensor locations equally.
+This explains the sharp drop in temperature readings, resulting in high correlations.
+In summary, the heat map supports the hypothesis by showing that indoor sensor readings fluctuate widely, while outdoor conditions tend to synchronize readings, albeit with higher volatility.
+In summary, this hypothesis is supported by the analysis of the mean absolute deviation. 
+Furthermore, it can be seen that the sensors at the different positions are differently stable to external environmental influences, especially when the subjects are outdoors.
 
-\begin{figure}[!h]
+\begin{figure}[t]
     \centering
     \includegraphics[width=0.9\textwidth]{thesis-doc/images/study1/hypothesis3/Correlation_Heatmap_Phase_2.png}
     \includegraphics[width=0.9\textwidth]{thesis-doc/images/study1/hypothesis3/Correlation_Heatmap_Phase_3.png}
     \caption{Heat maps showing the correlation matrices of temperature readings from different ear-based sensors during Phase 2 (indoor) and Phase 3 (outdoor). The color-coded matrices provide a visual representation of how strongly each pair of sensors correlates under different conditions. Darker shading represents higher correlation and helps assess consistency between sensor measurements and their sensitivity to environmental changes, providing empirical evidence for Hypothesis 3.}    
     \label{fig:eval:study1:hypothesis3_result}
 \end{figure}
+
+\subsection{Hypothesis 4: Temperature at the Tympanic Membrane Is Most Stable}
+\label{subsec:Evaluation:Study1:Hypothesis4}
+The fifth hypothesis considers the stability of temperature sensor readings at the tympanic membrane compared to other positions during phases 2 (indoor) and 3 (outdoor).
+The metric used here is the standard deviation. 
+The standard deviation results can be found in Table \ref{subsec:Evaluation:Study1:Hypothesis4:std_dev_table}. 
+In phase 2, the standard deviation is still relatively similar for all measurements, with only the position behind the ear in the middle yielding a worse value of $0.1154$. 
+The standard deviation from the tympanic membrane nevertheless sets itself apart from those of the others with $0.0288$ compared to $0.05-0.07$. 
+In phase 3, however, it is clear that the measurement of temperature at the tympanic membrane shows the most stability. 
+At $0.1971$, the deviation is significantly smaller than for the rest $0.65-0.92$. 
+Additionally, it can be seen from the figure \ref{fig:eval:study1:hypothesis1_result} that measurements at the tympanic membrane shows the least quantile differences and is closest to the thermometer values. 
+From the calculated standard deviations, it appears that the tympanic membrane has the lowest values in both phases, indicating higher stability. 
+In contrast, the other sensors show higher standard deviations, more specifically the sensors outside the ear. 
+This makes them more susceptible to external conditions, such as environmental changes.
+Thus, this confirms the hypothesis that the pom-pom skin provides the most stable temperature readings.
+
+\begin{table}[t]
+\centering
+\begin{tabular}{|l|c|c|}
+\hline
+Sensor & Mean Standard Deviation & Mean Standard Deviation \\
+& Phase 2 (indoor) & Phase 3 (outdoor) \\
+\hline
+Tympanic Membrane & 0.0308 & 0.3048 \\
+Concha & 0.0535 & 0.9882 \\
+Ear Canal & 0.0378 & 0.7496 \\
+Out\_Bottom & 0.1138 & 1.0156 \\
+Out\_Top & 0.0730 & 0.7836 \\
+Out\_Middle & 0.1176 & 0.9875 \\
+\hline
+\end{tabular}
+\caption{Standard deviations of temperature readings for different sensors during phases 2 and 3, averaged over all subjects. Lower values indicate higher stability.}
+\label{subsec:Evaluation:Study1:Hypothesis4:std_dev_table}
+\end{table}
+
+\subsection{Hypothesis 5: Movement Leads to Changes in the Temperature Readings}
+\label{subsec:Evaluation:Study1:Hypothesis5}
+
+Hypothesis 5 states that the physical movement of the participants will have an effect on the various temperature sensors. 
+This section will cover the methodology, evaluation, and discussion of this hypothesis.
+To investigate the influence of exercise, both phases 2 and 3 were considered. 
+In phase 2, subjects sat in a room for 20 minutes, and in phase 3, they walked outdoors for 20 minutes.
+During both phases, temperature was measured at the 6 temperature sensors using $8 Hz$. 
+In addition, data from the inertial measurement unit (IMU), which consists of an accelerometer, a gyroscope, and a magnetometer, were sampled at $50Hz$. 
+The relative change was now calculated for each temperature sensor as follows:
+
+\[
+\text{relative change} = \left| \frac{{T_{\text{current}} - T_{\text{previous}}}}{{T_{\text{previous}}}} \right| \times 100
+\]
+
+Where \( T_{\text{current}} \) and \( T_{\text{previous}} \) are the current and previous temperature values, respectively. 
+The absolute value of the relative change was taken to capture the magnitude of the change regardless of direction. 
+This value was then multiplied by 100 to express it as a percentage.
+In addition, the mean motion was derived from the IMU data.
+For this purpose, a metric for mean motion was calculated. 
+For each time point, the mean motion \(M\) was calculated using the following formula:
+
+\[
+M = \sqrt{{\sum_{i=1}^{n} x_i^2}}
+\]
+
+Where \( x_i \) is the IMU reading from one of the 9 columns (`ACC\_X`, `ACC\_Y`, `ACC\_Z`, `GYRO\_X`, `GYRO\_Y`, `GYRO\_Z`, `MAG\_X`, `MAG\_Y`, `MAG\_Z`). This approach effectively captures the total motion intensity at each time point by considering all available IMU sensors.
+Figure \ref{fig:eval:study1:hypothesis5_result} shows the relative changes in each temperature sensor reading for the indoor and outdoor phases.
+The movement of the subjects is shown at the bottom. 
+The plots show a nuanced relationship between movement and temperature sensor values.
+Relative changes can be seen for the individual temperature sensors in the two phases, but this may be due to different conditions. 
+In Phase 3, temperature generally decreased significantly when subjects left the room and went outside.
+This is exacerbated by movement during the outdoor phase. 
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=\textwidth]{thesis-doc/images/study1/hypothesis5/overall_mean_data_hypothesis5.pdf}
+    \caption{ADD DESCRIPTION}    
+    \label{fig:eval:study1:hypothesis5_result}
+\end{figure}
+
+
+\section{Results and Discussion from Study 2}
+\label{sec:Evaluation:Study2}
+Having checked the validity of the temperature measurements, a second study will now observe how the measured temperature behaves when the subject is placed under stress.
+A more detailed introduction to the design and objectives of study 2 is described in chapter~\ref{ch:Design:Study:Study2}.
+
+\subsection{Hypothesis 1: ...}
+\label{subsec:Evaluation:Study2:Hypothesis1}
+asdf
+
+\subsection{Hypothesis 2: ...}
+\label{subsec:Evaluation:Study2:Hypothesis2}
+asdf
+
+\subsection{Hypothesis 3: ...}
+\label{subsec:Evaluation:Study2:Hypothesis3}
+asdf
+
+\subsection{Hypothesis 4: ...}
+\label{subsec:Evaluation:Study2:Hypothesis4}
+asdf
+
+\subsection{Hypothesis 5: ...}
+\label{subsec:Evaluation:Study2:Hypothesis5}
+asdf
