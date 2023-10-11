@@ -2,108 +2,89 @@ import os
 import pandas as pd
 from study_02.src.TemperatureCalibration import TemperatureCalibration
 from study_02.src.hrv_pipeline import HRVPipeline
+import numpy as np
 
+from study_02.src.hypothesis1 import Hypothesis1Analyzer
+from study_02.src.hypothesis2 import Hypothesis2Analyzer
+from study_02.src.hypothesis3 import Hypothesis3Analyzer
+from study_02.src.hypothesis4 import Hypothesis4Analyzer
+from study_02.src.hypothesis5 import Hypothesis5Analyzer
+from study_02.src.hypothesis6 import Hypothesis6Analyzer
+from study_02.src.raw_data_plotter import RawDataPlotter
 
 
 class Study2Pipeline:
-    # init
     def __init__(self, data_dir, target_dir):
         self.data_dir = data_dir
         self.target_dir = target_dir
         self.all_calib_data = []
-        self.ground_truth_temps = {
-            '01': 36.4,
-            '02': 36.5,
-            '03': 37.2,
-            '04': 37.1,
-            '05': 36.6,
-            '06': 36.9,
-            '07': 36.5,
-            '08': 36.6,
-            '09': 37.5,
-            '10': 36.5,
-            '11': 36.9,
-            '12': 36.1,
-            '13': 36.1,
-            '14': 36.7,
-        }
+        self.all_hrv_data = []
 
-    def process_directory(self, dir_path, target_path):
-        for item in os.listdir(dir_path):
-            item_path = os.path.join(dir_path, item)
-            item_target_path = os.path.join(target_path, item)
-            if os.path.isdir(item_path):
-                os.makedirs(item_target_path, exist_ok=True)
-                self.process_directory(item_path, item_target_path)
-            elif item_path.endswith('.csv'):
-                self.process_file(item_path, item_target_path)
+    def process_directory(self):
+        for participant_folder in os.listdir(self.data_dir):
+            participant_path = os.path.join(self.data_dir, participant_folder)
+            if os.path.isdir(participant_path):
+                self.process_participant(participant_path)
 
-    def process_file(self, file_path, target_path):
-        print(f"Processing file: {file_path}")
-        df = pd.read_csv(file_path)
+    def process_participant(self, participant_path):
+        temp_file = [f for f in os.listdir(participant_path) if f.endswith('.csv')][0]
+        hrv_file = [f for f in os.listdir(participant_path) if f.endswith('.txt')][0]
 
+        temp_file_path = os.path.join(participant_path, temp_file)
+        hrv_file_path = os.path.join(participant_path, hrv_file)
+
+        # Process temperature data
+        temp_df = pd.read_csv(temp_file_path)
         temp_columns = ['TympanicMembrane', 'Concha', 'EarCanal', 'Out_Bottom', 'Out_Top', 'Out_Middle']
+        temp_df[temp_columns] = temp_df[temp_columns].replace(0, np.nan)
 
-        # if first row temp_columns have a value equal to 0, then we have to remove the first 6 rows
-        if df[temp_columns].iloc[0].sum() <= 4000:
-            # Make sure we only keep complete sets of 6 rows
-            num_rows_to_keep = len(df) // 6 * 6
-            df = df.iloc[:num_rows_to_keep]
+        # Process HRV data
+        hrv_df = pd.read_csv(hrv_file_path, header=None, names=['RRIntervals'])
 
-            df['MEAN_TIMESTAMP'] = (df['TIMESTAMP'].groupby(df.index // 6).transform('mean') / 6).astype('int64')
-            majority_ids = df['ID'].groupby(df.index // 6).transform(lambda x: x.value_counts().idxmax())
-
-            df = df.groupby(df.index // 6).apply(lambda x: x.sum())
-
-            # Calculate the mean TIMESTAMP and use the most frequent ID
-            df['TIMESTAMP'] = df['MEAN_TIMESTAMP']
-            # df['ID'] = np.around(df['MAJORITY_ID']).astype('int') / 6
-            df['ID'] = majority_ids.groupby(majority_ids.index // 6).first()
-
-            df.drop([
-                'MEAN_TIMESTAMP',
-                'ACC_X',
-                'ACC_Y',
-                'ACC_Z',
-                'GYRO_X',
-                'GYRO_Y',
-                'GYRO_Z',
-                'MAG_X',
-                'MAG_Y',
-                'MAG_Z'
-            ], axis=1, inplace=True)
-
-            # modified_file_path = os.path.splitext(file_path)[0] + "_modified.csv"
-            # df.to_csv(modified_file_path, index=False)
-
-        # Extract proband number from file name
-        basename = os.path.basename(file_path)
-        proband_number = basename.split('_')[2]  # Assumes the file name format is "Logging_person_x.csv"
-
-        # Look up real temperature ground truth based on proband number
-        real_temp_ground_truth = self.ground_truth_temps.get(proband_number, 37.0)  # Default to 37.0 if not found
-
+        # Calibration and smoothing
         calib = TemperatureCalibration(
-            df,
+            temp_df,
             temp_columns,
-            os.path.basename(file_path),
-            os.path.dirname(file_path),
-            os.path.dirname(target_path),
-            real_temp_ground_truth
+            os.path.basename(temp_file_path),
+            os.path.dirname(temp_file_path),
+            os.path.join(self.target_dir, os.path.basename(participant_path)),
         )
-
         calib.smooth_data()
         calib.plot_raw_data()
         self.all_calib_data.append(calib)
+        self.all_hrv_data.append(hrv_df)
 
 
-if __name__ == "__main__":
-    folder_path = "data/study_data_study2"
-    target_folder = "target"
+if __name__ == '__main__':
+    data_dir = 'data/study_data_study2'
+    target_dir = 'target/study2_results'
 
-    pipeline = Study2Pipeline(folder_path, target_folder)
-    pipeline.process_directory(folder_path, target_folder)
+    pipeline = Study2Pipeline(data_dir, target_dir)
+    pipeline.process_directory()
 
-    # HRV pipeline
-    hrv_pipeline = HRVPipeline(folder_path, target_folder)
-    hrv_pipeline.process_directory(folder_path, target_folder)
+    raw_data_plotter = RawDataPlotter(pipeline.all_calib_data, pipeline.all_hrv_data, target_dir)
+    raw_data_plotter.plot_raw_data()
+
+    print("Analyzing hypothesis 1")
+    hypothesis1 = Hypothesis1Analyzer(pipeline.all_calib_data, pipeline.all_hrv_data, target_dir)
+    hypothesis1.analyze()
+
+    print("Analyzing hypothesis 2")
+    hypothesis2 = Hypothesis2Analyzer(pipeline.all_calib_data, pipeline.all_hrv_data, target_dir)
+    hypothesis2.analyze()
+
+    print("Analyzing hypothesis 3")
+    hypothesis3 = Hypothesis3Analyzer(pipeline.all_calib_data, pipeline.all_hrv_data, target_dir)
+    hypothesis3.analyze()
+
+    print("Analyzing hypothesis 4")
+    hypothesis4 = Hypothesis4Analyzer(pipeline.all_calib_data, pipeline.all_hrv_data, target_dir)
+    hypothesis4.analyze()
+
+    print("Analyzing hypothesis 5")
+    hypothesis5 = Hypothesis5Analyzer(pipeline.all_calib_data, pipeline.all_hrv_data, target_dir)
+    hypothesis5.analyze()
+
+    print("Analyzing hypothesis 6")
+    hypothesis6 = Hypothesis6Analyzer(pipeline.all_calib_data, pipeline.all_hrv_data, target_dir)
+    hypothesis6.analyze()

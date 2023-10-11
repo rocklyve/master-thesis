@@ -6,9 +6,8 @@ from matplotlib import pyplot as plt
 
 class TemperatureCalibration:
 
-    def __init__(self, df, temp_columns, source_filename, data_folder, target_folder, real_temp_ground_truth):
+    def __init__(self, df, temp_columns, source_filename, data_folder, target_folder):
         self.raw_data = df
-        self.real_temp_ground_truth = real_temp_ground_truth
         self.temp_columns = temp_columns
         self.raw_data[temp_columns] = self.raw_data[temp_columns] / 100.0
         self.raw_data['TIMESTAMP'] = (self.raw_data['TIMESTAMP'] - self.raw_data['TIMESTAMP'].min()) / 1000.0 / 60.0
@@ -19,7 +18,7 @@ class TemperatureCalibration:
         self.target_folder = target_folder  # New attribute to store the target folder
 
     def smooth_data(self):
-        self.smoothed_data = self.raw_data.rolling(window=20).mean()
+        self.smoothed_data = self.raw_data.rolling(window=120, min_periods=1).mean()
 
     def plot_raw_data(self):
         # Determine the suffix of the source filename
@@ -32,8 +31,13 @@ class TemperatureCalibration:
         self.smooth_data()
         smoothed_plot_data = self.smoothed_data[self.temp_columns]
 
+        # Filter data for IDs greater than 1
+        filtered_data = self.raw_data[self.raw_data['ID'] > 1]
+        filtered_smoothed_data = smoothed_plot_data.loc[filtered_data.index]
+
         def add_background_color(ax):
-            unique_ids = self.raw_data['ID'].unique()
+            # Only consider IDs greater than 1
+            unique_ids = [i for i in self.raw_data['ID'].unique() if i > 1]
             colors = plt.cm.jet(np.linspace(0, 1, len(unique_ids)))
             for i, unique_id in enumerate(unique_ids):
                 id_data = self.raw_data[self.raw_data['ID'] == unique_id]
@@ -43,7 +47,8 @@ class TemperatureCalibration:
         # Create a plot for the smoothed raw data
         plt.figure(figsize=(8, 6), dpi=300)
         ax = plt.gca()
-        plt.plot(self.raw_data['TIMESTAMP'], smoothed_plot_data)
+        if not filtered_smoothed_data.isna().all().all():  # Check if all values are NaN
+            plt.plot(filtered_data['TIMESTAMP'], filtered_smoothed_data)
         add_background_color(ax)
         plt.xlabel('Time (min)')
         plt.ylabel('Temperature (°C)')
