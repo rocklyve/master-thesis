@@ -62,7 +62,7 @@ if __name__ == '__main__':
     pipeline = Study2Pipeline(data_dir, target_dir)
     pipeline.process_directory()
 
-    raw_data_plotter = RawDataPlotter(pipeline.all_calib_data, pipeline.all_hrv_data, target_dir)
+    raw_data_plotter = RawDataPlotter(pipeline.all_calib_data, pipeline.all_hrv_data, data_dir, target_dir)
     raw_data_plotter.plot_raw_data()
 
     print("Analyzing hypothesis 1")
