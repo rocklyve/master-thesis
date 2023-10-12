@@ -5,83 +5,34 @@ import numpy as np
 
 
 class HRVPipeline:
-    def __init__(self, folder_path, target_folder):
-        self.folder_path = folder_path
-        self.target_folder = target_folder
+    def __init__(self, all_hrv_data):
+        self.all_hrv_data = all_hrv_data
+        self.sdnn_list = []
+        self.rmssd_list = []
+        self.lf_hf_list = []
 
-    def detect_stress(self, measures):
-        # Example thresholds, these need to be calibrated based on individual or population data
-        RMSSD_THRESHOLD = 50
-        LFHF_THRESHOLD = 2.0
+    def analyze(self):
+        # For all 3 phases together
+        self.get_statistics_for_phase('start_sitting', 'stress_end')
 
-        rmssd = measures.get('rmssd', 0)
-        lf_hf_ratio = measures.get('LF/HF', 1)
+        # For each of the 3 dually
+        self.get_statistics_for_phase('start_sitting', 'stroop_start')  # Sitting phase
+        self.get_statistics_for_phase('stroop_start', 'stress_end')  # Stress phase
 
-        is_stressed = False
+        # Within stress phase
+        self.get_statistics_for_phase('stroop_start', 'n-back_start')  # Stroop test
+        self.get_statistics_for_phase('n-back_start', 'math_start')  # N-back test
+        self.get_statistics_for_phase('math_start', 'stress_end')  # Math test
 
-        if rmssd < RMSSD_THRESHOLD:
-            print(f"Low RMSSD detected: {rmssd}")
-            is_stressed = True
 
-        if lf_hf_ratio > LFHF_THRESHOLD:
-            print(f"High LF/HF ratio detected: {lf_hf_ratio}")
-            is_stressed = True
+    def get_statistics_for_phase(self, phase_start, phase_end):
+        for hrv_data in self.all_hrv_data:
+            sdnn, rmssd, lf_hf = hrv_data.get_statistics(phase_start, phase_end)
+            self.sdnn_list.append(sdnn)
+            self.rmssd_list.append(rmssd)
+            self.lf_hf_list.append(lf_hf)
 
-        return is_stressed
-
-    def plot_results(self, working_data, measures, label, target_folder, txt_file):
-        plot_object = hp.plotter(working_data, measures, show=False)
-        ax = plot_object.gca()
-        x_ticks = ax.get_xticks()
-        ax.set_xticklabels(x_ticks / 60000)  # Convert ms to minutes for the x-axis labels
-        ax.set_xlabel('Time (min)')
-        plot_object.suptitle(f"{label}")
-        plot_object.savefig(os.path.join(target_folder, f"{os.path.splitext(txt_file)[0]}_{label}.png"))
-        plt.close()
-
-    def process_directory(self, folder_path, target_folder):
-        # for each folder, process the files
-        # ignore the .DS_Store file on macOS
-        for folder in os.listdir(folder_path):
-            if folder == '.DS_Store':
-                continue
-            print("Processing folder:", folder)
-            self.folder_path = os.path.join(folder_path, folder)
-            self.target_folder = os.path.join(target_folder, folder)
-            # if the target folder doesn't exist, create it
-            if not os.path.exists(self.target_folder):
-                os.makedirs(self.target_folder, exist_ok=True)
-            self.process_files()
-
-    def process_files(self):
-        txt_files = [f for f in os.listdir(self.folder_path) if f.endswith('.txt')]
-
-        for txt_file in txt_files:
-            print("Processing file:", txt_file)
-            with open(os.path.join(self.folder_path, txt_file), 'r') as f:
-                rr_intervals = np.array([int(line.strip()) for line in f])
-
-            if rr_intervals.size == 0:
-                print(f"Skipping empty file: {txt_file}")
-                continue
-
-            sample_rate = 1000.0
-            samples_15min = int(15 * 60)
-            samples_13min = int(13 * 60)
-
-            rr_15min = rr_intervals[:samples_15min]
-            rr_13min = rr_intervals[samples_15min:samples_15min + samples_13min]
-            rr_rest = rr_intervals[samples_15min + samples_13min:]
-
-            for segment, label in zip([rr_15min, rr_13min, rr_rest], ['First 15 min', 'Next 13 min', 'Rest']):
-                try:
-                    working_data, measures = hp.process(segment, sample_rate)
-                    print('rmssd: ', measures.get('rmssd', 0))
-                    is_stressed = self.detect_stress(measures)
-                    print(f"{label}: Stress detected" if is_stressed else f"{label}: No stress detected")
-
-                    # Plot the results for this segment
-                    self.plot_results(working_data, measures, label, self.target_folder, txt_file)
-
-                except Exception as e:
-                    print(f"Error processing {txt_file} for {label}: {e}")
+        print(f"{'start_sitting'} to {'stress_end'}: SDNN: {np.mean(self.sdnn_list)}, RMSSD: {np.mean(self.rmssd_list)}, LF/HF: {np.mean(self.lf_hf_list)}")
+        self.sdnn_list = []
+        self.rmssd_list = []
+        self.lf_hf_list = []

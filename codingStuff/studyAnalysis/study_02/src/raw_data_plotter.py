@@ -23,7 +23,7 @@ class RawDataPlotter:
             plt.figure(figsize=(12, 8))
 
             # Plot RR intervals. Assuming hrv_data is a NumPy array or list
-            plt.plot(np.arange(len(hrv_data)), hrv_data)
+            plt.plot(np.arange(len(hrv_data.hrv_df)), hrv_data.hrv_df)
 
             plt.title(f'Raw HRV Data for Participant {idx + 1}')
             plt.xlabel('Index')

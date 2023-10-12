@@ -6,8 +6,9 @@ from matplotlib import pyplot as plt
 
 class TemperatureCalibration:
 
-    def __init__(self, df, temp_columns, source_filename, data_folder, target_folder):
+    def __init__(self, df, ground_truth_temp, temp_columns, source_filename, data_folder, target_folder):
         self.raw_data = df
+        self.ground_truth_temp = ground_truth_temp
         self.temp_columns = temp_columns
         self.raw_data[temp_columns] = self.raw_data[temp_columns] / 100.0
         self.raw_data['TIMESTAMP'] = (self.raw_data['TIMESTAMP'] - self.raw_data['TIMESTAMP'].min()) / 1000.0 / 60.0

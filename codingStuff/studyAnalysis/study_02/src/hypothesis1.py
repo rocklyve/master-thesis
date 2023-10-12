@@ -1,59 +1,82 @@
-import os
-
+import pandas as pd
+import matplotlib.pyplot as plt
 import numpy as np
-from matplotlib import pyplot as plt
-from scipy import stats
 
-
+# Define the Hypothesis1Analyzer class
 class Hypothesis1Analyzer:
-    def __init__(self, all_calib_data, all_hrv_data, target_dir):
-        self.all_calib_data = all_calib_data
-        self.all_hrv_data = all_hrv_data
-        self.target_dir = target_dir
+    def __init__(self, all_calib_data, target_dir):
+        self.all_calib_data = all_calib_data  # List of TemperatureCalibration objects
+        self.target_dir = target_dir  # Directory where plots will be saved
 
     def analyze(self):
-        # Create the target directory if it doesn't exist
-        os.makedirs(self.target_dir, exist_ok=True)
+        mean_temp_list = []  # To store the mean temperature for each phase and sensor for all probands
 
-        phase2_means = []
-        phase3_means = []
-
-        # Loop through each participant's calibrated temperature data
         for calib_data in self.all_calib_data:
-            # Filter data by phase 2 and phase 3 using the 'ID' column
-            phase2_data = calib_data.raw_data[calib_data.raw_data['ID'] == 2]
-            phase3_data = calib_data.raw_data[calib_data.raw_data['ID'] == 3]
+            proband = calib_data.source_filename.split('_')[2].split('.')[0] # Extract proband name from filename
+            ground_truth = calib_data.ground_truth_temp  # Extract ground truth for the current proband
 
-            # Compute the mean temperatures for each phase and sensor
-            phase2_mean = phase2_data[calib_data.temp_columns].mean()
-            phase3_mean = phase3_data[calib_data.temp_columns].mean()
+            for phase_id in [2, 3, 4]:  # Loop through the phase IDs (sitting, stress, relax)
+                phase_data = calib_data.raw_data[
+                    calib_data.raw_data['ID'] == phase_id]  # Filter data for the current phase
 
-            phase2_means.append(phase2_mean)
-            phase3_means.append(phase3_mean)
+                for sensor in calib_data.temp_columns:  # Loop through each sensor
+                    mean_temp = phase_data[sensor].mean()  # Calculate mean temperature for the current sensor and phase
+                    mean_temp -= ground_truth  # Subtract the ground truth temperature
 
-        # Convert lists to NumPy arrays for easier manipulation
-        phase2_means = np.array(phase2_means)
-        phase3_means = np.array(phase3_means)
+                    mean_temp_list.append({
+                        'Proband': proband,
+                        'Phase': phase_id,
+                        'Sensor': sensor,
+                        'Mean_Temperature': mean_temp
+                    })
 
-        # Compute the global mean across all sensors
-        global_mean_phase2 = np.nanmean(phase2_means, axis=1)
-        global_mean_phase3 = np.nanmean(phase3_means, axis=1)
+        # Create LaTeX tables
+        self.create_latex_table(mean_temp_list, filename_suffix='_all')  # For all probands
+        self.create_latex_table(mean_temp_list, probands=['p01', 'p04', 'p05'], filename_suffix='_145')  # For probands 1, 4, and 5
 
-        # Perform paired t-test for statistical significance
-        t_stat, p_value = stats.ttest_rel(global_mean_phase2, global_mean_phase3)
+    def create_latex_table(self, mean_temp_list, probands=None, filename_suffix=''):
+        # Initialize a dictionary to store the mean temperatures
+        sensor_phase_data = {}
 
-        # Create and save the plot
-        plt.figure(figsize=(10, 6))
-        plt.bar(['Phase 2 (Relaxed)', 'Phase 3 (Stress)'],
-                [np.nanmean(global_mean_phase2), np.nanmean(global_mean_phase3)],
-                yerr=[np.nanstd(global_mean_phase2), np.nanstd(global_mean_phase3)], capsize=10)
-        plt.title('Mean Ear Temperature During Relaxed and Stress Phases')
-        plt.ylabel('Temperature (°C)')
-        plt.xlabel('Phase')
-        plt.text(0.5, max(np.nanmean(global_mean_phase2), np.nanmean(global_mean_phase3)),
-                 f'p-value = {p_value:.4f}', horizontalalignment='center')
-        plot_path = os.path.join(self.target_dir, 'hypothesis1_plot.png')
-        plt.savefig(plot_path)
-        plt.close()
+        # Filter data based on the specified probands, if any
+        if probands is not None:
+            mean_temp_list = [entry for entry in mean_temp_list if entry['Proband'] in probands]
 
-        return t_stat, p_value
+        # Populate the sensor_phase_data dictionary
+        for entry in mean_temp_list:
+            sensor = entry['Sensor']
+            phase = entry['Phase']
+            mean_temp = entry['Mean_Temperature']
+
+            if sensor not in sensor_phase_data:
+                sensor_phase_data[sensor] = {}
+
+            if phase not in sensor_phase_data[sensor]:
+                sensor_phase_data[sensor][phase] = []
+
+            sensor_phase_data[sensor][phase].append(mean_temp)
+
+        # Calculate the mean temperature for each sensor and phase
+        for sensor, phase_data in sensor_phase_data.items():
+            for phase, temps in phase_data.items():
+                sensor_phase_data[sensor][phase] = round(np.mean(temps), 2)
+
+        # Create the LaTeX table
+        latex_code = "\\begin{table}[t]\n\\centering\n\\begin{tabular}{|l|rrr|}\n\\hline\n"
+        latex_code += "Sensor & Sitting Phase & Stress Phase & Relax Phase \\\\\n"
+        latex_code += "& Mean Temp & Mean Temp & Mean Temp \\\\\n\\hline\n"
+
+        for sensor, phase_data in sensor_phase_data.items():
+            sitting_temp = phase_data.get(2, 'N/A')
+            stress_temp = phase_data.get(3, 'N/A')
+            relax_temp = phase_data.get(4, 'N/A')
+            latex_code += f"{sensor} & {sitting_temp} & {stress_temp} & {relax_temp} \\\\\n"
+
+        latex_code += "\\hline\n\\end{tabular}\n"
+        latex_code += "\\caption{Mean Temperature of each phase over all participants. "
+        latex_code += "The measured ground truth values is subtracted from each participants temperature data to combine the results in a more fair way.}\n"
+        latex_code += f"\\label{{subsec:Evaluation:Study2:Hypothesis1:mean{filename_suffix}_participants}}\n\\end{{table}}"
+
+        print("LaTeX code:")
+        print(latex_code)
+        return latex_code
