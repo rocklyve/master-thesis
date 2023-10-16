@@ -1,12 +1,12 @@
 import os
 import numpy as np
 import pandas as pd
-from study_calculations.src.TemperatureCalibration import TemperatureCalibration
-from study_calculations.src.hypothesis1 import Hypothesis1Analyzer
-from study_calculations.src.hypothesis2 import Hypothesis2Analyzer
-from study_calculations.src.hypothesis3 import Hypothesis3Analyzer
-from study_calculations.src.hypothesis4 import Hypothesis4Analyzer
-from study_calculations.src.hypothesis5 import Hypothesis5Analyzer
+from study_01.src.TemperatureCalibration import TemperatureCalibration
+from study_01.src.hypothesis1 import Hypothesis1Analyzer
+from study_01.src.hypothesis2 import Hypothesis2Analyzer
+from study_01.src.hypothesis3 import Hypothesis3Analyzer
+from study_01.src.hypothesis4 import Hypothesis4Analyzer
+from study_01.src.hypothesis5 import Hypothesis5Analyzer
 
 
 class AnalysisPipeline:

@@ -110,8 +110,8 @@ class Study2Pipeline:
 
 
 if __name__ == '__main__':
-    data_dir = 'data/study_data_study2'
-    target_dir = 'target/study2_results'
+    data_dir = 'data/'
+    target_dir = 'target/'
 
     pipeline = Study2Pipeline(data_dir, target_dir)
     pipeline.process_directory()
