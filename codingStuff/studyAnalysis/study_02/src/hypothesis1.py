@@ -1,6 +1,8 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
+from scipy.stats import ttest_rel
+
 
 # Define the Hypothesis1Analyzer class
 class Hypothesis1Analyzer:
@@ -10,6 +12,7 @@ class Hypothesis1Analyzer:
 
     def analyze(self):
         mean_temp_list = []  # To store the mean temperature for each phase and sensor for all probands
+        organized_data = {}  # Nested dictionary to organize data for t-test
 
         for calib_data in self.all_calib_data:
             proband = calib_data.source_filename.split('_')[2].split('.')[0] # Extract proband name from filename
@@ -33,6 +36,43 @@ class Hypothesis1Analyzer:
         # Create LaTeX tables
         self.create_latex_table(mean_temp_list, filename_suffix='_all')  # For all probands
         self.create_latex_table(mean_temp_list, probands=['p01', 'p04', 'p05'], filename_suffix='_145')  # For probands 1, 4, and 5
+
+        # Organize the data
+        for entry in mean_temp_list:
+            sensor = entry['Sensor']
+            phase = entry['Phase']
+            mean_temp = entry['Mean_Temperature']
+
+            if entry['Proband'] not in ['p01', 'p04', 'p05']:
+                continue
+
+            if sensor not in organized_data:
+                organized_data[sensor] = {}
+
+            if phase not in organized_data[sensor]:
+                organized_data[sensor][phase] = []
+
+            organized_data[sensor][phase].append(mean_temp)
+
+        # Perform t-tests
+        for sensor, phase_data in organized_data.items():
+            sitting_data = np.array(phase_data.get(2, []))  # Phase ID for 'Sitting'
+            stress_data = np.array(phase_data.get(3, []))  # Phase ID for 'Stress'
+            relax_data = np.array(phase_data.get(4, []))  # Phase ID for 'Stress'
+
+            print('Now for sitting - stress')
+            t_stat, p_value = self.perform_ttest(sitting_data, stress_data)
+
+            print(f"For sensor {sensor}, t-statistic is {t_stat} and p-value is {p_value}")
+
+            print('Now for stress - relax')
+            t_stat, p_value = self.perform_ttest(stress_data, relax_data)
+
+            print(f"For sensor {sensor}, t-statistic is {t_stat} and p-value is {p_value}")
+
+    def perform_ttest(self, data1, data2):
+        t_stat, p_value = ttest_rel(data1, data2, nan_policy='omit')  # 'omit' will ignore NaNs
+        return t_stat, p_value
 
     def create_latex_table(self, mean_temp_list, probands=None, filename_suffix=''):
         # Initialize a dictionary to store the mean temperatures

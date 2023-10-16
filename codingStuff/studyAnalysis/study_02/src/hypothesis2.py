@@ -1,7 +1,9 @@
 from collections import defaultdict
 from datetime import timedelta
 import numpy as np
+from scipy import stats
 import pandas as pd
+import copy
 
 class Hypothesis2Analyzer:
     def __init__(self, all_calib_data, all_hrv_data, target_dir):
@@ -9,7 +11,14 @@ class Hypothesis2Analyzer:
         self.all_hrv_data = all_hrv_data
         self.target_dir = target_dir
 
+    def perform_ttest(self, sample1, sample2):
+        t_stat, p_value = stats.ttest_rel(sample1, sample2)
+        return t_stat, p_value
     def analyze(self):
+        stress_test_temp_data = {}
+        stroop_values = defaultdict(list)
+        nback_values = defaultdict(list)
+        math_values = defaultdict(list)
         stress_test_temp_data = {}  # To store the mean temperature for each stress test and sensor for all probands
 
         for calib_data in self.all_calib_data:
@@ -18,8 +27,6 @@ class Hypothesis2Analyzer:
 
             for stress_test in ['Stroop', 'N-Back', 'Math']:  # Loop through the stress tests
                 range_start, range_end = self.get_time_range_for_stress_test(stress_test, calib_data, self.all_hrv_data[0])
-                print(f"Time range for {stress_test} for proband {proband}: {range_start} to {range_end}")
-                print(f"Last timestamp of calib_data.raw_data: {calib_data.raw_data['TIMESTAMP'].iloc[-1]}")
                 # stress_test_data = calib_data.raw_data[(calib_data.raw_data['TIMESTAMP'] >= range_start) and (calib_data.raw_data['TIMESTAMP'] <= range_end)]  # Filter data for the current stress test
                 stress_test_data = calib_data.raw_data[
                     (calib_data.raw_data['TIMESTAMP'] >= range_start) & (calib_data.raw_data['TIMESTAMP'] <= range_end)]
@@ -43,9 +50,36 @@ class Hypothesis2Analyzer:
 
         # Generate LaTeX table or plots based on stress_test_temp_data
         # ...
+
+
+        for sensor, temps in stress_test_temp_data['Stroop'].items():
+            stroop_values[sensor].append(temps)
+        for sensor, temps in stress_test_temp_data['N-Back'].items():
+            nback_values[sensor].append(temps)
+        for sensor, temps in stress_test_temp_data['Math'].items():
+            math_values[sensor].append(temps)
+
+        # Perform t-tests
+        for sensor in self.all_calib_data[0].temp_columns:
+            t_stat_stroop_nback, p_value_stroop_nback = self.perform_ttest(stroop_values[sensor][0], nback_values[sensor][0])
+            t_stat_nback_math, p_value_nback_math = self.perform_ttest(nback_values[sensor][0], math_values[sensor][0])
+
+            print(
+                f"For sensor {sensor}, t-statistic and p-value between Stroop and N-Back are {t_stat_stroop_nback} and {p_value_stroop_nback} respectively.")
+            print(
+                f"For sensor {sensor}, t-statistic and p-value between N-Back and Math are {t_stat_nback_math} and {p_value_nback_math} respectively.")
+
+        for stress_test, sensor_data in stress_test_temp_data.items():
+            for sensor, temps in sensor_data.items():
+                stress_test_temp_data[stress_test][sensor] = round(np.mean(temps), 2)
+
         self.create_latex_table(stress_test_temp_data, filename_suffix='_all')  # For all probands
 
     def analyze145(self):
+        stress_test_temp_data = {}
+        stroop_values = defaultdict(list)
+        nback_values = defaultdict(list)
+        math_values = defaultdict(list)
         stress_test_temp_data = {}  # To store the mean temperature for each stress test and sensor for all probands
 
         for calib_data in self.all_calib_data:
@@ -56,8 +90,6 @@ class Hypothesis2Analyzer:
 
             for stress_test in ['Stroop', 'N-Back', 'Math']:  # Loop through the stress tests
                 range_start, range_end = self.get_time_range_for_stress_test(stress_test, calib_data, self.all_hrv_data[0])
-                print(f"Time range for {stress_test} for proband {proband}: {range_start} to {range_end}")
-                print(f"Last timestamp of calib_data.raw_data: {calib_data.raw_data['TIMESTAMP'].iloc[-1]}")
                 # stress_test_data = calib_data.raw_data[(calib_data.raw_data['TIMESTAMP'] >= range_start) and (calib_data.raw_data['TIMESTAMP'] <= range_end)]  # Filter data for the current stress test
                 stress_test_data = calib_data.raw_data[
                     (calib_data.raw_data['TIMESTAMP'] >= range_start) & (calib_data.raw_data['TIMESTAMP'] <= range_end)]
@@ -79,8 +111,28 @@ class Hypothesis2Analyzer:
 
                     stress_test_temp_data[stress_test][sensor].append(mean_temp)
 
-        # Generate LaTeX table or plots based on stress_test_temp_data
-        # ...
+        # At the end of the loop that populates stress_test_temp_data
+        for sensor, temps in stress_test_temp_data['Stroop'].items():
+            stroop_values[sensor].append(temps)
+        for sensor, temps in stress_test_temp_data['N-Back'].items():
+            nback_values[sensor].append(temps)
+        for sensor, temps in stress_test_temp_data['Math'].items():
+            math_values[sensor].append(temps)
+
+        # Perform t-tests
+        for sensor in self.all_calib_data[0].temp_columns:
+            t_stat_stroop_nback, p_value_stroop_nback = self.perform_ttest(stroop_values[sensor][0], nback_values[sensor][0])
+            t_stat_nback_math, p_value_nback_math = self.perform_ttest(nback_values[sensor][0], math_values[sensor][0])
+
+            print(
+                f"For sensor {sensor}, t-statistic and p-value between Stroop and N-Back are {t_stat_stroop_nback} and {p_value_stroop_nback} respectively.")
+            print(
+                f"For sensor {sensor}, t-statistic and p-value between N-Back and Math are {t_stat_nback_math} and {p_value_nback_math} respectively.")
+
+        for stress_test, sensor_data in stress_test_temp_data.items():
+            for sensor, temps in sensor_data.items():
+                stress_test_temp_data[stress_test][sensor] = round(np.mean(temps), 2)
+
         self.create_latex_table(stress_test_temp_data, filename_suffix='_all')  # For all probands
 
     def get_time_range_for_stress_test(self, stress_test, calib_data, hrv_data):
@@ -108,11 +160,6 @@ class Hypothesis2Analyzer:
         return int(total_seconds * 1000)  # Convert to milliseconds
 
     def create_latex_table(self, stress_test_temp_data, filename_suffix=''):
-        # Calculate the mean temperature for each sensor and stress test
-        for stress_test, sensor_data in stress_test_temp_data.items():
-            for sensor, temps in sensor_data.items():
-                stress_test_temp_data[stress_test][sensor] = round(np.mean(temps), 2)
-
         # Create the LaTeX table
         latex_code = "\\begin{table}[t]\n\\centering\n\\begin{tabular}{|l|rrr|}\n\\hline\n"
         latex_code += "Sensor & Stroop Test & N-Back Test & Math Test \\\\\n"
