@@ -1,8 +1,8 @@
 \chapter{Implementation}
 \label{ch:Implementation}
 This chapter describes the details of the implementation of the prototype and the analysis of the data collected during the studies.
-To implement the prototype, Arduino software was developed to measure temperature sensor values and IMU data and store them on a microSD card along with a timestamp.
-Implementation details for evaluating and analyzing the collected data are then described.
+To implement the prototype, Arduino software was developed to measure temperature sensor values and IMU data and store them on a microSD card with a timestamp.
+Implementation details for evaluating and analyzing the collected data are described afterwards.
 
 \section{Prototype}
 The prototype is controlled by OpenEarable, which was programmed to be controlled via Arduino code. 
@@ -11,7 +11,7 @@ The main task of the prototype is to collect data from the temperature sensors a
 Similar to traditional Arduino code, the prototype code consists of a \texttt{setup()} and a \texttt{loop()} method.
 
 In the \texttt{setup()} method, all the required components are initialized. These include the sensors, the IMU, the SD card logger and the key interrupt. The latter is used to ensure that a measurement is terminated should the key be pressed twice within two seconds. If the key is pressed once, the phase is changed (ID). 
-When the sensors are initialized, a texttt{wire} connection is made and the multiplexer is triggered.
+When the sensors are initialized, a \texttt{Wire} connection is made and the multiplexer is triggered.
 The multiplexer is crucial when reading out the sensors, because each sensor is addressed with the same address.
 All temperature sensors are connected to the multiplexer and are addressed one after the other to read out the temperature value.
 This is possible because the multiplexer always switches through one output and thus all sensors can have the same address.
@@ -19,10 +19,10 @@ This is possible because the multiplexer always switches through one output and 
 In addition to the regular operations in the \texttt{loop()} method, the code contains functions for handling keystrokes. A key press is detected using an interrupt. As soon as the key is pressed, a function is started that checks whether the key has already been pressed within the last two seconds. If this is the case, the data acquisition of sensor data and IMU data is stopped and the SD card with the collected data is written.
 
 One of the main tasks is to read data from the MLX90632 sensors and the IMU sensor. 
-For this, the multiplexer is always switched to the respective sensor, and the value is read and persisted via the modified library "Protocentral\_MLX90632".
+For this, the multiplexer is always switched to the respective sensor and the value is read and persisted via the modified library "Protocentral\_MLX90632".
 The library was strongly modified to enable a faster measurement. 
 This is necessary because additional motion data should be recorded.
-The IMU sensor, built directly into the OpenEarable, provides accelerometer, gyroscope, and magnetometer data.
+The IMU sensor, built directly into the OpenEarable, provides accelerometer, gyroscope and magnetometer data.
 
 The collected data from one pass of the \texttt{loop()} function is then written to the SD card. Each line represents one pass of the \texttt{loop()} function and contains one of the 6 temperature sensor values and the 9 IMU data as well as a time value and an ID.
 Thus the 6 temperature sensor values are distributed in 6 lines. 
@@ -36,7 +36,7 @@ However, the sampling rate is so high that this does not affect the final result
 The IMU data needs a sampling rate of at least 50Hz to make significant statements about the motion. 
 To achieve this, only one sensor value per iteration was read out to achieve the performance. 
 Additionally, the code had to be optimized several times for performance reasons, ranging from removing \texttt{for} loops to storing data in strings, instead of arrays. 
-Finally, a sampling rate of $50Hz$ of IMU data, and a sampling rate of $8.3Hz$ of sensor values has now been achieved.
+Finally, a sampling rate of $50Hz$ of IMU data and a sampling rate of $8.3Hz$ of sensor values has now been achieved.
 Since the temperature sensors have an update rate of $2Hz$, some consecutive sensor values are the same, but no measured sensor value is lost.
 
 \section{Sensor Calibration Implementation in Arduino}
@@ -58,13 +58,13 @@ During the acclimatization phase, the data is not evaluated, since this phase se
 In addition, the "ID" represents the separation of the phases.
 In order to compare different temperature readings between multiple individuals, the ground truth, i.e. the thermometer reading, is subtracted from each sensor reading.
 The individual hypotheses are now analyzed and further supported by a significance test (paired t-tests) to prove or disprove the hypotheses.
-Visualization tools from the Matplotlib and Seaborn libraries will be used to visually represent temperature variations, sensor stability, and the effects of environmental variables.
+Visualization tools from the Matplotlib and Seaborn libraries will be used to visually represent temperature variations, sensor stability and the effects of environmental variables.
 In the second study, raw data will be imported and temporally aligned similar to study 1. Heart rate data will also be imported and synchronized with temperature measurements. 
 Data quality is checked to ensure the integrity of the data set.
-For data analysis, temperature changes during stress induction tests, which include the Stroop test, N-back test, and math test, will be examined. 
+For data analysis, temperature changes during stress induction tests, which include the Stroop test, N-back test and math test, will be examined. 
 Inter-subject variability and consistency will also be assessed. 
 Heart rate data will be used as baseline data for stress induction. 
 Significance tests (t-tests) will also be used to evaluate the effects of stress on temperature measurements. 
 Correlations between changes in heart rate and temperature will be analyzed to provide evidence of the effects of stress induction. 
 
-In both Study 1 and Study 2, custom Python pipelines were developed to process and analyze sensor data, using Pandas for data manipulation and Matplotlib and Seaborn for visualization. These pipelines read raw sensor and reference thermometer data into Pandas data frames, performed quality checks, and performed hypothesis-specific analyses. The resulting statistical or visual insights were then stored for further analysis. Study 1 focused on sensor stability, temperature fluctuations, and environmental effects, while Study 2 expanded the analysis to include stress-induced effects and heart rate correlates.
+In both Study 1 and Study 2, custom Python pipelines were developed to process and analyze sensor data, using Pandas for data manipulation and Matplotlib and Seaborn for visualization. These pipelines read raw sensor and reference thermometer data into Pandas data frames, performed quality checks and performed hypothesis-specific analyses. The resulting statistical or visual insights were then stored for further analysis. Study 1 focused on sensor stability, temperature fluctuations and environmental effects, while Study 2 expanded the analysis to include stress-induced effects and heart rate correlates.

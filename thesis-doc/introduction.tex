@@ -5,18 +5,18 @@
 \section{Motivation}
 \label{ch:Introduction:Motivation}
 % Here is the main motivation  - the revolution of earables
-With the increasing world population and the growing demand for healthcare, monitoring various biophysiological signals of the body has become increasingly important. 
+With the increasing world population and the growing demand for healthcare, monitoring various biophysiological signals of the body has become more and more important. 
 As a result of increased research and development in this field, several wearable and implantable systems have been developed \cite{loncar-turukaloLiteratureWearableTechnology2019}.
 The revolution began with smartphones, followed by other wearables such as watches, and now includes earables.
 Earables have emerged as a particularly promising technology for the future of healthcare and lifestyle \cite{trespGoingDigitalSurvey2016, kirkWearablesRevolutionStandardization2014a}. 
-The global earable market size was valued in 2022 at around USD 58 million and is expected to rise to 12.6\% until 2030 \cite{GlobalEarphonesHeadphones2018}.
+The global earable market size was valued in 2022 at around USD 58 million and is expected to rise by another 12.6\% until 2030 \cite{GlobalEarphonesHeadphones2018}.
 Most wearables are equipped with various sensors, which are intended to replace a modern medical laboratory through analysis \cite{loncar-turukaloLiteratureWearableTechnology2019}.
 
 % Why earables?
 Capturing data using earables has become very popular due to their compact size, their comfortable fit, their easy reachability by hands, and their ability to capture lots of physiological data of the human body \cite{roddigerSensingEarablesSystematic2022a}. 
-The fact, that they are very close to the body, especially on a body opening, and can be worn over a long period of time without any issues is a huge advantage compared to other positions to capture such data.
+The fact that they are very close to the body, especially on a body opening, and can be worn over a long period of time without any issues is a huge advantage compared to other positions to capture such data.
 Furthermore, many earables are designed to be discrete, making them a practical option for individuals who want to monitor their health without drawing attention to themselves.
-Earables are located near the brain and the major blood vessels on the head and neck and can be worn in or around the ears capturing a variety of biometric data to revolutionize the way we monitor and understand our health such as heart rate, oxygen saturation, and body temperature.
+Earables are located near the brain and the major blood vessels on the head and neck can be worn in or around the ears capturing a variety of biometric data to revolutionize the way we monitor and understand our health such as heart rate, oxygen saturation, and body temperature.
 
 % body temperature
 One important aspect of sensing data with earables is the ability to detect changes in body temperature \cite{dolsonWearableSensorTechnology2022, bonziAccuracyPeripheralThermometers2016, NovelWearableDevice2021}. 
@@ -40,9 +40,9 @@ The ear canal is a promising location for body temperature measurement because i
 In addition, this location is less susceptible to body movement \cite{grossmanFrequencyVelocityRotational1988, kavanaghRoleNeckTrunk2006a}.
 In the ear canal, the tympanic membrane is located.
 The tympanic is supplied with blood by the branches of the internal carotid artery, which supply blood to the thermoregulation center in the hypothalamus of the brain \cite{moranCoreTemperatureMeasurement2002a}.
-Therefore the ear provides high potential in measuring body temperature.
+Therefore, the ear provides high potential in measuring body temperature.
 
-However, the sensor placement and measurement methodology for ear-based temperature monitoring is still an open research question. 
+Nevertheless, the sensor placement and measurement methodology for ear-based temperature monitoring is still an open research question. 
 The optimal position for temperature measurement on the ear is quite obvious: the tympanic membrane \cite{childsTympanicMembraneTemperature1999, kimComparisonBilateralEardrum2022, mumaComparisonRectalAxillary1991}.
 However, it is not easy to align the infrared sensor with the tympanic membrane.
 In addition, influencing factors such as ear wax can affect measurement results. 
@@ -50,7 +50,7 @@ This raises the question of how measurement results differ at different measurem
 By using an alternative measuring point, various influencing factors would be eliminated.
 It may also be interesting to see whether the combination of several sensors stabilizes the measurement results.
 Another question is how temperature measurements on the ear behave when they are not performed under controlled conditions in the laboratory.
-For example, what is the influence of motion artifacts?
+So one might ask what is the influence of motion artifacts?
 With additional sensors, for example, an IMU, it would be possible to detect movements and integrate this knowledge into the erroneous temperature measurement and possibly correct it.
 
 \section{Problem}
@@ -68,7 +68,7 @@ In addition, influencing factors such as earwax can affect the path to the tympa
 This master's thesis examines temperature sensors, each placed at different locations in and around the ear canal comparing the sensor measurements with those of a medically certified thermometer, considered here as the ground truth.
 The research objective is to combine and/or compare different positions for temperature-based measurement in and around the ear and investigate how this affects the accuracy and stability of the measurements.
 Additionally, it is interesting to see if other sensor information can be used to filter out potential errors and optimize results. These includes for example an IMU signal. The resulting location or combined locations for the measurement will then be taken as a basis to detect a temperature-dependent event of the body and evaluate if this provides conclusive results.
-Various metrics such as Mean Squared Deviation and correlation are used to measure the accuracy and stability of the measurements.
+Various metrics such as mean squared deviation and correlation are used to measure the accuracy and stability of the measurements.
 
 In particular, it is unclear what effect different measurement positions have on measurement accuracy and reliability.
 To address these issues, we will test several hypotheses. 
@@ -92,7 +92,7 @@ To gain additional insight, we also plan to take temperature measurements during
 \begin{figure}
     \centering
     \includegraphics[scale=0.26]{thesis-doc/images/ear_measurement_points/emp.png}
-    \caption{Here the temperature measurement points are shown visually from different angles (profile view (1), ear from behind (2), ear from the side (3)). $P1-P3$ are three measuring points behind the ear, which measure the skin temperature at the mastoid. $C1$ is a measuring point that measures the temperature at the concha. $C2$ and $C3$ measure the temperature in the ear canal, where $C3$ is directed at the tympanic membrane and $C2$ is directed at the edge of the ear canal. The arrows at each measuring point show the measuring direction. In addition, a measuring point is outlined with a dashed line if it is located behind the ear. The sensor used is the MLX90632, which is an infrared temperature sensor. This is connected to the OpenEarable and the sensor values can be received and persisted using the I2C protocol.}
+    \caption{Here the temperature measurement points are shown visually from different angles (profile view (1), ear from behind (2), ear from the side (3)). P1-P3 are three measuring points behind the ear, which measure the skin temperature at the mastoid. $C1$ is a measuring point that measures the temperature at the concha. $C2$ and $C3$ measure the temperature in the ear canal, where $C3$ is directed at the tympanic membrane and $C2$ is directed at the edge of the ear canal. The arrows at each measuring point show the measuring direction. In addition, a measuring point is outlined with a dashed line if it is located behind the ear. The sensor used is the MLX90632, which is an infrared temperature sensor. This is connected to the OpenEarable and the sensor values can be received and persisted using the I2C protocol.}
     \label{fig:ear_measurement_positions}
 \end{figure}
 
