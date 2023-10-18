@@ -3,7 +3,7 @@
 # different sensor locations.
 import os
 import numpy as np
-from scipy.stats import pearsonr
+from scipy.stats import pearsonr, spearmanr
 import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
@@ -75,18 +75,18 @@ class Hypothesis3Analyzer:
                 }).dropna()
 
                 # Calculate correlations for this participant and phase
-                correlations = {}
                 for sensor1 in calib.temp_columns:
                     for sensor2 in calib.temp_columns:
                         if sensor1 >= sensor2:
                             continue
-                        corr, _ = pearsonr(aggregated_data[sensor1], aggregated_data[sensor2])
+                        corr, _ = spearmanr(aggregated_data[sensor1], aggregated_data[sensor2])
+
                         key = f"{sensor1}-{sensor2}-Phase{phase_id}"
                         if key not in self.avg_correlations:
                             self.avg_correlations[key] = []
                         self.avg_correlations[key].append(corr)
 
-        # Average the correlations across all participants
+        # Average the Fisher Z-values across all participants and convert back to correlation
         for key, values in self.avg_correlations.items():
             self.avg_correlations[key] = np.mean(values)
 

@@ -69,9 +69,9 @@ class Hypothesis2Analyzer:
             t_stat, p_value = stats.ttest_ind(indoor_var_clean, outdoor_var_clean)
 
             if p_value < bonferroni_alpha:
-                print(f"Reject null hypothesis for {sensor}: p-value = {p_value}")
+                print(f"Reject null hypothesis for {sensor}: p-value = {p_value}, t-stat = {t_stat}")
             else:
-                print(f"Fail to reject null hypothesis for {sensor}: p-value = {p_value}")
+                print(f"Fail to reject null hypothesis for {sensor}: p-value = {p_value}, t-stat = {t_stat}")
 
         print("Variance by sensor:")
         print(variances_by_sensor)

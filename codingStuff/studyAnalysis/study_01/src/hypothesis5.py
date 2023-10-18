@@ -3,6 +3,9 @@ import numpy as np
 import pandas as pd
 import os
 from matplotlib.backends.backend_pdf import PdfPages
+import seaborn as sns
+from tqdm import tqdm
+
 
 class Hypothesis5Analyzer:
 
@@ -14,6 +17,45 @@ class Hypothesis5Analyzer:
         self.yAxisRange = [0, 2.5]
 
     def analyze(self):
+        fig, axes = plt.subplots(7, 1, figsize=(8.3, 11.7))  # DIN A4 size
+
+        # For IMU data
+        all_imu_data = []
+        for calib in tqdm(self.all_calib_data, desc="Processing IMU data"):
+            phase_data = calib.raw_data[calib.raw_data['ID'].isin([2, 3, 4])]
+            min_time = phase_data[phase_data['ID'] == 2]['TIMESTAMP'].min()
+            phase_data['TIMESTAMP'] -= min_time  # Subtract min_time from all TIMESTAMPs
+            imu_data = phase_data[self.imu_columns].mean(axis=1)
+            all_imu_data.append(imu_data)
+
+        mean_movement = pd.concat(all_imu_data, axis=1).mean(axis=1).reset_index()
+        sns.lineplot(x='index', y=0, data=mean_movement, ax=axes[-1])
+        axes[-1].set_title('Mean Movement')
+        axes[-1].set_xlabel('Time (Adjusted)')
+        axes[-1].set_ylabel('Mean Movement')
+
+        # For each temperature sensor
+        for idx, sensor in enumerate(tqdm(self.temp_columns, desc="Processing Temperature Sensors")):
+            all_sensor_data = []
+            for calib in self.all_calib_data:
+                phase_data = calib.raw_data[calib.raw_data['ID'].isin([2, 3, 4])]
+                min_time = phase_data[phase_data['ID'] == 2]['TIMESTAMP'].min()
+                phase_data['TIMESTAMP'] -= min_time  # Subtract min_time from all TIMESTAMPs
+                sensor_data = phase_data[sensor].dropna().diff().abs()
+                all_sensor_data.append(sensor_data.reset_index(drop=True))
+
+            mean_sensor_data = pd.concat(all_sensor_data, axis=1).mean(axis=1).reset_index()
+            mean_sensor_data.columns = ['index', 'Temperature Change']
+            sns.lineplot(x=mean_sensor_data.columns[0], y=mean_sensor_data.columns[1], data=mean_sensor_data, ax=axes[idx])
+            axes[idx].set_title(f'{sensor} Absolute Change')
+            axes[idx].set_xlabel('Time (Adjusted)')
+            axes[idx].set_ylabel('Temperature Change (°C)')
+
+        plt.tight_layout()
+        plt.savefig(f"{self.output_folder}/Hypothesis5_Analysis.pdf")
+        plt.show()
+
+    def analyze2(self):
         all_participant_data = {col: [] for col in self.temp_columns}
         all_participant_data['MeanMovement'] = []
 
@@ -74,7 +116,7 @@ class Hypothesis5Analyzer:
                 axes[i].set_title(f"{col}: Overall Mean Relative Change")
                 # axes[i].set_xlabel('Time (min)')
                 axes[i].set_ylabel('Relative Change (%)')  # Percentage for relative change
-                axes[i].set_ylim([0,5])  # 0-100% for relative change
+                axes[i].set_ylim([0, 5])  # 0-100% for relative change
 
             overall_mean_movement = np.nanmean(all_participant_data['MeanMovement'], axis=0)
             axes[-1].plot(np.linspace(0, min_length / (60 * 1000) * 115, min_length), overall_mean_movement)

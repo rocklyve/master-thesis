@@ -92,9 +92,9 @@ if __name__ == '__main__':
     # print('')
     # hypothesis1.boxplot()
 
-    print("Analyzing hypothesis 2")
-    hypothesis2 = Hypothesis2Analyzer(pipeline.all_calib_data)
-    hypothesis2.analyze()
+    # print("Analyzing hypothesis 2")
+    # hypothesis2 = Hypothesis2Analyzer(pipeline.all_calib_data)
+    # hypothesis2.analyze()
 
     # print("Analyzing hypothesis 3")
     # hypothesis3 = Hypothesis3Analyzer(pipeline.all_calib_data)
@@ -106,6 +106,6 @@ if __name__ == '__main__':
     # hypothesis4 = Hypothesis4Analyzer(pipeline.all_calib_data)
     # hypothesis4.analyze()
     #
-    # print("Analyzing hypothesis 5")
-    # hypothesis5 = Hypothesis5Analyzer(pipeline.all_calib_data, target_dir)
-    # hypothesis5.analyze()
+    print("Analyzing hypothesis 5")
+    hypothesis5 = Hypothesis5Analyzer(pipeline.all_calib_data, target_dir)
+    hypothesis5.analyze()
