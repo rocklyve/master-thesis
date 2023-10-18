@@ -7,7 +7,7 @@ For each study, a series of hypotheses have been put forward, and the data colle
 \section{Results and Discussion from Study 1}
 \label{sec:Evaluation:Study1}
 Study 1 focuses on exploring the potential and limitations of the developed ear-based temperature measurement system and examines its accuracy, reliability, and robustness under various conditions. 
-A more detailed discussion of the design and objectives of Study 1 is described in chapter~\ref{ch:Design:Study:Study1}.
+A more detailed discussion of the design and objectives of study 1 is described in chapter~\ref{ch:Design:Study:Study1}.
 
 Figure~\ref{fig:ch:Evaluation:Study1:RawData} shows a sample measurement from participant 7.
 The progression of slightly smoothed raw data across phases that can be seen is very similar to that of the other subjects. 
@@ -20,10 +20,28 @@ To verify the findings collected in this study, several hypotheses were formulat
 These hypotheses aim to answer specific questions related to the performance and reliability of ear-based temperature measurements. 
 The results and their implications are discussed in the following sections, where each hypothesis is evaluated in detail based on the data collected.
 
-\begin{figure}[!h]
+For proving the hypothesis to be right or wrong, t-tests are used.
+The t-test is a fundamental concept in statistical hypothesis testing and shows whether two sets of data are significantly different from each other. 
+It is particularly useful when small sample sizes are involved and the standard deviation of the population is unknown.
+The underlying principle of the t-test is to compare the means of two groups and evaluate how likely it is that the observed differences are due to chance.
+The formula for the t-statistic in an independent t-test is as follows.
+
+\[
+t = \frac{{\bar{x}_1 - \bar{x}_2}}{\sqrt{\frac{{s_1^2}}{n_1} + \frac{{s_2^2}}{n_2}}}
+\]
+
+where \( \bar{x}_1 \) and \( \bar{x}_2 \) are the sample means, \( s_1^2 \) and \( s_2^2 \) are the sample variances, and \( n_1 \) and \( n_2 \) are the sample sizes for the two groups.
+The calculated t-statistic is then compared to a critical value determined by the degrees of freedom and the chosen significance level, commonly denoted by \( \alpha \).
+
+The p-value, another important metric, quantifies the probability of obtaining the observed results if the null hypothesis were true.
+A low p-value (\( p < \alpha \)) indicates strong evidence against the null hypothesis, such that it is rejected in favor of the alternative hypothesis.
+Conversely, a high p-value indicates that the observed data are consistent with the null hypothesis.
+The choice of significance level \( \alpha \), often set at 0.05, is critical because it controls the rate of type I errors that occur when a true null hypothesis is falsely rejected.
+
+\begin{figure}[!t]
     \centering
     \includegraphics[width=\textwidth]{thesis-doc/images/study1/Logging_person_10_0smoothed_raw_data.png}
-    \caption{Raw data of a measurement in study 1 of subject 10. The subject had a body temperature of $36.5^\circ\text{C}$ at the beginning. Phases 1-4 are shown, distinguished by the background color of the plot. In phase 1, the sensor has adjusted and acclimated to the temperature of the subject. After the sensor settled in, Phase 2 measured the temperature while sitting in a room. In phase 3, the subject went for a walk outside. In phase 4, he went back into the room to see how the sensors settled back to the calmer environmental conditions.}
+    \caption{Raw data of a measurement in study 1 of subject 10. The subject had a body temperature of $36.5^\circ\text{C}$ at the beginning. Phases 1-4 are shown, distinguished by the background color of the plot. In phase 1, the sensor has adjusted and acclimated to the temperature of the subject. After the sensor settled in, Phase 2 measured the temperature while sitting in a room. In phase 3, the subject went for a walk outside. In phase 4, he went back into the room to see how the sensors settled back to the calmer environmental conditions. During the measurement, the subject was sitting on a chair in a room with closed windows. The ground truth is measured before and after the whole measurement in the same ear (right) where the prototype is placed. Also the room temperature, humidity and outdoor temperature was noted manually to complete the dataset.}
     \label{fig:ch:Evaluation:Study1:RawData}
 \end{figure}
 
@@ -31,28 +49,38 @@ The results and their implications are discussed in the following sections, wher
 \label{subsec:Evaluation:Study1:Hypothesis1}
 
 The first hypothesis is to show that a lower temperature is measured behind the ear than in the ear.
-For this purpose, the analysis was considered in two perspectives. 
-First, only the data points where the subject was sitting were recorded, and second, all data were considered except for the acclimatization phase (phase 1).
+For this purpose, the analysis was considered from two points of view. 
+First, only the data points where the subject was sitting were recorded, and second, all data except for the acclimatization phase (phase 1) were considered.
+In both views, a distinction was made between the two two sensor groups behind the ear (Outer Ear Top, Outer Ear Middle, Outer Ear Bottom) and in the ear (Tympanic Membrane, Ear Canal, Concha). 
 
 In the first perspective, the data were considered at which the subject was seated (phase 2). 
 Here, for all subjects, the mean temperature behind the ear was \(36.30^\circ\text{C}\), while the mean temperature inside the ear was \(36.74^\circ\text{C}\). 
 To prove a statistically significant difference between the two means, a t-test can be used.
 The t-test yielded a p-value of \(0.0424\), which is below the alpha value of \(0.05\).
 Since the p-value is below the alpha, this is evidence of a significant difference.
-The mean error between the ground truth and the temperature measured behind the ear was \(0.79^\circ\text{C}\), and that for the temperature in the ear was \(0.38^\circ\text{C}\). 
+The mean error between the ground truth and the temperature measured behind the ear was \(0.50^\circ\text{C}\), and that for the temperature in the ear was \(0.18^\circ\text{C}\). 
 The p-value for the comparison of these errors was \(0.0115\), again indicating a statistically significant difference.
 Thus, it is clear that temperature is measured significantly lower behind the ear than in the ear while sitting.
 
 The second perspective now also looks at other phases of the study. 
-Now, in addition to the sitting phase (phase 2), the walking phase (phase 3) and the regeneration phase (phase 4) were also considered. 
+Now, in addition to the sitting phase (phase 2), the walking phase (phase 3) and the relax phase (phase 4) were also considered. 
 The mean temperature behind the ear was \(35.33^\circ\text{C}\) and in the ear it was \(36.02^\circ\text{C}\). 
 The p-value of the T-test was \(0.0158\), which again is statistically significant.
-The mean error behind the ear was \(1.67^\circ\text{C}\) and in the ear it was \(0.98^\circ\text{C}\). 
-The p-value for the comparison of these errors was \(0.0158\), which is also statistically significant.
+The mean error behind the ear was \(1.45^\circ\text{C}\) and in the ear it was \(0.77^\circ\text{C}\). 
+The p-value for the comparison of these errors was \(0.0042\), which is also statistically significant.
+Thus, both perspectives support the hypothesis, both in the sitting phase only and during all activities except the acclimatization phase.
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=\textwidth]{thesis-doc/images/study1/hypothesis1/hypothesis1_boxplot_phase_2.png}
+    \includegraphics[width=\textwidth]{thesis-doc/images/study1/hypothesis1/hypothesis1_boxplot_phase_3.png}
+    \caption{Boxplots to visually illustrate the distribution of readings from different sensor positions during Phase 2 (sitting indoors) and Phase 3 (walking outdoors). Central tendencies and their dispersion for the analysis of the sensors under different environments can be seen. Temperature values were subtracted from actual thermometer readings (ground truth) to compare all user data. These visualizations are an essential part of the evaluation of hypotheses 1 and 2, as they highlight differences in mean temperature and variance and highlight potential outliers.}
+    \label{fig:eval:study1:hypothesis1_result}
+\end{figure}
 
 This can also be seen in Figure \ref{fig:eval:study1:hypothesis1_result}.
 The two boxplot images show the sitting and walking phases (phase 2 and 3), always zeroed to the temperature measured by the thermometer before the measurement.
-During sitting (phase 2), the temperature measured at the tympanic membrane is very close to the temperature measured by the thermometer ($\pm0.25^\circ\text{C}$). 
+During sitting (phase 2), the temperature measured at the tympanic membrane is very close to the temperature measured by the thermometer ($\pm0.5^\circ\text{C}$). 
 The sensors in the ear canal and pinna also show high accuracy. 
 For the sensors behind the ear, although the median is sometimes very close to the sensors in the ear, the outliers are strongly represented here, which questions the reliability of the signals.
 When comparing the sensors behind the ear, the sensor placed at the top behind the ear provides the best results. 
@@ -67,33 +95,8 @@ The second perspective also confirms the hypothesis that the temperature measure
 However, the sensors behind the ear also show a statistically significant higher error compared to the ground truth, especially when the subject is involved in activities such as walking. 
 These findings have important implications for the use of ear-based temperature sensors in various applications.
 
-\begin{figure}[!h]
-    \centering
-    \includegraphics[width=\textwidth]{thesis-doc/images/study1/hypothesis1/hypothesis1_boxplot_phase_2.png}
-    \includegraphics[width=\textwidth]{thesis-doc/images/study1/hypothesis1/hypothesis1_boxplot_phase_3.png}
-    \caption{Boxplots visually illustrating the distribution of measured values from different sensor positions during phase 2 (indoor) and phase 3 (outdoor). Central tendencies and their dispersion for the analysis of the sensors under different environments can be seen. Temperature values were subtracted from the thermometer reading to compare all user data together. These visualizations are an essential part of the evaluation of Hypotheses 1 and 2, as they highlight differences in variance and highlight potential outliers.}
-    \label{fig:eval:study1:hypothesis1_result}
-\end{figure}
-
 \subsection{Hypothesis 2: Variance Difference Indoor/Outdoor}
 \label{subsec:Evaluation:Study2:Hypothesis2}
-
-The second hypothesis is to show that the variance in temperature readings from ear-based sensors is lower indoors than outdoors.
-This expectation is derived from the fact that the external influences in an indoor environment with closed windows are significantly less than the external influences outside during walking.
-To test this hypothesis empirically, the data set of several ear-based temperature sensors at different positions was considered, both indoors and outdoors.
-The different situations within the studies were divided into phases. 
-Phase 2 represents an indoor measurement, and Phase 3 represents an outdoor measurement during walking.
-Here, the temperature values in different areas of the ear were looked at closely.
-To prove the hypothesis, the variances per temperature sensor were now calculated for phases 2 and 3 respectively. 
-The results show a clear pattern. 
-The mean variance for the tympanic sensor $0.00096$ indoors and \(0.107\) outdoors.
-This pattern was consistently observed for other sensor locations, such as the auricle with a mean variance of $0.00307$ indoors and $1.134$ outdoors.
-A detailed listing of the results can be seen in Table \ref{subsec:Evaluation:Study2:Hypothesis2:mean_variance_table}.
-A two-sample T-test was used to statistically compare these variances.
-The results provided clear evidence to support the hypothesis.
-For example, the p-value for the tympanic sensor was significantly below the Bonferroni-corrected threshold, clearly refuting the null hypothesis.
-This pattern is also seen for the other positions in and around the ear, providing extensive empirical support for the hypothesis.
-In summary, the data confirm the second hypothesis: temperature measurements with ear-based sensors have significantly lower deviations when taken indoors than outdoors.
 
 \begin{table}[t]
 \centering
@@ -115,6 +118,23 @@ In summary, the data confirm the second hypothesis: temperature measurements wit
 \caption{Mean absolute deviation (MAD), mean variance, and mean distance from ground truth for different sensors. Phases 2 (inside) and 3 (outside) were considered. All values were calculated for each sensor and averaged over all subjects.}
 \label{subsec:Evaluation:Study2:Hypothesis2:mean_variance_table}
 \end{table}
+
+The second hypothesis is to show that the variance in temperature readings from ear-based sensors is lower indoors than outdoors.
+This expectation is derived from the fact that the external influences in an indoor environment with closed windows are significantly less than the external influences outside during walking.
+To test this hypothesis empirically, the data set of several ear-based temperature sensors at different positions was considered, both indoors and outdoors.
+The different situations within the studies were divided into phases. 
+Phase 2 represents an indoor measurement, and Phase 3 represents an outdoor measurement during walking.
+Here, the temperature values in different areas of the ear were looked at closely.
+To prove the hypothesis, the variances per temperature sensor were now calculated for phases 2 and 3 respectively. 
+The results show a clear pattern. 
+The mean variance for the tympanic sensor $0.00096$ indoors and \(0.107\) outdoors.
+This pattern was consistently observed for other sensor locations, such as the auricle with a mean variance of $0.00307$ indoors and $1.134$ outdoors.
+A detailed listing of the results can be seen in Table \ref{subsec:Evaluation:Study2:Hypothesis2:mean_variance_table}.
+A two-sample T-test was used to statistically compare these variances.
+The results provided clear evidence to support the hypothesis.
+For example, the p-value for the tympanic sensor was significantly below the Bonferroni-corrected threshold, clearly refuting the null hypothesis.
+This pattern is also seen for the other positions in and around the ear, providing extensive empirical support for the hypothesis.
+In summary, the data confirm the second hypothesis: temperature measurements with ear-based sensors have significantly lower deviations when taken indoors than outdoors.
 
 \subsection{Hypothesis 3: Relative Changes in Temperature Readings}
 \label{subsec:Evaluation:Study1:Hypothesis3}
