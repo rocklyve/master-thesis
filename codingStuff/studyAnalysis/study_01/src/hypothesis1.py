@@ -4,6 +4,7 @@ from scipy import stats
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
+import seaborn as sns
 
 
 class Hypothesis1Analyzer:
@@ -38,18 +39,27 @@ class Hypothesis1Analyzer:
             phase_data = delta_temp_df[delta_temp_df['ID'] == phase]
 
             plt.figure(figsize=(12, 6))
+            ax = sns.boxplot(x='Sensor', y='Delta Temperature', data=phase_data)
+
+            new_labels = [
+                'Tympanic Membrane',
+                'Concha',
+                'Ear Canal',
+                'Outer Ear Bottom',
+                'Outer Ear Top',
+                'Outer Ear Middle'
+            ]
+            ax.set_xticks(range(len(new_labels)))
+            ax.set_xticklabels(new_labels)
+
             plt.title(f"Delta Temperature for Different Sensors (Phase {phase})")
-            plt.xlabel("Sensor")
+            plt.xlabel("")
             plt.ylabel("Delta Temperature (°C)")
 
-            plt.boxplot([phase_data[phase_data['Sensor'] == sensor]['Delta Temperature'].dropna() for sensor in
-                         phase_data['Sensor'].unique()],
-                        labels=phase_data['Sensor'].unique())
-
-            plt.savefig(os.path.join("target/", f"hypothesis1_boxplot_phase_{phase}.png"), dpi=300)
+            plt.savefig(os.path.join("target/", f"hypothesis1_boxplot_phase_{phase}.png"), dpi=300, bbox_inches='tight')
             plt.close()
 
-    def analyze_mean_error(self):
+    def analyze_mean_error(self, phases):
         # Initialize lists to store mean temperatures and errors for each location
         behind_ear_means = []
         in_ear_means = []
@@ -58,7 +68,7 @@ class Hypothesis1Analyzer:
 
         for calib_data in self.all_calib_data:
             # Filter data for phases 2 and 3 and 4
-            phase_data = calib_data.raw_data[calib_data.raw_data['ID'].isin([2, 3, 4])]
+            phase_data = calib_data.raw_data[calib_data.raw_data['ID'].isin(phases)]
 
             # Columns for behind the ear and in the ear
             behind_ear_columns = ['Out_Bottom', 'Out_Top', 'Out_Middle']
@@ -93,8 +103,8 @@ class Hypothesis1Analyzer:
 
         print(f"Mean temperature behind the ear: {np.mean(behind_ear_means):.2f}")
         print(f"Mean temperature in the ear: {np.mean(in_ear_means):.2f}")
-        print(f"T-test p-value for comparing means: {p_val_means}")
+        print(f"T-test t and p-value for comparing means: {t_stat_means}, {p_val_means}")
 
         print(f"Mean error behind the ear: {np.mean(behind_ear_errors):.2f}")
         print(f"Mean error in the ear: {np.mean(in_ear_errors):.2f}")
-        print(f"T-test p-value for comparing errors: {p_val_errors}")
+        print(f"T-test p-value for comparing errors: {t_stat_errors}, {p_val_errors}")

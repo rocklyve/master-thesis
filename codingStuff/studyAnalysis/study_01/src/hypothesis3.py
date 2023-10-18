@@ -2,7 +2,6 @@
 # the relationship between relative changes in temperature readings from
 # different sensor locations.
 import os
-
 import numpy as np
 from scipy.stats import pearsonr
 import matplotlib.pyplot as plt
@@ -20,6 +19,15 @@ class Hypothesis3Analyzer:
 
     def generate_heatmap(self):
         # Creating a DataFrame from the average correlations dictionary
+        sensor_name_map = {
+            'TympanicMembrane': 'Tympanic Membrane',
+            'Concha': 'Concha',
+            'EarCanal': 'Ear Canal',
+            'Out_Bottom': 'Outer Ear Bottom',
+            'Out_Top': 'Outer Ear Top',
+            'Out_Middle': 'Outer Ear Middle'
+        }
+
         df_list = []
         for k, v in self.avg_correlations.items():
             sensor1, sensor2, phase = k.split('-')
@@ -35,13 +43,20 @@ class Hypothesis3Analyzer:
         for phase in ['2', '3']:
             phase_df = df[df['Phase'] == phase]
             heatmap_df = phase_df.pivot(index="Sensor1", columns="Sensor2", values="Correlation")
-            plt.figure(figsize=(10, 8))
-            sns.heatmap(heatmap_df, annot=True, fmt=".2f", cmap="coolwarm", center=0)
-            plt.title(f"Correlation Heatmap for Phase {phase}")
 
-            # Save the plot in the target folder
+            # Rename the sensors
+            heatmap_df.rename(index=sensor_name_map, columns=sensor_name_map, inplace=True)
+
+            plt.figure(figsize=(10, 8))
+            ax = sns.heatmap(heatmap_df, annot=True, fmt=".2f", cmap="coolwarm", center=0)
+            ax.set(xlabel='')
+            plt.title(f"Correlation Heatmap for Phase {phase}")
+            plt.xlabel("")
+            plt.ylabel("")
+
+            # Save the plot
             plot_filename = os.path.join("target", f"Correlation_Heatmap_Phase_{phase}.png")
-            plt.savefig(plot_filename, dpi=300)
+            plt.savefig(plot_filename, dpi=300, bbox_inches='tight')
             plt.close()
 
     def analyze(self):
