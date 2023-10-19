@@ -16,138 +16,62 @@ class Hypothesis5Analyzer:
         self.imu_columns = ['ACC_X', 'ACC_Y', 'ACC_Z', 'GYRO_X', 'GYRO_Y', 'GYRO_Z', 'MAG_X', 'MAG_Y', 'MAG_Z']
         self.yAxisRange = [0, 2.5]
 
-    def analyze(self):
-        fig, axes = plt.subplots(7, 1, figsize=(8.3, 11.7))  # DIN A4 size
+    def filter_phases(self, data):
+        return data[data['ID'].isin([2, 3, 4])].copy()
 
-        # For IMU data
-        all_imu_data = []
-        for calib in tqdm(self.all_calib_data, desc="Processing IMU data"):
-            phase_data = calib.raw_data[calib.raw_data['ID'].isin([2, 3, 4])]
-            min_time = phase_data[phase_data['ID'] == 2]['TIMESTAMP'].min()
-            phase_data['TIMESTAMP'] -= min_time  # Subtract min_time from all TIMESTAMPs
-            imu_data = phase_data[self.imu_columns].mean(axis=1)
-            all_imu_data.append(imu_data)
+    def adjust_time_to_minutes(self, data, time_column='TIMESTAMP'):
+        min_time = data[time_column].min()
+        data['AdjustedTime'] = (data[time_column] - min_time) / 60000  # Convert to minutes
+        return data
 
-        mean_movement = pd.concat(all_imu_data, axis=1).mean(axis=1).reset_index()
-        sns.lineplot(x='index', y=0, data=mean_movement, ax=axes[-1])
+    def calculate_mean_movement(self, data):
+        return data[self.imu_columns].mean(axis=1)
+
+    def plot_mean_movement(self, mean_movement, axes):
+        sns.lineplot(x='AdjustedTime', y=0, data=mean_movement, ax=axes[-1])
+        print(mean_movement.head())
         axes[-1].set_title('Mean Movement')
-        axes[-1].set_xlabel('Time (Adjusted)')
+        axes[-1].set_xlabel('Time (minutes)')
         axes[-1].set_ylabel('Mean Movement')
 
-        # For each temperature sensor
-        for idx, sensor in enumerate(tqdm(self.temp_columns, desc="Processing Temperature Sensors")):
-            all_sensor_data = []
-            for calib in self.all_calib_data:
-                phase_data = calib.raw_data[calib.raw_data['ID'].isin([2, 3, 4])]
-                min_time = phase_data[phase_data['ID'] == 2]['TIMESTAMP'].min()
-                phase_data['TIMESTAMP'] -= min_time  # Subtract min_time from all TIMESTAMPs
-                sensor_data = phase_data[sensor].dropna().diff().abs()
-                all_sensor_data.append(sensor_data.reset_index(drop=True))
+    def aggregate_absolute_relative_change(self, all_subject_data, sensor):
+        aggregated_data = pd.concat(all_subject_data, axis=1)
+        mean_data = aggregated_data.mean(axis=1).reset_index()
+        mean_data['Sensor'] = sensor
+        return mean_data
 
-            mean_sensor_data = pd.concat(all_sensor_data, axis=1).mean(axis=1).reset_index()
-            mean_sensor_data.columns = ['index', 'Temperature Change']
-            sns.lineplot(x=mean_sensor_data.columns[0], y=mean_sensor_data.columns[1], data=mean_sensor_data, ax=axes[idx])
-            axes[idx].set_title(f'{sensor} Absolute Change')
-            axes[idx].set_xlabel('Time (Adjusted)')
-            axes[idx].set_ylabel('Temperature Change (°C)')
+    def analyze(self):
+        fig, axes = plt.subplots(7, 1, figsize=(8.27, 11.69))  # A4 size
+        all_aggregated_imu_data = []
+        aggregated_sensor_data = {sensor: [] for sensor in self.temp_columns}
+
+        for calib in self.all_calib_data:
+            phase_data = self.filter_phases(calib.raw_data)
+            phase_data = self.adjust_time_to_minutes(phase_data)
+
+            imu_data = self.calculate_mean_movement(phase_data)
+            all_aggregated_imu_data.append(imu_data)
+
+            for sensor in self.temp_columns:
+                temp_data = phase_data[['AdjustedTime', sensor]].dropna()
+                initial_value = temp_data[sensor].iloc[0]
+                temp_data['AbsoluteRelativeChange'] = np.abs(temp_data[sensor] - initial_value)
+                aggregated_sensor_data[sensor].append(temp_data['AbsoluteRelativeChange'])
+
+        # Plot aggregated sensor data
+        for i, (sensor, all_subject_data) in enumerate(aggregated_sensor_data.items()):
+            mean_data = self.aggregate_absolute_relative_change(all_subject_data, sensor)
+            sns.lineplot(x='index', y=0, data=mean_data, ax=axes[i])
+            axes[i].set_title(f"{sensor} Mean Absolute Relative Change (MAR)")
+            axes[i].set_xlabel('')
+            axes[i].set_ylabel('MARC (°C)')
+            axes[i].set_ylim(0, 5)
+
+        # Plot mean movement
+        mean_movement = pd.concat(all_aggregated_imu_data, axis=1).mean(axis=1).reset_index()
+        mean_movement['AdjustedTime'] = self.adjust_time_to_minutes(mean_movement, 'index')[
+            'AdjustedTime']  # Convert to minutes
+        self.plot_mean_movement(mean_movement, axes)
 
         plt.tight_layout()
-        plt.savefig(f"{self.output_folder}/Hypothesis5_Analysis.pdf")
-        plt.show()
-
-    def analyze2(self):
-        all_participant_data = {col: [] for col in self.temp_columns}
-        all_participant_data['MeanMovement'] = []
-
-        for calib_obj in self.all_calib_data:
-            df = calib_obj.raw_data
-            initial_timestamp = df['TIMESTAMP'].min()  # To correct the time range in the plot
-
-            df_phase2 = df[df['ID'] == 2]
-            df_phase2 = df_phase2[df_phase2['TIMESTAMP'] <= df_phase2['TIMESTAMP'].min() + 20 * 60 * 1000]
-
-            df_phase3 = df[df['ID'] == 3]
-            df_phase3 = df_phase3[df_phase3['TIMESTAMP'] <= df_phase3['TIMESTAMP'].min() + 20 * 60 * 1000]
-
-            df_combined = pd.concat([df_phase2, df_phase3])
-
-            with PdfPages(os.path.join(self.output_folder,
-                                       f"{calib_obj.source_filename.split('.')[0]}_hypothesis5.pdf")) as pdf:
-                fig, axes = plt.subplots(len(self.temp_columns) + 1, 1, figsize=(8.27, 11.69))  # DIN A4 size in inches
-
-                for i, col in enumerate(self.temp_columns):
-                    relative_change = self.plot_temp_sensor(df_combined, col, axes[i], initial_timestamp)
-                    if relative_change is not None:
-                        all_participant_data[col].append(relative_change)
-
-                # Calculate mean IMU movement for this participant and plot it
-                mean_movement = self.calculate_mean_movement(df_combined)
-                if mean_movement is not None:
-                    all_participant_data['MeanMovement'].append(mean_movement.values)
-
-                axes[-1].plot((mean_movement.index - initial_timestamp) / (60 * 1000) * 18 - 18, mean_movement)
-                axes[-1].set_title('Mean Movement')
-                axes[-1].set_xlabel('Time (min)')
-                axes[-1].set_ylabel('Mean Movement')
-
-                plt.tight_layout()
-                pdf.savefig(fig)
-
-        # Filter out None values before finding min_length
-        min_length = min(
-            len(x) for col in self.temp_columns + ['MeanMovement'] for x in all_participant_data[col] if x is not None)
-
-        # Filter out None values and trim or pad data series to the same length
-        for col in self.temp_columns + ['MeanMovement']:
-            all_participant_data[col] = [x[:min_length] for x in all_participant_data[col] if x is not None]
-
-        # Generate overall plot for mean data across all participants
-        with PdfPages(os.path.join(self.output_folder, "overall_mean_data_hypothesis5.pdf")) as pdf:
-            fig, axes = plt.subplots(len(self.temp_columns) + 1, 1, figsize=(8.27, 11.69))  # DIN A4 size in inches
-
-            for i, col in enumerate(self.temp_columns):
-                if len(all_participant_data[col]) > 0 and not np.all(np.isnan(all_participant_data[col])):
-                    overall_mean_data = np.nanmean(all_participant_data[col], axis=0)
-                else:
-                    # Handle the case where there's no valid data.
-                    overall_mean_data = None
-                # Multiply time value by 13.3333
-                axes[i].plot(np.linspace(0, min_length / (60 * 1000) * 115, min_length), overall_mean_data * 10)
-                axes[i].set_title(f"{col}: Overall Mean Relative Change")
-                # axes[i].set_xlabel('Time (min)')
-                axes[i].set_ylabel('Relative Change (%)')  # Percentage for relative change
-                axes[i].set_ylim([0, 5])  # 0-100% for relative change
-
-            overall_mean_movement = np.nanmean(all_participant_data['MeanMovement'], axis=0)
-            axes[-1].plot(np.linspace(0, min_length / (60 * 1000) * 115, min_length), overall_mean_movement)
-            axes[-1].set_title('Overall Mean Movement')
-            axes[-1].set_xlabel('Time (min)')
-            axes[-1].set_ylabel('Mean Movement')
-
-            plt.tight_layout()
-            pdf.savefig(fig)
-
-    def plot_temp_sensor(self, df, sensor_name, ax, initial_timestamp):
-        sensor_data = df[sensor_name].dropna()
-        if sensor_data.empty:
-            return None  # Skip if there is no data
-
-        relative_change = self.calculate_relative_change(sensor_data).abs()
-        ax.plot((sensor_data.index - initial_timestamp) / (60 * 1000) * 18 - 18,
-                relative_change)  # Convert time to minutes and correct the timestamp
-        ax.set_title(f"{sensor_name} Relative Change")
-        # ax.set_xlabel('Time (min)')
-        ax.set_ylabel('Relative Change (%)')  # Percentage for relative change
-        ax.set_ylim(self.yAxisRange)  # 0-100% for relative change
-        return relative_change.values  # Return the relative change values for later use
-
-    def calculate_relative_change(self, series):
-        return np.abs(series.pct_change() * 100)
-
-    def calculate_mean_movement(self, df):
-        # Use the user's method for calculating movement
-        imu_data = df[self.imu_columns].dropna()
-        if imu_data.empty:
-            return None  # Skip if there is no data
-
-        return np.sqrt((imu_data ** 2).sum(axis=1))
+        plt.savefig(f"{self.output_folder}/Hypothesis5_Analysis.png", dpi=750)
