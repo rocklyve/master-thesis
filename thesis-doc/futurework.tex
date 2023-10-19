@@ -2,61 +2,81 @@
 \label{ch:Conclusion}
 
 \section{Conclusion}
-This thesis provided an in-depth exploration into the realm of ear-based temperature sensing, specifically focusing on sensor placement and fusion for wearable applications. 
+In this master's thesis, the field of ear-based temperature sensing was studied in depth, with a focus on sensor placement and evaluation for wearable applications. 
 
-The research commenced with the design and development of a prototype device, equipped with temperature sensors at various locations around the ear. 
-The development of this prototype was a critical step, as it enabled the collection of high-fidelity temperature data, serving as the basis for subsequent analysis. 
+The research began with the design and development of a prototype equipped with temperature sensors at various locations on the ear. 
+The development of this prototype was a critical step because it enabled the collection of temperature data with high accuracy, which served as the basis for subsequent analysis. 
 The prototype demonstrated the feasibility of ear-based temperature monitoring and its potential applications in healthcare and beyond.
 
-The first study, dedicated to localized ear temperature measurement, provided valuable insights into the nuances of ear-based temperature sensing. 
-It highlighted the need for an acclimation phase for the sensors to adapt to individual physiological conditions. 
-Moreover, the study confirmed the reliability and stability of the temperature readings across different locations on the ear. 
-The results demonstrated that, after the acclimation phase, the sensors were quite stable, thereby validating the prototype's utility for long-term temperature monitoring.
+The initial study, which focused on local temperature measurement at the ear, provided valuable insight into the intricacies of ear-based temperature sensing. 
+It highlighted that sensors require an acclimation period to adapt to individual physiological conditions. 
+It was also clearly seen that the temperature sensors always took different lengths of time to adapt to the new conditions.
+In addition, the study confirmed the reliability and stability of temperature readings at different locations on the ear. 
+The results showed that the sensors were quite stable after the acclimation period, confirming the usefulness of the prototype for long-term temperature monitoring.
+While people sit in a room, the temperature of each sensor hardly changes, but it is constantly different between sensors.
+This is due to the different positions, as each has different temperatures.
+While the subjects went outside for a walk after the 20 minute sitting period, there was a noticeable drop in temperatures. 
+The further the sensor was in the ear, the less the temperature changed.
+Here, it was clearly seen that the sensors were exposed to external conditions, such as the temperature drop (approximately $5^\circ\text{C}$ outdoor temperature), wind, sunlight, and other conditions.
+After the subjects arrived back in the room, the temperature settled back to the value measured earlier in the second phase.
+In general, it was also shown that the variance in the outdoor phase was significantly higher than in the indoor phase (phase 2).
+In addition, the sensors behind the ear were shown to have lower temperatures than the sensors in the ear and at the pinna.
+Since motion data was recorded in addition to temperature, it was shown that the subjects exhibited increased relative absolute changes in the Different temperature measurement points during the Outdoor phase.
+The most stable measurement was obtained with the sensor pointing to the tympanic membrane. 
+Here the measurement was very close to ground truth and had the least environmental effects to show.
 
-In the second study, the focus shifted to understanding the impact of stress on ear temperature. 
-The study was designed with three different stress-inducing tests to provide a holistic view of stress effects. 
-The results indicated a clear relationship between stress conditions and physiological responses, both in terms of heart rate and ear temperature. 
-Notably, the sympathetic nervous system's activation during stress conditions was corroborated by the temperature variations observed. 
+The second study focused on investigating the effects of stress on ear temperature. 
+The study was designed with three different stress-inducing tests to provide a holistic view of the effects of stress. 
+Due to limited capacity, a Trier social stress test (TSST) was not used, which is currently considered the best scientific option to induce stress.
+In the study, five subjects were used for recording, in which initial tendencies were shown.
+Only one subject had clear rashes of stress during the stress phase, the other subjects showed mild to no signs of stress.
+It was recognizable that slight to strong signs were seen in male subjects and no signs of stress in female subjects.
+However, this cannot be generalized directly because the number of subjects was too small (5, 3 male, 2 female).
+When looking at temperature, no significant temperature increases were detected during stressful periods.
+However, this is also not an indication that the temperature does not increase during stress, since on the one hand the number of subjects was much too small for this and on the other hand the optimal stress test was not selected due to time constraints.
+Further studies are needed to provide clarity here.
 
-The research also addressed the practical challenges encountered during the studies, including issues related to sensor placement, data quality, and environmental factors. 
-Advanced data analytics tools, such as Pandas, Matplotlib, and Seaborn, were employed for data processing and visualization, enhancing the interpretability of the results.
-
-Overall, the findings of this research have implications not just for stress detection but for a broader range of applications including health monitoring, biofeedback training, and possibly early detection of medical conditions. 
-The thesis successfully bridged the gap between theoretical concepts and practical implementation, providing a foundation for future work in this promising field.
-
+Overall, the results of this research have implications not only for stress detection, but also for a broader range of applications such as health monitoring and potentially early disease detection.
+The thesis successfully bridged the gap between theoretical concepts and practical implementation and provides a foundation for future work in this promising area.
 
 \section{Future Work}
+In this chapter, possible future work, which can be built based on this thesis.
+This thesis focused on building a prototype, looking at its measured values in a first study and also collecting first findings on temperature changes under stress in a small scale.
+Based on this, there are numerous areas which can be investigated with the new prototype.
 
-\subsection{Circadian Rhythm Detection}
-One of the intriguing avenues for future work is the investigation of circadian rhythm patterns through ear-based temperature measurements. 
-By leveraging the prototype, continuous temperature monitoring can provide data that may reveal insights into an individual's biological clock, aiding in the diagnosis and treatment of sleep disorders, among other applications.
+\paragraph{Detection of Circadian Rhythm}
+One of the most interesting avenues for future work is the study of circadian rhythm patterns through ear-based temperature measurements. 
+By using the prototype, continuous temperature monitoring can provide data that can give insight into a person's biological clock and help diagnose and treat sleep disorders, among other things.
+Here, across the different sensor positions, it is possible to test which sensor can be used to detect such patterns.
+This could have far-reaching consequences should a sensor other than the sensor pointing to the tympanic membrane also detect such patterns. 
+This is because it would then be possible to integrate such a sensor into a conventional in-ear headphone and monitor the body's temperature for a longer period of time.
 
-\subsection{Cycle Tracking for Women}
-Another promising application is menstrual cycle tracking for women. 
-Body temperature is known to undergo subtle changes during the menstrual cycle, and continuous monitoring through the ear could offer a non-intrusive way to track these changes. 
-This could assist in fertility planning or in detecting irregularities that may require medical attention.
+\paragraph{Early Detection of Disease}
+The prototype can also make a significant contribution to the detection of diseases, since, among other reactions of the body, the core body temperature also increases due to a defensive reaction to viruses and bacteria. Here, core body temperature is an early indicator of disease.
+Here, it could be checked whether this can also be detected by the various sensors of the prototype.
 
-\subsection{TSST for Stress Detection}
-To validate the stress-detection capabilities further, implementing the Trier Social Stress Test (TSST) in future studies could be beneficial. 
-The TSST is a standardized procedure for inducing psychological stress and could provide a more comprehensive assessment of the prototype’s capabilities in stress detection. 
+\paragraph{Cycle Tracking for Women}
+Another promising application is tracking women's menstrual cycles. 
+Body temperature is known to change slightly during the menstrual cycle, and continuous monitoring via the ear could provide a non-intrusive method of tracking these changes. 
+This could aid in fertility planning or in detecting irregularities that might require medical attention.
 
-\subsection{Increased Sample Size}
-Both studies were conducted with a limited number of subjects. 
-Future work could involve a larger, more diverse population to validate the findings statistically.
+\paragraph{TSST for Stress Detection with Increased Sample Size}
+To further validate stress detection skills, administration of the Trier Social Stress Test (TSST) could be beneficial in future studies. 
+The TSST is a standardized procedure for inducing psychological stress and could provide a more comprehensive assessment of the prototype's stress detection abilities. 
+This test would extend the second study conducted in this thesis.
+In doing so, it could confirm the initial findings, which were not yet sufficiently significant here.
+The second study in particular was conducted with a limited number of subjects. 
+Future work could include a larger, more diverse population to statistically validate the results.
 
-\subsection{Multi-Modal Data Fusion}
-Incorporating other physiological measures like skin conductance or eye-tracking could offer a more holistic view of stress responses or other physiological states. 
-Data fusion algorithms could be developed to integrate these multiple streams of data for more accurate and reliable results.
+\paragraph{Real-World Applications}
+Future work could include field studies in which participants perform everyday activities while wearing the device. 
+This would test the robustness and applicability of the device in real-world conditions and potentially reveal unforeseen challenges or opportunities.
+However, battery life would need to be optimized for this.
+Activity classification would also need to be accurate.
 
-\subsection{Real-world Applications}
-Future work could also involve field studies where participants engage in day-to-day activities while wearing the device. 
-This would test the robustness and applicability of the device in real-world conditions, potentially revealing unforeseen challenges or opportunities.
+\paragraph{Approaches to Machine Learning}
+The rich dataset generated by the prototype could be used to train machine learning models for automatic detection of different physiological states or conditions to create a smarter, more adaptive system.
 
-\subsection{Machine Learning Approaches}
-The rich dataset generated by the prototype could be used to train machine learning models for automatic detection of various physiological states or conditions, offering a more intelligent, adaptive system.
-
-\subsection{Battery Optimization and Miniaturization}
-Future iterations of the prototype could focus on battery optimization and miniaturization to make the device more practical and user-friendly for long-term wear.
-
-By pursuing these avenues for future research, this work can be extended and refined, contributing to the growing body of knowledge in the field of wearable healthcare technologies.
-
+By pursuing these avenues for future research, this work can be expanded and refined and contribute to the growing body of knowledge in wearable health technologies.
+The optimal position for detecting as many symptoms as possible, coupled with a position that fits into an everyday object such as in-ear headphones, provides tremendous scientific potential.
+It also provides very important health values for the user, which he currently cannot obtain through any other alternatives.
