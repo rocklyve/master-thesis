@@ -53,19 +53,19 @@ class Hypothesis5Analyzer:
 
             for sensor in self.temp_columns:
                 temp_data = phase_data[['AdjustedTime', sensor]].dropna()
-                initial_value = temp_data[sensor].iloc[0]
-                temp_data['AbsoluteRelativeChange'] = np.abs(temp_data[sensor] - initial_value)
+                # initial_value = temp_data[sensor].iloc[0]
+                temp_data['AbsoluteRelativeChange'] = temp_data[sensor].diff().abs().rolling(window=5000).mean()
                 aggregated_sensor_data[sensor].append(temp_data['AbsoluteRelativeChange'])
 
         # Plot aggregated sensor data
         for i, (sensor, all_subject_data) in enumerate(aggregated_sensor_data.items()):
             mean_data = self.aggregate_absolute_relative_change(all_subject_data, sensor)
             custom_colors = ["#0064AE", "#FF801A", "#009800", "#D51C1E", "#8950E8", "#874A3D"]
-            sns.lineplot(x='index', y=0, data=mean_data, ax=axes[i], color=custom_colors[i])
+            sns.lineplot(x='index', y=0, data=mean_data, ax=axes[i], color=custom_colors[i],  errorbar=None)
             axes[i].set_title(f"{sensor} Mean Absolute Relative Change (MAR)")
             axes[i].set_xlabel('')
             axes[i].set_ylabel('MARC (°C)')
-            axes[i].set_ylim(0, 5)
+            axes[i].set_ylim(0, 0.017)
 
         # Plot mean movement
         mean_movement = pd.concat(all_aggregated_imu_data, axis=1).mean(axis=1).reset_index()
