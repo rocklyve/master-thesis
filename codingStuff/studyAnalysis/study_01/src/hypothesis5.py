@@ -28,8 +28,7 @@ class Hypothesis5Analyzer:
         return data[self.imu_columns].mean(axis=1)
 
     def plot_mean_movement(self, mean_movement, axes):
-        sns.lineplot(x='AdjustedTime', y=0, data=mean_movement, ax=axes[-1])
-        print(mean_movement.head())
+        sns.lineplot(x='AdjustedTime', y=0, data=mean_movement, ax=axes[-1], color='black')
         axes[-1].set_title('Mean Movement')
         axes[-1].set_xlabel('Time (minutes)')
         axes[-1].set_ylabel('Mean Movement')
@@ -61,7 +60,8 @@ class Hypothesis5Analyzer:
         # Plot aggregated sensor data
         for i, (sensor, all_subject_data) in enumerate(aggregated_sensor_data.items()):
             mean_data = self.aggregate_absolute_relative_change(all_subject_data, sensor)
-            sns.lineplot(x='index', y=0, data=mean_data, ax=axes[i])
+            custom_colors = ["#0064AE", "#FF801A", "#009800", "#D51C1E", "#8950E8", "#874A3D"]
+            sns.lineplot(x='index', y=0, data=mean_data, ax=axes[i], color=custom_colors[i])
             axes[i].set_title(f"{sensor} Mean Absolute Relative Change (MAR)")
             axes[i].set_xlabel('')
             axes[i].set_ylabel('MARC (°C)')
