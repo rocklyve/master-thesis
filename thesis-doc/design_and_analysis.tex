@@ -5,13 +5,14 @@
 \chapter{Design and Analysis}
 \label{ch:Design}
 This master thesis aims to compare different positions on the ear for measuring body temperature. 
-To achieve this, a prototype was developed, which allows temperature measurements at different positions in and around the ear. 
-Subsequently, studies were conducted to collect temperature data at different locations in and around the ear and the collected data was analyzed.
-Initially, this section outlines the OpenEarable platform, which constitutes the cornerstone for both the prototype and comprehension. 
-Subsequently, the sensors crucial for temperature measurement are elaborated upon.
+For this purpose, a prototype was developed that allows temperature measurements at different positions in and around the ear. 
+Studies were then conducted to collect temperature data at different locations in and around the ear, then temperature changes under stress were observed.
+The data collected from both studies were then analyzed and evaluated.
+This section first introduces the OpenEarable platform, which is the cornerstone of the prototype and understanding. 
+Next, the sensors critical to temperature measurement are discussed.
 After laying the groundwork for understanding the prototype, the development and approach to designing the prototype is explained.
-In addition, the detailed methodology and procedure of the study are described.
-The study results are portrayed in chapter \ref{ch:Evaluation}.
+In addition, the methodology and process of the two studies are described in detail.
+The results of the studies are presented in chapter \ref{ch:Evaluation}.
 
 \section{Platform: OpenEarable}
 \label{ch:Design:Prototype:OpenEarable}
@@ -20,10 +21,11 @@ In Chapter \ref{Background:SensingWithEarables:OpenEarable}, the OpenEarable pla
 The OpenEarable was designed for rapid prototyping and exploration of novel Earable applications.
 This thesis successfully utilized it as the foundation for the prototype. 
 Figure \ref{fig:design:prototype_connection} illustrates the seamless collaboration between all components. 
-Leveraging an Arduino Nano 33 BLE, the OpenEarable enables the deployment of Arduino-based software and its connection to both the PCB and FlexPCB is facilitated via the 4-pin connector. 
-The developed software gathers data from the temperature sensors and effectively utilizes OpenEarable's resources. 
-The study data is persistently stored on the SD card and the study termination is triggered by a double-click on a push button.
-In summary, the OpenEarable platform proved to be a versatile and effective foundation for the prototype, enabling seamless interaction between its components and facilitating data collection from the temperature sensors. 
+The OpenEarable uses an Arduino Nano 33 BLE and enables the use of Arduino-based software. It connects to the PCB and FlexPCB via a 4-pin connector. 
+The developed software collects data from the temperature sensors and effectively utilizes the resources of the OpenEarable. 
+In addition, the IMU data already available on the OpenEarable is read out.
+The study data is permanently stored on the SD card and the termination of the study is triggered by a double click on a push button.
+In summary, the OpenEarable platform proved to be a versatile and effective foundation for the prototype, allowing seamless interaction between its components and facilitating data collection from the temperature sensors. 
 By leveraging Arduino-based features and user-friendly design, OpenEarable was successfully used in this study to explore novel Earable applications and conduct the user study easily and efficiently.
 
 % TODO: PCB Schematic in den Anhang vermutlich packen, sehr wichtig!!!
@@ -37,7 +39,7 @@ The MLX90632 sensor is an infrared temperature sensor known for its high accurac
 Furthermore, non-contact temperature measurement is a huge advantage. 
 The MLX90632 can measure temperature without physical contact with the object or body part, providing a non-invasive and convenient ear temperature monitoring option.
 In order to place the temperature sensors in the necessary locations to measure temperature, the sensors must be appropriately small. 
-Since the MLX90632 has a small form factor, this is optimal for the application needed.
+Since the MLX90632 has a small form factor (3x3mm), this is optimal for the application needed.
 Additionally, the MLX90632 is readily available on the market and has existing Arduino libraries. 
 This availability and compatibility with Arduino simplify the integration process and save valuable development time.
 In addition, the sensor is designed for low power consumption, making it suitable for battery-powered devices. 
@@ -45,7 +47,7 @@ Given the small battery size in the developed prototype, low power consumption i
 The MLX90632 offers fast response times and allows for real-time temperature monitoring and fast updates. 
 Some difficulties arose when writing the EEPROM, so the default value was left at 2Hz.
 The intention of adjusting the measuring rate was the implementation details of the library, which was finally solved by adjusting the library. 
-This process is described in more detail in the chapter \ref{ch:Implementation}.
+This process is described in more detail in chapter \ref{ch:Implementation}.
 The high sensitivity to temperature changes allows the MLX90632 to accurately detect even minor variations. 
 This sensitivity is advantageous for precise temperature tracking.
 In addition, the sensor has applications in both the consumer and industrial markets due to its accuracy and reliability. 
@@ -87,7 +89,7 @@ The second component is placed in the ear and is also controlled by the OpenEara
 To ensure functionality and protection of the hardware, custom 3D-printed enclosures were created for both the behind-the-ear component and the in-the-ear component. 
 Figure \ref{fig:design:prototype_on_head_visual} shows the final result, worn by a participant and also visually demonstrates the positioning of the components.
 As shown in Figure \ref{fig:design:prototype_on_head_visual}, the custom cases add durability and a high-end appearance to the product, improving its overall usability and aesthetics.
-The use of the 8-pin cable effectively connects the two components, additionally ensuring good comfort.
+The use of the 8-pin cable effectively connects the two components, additionally ensuring good comfort and fit.
 
 \begin{figure}[t]
     \centering
@@ -117,7 +119,7 @@ The use of the 8-pin cable effectively connects the two components, additionally
 The temperature behind the ear is measured at three positions, as can be seen in Figure \ref{fig:design:pcb_description} on the back of the PCB and conceptually in Figure \ref{fig:ear_measurement_positions}.
 To position the temperature sensors at the locations chosen in section \ref{ch:Introduction:PlannedApproach}, a PCB was developed that has the sensors installed at the appropriate locations. 
 The PCB has been designed so that only the temperature sensors are placed on the back. This allows the PCB to be placed entirely in the bottom of the case, while the temperature sensors peek out through matching openings in the case. On the front of the PCB are all the other components, including a 4-pin connector and an 8-pin connector.
-The 4-pin connector is used to connect to the OpenEarable. This connection allows the OpenEarable to communicate with the PCB via I2C, as the OpenEarable also has a special 4-pin connector for this purpose.
+The 4-pin connector is used to connect to the OpenEarable. This connection allows the OpenEarable to communicate with the PCB via I2C, as the OpenEarable also has a special 4-pin connector for exactly such a purpose.
 To be able to control the second component (the earpiece) via I2C later on as well, the 8-pin connector was added to establish a connection to the second component.
 Via I2C, the built-in multiplexer is addressed, with which one of the eight possible applied lines can be switched and read out. The eight possible through-connections of the multiplexer are connected to all temperature sensors, including those of the FlexPCB via the 8-pin connector.
 In addition, an LED is installed on the PCB to directly indicate a possible short circuit.
@@ -144,15 +146,16 @@ This was taken into account.
 
 The second component now enables temperature measurement in the ear area. The FlexPCB itself is only equipped with components on the front side. Thereby, the 8-pin connector that connects the FlexPCB to the PCB is located, as described in section \ref{ch:Design:Prototype:BehindEar}.
 Additionally, three temperature sensors are placed on the FlexPCB to sense the positions in the ear and pinna described in section \ref{ch:Introduction:PlannedApproach} and Figure \ref{fig:ear_measurement_positions}.
-The FlexPCB was designed to extend through the component. On the one hand, the 8-pin connector protrudes outward to connect to the PCB. 
-On the other hand, the PCB runs along the outside of the housing to the earbud, allowing the FlexPCB to snake through. 
-The tip of the FlexPCB also contains a temperature sensor mounted in the earplug and aimed directly at the eardrum. 
+The FlexPCB was designed to extend through the component. 
+On the one hand, the 8-pin connector extends outward to connect to the PCB. 
+On the other hand, the PCB extends along the outside of the case to the earbud, allowing the FlexPCB to snake through. 
+The tip of the FlexPCB also contains a temperature sensor mounted in the earplug and aimed directly at the tympanic membrane. 
 Another temperature sensor is aimed at the ear canal and is located on the outer edge of the earplug. The third temperature sensor is aimed at the pinna.
 The component was modeled on the design of an AirPod, but heavily modified afterward. 
 The original AirPods design is freely available on TinkerCAD and was used as the basis for the component shape. 
 The inside of the design was completely hollowed out to allow cables to be routed through the case. Additionally, an adapter was added to the side to fit the redesigned earpod. 
 An earbud can be attached here to ensure that the earbud penetrates further into the ear than usual compared to conventional in-ear headphones. 
-This enables precise temperature measurement in the direction of the eardrum. A temperature sensor is attached to the tip of the earbud to perform basic temperature measurements.
+This enables precise temperature measurement in the direction of the tympanic membrane. A temperature sensor is attached to the tip of the earbud to perform basic temperature measurements.
 The three temperature sensors on the FlexPCB can be switched via the multiplexer that is connected to the PCB. 
 This allows for precise selection and acquisition of the desired measurements. Figure \ref{fig:design:prototype_earpiece_views} shows a sketch and other images of the final component.
 
@@ -169,19 +172,21 @@ The sketch shows the first idea of how the FlexPCB has to be designed so that it
 
 \section{Study}
 \label{ch:Design:Study}
-The requirement of this master thesis is to measure the temperature at different positions of the ear to enable temperature measurement over a longer period of time. 
+This master thesis includes to measure the temperature at different positions of the ear to enable temperature measurement over a longer period. 
 For this purpose, a study is to be conducted in which the temperature is measured at different positions and then compared. 
 For this purpose, a prototype was developed, which was described in detail in the previous chapters. 
-With this prototype, it is possible to measure the temperature at three positions behind the ear, on the auricle, in the ear canal and on the eardrum.
+With this prototype, it is possible to measure the temperature at three positions behind the ear, on the auricle, in the ear canal and on the tympanic membrane.
 The goal after recording the data is to compare the different positions. 
-In the context of this master's thesis and related study, several hypotheses arise that have the potential to clarify key aspects of ear temperature measurement. 
-One of these hypotheses concerns location-dependent temperature accuracy. It is hypothesized that the position of the sensors, whether behind the ear, in the pinna, in the ear canal, or on the eardrum, significantly affects the accuracy of the temperature measurement.
-Furthermore, the question of replicability and consistency of the measurements is of interest. It is assumed that despite the variable human physiology, the measurement results are consistent across different subjects. The relevance of the initial acclimatization phase of the sensors is also considered. Here, it is assumed that the 20-minute acclimatization phase is sufficient to ensure stable temperature measurement. 
+In the context of this master's thesis and related study, several hypotheses arise that have the potential to clarify key aspects of ear temperature measurement.
+Furthermore, the question of replicability and consistency of the measurements is of interest. 
+It is assumed that despite the variable human physiology, the measurement results are consistent across different subjects. 
+The relevance of the initial acclimatization phase of the sensors is also considered. 
+Here, it is assumed that the 20-minute acclimatization phase is sufficient to ensure stable temperature measurement \cite{chagllae.MeasurementCoreBody2018}. 
 The role of environmental variables is also considered. 
 It is hypothesized that the readings could differ significantly from the baseline measurements after being outdoors, allowing conclusions to be drawn about the susceptibility of the sensors to environmental conditions. 
 In addition, the adaptability of the measurements to changing temperature conditions is another key issue. 
 It is hypothesized that the sensors will respond quickly enough to detect and account for changes in ambient temperature while outdoors.
-In the context of the further hypotheses, for example, the question is raised whether changes in the IMU signal, i.e. in the gyroscope, magnetometer and accelerometer measurements, are correlated with changes in temperature. Similarly, the relevance of the physiological nature of the subjects, such as the skin thickness behind the ear or the ear shape, is highlighted in relation to the measurement accuracy. 
+In the context of the further hypotheses, for example, the question is raised whether changes in the IMU signal, i.e. in the gyroscope, magnetometer and accelerometer measurements, are correlated with temperature changes. Similarly, the relevance of the physiological nature of the subjects, such as the skin thickness behind the ear or the ear shape, is highlighted in relation to the measurement accuracy. 
 Finally, the speed of the sensors in detecting rapid temperature changes induced by physical or emotional states is considered as a possible variable for assessing system performance.
 These hypotheses not only provide a broad basis for evaluating the developed prototype, but can also be used to define further research questions and applications in the field of temperature measurement by wearables.
 % Write more about stress study
@@ -189,77 +194,121 @@ These hypotheses not only provide a broad basis for evaluating the developed pro
 \subsection{Study 1: Localized Ear Temperature Measurement Study Procedure: Baseline Surveys and Environmental Influences}
 \label{ch:Design:Study:Study1}
 Two studies were conducted as part of this master's thesis. 
-The first study deals with the comparison of the temperatures at the different positions.
-For this purpose, a study was designed to test the different hyptotheses and to create the best possible data basis. 
-The study starts with the temperature measurement of the right ear by a thermometer (BRAUN ThermoScan 7) to obtain a reference value of the temperature in the ear. 
-This measurement will be taken again at the conclusion of the study.
-This is followed by the attachment of the prototype to the subject's ear. This phase is critical, as correct positioning of the sensors is crucial for the quality of the recorded data.
-Since the component behind the ear tends to stick out a bit from the skin after a while, the component was taped behind the ear to be securely in the correct position and not slip even during light activities. 
-A powerbank was attached to ensure that the prototype's battery lasts for the complete period, as initial findings indicate that the battery life is between one and two hours.
-After the installation of the prototype, an acclimatization phase of 20 minutes follows, during which data is already recorded. 
-This phase is to ensure that the sensors have sufficient time to adapt to the physiological conditions of the subject and to allow stable measurements.
-After completion of the acclimatization phase, the main data collection is performed. 
-The subject spends another 20 minutes in a seated position in a room of the institute where all other subjects have also performed the study. 
+The first study deals with the comparison of temperatures at the different sites.
+For this purpose, a study was designed to test the different hypotheses and to provide the best possible data basis. 
+The study begins by giving the subject an introduction to the study. 
+After the subject has signed the privacy statement, as well as the informed consent form, a temperature measurement of the right ear is taken with a thermometer (BRAUN ThermoScan 7) to obtain a reference value for the temperature in the ear. 
+This measurement is taken again at the end of the study.
+The prototype is then attached to the subject's ear. 
+This phase is critical because the correct positioning of the sensors is crucial for the quality of the recorded data.
+Since the component behind the ear tends to protrude a bit from the skin after a while, it was taped behind the ear to ensure that it was securely in place and would not slip even during light activity. 
+This was observed during preliminary testing. 
+Care was also taken to ensure that this did not affect the temperature measurement of the sensors.
+This also includes external influences, such as wind, sun or other.
+To ensure that the prototype's battery would last throughout the entire period, a power bank was attached, as initial results suggest that battery life is between one and two hours.
+After the prototype is installed, an acclimation phase of 20 minutes follows, during which data is already being recorded. 
+The test subject was now sitting alone in a chair in a room at the TECO Institute.
+This phase is to ensure that the sensors have enough time to adapt to the physiological conditions of the test subject and to allow stable measurements.
+After the acclimatization phase was completed, the study investigator entered the room and pressed the prototype button to classify the next phase in the data as well.
+Subsequently, the subject was again alone in the room. 
+The subject spends an additional 20 minutes in a seated position in a room at the institute where all other subjects have also conducted the study. 
 The room is not air-conditioned and the windows were closed before the measurement.
-In addition, the room temperature and humidity were noted. 
-This phase is to provide a baseline for the temperature measurements and to verify the consistency of the sensors under stable conditions.
+In addition, the room temperature and humidity were noted between phases and at the beginning and end of the measurement. 
+The purpose of this phase is to establish a baseline for the temperature measurements and to check the consistency of the sensors under stable conditions.
 The next step is to investigate the influence of environmental variables. 
-Subjects will be asked to spend time outdoors walking for 20 minutes. 
+Subjects will be asked to walk outdoors for 20 minutes. 
 This is done to analyze the response of the sensors to sudden changes in temperature and environment and to evaluate the adaptability of the system.
-After returning indoors, subjects again sit in their original seats and remain in a seated position for another 20 minutes. 
-This phase allowed for quantification and analysis of any deviations in sensor measurements due to being outdoors.
-Throughout the time in the room, subjects were allowed to watch animal documentaries that allowed for no or minimal anxiety or happiness. 
-In total, the study will be conducted with 15 subjects to provide a sufficient database for statistical analyses.
-A visual diagram of the procedure during study 1 can be seen in Figure \ref{fig:design:study1:procedure}.
+After returning to the room, the subjects take their seats again in their original places and remain in a seated position for another 20 minutes. 
+This phase allowed for quantification and analysis of variations in sensor readings due to being outdoors.
+Throughout the time in the room, subjects were allowed to watch animal documentaries that elicited no or minimal anxiety or happiness. 
+Subsequently, subjects still answer a questionnaire that answers important information such as demographics, health, current weather conditions, and prototype comfort.
+After answering the questionnaire, the study is finished for the subject.
+A total of 12 subjects will be used in the study to provide a sufficient database for statistical analysis.
+A visual diagram of the procedure of study 1 can be seen in Figure \ref{fig:design:study1:procedure}.
 
 \begin{figure}[t]
     \centering
     \includegraphics[width=\textwidth]{thesis-doc/images/study1/Procedure_new.pdf}
-    \caption{ADD DESCRIPTION}
+    \caption{Figure illustrating the procedure of Study 1, consisting of four 20-minute phases: acclimatization, sitting, outdoor walking, and relaxation. Ground truth temperature is recorded using a BRAUN Thermoscan 7 thermometer before and after the study.}
     \label{fig:design:study1:procedure}
 \end{figure}
 
-Through this carefully designed procedure, the study is expected to help test the formulated hypotheses and provide valuable insight into the performance of the developed prototype and its potential applications.
+Through the design it should be possible to analyze the established hypotheses.
+The baseline should provide a general feeling for the temperature measurements at the different positions.
+In addition, through phase 2, it is hoped to better assess the temperature differences during phase 3 (outdoor phase).
+In the relax phase (phase 4), it should be observed how the sensors settle back to their normal level.
+
+For hypothesis 1, that the sensors behind the ear measure lower temperatures than the sensors at the tympanic membrane, the ear canal and the concha, this design of the study is an ideal prerequisite, because besides the baseline also external influences of the outdoor phase can be considered.
+Also for hypothesis 2, which considers the variance differences between the controlled and uncontrolled environment, the study design provides a good basis, because both phases are covered.
+For hypothesis 3, which tests whether certain sensors behave more or less similarly, the study design provides a good basis.
+In the outdoor phase (phase 3), the correlation is expected to be very high, as the test subjects move into a colder environment and thus the correlation between the sensors is very high.
+Likewise, hypothesis 4 can be perfectly considered and evaluated. 
+Here it has to be shown that the temperature of the sensor directed to the tympanic membrane is the most stable. 
+It is expected that the subjects are exposed to external conditions in the outdoor phase (phase 3) and a clear difference can be seen especially in this phase.
+Since the IMU data are always recorded in parallel, hypothesis 5 can also be analyzed well with the study design.
+Here, it is examined whether increased human movements lead to temperature changes. 
+Here, however, a distribution is not directly clear. 
+Since the movement is clearly higher in the outdoor phase, the temperature change can be tested here, but this can also be caused by external environmental influences and not only by the pure movement.
+
+However, a further subdivision into two phases (movement and walking oudoors) is beyond the scope of the study.
+Through this carefully designed procedure, the study should help test the formulated hypotheses and provide valuable insight into the performance of the developed prototype and its potential applications.
 
 \subsection{Study 2: Study Course Under Stress Conditions: Impact on Temperature Measurements With Ear-Based Sensors}
 \label{ch:Design:Study:Study2}
-\begin{figure}[!ht]
+In the second study, the influence of stress-induced physiological changes on temperature measurements at different locations of the ear is investigated. 
+The study begins similarly to the first study in that the subject is given an introduction at the beginning and the study procedure is explained.
+After the subject signs the privacy statement and informed consent, a thermometer (BRAUN Thermoscan 7) was used to measure the temperature in the same ear (right) where the prototype will be placed.
+The prototype is then attached as in Study 1.
+Added to this in Study 2 is the attachment of the reference meter.
+A HRV chest strap (Polar H9) will provide heart rate variability as ground truth for this purpose.
+The chest strap is connected to the smartphone using the "EliteHRV" app and the measurement is started simultaneously with the prototype.
+The app was used in such a way that the subject cannot see any HRV readings, only a time indicating the length of the current measurement.
+An initial 20-minute acclimatization phase, during which the sensors and the subjects adapt to the environmental conditions, is followed by a 15-minute measurement phase in a sitting position.
+Between the phases, the person conducting the study enters the room and presses the button of the prototype in order to be able to distinguish the individual phases in the data as well.
+After that, the subjects are exposed to a stress situation. 
+\begin{figure}[!t]
     \centering
     \includegraphics[width=\textwidth]{thesis-doc/images/study2/Procedure2_new.pdf}
-    \caption{ADD DESCRIPTION}
+    \caption{Figure outlining Study 2, which measures temperature changes under stress. The procedure includes a 20-minute acclimatization, 15 minutes of sitting, three stress tests, and a 15-minute relaxation phase. Ground truth is obtained using a BRAUN Thermoscan 7 thermometer before and after the study.}
     \label{fig:design:study2:procedure}
 \end{figure}
-In the second study, the influence of stress-induced physiological changes on temperature measurements at different sites of the ear is investigated. 
-An initial 20-minute acclimatization period, during which the sensors and the subjects adapt to the environmental conditions, is followed by a 15-minute measurement period in a seated position.
-After that, the subjects are exposed to a stress situation. 
 At the beginning of the stress phase, the subjects solve a Stroop test, then an N-Back test and finally a mathematics test. 
+Here, the subject has the task of noting the time at which he starts the respective stress test.
+The time is taken from the "EliteHRV" app.
 The Stroop test tests the subjects' attention by alternately displaying words in different colors. 
 The subject is asked to interpret the color of the word. The words are always color words, but the words do not always match the color in which they are displayed. 
-When the word and the color do not match, the reaction time and the number of errors increase. 
-This is to create an initial stress situation for the subject \cite{StroopCompetitionSocialEvaluative}. 
+When the word and the color do not match, reaction time and the number of errors increase. 
+This creates an initial stress situation for the subject \cite{StroopCompetitionSocialEvaluative}. 
 Next, an N-back test with 2 dimensions is performed. 
-Here, a letter is named to the subject via a voice output and a position in a tic-tac-toe field is displayed. 
-The subject must now recall N steps back and indicate whether the letter or position has already been named or shown in the last N iterations. 
+Here, the subject is told a letter via a voice output and shown a position in a tic-tac-toe box. 
+The subject must now recall N steps and indicate whether the letter or position has already been named or shown in the last N iterations. 
 This test was performed with $N={1,2,3}$ and is designed to elicit strain and stress \cite{liangEffectAcuteStress2023}.
 Last, the subject is presented with a mathematical test. 
 This involves several mathematical tasks in which 4 answer options are always available.
 Here, the subject has 8 minutes to solve as many tasks as possible. 
 This is also designed to trigger a stress situation \cite{caviolaStressTimePressure2017}.
-The three tests are all designed to trigger stressful situations and always challenge the subject in a different way.
+
+All three tests are designed to trigger stressful situations and challenge the subject in a different way each time.
 For the Stroop test, there is no visual timer, but the number of words is limited. 
 There is a high score for the test, which is intended to motivate the subject to do as well as possible. 
-In the N-Back test, the time is strictly given, the subject has the opportunity to answer within three seconds.
-Here, the subject is exposed to the risk of being frustrated if he or she fails to complete one or more sub-steps.
+In the N-Back test, the time is strictly predetermined, and the subject has the opportunity to answer within three seconds.
+Here, the subject is at risk of becoming frustrated if he or she fails to complete one or more sub-steps.
 The mathematical test has a time limit of 8 minutes, in which the subject must solve as many tasks as possible.
 Again, the subject is put under pressure in a different way that is intended to trigger stressful situations.
 This scenario was chosen because a large study was not possible due to time constraints. 
-Standard in science for induction in standardized stress induction tests is the Trier Social Stress Test (TSST). 
-However, the selected test covers the requirements and should allow to induce stress in the subjects.
-To check the stress level of the subjects, heart rate is measured in addition to temperature data. 
-These additional markers provide a solid scientific basis for evaluating stress induction and its effects on the measured temperature values.
+The scientific standard for induction in standardized stress induction tests is the Trier Social Stress Test (TSST). 
+However, the chosen test covers the requirements and should allow to induce stress in the subjects.
+To check the stress level of the subjects, heart rate variability (HRV) is measured in addition to temperature data. 
+These additional markers provide a solid scientific basis for the evaluation of stress induction and its effects on the measured temperature values.
 The stress induction phase is followed by another 15-minute measurement phase in a seated position, during which the subjects are not exposed to any other stressful situations. 
 This serves to record the recovery processes and their effects on the measured parameters. 
-The procedure is visually displayed in Figure \ref{fig:design:study2:procedure}
-In study 2, the effect of different stress-inducing tests - the Stroop test, the N-back test and a timed mathematical test - on the temperature measurement at the ear is investigated.
+The procedure is visually depicted in Figure \ref{fig:design:study2:procedure}.
+The study is used to analyze different hypotheses, including hypothesis 1. 
+This asserts that temperature increases under stress.
+By plotting the baseline in phase 2 and the stress phase in phase 3, this can be solidly tested.
+Hypothesis 2 looks at the different temperature differences between stress tests.
+Since a total of three stress tests were conducted, this can also be tested.
+
+In study 2, the effect of different stress-inducing tests - the Stroop test, the N-back test, and a timed mathematical test - on ear temperature measurement is investigated.
 At the same time, heart rate will be measured as an additional physiological marker of stress. 
-The study includes an initial acclimation phase, a pre-stress measurement phase, a stress induction phase and a post-stress measurement phase to comprehensively assess ear temperature variations under stress conditions.
+The study includes an initial acclimation phase, a pre-stress measurement phase, a stress induction phase, and a post-stress measurement phase to comprehensively assess changes in ear temperature under stress conditions.
