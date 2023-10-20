@@ -3,8 +3,8 @@ import numpy as np
 
 
 class Hypothesis2Analyzer:
-    def __init__(self, all_calib_data):
-        self.all_calib_data = all_calib_data
+    def __init__(self, all_temp_data):
+        self.all_temp_data = all_temp_data
 
     def analyze(self):
         variances_by_sensor = {'Indoor': {}, 'Outdoor': {}}
@@ -12,13 +12,13 @@ class Hypothesis2Analyzer:
         diff_from_mean = {'Indoor': {}, 'Outdoor': {}}
         num_tests = 0  # Keep track of the number of tests
 
-        for calib_data in self.all_calib_data:
-            indoor_data = calib_data.raw_data[calib_data.raw_data['ID'] == 2]
-            outdoor_data = calib_data.raw_data[calib_data.raw_data['ID'] == 3]
+        for temp_data in self.all_temp_data:
+            indoor_data = temp_data.raw_data[temp_data.raw_data['ID'] == 2]
+            outdoor_data = temp_data.raw_data[temp_data.raw_data['ID'] == 3]
 
-            ground_truth = calib_data.real_temp_ground_truth
+            ground_truth = temp_data.real_temp_ground_truth
 
-            for sensor in calib_data.temp_columns:
+            for sensor in temp_data.temp_columns:
                 indoor_mean = np.mean(indoor_data[sensor])
                 indoor_var = np.var(indoor_data[sensor])
                 outdoor_mean = np.mean(outdoor_data[sensor])
@@ -46,7 +46,7 @@ class Hypothesis2Analyzer:
                 num_tests += 1
 
         # Calculations and output
-        for sensor in calib_data.temp_columns:
+        for sensor in self.all_temp_data.temp_columns:
             mean_indoor_var = np.mean([x for x in variances_by_sensor['Indoor'][sensor] if not np.isnan(x)])
             mean_outdoor_var = np.mean([x for x in variances_by_sensor['Outdoor'][sensor] if not np.isnan(x)])
             mean_indoor_diff_from_gt = np.mean([x for x in diff_from_ground_truth['Indoor'][sensor] if not np.isnan(x)])
@@ -61,7 +61,7 @@ class Hypothesis2Analyzer:
         alpha = 0.05
         bonferroni_alpha = alpha / num_tests  # Bonferroni corrected alpha
 
-        for sensor in calib_data.temp_columns:
+        for sensor in self.all_temp_data.temp_columns:
             # Remove NaNs if present
             indoor_var_clean = [x for x in variances_by_sensor['Indoor'][sensor] if not np.isnan(x)]
             outdoor_var_clean = [x for x in variances_by_sensor['Outdoor'][sensor] if not np.isnan(x)]

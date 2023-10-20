@@ -9,8 +9,8 @@ from tqdm import tqdm
 
 class Hypothesis5Analyzer:
 
-    def __init__(self, all_calib_data, output_folder):
-        self.all_calib_data = all_calib_data
+    def __init__(self, all_temp_data, output_folder):
+        self.all_temp_data = all_temp_data
         self.output_folder = output_folder
         self.temp_columns = ['TympanicMembrane', 'Concha', 'EarCanal', 'Out_Bottom', 'Out_Top', 'Out_Middle']
         self.imu_columns = ['ACC_X', 'ACC_Y', 'ACC_Z', 'GYRO_X', 'GYRO_Y', 'GYRO_Z', 'MAG_X', 'MAG_Y', 'MAG_Z']
@@ -52,8 +52,8 @@ class Hypothesis5Analyzer:
         all_aggregated_imu_data = []
         aggregated_sensor_data = {sensor: [] for sensor in self.temp_columns}
 
-        for calib in self.all_calib_data:
-            phase_data = self.filter_phases(calib.raw_data)
+        for temp_data in self.all_temp_data:
+            phase_data = self.filter_phases(temp_data.raw_data)
             phase_data = self.adjust_time_to_minutes(phase_data)
 
             imu_data = self.calculate_mean_movement(phase_data)

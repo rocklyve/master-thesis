@@ -8,26 +8,26 @@ import seaborn as sns
 
 
 class Hypothesis1Analyzer:
-    def __init__(self, all_calib_data):
-        self.all_calib_data = all_calib_data
+    def __init__(self, all_temp_data):
+        self.all_temp_data = all_temp_data
 
     def boxplot(self):
         # Initialize an empty DataFrame to hold delta temperatures for all sensors
         delta_temp_df = pd.DataFrame(columns=['Sensor', 'Delta Temperature', 'ID'])
 
         # Iterate through all calibration data objects
-        for calib_data in self.all_calib_data:
-            real_temp_ground_truth = calib_data.real_temp_ground_truth
+        for temp_data in self.all_temp_data:
+            real_temp_ground_truth = temp_data.real_temp_ground_truth
 
-            for sensor in calib_data.temp_columns:
+            for sensor in temp_data.temp_columns:
                 # Calculate delta temperature
-                delta_temp = calib_data.raw_data[sensor] - real_temp_ground_truth
+                delta_temp = temp_data.raw_data[sensor] - real_temp_ground_truth
 
                 # Create a temporary DataFrame
                 temp_df = pd.DataFrame({
                     'Sensor': [sensor] * len(delta_temp),
                     'Delta Temperature': delta_temp,
-                    'ID': calib_data.raw_data['ID']  # Assuming 'ID' is in raw_data
+                    'ID': temp_data.raw_data['ID']  # Assuming 'ID' is in raw_data
                 })
 
                 # Append to the main DataFrame
@@ -66,9 +66,9 @@ class Hypothesis1Analyzer:
         behind_ear_errors = []
         in_ear_errors = []
 
-        for calib_data in self.all_calib_data:
+        for temp_data in self.all_temp_data:
             # Filter data for phases 2 and 3 and 4
-            phase_data = calib_data.raw_data[calib_data.raw_data['ID'].isin(phases)]
+            phase_data = temp_data.raw_data[temp_data.raw_data['ID'].isin(phases)]
 
             # Columns for behind the ear and in the ear
             behind_ear_columns = ['Out_Bottom', 'Out_Top', 'Out_Middle']
@@ -78,8 +78,8 @@ class Hypothesis1Analyzer:
             mean_behind_ear = phase_data[behind_ear_columns].mean().mean()
             mean_in_ear = phase_data[in_ear_columns].mean().mean()
 
-            # Calculate error based on ground truth (real_temp_ground_truth attribute in calib_data)
-            ground_truth = calib_data.real_temp_ground_truth
+            # Calculate error based on ground truth (real_temp_ground_truth attribute in temp_data)
+            ground_truth = temp_data.real_temp_ground_truth
             error_behind_ear = abs(mean_behind_ear - ground_truth)
             error_in_ear = abs(mean_in_ear - ground_truth)
 

@@ -1,7 +1,7 @@
 import os
 import numpy as np
 import pandas as pd
-from study_01.src.TemperatureCalibration import TemperatureCalibration
+from study_01.src.TemperatureData import TemperatureData
 from study_01.src.hypothesis1 import Hypothesis1Analyzer
 from study_01.src.hypothesis2 import Hypothesis2Analyzer
 from study_01.src.hypothesis3 import Hypothesis3Analyzer
@@ -13,7 +13,7 @@ class AnalysisPipeline:
     def __init__(self, data_dir, target_dir):
         self.data_dir = data_dir
         self.target_dir = target_dir
-        self.all_calib_data = []
+        self.all_temp_data = []
         self.all_imu_data = []
         self.ground_truth_temps = {
             '01': 36.4,
@@ -57,7 +57,7 @@ class AnalysisPipeline:
         # Look up real temperature ground truth based on proband number
         real_temp_ground_truth = self.ground_truth_temps.get(proband_number, 100.0)  # Default to 37.0 if not found
 
-        calib = TemperatureCalibration(
+        temp_subj_data = TemperatureData(
             df,
             temp_columns,
             os.path.basename(file_path),
@@ -66,46 +66,44 @@ class AnalysisPipeline:
             real_temp_ground_truth
         )
 
-        calib.smooth_data()
-        # calib.plot_raw_data()
-        self.all_calib_data.append(calib)
+        temp_subj_data.smooth_data()
+        # temp_subj_data.plot_raw_data()
+        self.all_temp_data.append(temp_subj_data)
 
 
 
 if __name__ == '__main__':
-    # data_dir = 'data/study_data_test'
     data_dir = 'data/study_data'
-    # data_dir = 'data/chess'
     target_dir = 'target'
 
     pipeline = AnalysisPipeline(data_dir, target_dir)
     pipeline.process_directory(data_dir, target_dir)
 
-    # print("Analyzing hypothesis 1")
-    # print('')
-    # hypothesis1 = Hypothesis1Analyzer(pipeline.all_calib_data)
-    # print("Mean and error of only sitting phase")
-    # hypothesis1.analyze_mean_error([2])
-    # print('')
-    # print("Mean and error of phases 2,3,4")
-    # hypothesis1.analyze_mean_error([2, 3, 4])
-    # print('')
-    # hypothesis1.boxplot()
+    print("Analyzing hypothesis 1")
+    print('')
+    hypothesis1 = Hypothesis1Analyzer(pipeline.all_temp_data)
+    print("Mean and error of only sitting phase")
+    hypothesis1.analyze_mean_error([2])
+    print('')
+    print("Mean and error of phases 2,3,4")
+    hypothesis1.analyze_mean_error([2, 3, 4])
+    print('')
+    hypothesis1.boxplot()
 
-    # print("Analyzing hypothesis 2")
-    # hypothesis2 = Hypothesis2Analyzer(pipeline.all_calib_data)
-    # hypothesis2.analyze()
+    print("Analyzing hypothesis 2")
+    hypothesis2 = Hypothesis2Analyzer(pipeline.all_temp_data)
+    hypothesis2.analyze()
 
-    # print("Analyzing hypothesis 3")
-    # hypothesis3 = Hypothesis3Analyzer(pipeline.all_calib_data)
-    # hypothesis3.analyze()
-    # hypothesis3.analyze_mad()
-    # hypothesis3.generate_heatmap()
-    #
-    # print("Analyzing hypothesis 4")
-    # hypothesis4 = Hypothesis4Analyzer(pipeline.all_calib_data)
-    # hypothesis4.analyze()
-    #
+    print("Analyzing hypothesis 3")
+    hypothesis3 = Hypothesis3Analyzer(pipeline.all_temp_data)
+    hypothesis3.analyze()
+    hypothesis3.analyze_mad()
+    hypothesis3.generate_heatmap()
+
+    print("Analyzing hypothesis 4")
+    hypothesis4 = Hypothesis4Analyzer(pipeline.all_temp_data)
+    hypothesis4.analyze()
+
     print("Analyzing hypothesis 5")
-    hypothesis5 = Hypothesis5Analyzer(pipeline.all_calib_data, target_dir)
+    hypothesis5 = Hypothesis5Analyzer(pipeline.all_temp_data, target_dir)
     hypothesis5.analyze()

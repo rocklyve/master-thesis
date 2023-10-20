@@ -11,9 +11,9 @@ from scipy import stats
 
 
 class Hypothesis3Analyzer:
-    def __init__(self, all_calib_data):
+    def __init__(self, all_temp_data):
         self.avg_correlations = {}
-        self.all_calib_data = all_calib_data
+        self.all_temp_data = all_temp_data
 
     # absolute abweichung anschauen
 
@@ -62,21 +62,21 @@ class Hypothesis3Analyzer:
     def analyze(self):
         self.avg_correlations = {}
 
-        for calib in self.all_calib_data:
+        for temp_data in self.all_temp_data:
             for phase_id in [2, 3]:  # Phase 2 (Indoor), Phase 3 (Outdoor)
-                phase_data = calib.raw_data[calib.raw_data['ID'] == phase_id]
+                phase_data = temp_data.raw_data[temp_data.raw_data['ID'] == phase_id]
 
                 # Group every 6 rows and aggregate
                 grouped_data = phase_data.groupby(phase_data.index // 6)
                 aggregated_data = grouped_data.agg({
                     'TIMESTAMP': 'mean',
                     'ID': 'first',
-                    **{col: 'first' for col in calib.temp_columns}
+                    **{col: 'first' for col in temp_data.temp_columns}
                 }).dropna()
 
                 # Calculate correlations for this participant and phase
-                for sensor1 in calib.temp_columns:
-                    for sensor2 in calib.temp_columns:
+                for sensor1 in temp_data.temp_columns:
+                    for sensor2 in temp_data.temp_columns:
                         if sensor1 >= sensor2:
                             continue
                         corr, _ = spearmanr(aggregated_data[sensor1], aggregated_data[sensor2])
@@ -95,13 +95,13 @@ class Hypothesis3Analyzer:
     def analyze_mad(self):
         mad_by_sensor = {'Indoor': {}, 'Outdoor': {}}
 
-        for calib in self.all_calib_data:
+        for temp_data in self.all_temp_data:
             for phase, phase_id in [('Indoor', 2), ('Outdoor', 3)]:
-                phase_data = calib.raw_data[calib.raw_data['ID'] == phase_id]
+                phase_data = temp_data.raw_data[temp_data.raw_data['ID'] == phase_id]
                 if phase_data.empty:
                     continue
 
-                for sensor in calib.temp_columns:
+                for sensor in temp_data.temp_columns:
                     sensor_data = phase_data[sensor].dropna()  # Remove NaNs if any
                     mad_value = np.mean(np.absolute(sensor_data - np.mean(sensor_data)))  # Compute MAD
 
