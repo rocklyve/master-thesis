@@ -46,7 +46,7 @@ class Hypothesis2Analyzer:
                 num_tests += 1
 
         # Calculations and output
-        for sensor in self.all_temp_data.temp_columns:
+        for sensor in self.all_temp_data[0].temp_columns:
             mean_indoor_var = np.mean([x for x in variances_by_sensor['Indoor'][sensor] if not np.isnan(x)])
             mean_outdoor_var = np.mean([x for x in variances_by_sensor['Outdoor'][sensor] if not np.isnan(x)])
             mean_indoor_diff_from_gt = np.mean([x for x in diff_from_ground_truth['Indoor'][sensor] if not np.isnan(x)])
@@ -61,7 +61,7 @@ class Hypothesis2Analyzer:
         alpha = 0.05
         bonferroni_alpha = alpha / num_tests  # Bonferroni corrected alpha
 
-        for sensor in self.all_temp_data.temp_columns:
+        for sensor in self.all_temp_data[0].temp_columns:
             # Remove NaNs if present
             indoor_var_clean = [x for x in variances_by_sensor['Indoor'][sensor] if not np.isnan(x)]
             outdoor_var_clean = [x for x in variances_by_sensor['Outdoor'][sensor] if not np.isnan(x)]

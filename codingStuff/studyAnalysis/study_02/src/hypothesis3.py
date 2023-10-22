@@ -5,8 +5,8 @@ import matplotlib.pyplot as plt
 from scipy.stats import pearsonr
 
 class Hypothesis3Analyzer:
-    def __init__(self, all_calib_data, all_hrv_data, target_dir):
-        self.all_calib_data = all_calib_data
+    def __init__(self, all_temp_data, all_hrv_data, target_dir):
+        self.all_temp_data = all_temp_data
         self.all_hrv_data = all_hrv_data
         self.target_dir = target_dir
 
@@ -18,10 +18,10 @@ class Hypothesis3Analyzer:
         correlations = {}
         correlations_participant_4 = {}  # For Participant 4 specifically
 
-        # Loop through each participant's calibrated temperature and HRV data
-        for idx, (calib_data, hrv_data) in enumerate(zip(self.all_calib_data, self.all_hrv_data)):
+        # Loop through each participant's temperature and HRV data
+        for idx, (temp_data, hrv_data) in enumerate(zip(self.all_temp_data, self.all_hrv_data)):
             # Filter data for phase 3
-            phase3_data = calib_data.raw_data[calib_data.raw_data['ID'] == 3]
+            phase3_data = temp_data.raw_data[temp_data.raw_data['ID'] == 3]
 
             # Generate timestamps for HRV data, assuming it starts at the same time as the temperature data
             hrv_timestamps = np.cumsum(hrv_data.hrv_df['RRIntervals']) / 1000  # Convert from ms to s
@@ -30,7 +30,7 @@ class Hypothesis3Analyzer:
             # Resample temperature data to align with HRV data
             phase3_data_resampled = phase3_data.set_index('TIMESTAMP').reindex(hrv_timestamps, method='nearest')
 
-            for sensor in calib_data.temp_columns:
+            for sensor in temp_data.temp_columns:
                 # Drop NaNs only for the current sensor
                 valid_indices = ~np.isnan(phase3_data_resampled[sensor]).values
                 valid_temp_data = phase3_data_resampled[sensor].dropna()

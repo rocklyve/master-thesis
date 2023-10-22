@@ -4,7 +4,7 @@ import numpy as np
 from matplotlib import pyplot as plt
 
 
-class TemperatureCalibration:
+class TemperatureData:
 
     def __init__(self, df, ground_truth_temp, temp_columns, source_filename, data_folder, target_folder):
         self.raw_data = df
@@ -13,7 +13,6 @@ class TemperatureCalibration:
         self.raw_data[temp_columns] = self.raw_data[temp_columns] / 100.0
         self.raw_data['TIMESTAMP'] = (self.raw_data['TIMESTAMP'] - self.raw_data['TIMESTAMP'].min()) / 1000.0 / 60.0
         self.mean_temp = self.raw_data[temp_columns].mean(axis=1)
-        self.calibrated_data_dict = {}
         self.source_filename = source_filename
         self.data_folder = data_folder
         self.target_folder = target_folder  # New attribute to store the target folder

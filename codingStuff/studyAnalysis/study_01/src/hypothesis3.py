@@ -119,9 +119,3 @@ class Hypothesis3Analyzer:
                 avg_mad_by_sensor[phase][sensor] = avg_mad
 
         print(f"Average MAD by sensor for Phases 2 (Indoor) and 3 (Outdoor): {avg_mad_by_sensor}")
-
-    def calculate_relative_changes(self, readings):
-        # Calculate relative changes for a single sensor
-        # Assuming readings is a numpy array
-        rel_changes = np.diff(readings) / readings[:-1] * 100  # In percentage
-        return rel_changes

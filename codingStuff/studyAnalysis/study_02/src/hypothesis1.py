@@ -6,23 +6,23 @@ from scipy.stats import ttest_rel
 
 # Define the Hypothesis1Analyzer class
 class Hypothesis1Analyzer:
-    def __init__(self, all_calib_data, target_dir):
-        self.all_calib_data = all_calib_data  # List of TemperatureCalibration objects
+    def __init__(self, all_temp_data, target_dir):
+        self.all_temp_data = all_temp_data
         self.target_dir = target_dir  # Directory where plots will be saved
 
     def analyze(self):
         mean_temp_list = []  # To store the mean temperature for each phase and sensor for all probands
         organized_data = {}  # Nested dictionary to organize data for t-test
 
-        for calib_data in self.all_calib_data:
-            proband = calib_data.source_filename.split('_')[2].split('.')[0] # Extract proband name from filename
-            ground_truth = calib_data.ground_truth_temp  # Extract ground truth for the current proband
+        for temp_data in self.all_temp_data:
+            proband = temp_data.source_filename.split('_')[2].split('.')[0] # Extract proband name from filename
+            ground_truth = temp_data.ground_truth_temp  # Extract ground truth for the current proband
 
             for phase_id in [2, 3, 4]:  # Loop through the phase IDs (sitting, stress, relax)
-                phase_data = calib_data.raw_data[
-                    calib_data.raw_data['ID'] == phase_id]  # Filter data for the current phase
+                phase_data = temp_data.raw_data[
+                    temp_data.raw_data['ID'] == phase_id]  # Filter data for the current phase
 
-                for sensor in calib_data.temp_columns:  # Loop through each sensor
+                for sensor in temp_data.temp_columns:  # Loop through each sensor
                     mean_temp = phase_data[sensor].mean()  # Calculate mean temperature for the current sensor and phase
                     mean_temp -= ground_truth  # Subtract the ground truth temperature
 
