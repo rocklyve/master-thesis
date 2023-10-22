@@ -111,12 +111,12 @@ These findings have important implications for the use of ear-based temperature 
 \textbf{Tympanic Membrane} & 0.025 & 0.258 & 0.00097 & 0.1074 & 0.224 & -0.391 \\
 \textbf{Concha} & 0.042 & 0.820 & 0.00307 & 1.134 & -0.164 & -2.344 \\
 \textbf{EarCanal} & 0.030 & 0.624 & 0.00155 & 0.646 & -0.177 & -1.742 \\
-\textbf{Out\_Bottom} & 0.095 & 0.800 & 0.0189 & 1.110 & -0.527 & -3.094 \\
-\textbf{Out\_Top} & 0.062 & 0.663 & 0.00694 & 0.650 & -0.389 & -1.903 \\
-\textbf{Out\_Middle} & 0.101 & 0.831 & 0.0198 & 1.098 & -0.529 & -2.548 \\
+\textbf{O.E. Bottom} & 0.095 & 0.800 & 0.0189 & 1.110 & -0.527 & -3.094 \\
+\textbf{O.E. Top} & 0.062 & 0.663 & 0.00694 & 0.650 & -0.389 & -1.903 \\
+\textbf{O.E. Middle} & 0.101 & 0.831 & 0.0198 & 1.098 & -0.529 & -2.548 \\
 \hline
 \end{tabular}
-\caption{Mean absolute deviation (MAD), mean variance, and mean distance from ground truth for different sensors. Phases 2 (inside) and 3 (outside) were considered. All values were calculated for each sensor and averaged over all subjects.}
+\caption{Mean absolute deviation (MAD), mean variance, and mean distance from ground truth for different sensors (O.E. = Outer Ear). Phases 2 (inside) and 3 (outside) were considered. All values were calculated for each sensor and averaged over all subjects.}
 \label{subsec:Evaluation:Study1:Hypothesis2:mean_variance_table}
 \end{table}
 
@@ -141,9 +141,9 @@ A detailed listing of the results can be seen in Table \ref{subsec:Evaluation:St
 Tympanic Membrane & \(-4.0425\) & \(0.0005438\) \\
 Concha & \(-4.0111\) & \(0.0005870\) \\
 Ear Canal & \(-4.0762\) & \(0.0005009\) \\
-Out\_Bottom & \(-6.0146\) & \(4.71 \times 10^{-6}\) \\
-Out\_Top & \(-6.8479\) & \(7.04 \times 10^{-7}\) \\
-Out\_Middle & \(-4.3713\) & \(0.0002436\) \\
+Outer Ear Bottom & \(-6.0146\) & \(4.71 \times 10^{-6}\) \\
+Outer Ear Top & \(-6.8479\) & \(7.04 \times 10^{-7}\) \\
+Outer Ear Middle & \(-4.3713\) & \(0.0002436\) \\
 \hline
 \end{tabularx}
 \caption{t-statistics and P-values from the Bonferroni-corrected T-tests of the different sensors using the indoor and outdoor variances. }
@@ -181,7 +181,7 @@ As shown in Table \ref{subsec:Evaluation:Study1:Hypothesis2:mean_variance_table}
 For example, the tympanic sensor has a low MAD value of \(0.025 ^\circ\text{C}\) for indoor measurements, indicating that it provides very consistent readings in controlled environments. 
 However, this value increases to \(0.258 ^\circ\text{C}\) in the outdoor phase, indicating increased susceptibility to environmental factors such as wind and temperature variations. 
 This is consistent with the observed mean deviation from ground truth, further confirming the relevance of MAD as an assessment metric. 
-Other sensors, particularly those positioned outdoors such as Out\_Bottom and Out\_Middle, also show a significant increase in MAD values as they transition from an indoor to an outdoor environment. 
+Other sensors, particularly those positioned outdoors such as Outer Ear Bottom and Outer Ear Middle, also show a significant increase in MAD values as they transition from an indoor to an outdoor environment. 
 This is consistent with their increased mean differences from ground truth and highlights their volatility in response to external influences. 
 Thus, the MAD values illustrate the central message of this hypothesis: sensors vary in their stability in response to external environmental influences, and this variation is quantifiable.
 
@@ -195,7 +195,7 @@ Thus, the MAD values illustrate the central message of this hypothesis: sensors 
 
 This can also be seen in the heatmap in Figure \ref{fig:eval:study1:hypothesis3_result}.  
 Correlations between pairs of sensors are calculated using Spearman's rank correlation, which is more robust to outliers and non-linear relationships.  
-Phase 2 (interiors) shows a mixed set of correlation values, with some even showing a negative correlation, such as the pair of tympanic tubes and Out\_Bottom (\(r = -0.163\)).  
+Phase 2 (interiors) shows a mixed set of correlation values, with some even showing a negative correlation, such as the pair of tympanic tubes and Outer Ear Bottom (\(r = -0.163\)).  
 This suggests that not all sensors are equally sensitive to the same factors, which could be due to individual positioning or unique interactions with environmental or physiological variables.  
 In contrast, Phase 3 (outdoors) shows uniformly high correlations, often above \(0.9\), across all sensor pairs.  
 This suggests that the sensors behave more coherently when subjects are outdoors, possibly due to a common response to environmental factors such as wind and sunlight.  
@@ -218,7 +218,7 @@ In phase 2, the standard deviation is still relatively similar for all measureme
 The standard deviation from the tympanic membrane nevertheless sets itself apart from those of the others with $0.0288$ compared to $0.05-0.07$. 
 In phase 3, however, it is clear that the measurement of temperature at the tympanic membrane shows the most stability. 
 At $0.1971$, the deviation is significantly smaller than for the rest $0.65-0.92$. 
-Additionally, it can be seen from the figure \ref{fig:eval:study1:hypothesis1_result} that measurements at the tympanic membrane shows the least quantile differences and is closest to the thermometer values. 
+Additionally, it can be seen from the Figure \ref{fig:eval:study1:hypothesis1_result} that measurements at the tympanic membrane shows the least quantile differences and is closest to the thermometer values. 
 From the calculated standard deviations, it appears that the tympanic membrane has the lowest values in both phases, indicating higher stability. 
 In contrast, the other sensors show higher standard deviations, more specifically the sensors outside the ear. 
 This makes them more susceptible to external conditions, such as environmental changes.
@@ -234,12 +234,12 @@ Thus, this confirms the hypothesis that the tympanic membrane measurement provid
 \textbf{Tympanic Membrane} & 0.0308 & 0.3048 \\
 \textbf{Concha} & 0.0535 & 0.9882 \\
 \textbf{Ear Canal} & 0.0378 & 0.7496 \\
-\textbf{Out\_Bottom} & 0.1138 & 1.0156 \\
-\textbf{Out\_Top} & 0.0730 & 0.7836 \\
-\textbf{Out\_Middle} & 0.1176 & 0.9875 \\
+\textbf{Outer Ear Bottom} & 0.1138 & 1.0156 \\
+\textbf{Outer Ear Top} & 0.0730 & 0.7836 \\
+\textbf{Outer Ear Middle} & 0.1176 & 0.9875 \\
 \hline
 \end{tabular}
-\caption{Standard deviations of temperature readings for different sensors during phases 2 and 3, averaged over all subjects. Lower values indicate higher stability.}
+\caption{Mean Standard deviations of temperature readings for different sensors during phases 2 and 3, averaged over all subjects. Lower values indicate higher stability.}
 \label{subsec:Evaluation:Study1:Hypothesis4:std_dev_table}
 \end{table}
 
@@ -361,7 +361,7 @@ However, there is a tendency which can be further investigated by further studie
 \subsection{Hypothesis 1: Measurable Temperature Rise During Stress}
 \label{subsec:Evaluation:Study2:Hypothesis1}
 
-\begin{figure}[ht]
+\begin{figure}[t]
     \centering
     
     \begin{subtable}{\textwidth}
@@ -375,9 +375,9 @@ However, there is a tendency which can be further investigated by further studie
         \textbf{TympanicMembrane} & 0.06 & 0.15 & 0.03 & 0.11 & -0.01 & 0.06 \\
         \textbf{Concha} & -0.59 & -0.02 & -0.49 & 0.01 & -0.46 & -0.01 \\
         \textbf{EarCanal} & -0.45 & -0.08 & -0.41 & -0.12 & -0.38 & -0.15 \\
-        \textbf{Out\_Bottom} & -0.99 & -0.72 & -0.83 & -0.55 & -0.8 & -0.61 \\
-        \textbf{Out\_Top} & -0.45 & -0.27 & -0.36 & -0.19 & -0.37 & -0.22 \\
-        \textbf{Out\_Middle} & -0.79 & -0.67 & -0.61 & -0.46 & -0.59 & -0.51 \\
+        \textbf{Outer Ear Bottom} & -0.99 & -0.72 & -0.83 & -0.55 & -0.8 & -0.61 \\
+        \textbf{Outer Ear Top} & -0.45 & -0.27 & -0.36 & -0.19 & -0.37 & -0.22 \\
+        \textbf{Outer Ear Middle} & -0.79 & -0.67 & -0.61 & -0.46 & -0.59 & -0.51 \\
         \hline
         \end{tabularx}
         \caption{Mean Temperature of each phase over all participants and over participants 1,4, and 5. The measured ground truth values are subtracted from each participant's temperature data to combine the results in a more fair way.}
@@ -398,9 +398,9 @@ However, there is a tendency which can be further investigated by further studie
         \textbf{TympanicMembrane} & 2.801 & 0.049 & 11.782 & 0.007 & 0.971 & 0.387 & 0.753 & 0.530 \\
         \textbf{Concha} & -2.174 & 0.095 & -0.951 & 0.442 & -0.647 & 0.553 & 0.243 & 0.831 \\
         \textbf{EarCanal} & -0.733 & 0.504 & 2.949 & 0.098 & -0.622 & 0.568 & 0.392 & 0.733 \\
-        \textbf{Out\_Bottom} & -4.728 & 0.009 & -2.723 & 0.113 & -0.444 & 0.680 & 0.863 & 0.479 \\
-        \textbf{Out\_Top} & -5.692 & 0.005 & -3.178 & 0.086 & 0.430 & 0.689 & 1.880 & 0.201 \\
-        \textbf{Out\_Middle} & -3.323 & 0.029 & -3.394 & 0.077 & -0.544 & 0.616 & 3.492 & 0.073 \\
+        \textbf{Outer Ear Bottom} & -4.728 & 0.009 & -2.723 & 0.113 & -0.444 & 0.680 & 0.863 & 0.479 \\
+        \textbf{Outer Ear Top} & -5.692 & 0.005 & -3.178 & 0.086 & 0.430 & 0.689 & 1.880 & 0.201 \\
+        \textbf{Outer Ear Middle} & -3.323 & 0.029 & -3.394 & 0.077 & -0.544 & 0.616 & 3.492 & 0.073 \\
         \hline
         \end{tabularx}%
         }
@@ -440,7 +440,7 @@ Hypothesis 2 is evaluated using the mean temperatures and T-test results, as sho
 
 For the mean temperatures (see Table \ref{subsec:Evaluation:Study2:Hypothesis2:combined_mean_temps}), it can be seen that the TympanicMembrane sensor showed a slight increase in temperature across all stress tests for all participants and especially for participants 1, 4, and 5. In contrast, most of the other sensors showed temperature decreases.
 The T-test results (see Table \ref{subsec:Evaluation:Study2:Hypothesis1:TTest_Results}) provide interesting insights into the variability of temperature changes across different stress tests. 
-The Out\_Bottom sensor showed significant differences ($p<0.05$) in transitions between Stroop-N-Back and N-Back Math for all participants, providing strong evidence of variability. 
+The Outer Ear Bottom sensor showed significant differences ($p<0.05$) in transitions between Stroop-N-Back and N-Back Math for all participants, providing strong evidence of variability. 
 However, the TympanicMembrane and EarCanal sensors did not show statistically significant results, indicating a relatively consistent pattern of temperature change across all stress tests.
 Since it was already evident from previous studies that the signal on the tympanic membrane is the most accurate, no pattern is apparent in this small sample size.
 For the subset of participants 1, 4, and 5, the T-test results show similar trends but are generally less significant due to the smaller sample size.
@@ -459,9 +459,9 @@ For the subset of participants 1, 4, and 5, the T-test results show similar tren
         \textbf{TympanicMembrane} & 0.06 & 0.15 & 0.03 & 0.12 & 0.02 & 0.09 \\
         \textbf{Concha} & -0.53 & 0.0 & -0.5 & 0.02 & -0.46 & 0.01 \\
         \textbf{EarCanal} & -0.4 & -0.07 & -0.42 & -0.1 & -0.4 & -0.14 \\
-        \textbf{Out\_Bottom} & -0.9 & -0.63 & -0.84 & -0.57 & -0.79 & -0.52 \\
-        \textbf{Out\_Top} & -0.43 & -0.25 & -0.37 & -0.19 & -0.33 & -0.18 \\
-        \textbf{Out\_Middle} & -0.71 & -0.55 & -0.63 & -0.47 & -0.56 & -0.44 \\
+        \textbf{Outer Ear Bottom} & -0.9 & -0.63 & -0.84 & -0.57 & -0.79 & -0.52 \\
+        \textbf{Outer Ear Top} & -0.43 & -0.25 & -0.37 & -0.19 & -0.33 & -0.18 \\
+        \textbf{Outer Ear Middle} & -0.71 & -0.55 & -0.63 & -0.47 & -0.56 & -0.44 \\
         \hline
         \end{tabularx}
         \caption{Mean Temperature of each stress test over all participants and over participants 1,4, and 5. The measured ground truth values are subtracted from each participant's temperature data to combine the results in a more fair way.}
@@ -485,9 +485,9 @@ For the subset of participants 1, 4, and 5, the T-test results show similar tren
     \textbf{TympanicMembrane} & 1.51 & 0.20 & 1.31 & 0.32 & 0.80 & 0.47 & 0.97 & 0.43 \\
     \textbf{Concha} & -2.65 & 0.06 & -1.25 & 0.34 & -1.34 & 0.25 & 0.20 & 0.86 \\
     \textbf{EarCanal} & 1.57 & 0.19 & 2.30 & 0.15 & -0.45 & 0.68 & 2.62 & 0.12 \\
-    \textbf{Out\_Bottom} & -5.94 & 0.004 & -3.76 & 0.064 & -2.83 & 0.047 & -4.08 & 0.055 \\
-    \textbf{Out\_Top} & -2.56 & 0.06 & -2.48 & 0.13 & -1.77 & 0.15 & -1.16 & 0.36 \\
-    \textbf{Out\_Middle} & -3.19 & 0.033 & -1.84 & 0.21 & -2.87 & 0.046 & -3.40 & 0.077 \\
+    \textbf{Outer Ear Bottom} & -5.94 & 0.004 & -3.76 & 0.064 & -2.83 & 0.047 & -4.08 & 0.055 \\
+    \textbf{Outer Ear Top} & -2.56 & 0.06 & -2.48 & 0.13 & -1.77 & 0.15 & -1.16 & 0.36 \\
+    \textbf{Outer Ear Middle} & -3.19 & 0.033 & -1.84 & 0.21 & -2.87 & 0.046 & -3.40 & 0.077 \\
     \hline
     \end{tabularx}%
     }
@@ -512,6 +512,6 @@ In addition, the thesis can be considered that stress has different characterist
 For this, however, the number of subjects must be significantly higher.
 However, it can already be seen in table \ref{sec:Evaluation:Study2:Hypothesis1:Summary} that the temperature hardly changes between the stress phase and the phases around it. 
 Because of this, the analyses are not continued here, as a new study with an increased number of subjects is needed.
-In addition, the selected stress tests (as already mentioned in chapter \ref{ch:Design:Study:Study1}) do not elicit sufficient stress in every subject.
+In addition, the selected stress tests (as already mentioned in Section \ref{ch:Design:Study:Study1}) do not elicit sufficient stress in every subject.
 A Trier social stress test (TSST) is also a clearly scientifically recognized stress test, which should be considered for this purpose in the future.
 In summary, Study 2 has provided very helpful information and some approaches for future work, but no meaningful conclusions can be confirmed.

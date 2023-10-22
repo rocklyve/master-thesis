@@ -41,30 +41,151 @@ Since the temperature sensors have an update rate of $2Hz$, some consecutive sen
 
 \section{Sensor Calibration Implementation in Arduino}
 The calibration was implemented using the Arduino platform, modifying the library for the MLX90632 sensors to introduce an emission factor of $0.98$ according to the sensor datasheet. 
-This value is optimized for measuring human body temperature and was also used for the metal plate during calibration. 
+This value is optimized to measure the temperature of the human body and was also used for the metal plate during calibration. 
 This emission factor allows the system to account for the natural variability of thermal radiation between different materials and provide a standardized reading that is consistent across environments.
 
-\section{Data Analysis with Python}
+\section{Study Analysis}
 A pipeline was created for each of the analyses of Study 1 and Study 2. 
+The code of the two studies is located in the Git directory in the folder "codingStuff/studyAnalysis", respectively in the folder "study1" and "study2".
 The pipeline first reads all the recorded data into a Pandas data frame and generates the results for the different hypotheses.
 For each hypothesis, a file exists: "hypothesisX.py", where the "X" stands for the number of the hypothesis. 
-This is called in the pipeline and all results are either output or the plots are saved in the "target" folder.
+This is called in the pipeline and all results are either output or the plots are saved in the "target" folder or output to the console.
 
-In the analysis of Study 1, Python's Pandas library is used to import the raw data collected from the sensors. 
-The reference thermometer value collected by the BRAUN ThermoScan 7 is also stored per subject. 
-Any erroneous or missing data points are identified and either removed or interpolated to maintain data quality. 
+\subsection{Analysis of Study 1}
+The analysis of the first study is stored in the file "study1\_pipeline.py". 
+Running this file starts a pipeline to evaluate all hypotheses.
+At the beginning the class \texttt{AnalysisPipeline}, which sets as class attributes the data folders, target folders. 
+In addition, the class holds the ground truth temperature measured by all subjects in the class attribute \texttt{ground\_truth\_temps}.
+Then, the function \texttt{process\_directory} is called, which stores all the records of each subject's study in the class attribute \texttt{all\_temp\_data}.
+For this purpose, an object of class \texttt{TemperatureData} is created for each individual record.
+This file is stored in the "src" folder, as are all other files.
+Among other things, this object stores the raw data of the sensor values, as well as the ground truth value, which was previously stored in \texttt{ground\_truth\_temps} of all subjects.
+Since the temperature values were stored as \texttt{Integer} and multiplied by 100 in the csv file, the temperature values were also divided by 100 when persisted.
 Since only one temperature sensor value is stored per measurement and the other 5 sensor values are set to 0, they are also set to "NaN", which greatly simplifies the subsequent recording of the data.
-During the acclimatization phase, the data is not evaluated, since this phase serves to acclimatize the sensors to the temperature and leads to constant measured values.
 In addition, the "ID" represents the separation of the phases.
-In order to compare different temperature readings between multiple individuals, the ground truth, i.e. the thermometer reading, is subtracted from each sensor reading.
+In addition, the timestamp, which is stored in milliseconds in the csv file, was converted to minutes.
+The \texttt{TemperatureData} class also contains the function to smoothen the data, which averages and smoothes the data within a window-size of $120$.
+This corresponds to smoothing the data from a window of about 15 seconds, which was chosen to be very small over a total study length of 80 minutes.
+In addition, the class includes a function to plot the smoothed raw data (\texttt{plot\_raw\_data}).
+After executing the constructor of the class \texttt{AnalysisPipeline}, followed by reading in all collected study data, the data are correctly read in and can be used for the analysis of the hypotheses.
+For each one there is now a separate class \texttt{HypothesisXAnalyzer}, where the "X" stands for the number of the hyothesis.
 The individual hypotheses are now analyzed and further supported by a significance test (paired t-tests) to prove or disprove the hypotheses.
-Visualization tools from the Matplotlib and Seaborn libraries will be used to visually represent temperature variations, sensor stability and the effects of environmental variables.
-In the second study, raw data will be imported and temporally aligned similar to study 1. Heart rate data will also be imported and synchronized with temperature measurements. 
-Data quality is checked to ensure the integrity of the data set.
-For data analysis, temperature changes during stress induction tests, which include the Stroop test, N-back test and math test, will be examined. 
-Inter-subject variability and consistency will also be assessed. 
-Heart rate data will be used as baseline data for stress induction. 
-Significance tests (t-tests) will also be used to evaluate the effects of stress on temperature measurements. 
-Correlations between changes in heart rate and temperature will be analyzed to provide evidence of the effects of stress induction. 
 
-In both Study 1 and Study 2, custom Python pipelines were developed to process and analyze sensor data, using Pandas for data manipulation and Matplotlib and Seaborn for visualization. These pipelines read raw sensor and reference thermometer data into Pandas data frames, performed quality checks and performed hypothesis-specific analyses. The resulting statistical or visual insights were then stored for further analysis. Study 1 focused on sensor stability, temperature fluctuations and environmental effects, while Study 2 expanded the analysis to include stress-induced effects and heart rate correlates.
+\paragraph{Hypothesis 1}
+Hypothesis 1 compares the sensors behind the ear with those on the tympanic membrane, ear canal, and concha. 
+For this, the method \texttt{analyze\_mean\_error(phases)} is called, respectively for the phases $[2]$ and $[2,3,4]$.
+This method calculates the mean temperature and the mean absolute error of the sensors behind the ear (top, middle, bottom), as well as of the sensors inside the ear (tympanic membrane, ear canal, concha).
+In addition, a t-test is calculated for the results using \[\texttt{scipy.stats.ttest\_ind(behind\_ear\_means, in\_ear\_means)}\] and using \[\texttt{scipy.stats.ttest\_ind(behind\_ear\_errors, in\_ear\_errors)}\] to further support the hypothesis.
+The results of the method are then output to the console for further interpretation.
+In addition, a boxplot is created for each phase, which should represent the accuracy of the sensors. 
+For this, the ground truth is subtracted from each temperature sensor value per subject in order to compare the sensors across subjects.
+The resulting boxplot is stored in the "target" folder.
+
+\paragraph{Hypothesis 2}
+Hypothesis 2 involves a method that calculates the mean variance per sensor across all subjects. 
+Here, the results of phase 2 and phase 3 are compared, as this represents the indoor and outdoor phases.
+To get a better sense, the mean distance to ground truth measured in the two phases is also calculated.
+The results are displayed in the console.
+Since multiple comparisons were made for different sensors, a Bonferroni correction was applied to control for the family-specific error rate. 
+The Bonferroni corrected threshold with 
+\[
+    \alpha &= 0.05,
+\]
+\[
+    \text{bonferroni\_alpha} &= \frac{\alpha}{k}
+\]
+was used to determine the statistical significance of the results. Here, $k$ is the amount of sensors, which is $6$.
+For each sensor 
+\[
+    \texttt{stats.ttest\_ind(indoor\_var, outdoor\_var)}
+\]
+is calculated and for a p-value below "bonferroni\_alpha" the null hypothesis was rejected.
+The results were also output to the console.
+
+\paragraph{Hypothesis 3}
+Three methods exist for hypothesis 3.
+To begin, there is a \texttt{analyze()} method, which calculates the mean correlation from phase 2 and 3 (indoor, outdoor) over all subjects and stores them globally and additionally outputs them in the console.
+Here, all 6 rows were concatenated, as they represent a complete measurement of the temperature sensors. 
+The timestamp here was averaged over the 6 individual measurements.
+A Spearman correlation matrix was then created from this data set. 
+This was chosen because it not only detects linear correlations and also handles outliers well.
+The correlations range from $-1$ to $1$, with the value $-1$ representing a perfect negative correlation and the value $1$ representing a high correlation.
+These mean correlations were then used in the second function \texttt{generate\_heatmap()} to create a heatmap. 
+The heatmap is then saved in the "target" folder for each of the two phases.
+The third method is \texttt{analyze\_mad()}, which calculates the mean absolute deviation, respectively for the indoor and outdoor phases.
+The results are also output to the console.
+
+\paragraph{Hypothesis 4}
+Hypothesis 4 is to show that the temperature measured at the tympanic membrane is the most stable. 
+For this purpose, the mean standard deviation is calculated, which should show the stability of the sensors. 
+By means of 
+\[
+texttt{numpy.std(phase\_data[sensor])}
+\]
+the standard deviation is calculated per sensor and per subject, which is then averaged over all subjects.
+This is done for the indoor and outdoor phase and displayed in the console.
+
+\paragraph{Hypothesis 5}
+Hypothesis 5 looks at the absolute relative temperature changes and compares them to the mean absolute motion of the subjects, collected from the IMU data.
+Initially, the data is filtered so that only phases 2,3 and 4 are considered.
+Subsequently, by means of 
+\[
+\texttt{temp\_data[sensor].diff().abs().rolling(window=250).mean()}
+\]
+the relative changes per sensor per subject is calculated, which is then averaged per sensor.
+The amount of relative change is considered, as otherwise the changes between subjects, should they be negative and positive respectively, could neutralize each other.
+In addition to the absolute relative change of the individual temperature sensors, the absolute average movement of all subjects is also calculated. 
+For this the movement is calculated by means of 
+\[
+\texttt{pd.concat(all\_aggregated\_imu\_data, axis=1).mean(axis=1).reset\_index()}
+\]
+where \texttt{all\_aggregated\_imu\_data} stores the IMU data of all subjects.
+Then, a plot is generated, which is vertically arranged shows the absolute relative temperature sensor changes and finally the absolute relative movements. 
+The plot is stored in the "target" folder. 
+
+\subsection{Analysis of Study 2}
+
+The second study is structured very similarly to the first study. 
+The pipeline \texttt{Study2Pipeline} can be found in the file "study2\_pipeline.py".
+This holds the ground truth values of the five subjects.
+In addition, the HRV data are also included.
+For this purpose, all relevant timestamps are stored in the global attribute \texttt{hrv\_timestamps} per subject, including the start of the measurement, as well as the time of the individual stress tests.
+These were noted manually per subject and are set manually here.
+The collected data of the study are stored and read in the folder "data", in which a subfolder is created per proband. 
+Two files are stored per subject, a csv file which stores the temperature and IMU information, the same as known from study 1. 
+In addition, the measurements of the Polar H9 are stored in a txt file, which contains the RR intervals of the HRV measurement.
+
+The pipeline starts as in study 1 with the temperature data persisted into the global attribute \texttt{all\_temp\_data}.
+In addition, the HRV data are stored in the attribute \texttt{all\_hrv\_data}.
+For this purpose, an object of the class \texttt{HRVData} is created per subject, which contains the timestamps from \texttt{hrv\_timestamps}, as well as the information of the txt file in a data frame.
+Also stored per subject is the attribute \texttt{kubios\_data}, which stores important findings from the analysis with the "KubiosHRV Standard" software.
+These were calculated using the txt file per subject and read manually.
+The class \texttt{HRVData} has the method \texttt{print\_statistics()}, which outputs all the information about the ground truth, HRV measurement in the console, including the RMSSD, SDNN, LF/HF ratio, during the different phases.
+To plot the raw data, the class \texttt{RawDataPlotter} was created.
+This plots the raw data and persists the plot to the "target" folder.
+Now all the necessary steps have been done to prepare the data so that each hypothesis can be considered. 
+
+\paragraph{Hypothesis 1}
+Hypothesis 1 looks at temperature change and states that temperature increases under stress.
+For this purpose, the mean temperature of the individual sensors is calculated for the sitting phase, stress phase and relaxation phase. 
+Due to the consideration of the ground truth, everything was additionally considered also only for the test persons 1,4 and 5, since these had also actually signs of stress in the stress phase.
+The ground truth of the temperature value was now subtracted from the sensor value for each temperature sensor and test person in order to be able to average all test persons with each other.
+The results were output directly in the console as a combined latex table.
+Additionally by means of 
+\[
+ttest\_rel(data1, data2, nan\_policy='omit')
+\]
+a t-test was performed, ignoring "NaN" values. 
+"data1" and "data2" are the two data sets on which the significance test was performed. 
+This was done on the 3 relevant phases at the adjacent phases for each sensor. 
+These results were also displayed in the console.
+
+\paragraph{Hypothesis 2}
+Hypothesis 2 now considers the temperature changes of the individual stress tests.
+For this purpose, the data set was limited to the phase of the stress tests. 
+This was implemented by using the time value of the HRV data to determine the intervals of the individual stress tests.
+Then, the ground truth value of the temperature measurement was subtracted from the sensor value to compare the data across subjects. 
+The averaged result is output to the console as a final latex table.
+A significance test was performed to statistically substantiate the results.
+This was done as in hypothesis 1, but with the individual sub-stress phases instead of the coarser phases.
+The result was output in the console.
