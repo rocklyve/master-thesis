@@ -4,7 +4,7 @@ This chapter first introduces important aspects of body temperature and then con
 For body temperature, a distinction is made between core body temperature and skin temperature. 
 In addition, the focus is on how temperature can be measured. 
 In the subchapter on sensing with earables, the recording of data on the ear is generally introduced. 
-Here a division of Röddiger \cite{roddigerSensingEarablesSystematic2022a} is explained.
+Here, a division of Röddiger \cite{roddigerSensingEarablesSystematic2022a} is explained.
 
 \section{Body Temperature}
 \label{Background:BodyTemperature}
@@ -22,7 +22,7 @@ In order to keep the body temperature within the normal temperature range throug
 \label{Background:BodyTemperature:ThermalRegulation}
 A vital body function is the possibility of regulation of the exchange of body heat \cite{grodzinskyUnderstandingFeverBody2020}.
 Regulation occurs through a neural feedback system. 
-In many body parts, sensory means detect cold and heat and transmit them via the central nervous system to the hypothalamus reacting to potential temperature adjustments by triggering physiological activity. 
+In many body parts, sensory means detect cold and heat, and transmit them via the central nervous system to the hypothalamus, reacting to potential temperature adjustments by triggering physiological activity. 
 This can be associated with a gain or loss of heat, which maintains body temperature.
 Major players in regulating body temperature are the cardiovascular system, the sudomotor control system and skeletal muscles. 
 The goal is to maintain body temperature within the range of $35^\circ C$ to $41^\circ C$ \cite{pierauTemperatursensibilitaet2001}. 
@@ -34,7 +34,7 @@ The same applies if the body temperature drops below $35^\circ C$.
 Core body temperature is the temperature of the body's internal organs, such as the heart, liver and brain. 
 It is a commonly used indicator of human health and endurance performance.
 Unlike the core body temperature, the body surface temperature is more easily influenced by the ambient temperature and therefore cannot reflect the changes inside the body as well as the core body temperature.
-Core body temperature can be measured invasively rectally, orally (oesophagus), in the pulmonary artery (with the use of a catheter), or in the urinary bladder \cite{moranCoreTemperatureMeasurement2002a}.
+Core body temperature can be measured invasively rectally, orally (oesophagus), in the pulmonary artery (with the use of a catheter) or in the urinary bladder \cite{moranCoreTemperatureMeasurement2002a}.
 However, the gold standard is different.
 The core body temperature of a healthy human body differs almost little from the temperature of the blood flowing in the pulmonary artery \cite{krizanacFemoroiliacalArteryPulmonary2013, holtzclawMonitoringBodyTemperature1993}.
 This is exactly what is used as the gold standard for measuring core body temperature \cite{krizanacFemoroiliacalArteryPulmonary2013, holtzclawMonitoringBodyTemperature1993, fulbrookCoreBodyTemperature1997, maxtonEstimatingCoreTemperature2004}.
@@ -48,7 +48,7 @@ The following methods are much more convenient, but the measurement accuracy suf
 Measuring the body temperature non-invasive can be done on the axilla, the tympanic membrane and the body surface \cite{moranCoreTemperatureMeasurement2002a}.
 Usually, core body temperature is constant only in the core body and consequently cannot be determined outside only by temperature sensors \cite{niedermannPredictionHumanCore2014}.
 Due to this, it is necessary to use several other values for the calculation of the core body temperature in order to approximate the true temperature value. 
-These can include e.g. skin temperature and skin heat fluxes or the heart rate.
+These can include, e.g., skin temperature and skin heat fluxes or the heart rate.
 Niedermann achieved a root mean square deviation (rmsd) ranging from $0.28 ^\circ C$ to $0.34 ^\circ C$ for all environmental conditions in 2014 \cite{niedermannPredictionHumanCore2014}.
 Therefore, a principal component analysis (PCA) was performed to extract uncorrelated variables that were subsequently used in a linear regression model. 
 Six parameters, consisting of three skin temperatures, two skin heat currents and heart rate, were selected as input variables to generate two principal components. 
@@ -57,13 +57,13 @@ The predictive power of these components for estimating core body temperature wa
 \subsection{Skin Temperature}
 \label{Background:BodyTemperature:SkinTemperature}
 Skin temperature is often used to measure body temperature.
-In general it is the result of a dynamic equilibrium between the heat released during metabolic processes and transferred to the skin layer by thermal conduction and convection, the heat extracted from the environment and the heat transferred to the environment by radiation, convection and evaporation \cite{dolibogComparativeAnalysisHuman2022}.
+In general, it is the result of a dynamic equilibrium between the heat released during metabolic processes and transferred to the skin layer by thermal conduction and convection, the heat extracted from the environment and the heat transferred to the environment by radiation, convection and evaporation \cite{dolibogComparativeAnalysisHuman2022}.
 Various sensors are used to measure skin temperature. 
 These include the infrared sensors, but also the thermistors. 
 Both are equal for purposes of clinical electrodiagnostic readings.
 Thermistors offer better responsiveness and sensitivity in measurements.
 Infrared thermistors, on the other hand, are more convenient in terms of speed and maneuverability \cite{burnhamThreeTypesSkinSurface2006}.
-Because the skin is exposed to external influences, temperature differences can quickly occur.
+As the skin is exposed to external influences, temperature differences can quickly occur.
 This can be caused by cold or warm ambient air, but also by rain or other influences.
 Measurements on the skin that cannot be easily influenced, such as the armpits, are suitable here.
 
@@ -71,15 +71,17 @@ Measurements on the skin that cannot be easily influenced, such as the armpits, 
 \label{Background:BodyTemperature:TemperatureMeasurements}
 % TODO: General Temperature measurements of the human body
 In general, the temperature of a human body will be measured with a thermometer.
-There are multiple techniques available on which the temperature value will be calculated. 
-These are divided into contact and non-contact thermometers.
-For a detailed overview, take a look at chapters \ref{Background:TemperatureSensors:OpticalTS} and \ref{Background:TemperatureSensors:ResistanceTD}.
-Body temperature is often measured in the armpit, mouth, rectum, ear, or forehead.
+There are multiple techniques available based on which the temperature value will be calculated. 
+They are divided into contact and non-contact thermometers.
+For a detailed overview, take a look at Chapters \ref{Background:TemperatureSensors:OpticalTS} and \ref{Background:TemperatureSensors:ResistanceTD}.
+Body temperature is often measured in the armpit, mouth, rectum, ear or forehead.
 The temperature in the armpit is typically $36.6^\circ C$, in the mouth $36.9^\circ C$ and $37.1^\circ C$ in the ear \cite{dolibogComparativeAnalysisHuman2022}.
 % TODO: wie siehts bei Rectal aus?
-The rectal temperature testing method is the most accurate of all measurements, while non-contact forehead thermometers are considered the least accurate and measurements are taken with them should be confirmed by other methods.
+The rectal temperature testing method is the most accurate of all measurements, while non-contact forehead thermometers are considered the least accurate.
+Measurements taken with them should be confirmed by other methods.
 The minimum value of the standard error for the above methods is $0.1^\circ C$ [9].
-Ear readings are assumed to be of similar accuracy when compared to the rectal method, which is most commonly used in infants, the correct value is usually $37.1^\circ C$ \cite{dolibogComparativeAnalysisHuman2022}.
+Ear readings are assumed to be of similar accuracy compared to the rectal method, which is most commonly used for infants.
+The value for ear based measurement readings is usually $37.1^\circ C$ \cite{dolibogComparativeAnalysisHuman2022}.
 
 % Ear based temperature measeurements
 Ear-based temperature measurement uses a sensor to measure the temperature of the ear canal. 
@@ -95,11 +97,11 @@ The artery called the external carotid artery runs near the external auditory ca
 Since measuring body temperature at the tympanic membrane is a non-invasive measurement method, it is already being investigated as a possible replacement for currently accepted methods.
 This could be a safe and very convenient way of measuring core body temperature, but to date it is not de-facto due to unresolved problems.
 These include the accuracy and stability compared to measurements at other locations \cite{maxtonEstimatingCoreTemperature2004, fulbrookCoreBodyTemperature1997, mumaComparisonRectalAxillary1991, rothAgreementRectalTympanic1996}.
-Benzinger \cite{benzingerHeatRegulationHomeostasis1969, benzingerClinicalTemperatureNew1969, benzingerPhysicalHeatRegulation1959} first demonstrated the feasibility of tympanic membrane measurement as an indicator of core body temperature using a thermocouple temperature probe that engages the surface of the tympanic membrane with the ear canal sealed from the environment.
-For this, Benzinger made measurements of tympanic membrane temperature obtained from his probe and measurement approach and showed them to be stable, reproducible and responsive to thermal stresses of various types.
+Benzinger first demonstrated the feasibility of tympanic membrane measurement as an indicator of core body temperature using a thermocouple temperature probe that engages the surface of the tympanic membrane with the ear canal sealed from the environment \cite{benzingerHeatRegulationHomeostasis1969, benzingerClinicalTemperatureNew1969, benzingerPhysicalHeatRegulation1959}.
+For this, Benzinger made measurements of the tympanic membrane temperature with his probe and measurement approach and showed them to be stable, reproducible and responsive to thermal stresses of various types.
 However, there are other studies at a later date that refute individual assumptions of this study.
-McCaffrey et al. \cite{mccaffreyEffectHeadSkin1975} and Nielsen \cite{nielsenNaturalCoolingBrain1988} showed that head cooling reduces the core body temperature when measured with exactly the procedure of Benzinger.
-McCaffrey et al., however, also showed that by heating and cooling localized regions of the head, infrared measurement of temperature at the tympanic membrane of human subjects was not proportionally affected by changes in head skin temperature.
+McCaffrey et al. \cite{mccaffreyEffectHeadSkin1975} and Nielsen \cite{nielsenNaturalCoolingBrain1988} showed that head cooling reduces the core body temperature when measured exactly with the procedure of Benzinger.
+McCaffrey et al., however, also showed that by heating and cooling localized regions of the head, infrared measurement of the temperature at the tympanic membrane of human subjects was not proportionally affected by changes in head skin temperature.
 This suggests a contradiction, which means that this method may not be a good predictor of core body temperature because it depends on other, as yet unknown, variables.
 Brinnel and Cabanac \cite{brinnelTympanicTemperatureCore1989} and Sato et al. \cite{satoReexaminationTympanicMembrane1996}, however, provided data showing that measurements for this purpose are still reliable if the measurement point on the tympanic membrane is carefully chosen. 
 Brinnel and Cabanac proposed that the lower anterior quarter of the tympanic membrane (Figure \ref{fig:tympanic_membrane_mp}) has a higher temperature on the surface of the tympanic membrane and temperature measurement from a point in this area is the least sensitive to head cooling.
@@ -120,7 +122,7 @@ Brinnel and Cabanac proposed that the lower anterior quarter of the tympanic mem
 % TODO: \cite{childsTympanicMembraneTemperature1999}
 
 Temperature sensors are used to measure the temperature of a particular object or environment.
-They are widely used in many applications, such as industrial, medical, or scientific contexts.
+They are widely used in many applications, such as industrial, medical or scientific contexts.
 Temperature sensors detect changes in temperature and convert this into a measurable signal.
 There are various types of temperature sensors, including contact and non-contact sensors.
 % Contact sensors
@@ -130,32 +132,45 @@ Thermocouples measure the voltage generated by two different metals when they ar
 RTDs measure changes in the electrical resistance of a metal wire when it has temperature changes.
 Thermistors are semiconductor devices whose electrical resistance changes with temperature.
 % Non-contact sensors
-Non-contact sensors, on the other hand, do not require contact with the object being measured. They are also known as infrared sensors.
-Non-contact sensors measure the emitted infrared radiation from an object and convert it into a measurable signal.
-Most often, the sensors are used when contact with an object is not desirable or practical, such as can often be useful in a medical or scientific research context. 
-This is also the case in this work, as contact with the tympanic membrane, for example, is not desired.
-Non-contact sensors can be roughly divided into two categories: IR (Infared) sensors and optical pyrometers.
-IR sensors are devices that detect and measure the amount of infrared radiation emitted by an object. They operate on the principle that all objects emit infrared radiation in proportion to their temperature. 
-Optical pyrometers, on the other hand, measure temperature by detecting the color of light emitted by an object. They work on the principle that the color of light emitted from a hot object changes as the temperature of the object changes.
-However, the current classification here is very crude.
-In addition to those mentioned above, there are, for example, fiber optic sensors and acoustic sensors.
-
-When choosing the right sensor for a particular application, some things have to be considered.
+Non-contact sensors, on the other hand, do not require contact with the object being measured. 
+Non-contact sensors are divided into infrared thermometers, pyrometers, thermography, and acoustic pyrometers.
+Infrared thermometers measure the infrared radiation from a surface, while pyrometers measure radiation over a specific wavelength range.
+Thermography uses a thermal imaging camera to create a temperature map.
+Acoustic pyrometers measure temperature by using the velocity of sound waves in a medium.
+Most often, the sensors are used when contact with an object is not desirable or practical, as is often the case in medical or scientific research, for example. 
+This is also the case in this work, since contact with the eardrum, for example, is not desired.
+When selecting the right sensor for a particular application, a number of things need to be considered.
 Accuracy, response time and range are important variables.
 Depending on the requirement profile, the right sensor can be selected based on the parameters.
-In the following, the optical temperature sensors, as well as the RTDs are described in more detail, since they are very important in this work.
+In the following, the infrared sensor will be described in more detail, as this is the sensor used in this work.
 
-\subsection{Optical Temperature Sensors}
-\label{Background:TemperatureSensors:OpticalTS}
-Optical temperature sensors, also known as optical pyrometers, measure temperature by detecting the color of light emitted from an object. 
-This is based on the assumption that the color of the emitted light is different depending on the temperature.
-Typically, the behavior is to use a lens that focuses the emitted light from the object onto a detector, which then analyzes the color of the light. 
-This is then ultimately used to determine the temperature.
-This type of sensor is typically used in applications where contact with the object being measured is difficult or impossible, such as in space, harsh environments, or just where contact is not wanted.
-Thus, non-contact measurements are possible, which is essential when measuring the temperature of the tympanic membrane.
-Another advantage of optical temperature sensors is that moving objects can still be measured as long as the sensor continues to point at the object.
-However, this requires a line of sight to the measured object.
-In addition, accuracy can be affected by reflective surfaces or atmospheric conditions, which should not be a problem if the measurement is primarily in the ear.
+% \subsection{Optical Temperature Sensors}
+% \label{Background:TemperatureSensors:OpticalTS}
+% Optical temperature sensors, also known as optical pyrometers, measure temperature by detecting the color of light emitted from an object. 
+% This is based on the assumption that the color of the emitted light is different depending on the temperature.
+% Typically, the behavior is to use a lens that focuses the emitted light from the object onto a detector, which then analyzes the color of the light. 
+% This is then ultimately used to determine the temperature.
+% This type of sensor is typically used in applications where contact with the object being measured is difficult or impossible, such as in space, harsh environments, or just where contact is not wanted.
+% Thus, non-contact measurements are possible, which is essential when measuring the temperature of the tympanic membrane.
+% Another advantage of optical temperature sensors is that moving objects can still be measured as long as the sensor continues to point at the object.
+% However, this requires a line of sight to the measured object.
+% In addition, accuracy can be affected by reflective surfaces or atmospheric conditions, which should not be a problem if the measurement is primarily in the ear.
+
+\subsection{Infrared Sensors}
+\label{Background:TemperatureSensors:InfraredSensors}
+Infrared temperature sensors measure the temperature of an object by detecting the emitted infrared radiation.
+The sensor contains a thermopile, an array of thermocouples that absorbs the incoming infrared radiation. Through the Seebeck effect, the thermopile generates a voltage proportional to the temperature difference between the absorbing "hot" side and a "cold" reference side.
+This voltage is now amplified and converted into a digital signal, from which the temperature is subsequently calculated.
+Calibration factors and the ambient temperature are also taken into account here.
+An important factor for the accuracy of the measurement is the emissivity of the target object, as well as the wavelength range for which the sensor is sensitive. 
+The emissivity depends on the type of object to be measured.
+The emissivity, or emission factor, is a dimensionless quantity between 0 and 1 that indicates how efficiently a material emits thermal energy in the form of infrared radiation. 
+The emissivity defines the ratio to ideal blackbody radiation.
+Human skin is a relatively good emitter of infrared radiation, which is an advantage when measuring fever. 
+The factor here is $0.98$.
+Some sensors also measure the ambient temperature to adjust the final calculation.
+Infrared sensors have the advantage of non-contact measurement, making them ideal for applications where the object being measured is moving or difficult to access. However, they also have disadvantages, such as some sensitivity to external conditions such as smoke or fog. In addition, the accuracy of the measurement can be affected by the emissivity of the target material.
+Since the target material in this thesis is limited to the skin, this is an ideal sensor for measuring temperature at different positions of the ear.
 
 \subsubsection{MLX}
 \label{Background:TemperatureSensors:OpticalTS:MLX}
@@ -167,37 +182,34 @@ The MLX90632 has a small form factor and low power consumption, which is well-su
 In addition, the sensor has a very high accuracy of $\pm 0.2 ^\circ C$ from $35 ^\circ C$  to $42 ^\circ C$.
 In the range of $-20 ^\circ C$  to $100 ^\circ C$ the sensor reaches an accuracy of $\pm 1 ^\circ C$.
 Here the sensor can resolve in $0.02 ^\circ C$ steps.
-Another immense advantage is the simultaneous measurement of two temperature values at the same time.
-This is possible because two sensor elements are directly installed in the MLX90632.
-In this way, an object, such as skin temperature, as well as the ambient temperature can be measured.
-However, it is also possible to measure two different body parts at the same time.
 In order to be able to integrate the sensor optimally into a system, an I2C interface is available so that a microcontroller can communicate easily.
 Overall, the MLX90632 sensor provides a versatile and accurate solution for non-contact temperature measurement in a variety of applications, including medical, industrial and consumer electronics.
 
-\subsection{Thermal Resistance Temperature Detectors}
-\label{Background:TemperatureSensors:ResistanceTD}
-Thermal resistance temperature detectors operate by measuring changes in electrical resistance as a function of temperature. 
-This type of sensor is typically used in applications where high accuracy is required, such as laboratory environments or medical equipment.
-They provide high accuracy and cover a wide range of temperature measurements.
-However, contact measurement is required here, which limits temperature measurement to stationary objects.
-Furthermore, thermal resistance temperature sensors have a slow response time, which makes real-time measurement somewhat difficult.
+% \subsection{Thermal Resistance Temperature Detectors}
+% \label{Background:TemperatureSensors:ResistanceTD}
+% Thermal resistance temperature detectors operate by measuring changes in electrical resistance as a function of temperature. 
+% This type of sensor is typically used in applications where high accuracy is required, such as laboratory environments or medical equipment.
+% They provide high accuracy and cover a wide range of temperature measurements.
+% However, contact measurement is required here, which limits temperature measurement to stationary objects.
+% Furthermore, thermal resistance temperature sensors have a slow response time, which makes real-time measurement somewhat difficult.
 
-In summary, optical temperature sensors are useful in situations where contact with the object being measured is difficult or impossible, while thermal resistance sensors are suitable for applications that require high accuracy and a wide temperature measurement range. 
-Ultimately, the choice between these two types of sensors depends on the specific requirements of the application.
+% In summary, optical temperature sensors are useful in situations where contact with the object being measured is difficult or impossible, while thermal resistance sensors are suitable for applications that require high accuracy and a wide temperature measurement range. 
+% Ultimately, the choice between these two types of sensors depends on the specific requirements of the application.
 
-Here in the master's thesis, optical temperature sensors are suitable because they do not require direct contact points, which is essential when measuring temperature on the tympanic membrane.
+% Here in the master's thesis, optical temperature sensors are suitable because they do not require direct contact points, which is essential when measuring temperature on the tympanic membrane.
 
 \subsection{Stress and Its Effects on Body Temperature}
 This section is intended to provide a scientific basis for later studies on the detection of stress by measuring temperature at the ear. 
 To this end, the relationship between stress and body temperature will be explained in order to later test whether stress can be detected by changes in body temperature.
 Stress is a physiological and psychological response to challenging tasks or threatening situations \cite{jamesUnderstandingRelationshipsPhysiological2023}. 
 Stressors can be acute or chronic.
-An acute stressor (e.g., a near-accident with a car) triggers a stress response immediately, but the stress subsides immediately after the event.
+An acute stressor (e.g., a near-accident with a car) triggers a stress response directly, but the stress subsides immediately after the event.
 A chronic stressor, on the other hand, lasts over a longer period of time. 
 This includes, for example, financial problems or persistent illness.
-Here there are no quick fixes and the problems are not quickly forgotten \cite{baumControlIntrusiveMemories1993}.
+Here, there are no quick fixes and the problems are not quickly forgotten \cite{baumControlIntrusiveMemories1993}.
 Stress can have positive and negative effects.
-On the one hand, stress can make you rise above yourself in dicey situations; on the other hand, it can have a negative impact on mental and physical health if the stress is excessive or lasts for a long time \cite{jamesUnderstandingRelationshipsPhysiological2023}.
+On the one hand, stress can make you rise above yourself in dicey situations.
+On the other hand, it can have a negative impact on mental and physical health if the stress is excessive or lasts for a long time \cite{jamesUnderstandingRelationshipsPhysiological2023}.
 In this context, prolonged stress can cause, for example, digestive and gastrointestinal problems, hypertension, diabetes, cardiovascular disease, bone mineral loss, immune suppression and asthma \cite{merabetHowExposureChronic2022, dhamaBiomarkersStressRelated2019, petriePrevalencePTSDCommon2018}.
 
 Stress activates the body's fight-or-flight mechanism, which leads to various physiological changes, including an increase in body temperature \cite{marazzitiPsychologicalStressBody1992}. 
@@ -207,7 +219,7 @@ The human body's response to stress is complex and involves multiple systems, in
 One of the immediate physiological responses to stress is hyperthermia, a transient increase in core body temperature \cite{vinkersEffectStressCore2013}. 
 This phenomenon is part of the body's acute stress response, often referred to as the fight or flight response \cite{vinkersEffectStressCore2013}.
 The increase in body temperature during stress has already been demonstrated in several studies.
-In a 2021 study by Nakata, a passive heat stress test resulted in an increase in internal temperature of about $1.2 ^\circ\text{C}$ and impaired cognitive function \cite{nakataEffectsPassiveHeat2021}. 
+In a study by Nakata in 2021, a passive heat stress test resulted in an increase in the internal temperature of about $1.2 ^\circ\text{C}$ and impaired cognitive function \cite{nakataEffectsPassiveHeat2021}. 
 This study suggests that heat stress may have a significant impact on neuronal activity related to cognitive function.
 In another study, stress was inflicted on subjects using the Trier Social Stress Test (TSST) \cite{vinkersEffectStressCore2013}. 
 In this study, subjects had to perform a 5-minute interview with a preparation time of 3 minutes in front of a panel with a microphone. 
@@ -385,7 +397,7 @@ In addition, the variation in measurements at the external auditory canal is als
 This is explained by the ambient temperature and other radiations.
 With increasing ambient temperature and reduced radiation, the difference from the comparison measurement and also the fluctuations could be minimized.
 However, the most commonly used measurement point on the ear for temperature is the tympanic membrane. 
-The advantages of measuring temperature at the eardrum have already been explained in chapter \ref{Background:BodyTemperature:TemperatureMeasurements}.
+The advantages of measuring temperature at the eardrum have already been explained in Chapter \ref{Background:BodyTemperature:TemperatureMeasurements}.
 
 Already in 2013, Boano et. al used the eardrum to measure temperature with an ear-based wearable \cite{boanoNoninvasiveMeasurementCore2013}. 
 Here, the progression of temperature during a marathon run was tracked.

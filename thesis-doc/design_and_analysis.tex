@@ -12,7 +12,7 @@ This section first introduces the OpenEarable platform, which is the cornerstone
 Next, the sensors critical to temperature measurement are discussed.
 After laying the groundwork for understanding the prototype, the development and approach to designing the prototype is explained.
 In addition, the methodology and process of the two studies are described in detail.
-The results of the studies are presented in chapter \ref{ch:Evaluation}.
+The results of the studies are presented in Chapter \ref{ch:Evaluation}.
 
 \section{Platform: OpenEarable}
 \label{ch:Design:Prototype:OpenEarable}
@@ -47,7 +47,7 @@ Given the small battery size in the developed prototype, low power consumption i
 The MLX90632 offers fast response times and allows for real-time temperature monitoring and fast updates. 
 Some difficulties arose when writing the EEPROM, so the default value was left at 2Hz.
 The intention of adjusting the measuring rate was the implementation details of the library, which was finally solved by adjusting the library. 
-This process is described in more detail in chapter \ref{ch:Implementation}.
+This process is described in more detail in Chapter \ref{ch:Implementation}.
 The high sensitivity to temperature changes allows the MLX90632 to accurately detect even minor variations. 
 This sensitivity is advantageous for precise temperature tracking.
 In addition, the sensor has applications in both the consumer and industrial markets due to its accuracy and reliability. 
@@ -74,7 +74,7 @@ Overall, infrared temperature sensing capabilities, accuracy, easy availability,
 % The target metal plate was set to different reference temperatures ($25, 30, 35, 40, 45^\circ$ C) and a series of measurements was started.
 % Then, the recorded measurement data were concatenated and different offsets, including constant, linear and polynomial offset with the degrees (2, 4, 8, 16, 32), were calculated.
 
-% The MLX90632 sensor uses a special formula to convert measured values to temperature specifications, which is described in chapter \ref{ch:Design:Prototype:Sensors}.
+% The MLX90632 sensor uses a special formula to convert measured values to temperature specifications, which is described in Chapter \ref{ch:Design:Prototype:Sensors}.
 % Special attention is paid to the emissivity factor, a dimensionless quantity between 0 and 1, which describes the ratio of the energy radiated from the surface to the energy of an ideal black body.
 % For measurements of body temperature, this factor must be set to 0.98.
 % Although the calibration was performed on metal, which requires an emissivity factor of 1, the factor was left at 0.98 to adapt the calibration to the human body.
@@ -83,7 +83,7 @@ Overall, infrared temperature sensing capabilities, accuracy, easy availability,
 
 \section{Prototype}
 \label{ch:Design:Prototype}
-To measure the temperature as planned in section \ref{ch:Introduction:PlannedApproach}, a custom-built prototype was developed as part of this master's thesis.
+To measure the temperature as planned in Section \ref{ch:Introduction:PlannedApproach}, a custom-built prototype was developed as part of this master's thesis.
 The prototype consists of two components: an earpiece that resembles an in-ear headphone and a component placed behind the ear that resembles a hearing aid. TECO's OpenEarable platform for ear-based observations is integrated into the behind-the-ear component. This component serves as the central interface and houses the Arduino on which all code is executed. Additionally, a circuit board with three temperature sensors is connected to measure the temperature behind the ear.
 The second component is placed in the ear and is also controlled by the OpenEarable via the Arduino Nano33 BLE installed there. The OpenEarable acts as the basis for reading and storing data from the sensors connected via I2C. The relationship and interaction of the components are visually represented in Figure \ref{fig:design:prototype_connection}.
 To ensure functionality and protection of the hardware, custom 3D-printed enclosures were created for both the behind-the-ear component and the in-the-ear component. 
@@ -117,7 +117,7 @@ The use of the 8-pin cable effectively connects the two components, additionally
 \label{ch:Design:Prototype:BehindEar}
 
 The temperature behind the ear is measured at three positions, as can be seen in Figure \ref{fig:design:pcb_description} on the back of the PCB and conceptually in Figure \ref{fig:ear_measurement_positions}.
-To position the temperature sensors at the locations chosen in section \ref{ch:Introduction:PlannedApproach}, a PCB was developed that has the sensors installed at the appropriate locations. 
+To position the temperature sensors at the locations chosen in Section \ref{ch:Introduction:PlannedApproach}, a PCB was developed that has the sensors installed at the appropriate locations. 
 The PCB has been designed so that only the temperature sensors are placed on the back. This allows the PCB to be placed entirely in the bottom of the case, while the temperature sensors peek out through matching openings in the case. On the front of the PCB are all the other components, including a 4-pin connector and an 8-pin connector.
 The 4-pin connector is used to connect to the OpenEarable. This connection allows the OpenEarable to communicate with the PCB via I2C, as the OpenEarable also has a special 4-pin connector for exactly such a purpose.
 To be able to control the second component (the earpiece) via I2C later on as well, the 8-pin connector was added to establish a connection to the second component.
@@ -144,8 +144,8 @@ This was taken into account.
 \subsection{Temperature Measurements in the Ear}
 \label{ch:Design:Prototype:Earpiece}
 
-The second component now enables temperature measurement in the ear area. The FlexPCB itself is only equipped with components on the front side. Thereby, the 8-pin connector that connects the FlexPCB to the PCB is located, as described in section \ref{ch:Design:Prototype:BehindEar}.
-Additionally, three temperature sensors are placed on the FlexPCB to sense the positions in the ear and pinna described in section \ref{ch:Introduction:PlannedApproach} and Figure \ref{fig:ear_measurement_positions}.
+The second component now enables temperature measurement in the ear area. The FlexPCB itself is only equipped with components on the front side. Thereby, the 8-pin connector that connects the FlexPCB to the PCB is located, as described in Section \ref{ch:Design:Prototype:BehindEar}.
+Additionally, three temperature sensors are placed on the FlexPCB to sense the positions in the ear and Concha described in Section \ref{ch:Introduction:PlannedApproach} and Figure \ref{fig:ear_measurement_positions}.
 The FlexPCB was designed to extend through the component. 
 On the one hand, the 8-pin connector extends outward to connect to the PCB. 
 On the other hand, the PCB extends along the outside of the case to the earbud, allowing the FlexPCB to snake through. 

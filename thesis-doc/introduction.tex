@@ -14,20 +14,21 @@ Most wearables are equipped with various sensors, which are intended to replace 
 
 % Why earables?
 Capturing data using earables has become very popular due to their compact size, their comfortable fit, their easy reachability by hands and their ability to capture lots of physiological data of the human body \cite{roddigerSensingEarablesSystematic2022a}. 
-The fact that they are very close to the body, especially on a body opening and can be worn over a long period of time without any issues is a huge advantage compared to other positions to capture such data.
+The fact that they are very close to the body, especially on a body opening, and can be worn over a long period of time without any issues is a huge advantage compared to other positions to capture such data.
 Furthermore, many earables are designed to be discrete, making them a practical option for individuals who want to monitor their health without drawing attention to themselves.
-Earables are located near the brain and the major blood vessels on the head and neck can be worn in or around the ears capturing a variety of biometric data to revolutionize the way our health such as heart rate, oxygen saturation and body temperature is monitored and understood.
+Earables are located near the brain and the major blood vessels on the head and neck.
+They can be worn in or around the ears capturing a variety of biometric data to revolutionize the way our health such as heart rate, oxygen saturation and body temperature is monitored and understood.
 
 % body temperature
-One important aspect of sensing data with earables is the ability to detect changes in body temperature \cite{dolsonWearableSensorTechnology2022, bonziAccuracyPeripheralThermometers2016, NovelWearableDevice2021}. 
+An important aspect of sensing data with earables is the ability to detect changes in body temperature \cite{dolsonWearableSensorTechnology2022, bonziAccuracyPeripheralThermometers2016, NovelWearableDevice2021}. 
 Earables equipped with temperature sensors can provide accurate measurements of body temperature throughout the day, which can be used to track patterns and identify potential health issues \cite{rajbhandaryFeasibilityContinuousMonitoring2020a}.
-By monitoring core body temperature over time, individuals can gain valuable insights into their health and physiological state, allowing for early identification of potential issues \cite{mrozekBrainTemperaturePhysiology2012}.
-For example, core body temperature can be an important indicator of fever, as well as infection or inflammation. 
+By monitoring core body temperature over time, individuals can gain valuable information about their health and physiological state, allowing for early identification of potential issues \cite{mrozekBrainTemperaturePhysiology2012}.
+For example, core body temperature can be an important indicator of fever as well as infection or inflammation. 
 Monitoring this data can provide early insights and enable rapid treatment steps \cite{NovelWearableDevice2021}.
 Furthermore, core body temperature can also be used to classify the circadian rhythm of the body \cite{liCircadianRhythmAnalysis2021, juSleepQualityPreclinical2013}.
 This controls many physiological processes, revealing possible disturbances when core body temperature is measured continuously.
 Athletic performance can also be monitored using core body temperature \cite{boanoNoninvasiveMeasurementCore2013}.
-Changes in core body temperature can indicate changes in the body's thermoregulatory system that can affect performance and increase the risk of heat illness \cite{gabbettAthleteMonitoringCycle2017, silvaSleepQualityTraining2022}.
+Temperature can indicate changes in the body's thermoregulatory system that can affect the performance and increase the risk of heat illness \cite{gabbettAthleteMonitoringCycle2017, silvaSleepQualityTraining2022}.
 %Core body temperature is also closely related to sleep and monitoring core body temperature can help identify sleep disorders such as sleep apnea \cite{PIIS0022399902, liuSleepSuicideSystematic2020}.
 Hormonal changes also affect core body temperature. 
 These can, for example, trigger fluctuations in body temperature due to changes in estrogen levels during the menstrual cycle. 
@@ -45,13 +46,11 @@ Therefore, the ear provides high potential in measuring body temperature.
 Nevertheless, the sensor placement and measurement methodology for ear-based temperature monitoring is still an open research question. 
 The optimal position for temperature measurement on the ear is quite obvious: the tympanic membrane \cite{childsTympanicMembraneTemperature1999, kimComparisonBilateralEardrum2022, mumaComparisonRectalAxillary1991}.
 However, it is not easy to align the infrared sensor with the tympanic membrane.
-In addition, influencing factors such as ear wax can affect measurement results. 
-This raises the question of how measurement results differ at different measurement points on and in the ear. 
-By using an alternative measuring point, various influencing factors would be eliminated.
-% It may also be interesting to see whether the combination of several sensors stabilizes the measurement results.
-Another question is how temperature measurements on the ear behave when they are not performed under controlled conditions in the laboratory.
-So one might ask what is the influence of motion artifacts?
-With additional sensors, for example, an IMU, it would be possible to detect movements and integrate this knowledge into the erroneous temperature measurement and possibly correct it.
+In addition, influencing factors such as earwax can affect the measurement results. 
+This raises the question of how measurement results differ at different measurement points on and in the ear, and whether various characteristics, activities, or health features can also be detected via other sensor positions.
+Another question is how temperature measurements at the ear behave when not performed under controlled conditions in the laboratory.
+For example, one could ask how great the influence of motion artifacts is.
+With additional sensors, e.g., an IMU, it would be possible to detect motion and integrate this knowledge into the erroneous temperature measurement and possibly correct it.
 
 \section{Problem}
 \label{ch:Introduction:Problem}
@@ -60,47 +59,55 @@ Discrepancies in temperature-based measurement in the ear have been reported due
 The main problem is that the accuracy and reliability of ear temperature measurements can be affected by several factors \cite{gasimAccuracyTympanicTemperature2013}. 
 Measuring temperature at the tympanic membrane is quite complicated to set up since the temperature sensor in the ear canal must be properly aligned \cite{amoateng-adjepongAccuracyInfraredTympanic1999a, gasimAccuracyTympanicTemperature2013}. 
 Due to the wide variety of ear canal shapes of different individuals, this cannot always be guaranteed.
-In addition, influencing factors such as earwax can affect the path to the tympanic membrane and thus also the temperature measurement and all the advantages of measuring the temperature there \cite{gasimAccuracyTympanicTemperature2013}.
+In addition, influencing factors such as earwax can affect the path to the tympanic membrane and thus also the temperature measurement as well as all the advantages of measuring the temperature there \cite{gasimAccuracyTympanicTemperature2013}.
 
 
 \section{Question}
 \label{ch:Introduction:Question}
-This master's thesis examines temperature sensors, each placed at different locations in and around the ear canal comparing the sensor measurements with those of a medically certified thermometer, considered here as the ground truth.
-The research objective is to compare different positions for temperature-based measurement in and around the ear and investigate how this affects the accuracy and stability of the measurements.
-Additionally, it is interesting to see if other sensor information can be used to filter out potential errors and optimize results. These includes for example an IMU signal. 
-The resulting location for the measurement will then be taken as a basis to detect a temperature-dependent event of the body and evaluate if this provides conclusive results.
-Various metrics such as mean squared deviation and correlation are used to measure the accuracy and stability of the measurements.
+This master's thesis examines temperature sensors, each placed at different locations in and around the ear canal, and compares the sensor measurements to those of a medically certified thermometer (BRAUN Thermoscan 7), which is the ground truth here.
+The research goal is to compare different positions for temperature measurement in and around the ear and how this affects the accuracy and stability of the measurements.
+Additionally, it will be interesting to see if other sensor information can be used to filter potential errors and optimize results. 
+This includes, for example, an IMU signal. 
+The resulting location of the measurement is then used as a basis for detecting a temperature-dependent event of the body and evaluating whether this provides conclusive results.
+The temperature dependent event is stress in this thesis.
+Stress activates the sympathetic nervous system by activating the fight-or-flight mode.
+This leads to increased heart rate, increased blood flow, and thus increased body temperature, which should be detected by the sensors.
+Various metrics such as mean square deviation and correlation are used to measure the accuracy and stability of the measurements.
 
-In particular, it is unclear what effect different measurement positions have on measurement accuracy and reliability.
-To address these issues, several hypotheses will be tested. 
-In addition, it is conceivable that other signals like IMU can be used to detect measurement errors, sports activities, or the like.
-Various metrics are used to evaluate the accuracy and reliability of ear temperature measurements, such as Mean Squared Deviation and correlation.
-Through our studies, it is hoped to help improving the accuracy and reliability of temperature-based measurements in the ear and thus contribute to medical diagnostics.
-% TODO: check, if all hypotheses are mentioned here
+In particular, it is unclear how different measurement positions affect measurement accuracy and reliability.
+To address these issues, several hypotheses are tested. 
+In addition, it is conceivable that other signals such as IMU could be used to detect measurement errors, sports activities or the like.
+Several metrics are used to evaluate the accuracy and reliability of ear temperature measurements, such as mean square deviation and correlation.
+With our studies, we hope to contribute to improving the accuracy and reliability of ear temperature measurements and thus contribute to medical diagnostics.
 
 \section{Planned Approach}
 \label{ch:Introduction:PlannedApproach}
-The OpenEarable platform is used to attach various temperature sensors to the ear canal. 
-The sensors will be placed at various locations including the concha, inside the ear canal, one pointing to the tympanic membrane and behind the pinna.
-The exact positions can be explored in Figure \ref{fig:ear_measurement_positions}.
-Participants will be asked to wear the sensors on one ear in a study under similar conditions.
-The resulting data will be collected and analyzed afterward to determine the best sensor position for ear-based temperature measurement. 
-This position will then be used to classify temperature-related events of the body.
+In order to position the temperature sensors at the selected positions and to record the temperature values with them, a prototype is built for this master thesis.
+Subsequently, two studies will be conducted, the first of which will look at and compare the positions and the second of which will compare the temperature behavior under stress at the different sensor positions.
 
-To gain additional insight, it's planned to take temperature measurements during different activities to see how the measurements behave in different situations. 
-Furthermore the relevant activities were selected and compared to the results from the literature to see if our results are consistent with those from previous studies.
+The OpenEarable platform is used as a basis, which makes it possible to attach various temperature sensors to the ear canal in an uncomplicated manner. 
+The sensors are placed at various locations, including the concha, inside the ear canal, at a location facing the tympanic membrane, and behind the concha.
+The exact locations can be explored in Figure \ref{fig:ear_measurement_positions}.
+Two circuit boards will be designed for this purpose, furthermore a case for comfortable wearing during the study.
+Participants will be asked to wear the sensors in a study under similar conditions on the right ear.
+The resulting data will be collected and then analyzed to compare sensor positions for ear-based temperature measurement. 
+These positions will then be used to classify body stress induced in the second study based on body temperature.
+To gain additional insight, it is planned to take temperature measurements during different activities to see how the measurements behave in different situations. 
+In addition, relevant activities were selected and compared to results from the literature to see if our results are consistent with those from previous studies.
+
+From these findings, two independent studies emerge, which are described in more detail in the following sections.
 
 \begin{figure}
     \centering
     \includegraphics[scale=0.26]{thesis-doc/images/ear_measurement_points/emp.png}
-    \caption{Here the temperature measurement points are shown visually from different angles (profile view (1), ear from behind (2), ear from the side (3)). P1-P3 are three measuring points behind the ear, which measure the skin temperature at the mastoid. $C1$ is a measuring point that measures the temperature at the concha. $C2$ and $C3$ measure the temperature in the ear canal, where $C3$ is directed at the tympanic membrane and $C2$ is directed at the edge of the ear canal. The arrows at each measuring point show the measuring direction. In addition, a measuring point is outlined with a dashed line if it is located behind the ear. The sensor used is the MLX90632, which is an infrared temperature sensor. This is connected to the OpenEarable and the sensor values can be received and persisted using the I2C protocol.}
+    \caption{Here the temperature measurement points are shown visually from different angles (profile view (1), ear from behind (2), ear from the side (3)). $P1$-$P3$ are three measuring points behind the ear, which measure the skin temperature at the mastoid. $C1$ is a measuring point that measures the temperature at the concha. $C2$ and $C3$ measure the temperature in the ear canal, where $C3$ is directed at the tympanic membrane and $C2$ is directed at the edge of the ear canal. The arrows at each measuring point show the measuring direction. In addition, a measuring point is outlined with a dashed line if it is located behind the ear. The sensor used is the MLX90632, which is an infrared temperature sensor. This is connected to the OpenEarable and the sensor values can be received and persisted using the I2C protocol.}
     \label{fig:ear_measurement_positions}
 \end{figure}
 
 \section{Expected Results}
 \label{ch:Introduction:ExpectedResults}
 The study is expected to provide insights into the placement of sensors for temperature monitoring in or directly on the ear.
-% For this purpose, it is possible that this will be done by one sensor or by a combination of several sensors.
-Possible variations in temperature measurements at different positions in the ear canal will be identified in order to be able to adequately predict the temperature at the ear in everyday situations.
+Possible variations in temperature measurements at different positions in the ear canal will be identified to adequately detect temperature at the ear in everyday situations.
 The results will support the development of more accurate and reliable wearable devices for biometric applications. 
-In addition, the optimally determined position will serve as a new basis for the analysis of various body temperature-changing events.
+In addition, the optimally determined position will serve as a new basis for the analysis of various body temperature changing events.
+The second study, which is being conducted as part of this work, will demonstrate small-scale temperature increases under stress and provide preliminary findings.
