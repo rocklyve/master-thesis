@@ -103,7 +103,7 @@ class Study2Pipeline:
             os.path.join(self.target_dir, os.path.basename(participant_path)),
         )
         temp_data.smooth_data()
-        temp_data.plot_raw_data()
+        # temp_data.plot_raw_data()
         self.all_temp_data.append(temp_data)
         self.all_hrv_data.append(hrv_data)
 
@@ -118,17 +118,20 @@ if __name__ == '__main__':
     raw_data_plotter = RawDataPlotter(pipeline.all_temp_data, pipeline.all_hrv_data, data_dir, target_dir)
     raw_data_plotter.plot_raw_data()
 
-    # hrv_pipeline = HRVPipeline(pipeline.all_hrv_data)
-    # hrv_pipeline.analyze()
+    hrv_pipeline = HRVPipeline(pipeline.all_hrv_data)
+    hrv_pipeline.analyze()
 
-    print("Analyzing hypothesis 1")
-    hypothesis1 = Hypothesis1Analyzer(pipeline.all_temp_data, target_dir)
-    hypothesis1.analyze()
+    # print("")
+    # print("Analyzing hypothesis 1")
+    # print("")
+    # hypothesis1 = Hypothesis1Analyzer(pipeline.all_temp_data, target_dir)
+    # hypothesis1.analyze()
 
-    print("Analyzing hypothesis 2")
-    hypothesis2 = Hypothesis2Analyzer(pipeline.all_temp_data, pipeline.all_hrv_data, target_dir)
-    hypothesis2.analyze()
-    hypothesis2.analyze145()
+    # print("")
+    # print("Analyzing hypothesis 2")
+    # print("")
+    # hypothesis2 = Hypothesis2Analyzer(pipeline.all_temp_data, pipeline.all_hrv_data, target_dir)
+    # hypothesis2.analyze()
 
     # print("Analyzing hypothesis 3")
     # hypothesis3 = Hypothesis3Analyzer(pipeline.all_temp_data, pipeline.all_hrv_data, target_dir)

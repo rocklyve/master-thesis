@@ -34,8 +34,12 @@ class Hypothesis1Analyzer:
                     })
 
         # Create LaTeX tables
-        self.create_latex_table(mean_temp_list, filename_suffix='_all')  # For all probands
-        self.create_latex_table(mean_temp_list, probands=['p01', 'p04', 'p05'], filename_suffix='_145')  # For probands 1, 4, and 5
+        # self.create_latex_table(mean_temp_list, filename_suffix='_all')  # For all probands
+        # self.create_latex_table(mean_temp_list, probands=['p01', 'p04', 'p05'], filename_suffix='_145')  # For probands 1, 4, and 5
+
+        self.create_latex_table_2(mean_temp_list, filename_suffix='_all')  # For all probands
+        # self.create_latex_table_2(mean_temp_list, probands=['p01', 'p04', 'p05'],
+        #                           filename_suffix='_145')  # For probands 1, 4, and 5
 
         # Organize the data
         for entry in mean_temp_list:
@@ -73,6 +77,52 @@ class Hypothesis1Analyzer:
     def perform_ttest(self, data1, data2):
         t_stat, p_value = ttest_rel(data1, data2, nan_policy='omit')  # 'omit' will ignore NaNs
         return t_stat, p_value
+
+    def create_latex_table_2(self, mean_temp_list, probands=None, filename_suffix=''):
+        # Initialize a dictionary to store the temperature differences
+        sensor_phase_diff_data = {}
+
+        # Filter data based on the specified probands, if any
+        if probands is not None:
+            mean_temp_list = [entry for entry in mean_temp_list if entry['Proband'] in probands]
+
+        # Populate the sensor_phase_diff_data dictionary
+        for entry in mean_temp_list:
+            proband = entry['Proband']
+            sensor = entry['Sensor']
+            phase = entry['Phase']
+            mean_temp = entry['Mean_Temperature']
+
+            if proband not in sensor_phase_diff_data:
+                sensor_phase_diff_data[proband] = {}
+
+            if sensor not in sensor_phase_diff_data[proband]:
+                sensor_phase_diff_data[proband][sensor] = {}
+
+            sensor_phase_diff_data[proband][sensor][phase] = mean_temp
+
+        # Create the LaTeX tables
+        for table_title, (phase1, phase2) in zip(['Sitting to Stress', 'Stress to Relax'], [(2, 3), (3, 4)]):
+            latex_code = "\\begin{table}[t]\n\\centering\n\\begin{tabular}{|l|" + "r" * len(
+                self.all_temp_data[0].temp_columns) + "|}\n\\hline\n"
+            latex_code += "Proband & " + ' & '.join(self.all_temp_data[0].temp_columns) + " \\\\\n\\hline\n"
+
+            for proband, sensor_data in sensor_phase_diff_data.items():
+                row_data = []
+                for sensor in self.all_temp_data[0].temp_columns:
+                    temp_diff = round(
+                        sensor_data.get(sensor, {}).get(phase2, np.nan) - sensor_data.get(sensor, {}).get(phase1,
+                                                                                                          np.nan), 2)
+                    row_data.append(str(temp_diff) if not np.isnan(temp_diff) else 'N/A')
+
+                latex_code += f"{proband} & {' & '.join(row_data)} \\\\\n"
+
+            latex_code += "\\hline\n\\end{tabular}\n"
+            latex_code += f"\\caption{{Temperature Difference from {table_title} for each participant.}}\n"
+            latex_code += f"\\label{{subsec:Evaluation:Study2:Hypothesis1:temp_diff_{table_title.replace(' ', '_').lower()}{filename_suffix}}}\n\\end{{table}}"
+
+            print(f"LaTeX code for {table_title}:")
+            print(latex_code)
 
     def create_latex_table(self, mean_temp_list, probands=None, filename_suffix=''):
         # Initialize a dictionary to store the mean temperatures

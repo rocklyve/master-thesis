@@ -7,6 +7,7 @@ from scipy.fft import fft
 class HRVData:
     def __init__(self, hrv_df, hrv_timestamps, hrv_file_path, hrv_file_name):
         self.hrv_df = hrv_df
+        self.proband = hrv_file_path.split('/')[1]
         self.hrv_timestamps = hrv_timestamps
         self.hrv_filepath = hrv_file_path
         self.hrv_filename = hrv_file_name
