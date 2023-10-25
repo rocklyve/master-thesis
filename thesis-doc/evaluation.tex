@@ -17,6 +17,16 @@ At the beginning in the acclimation phase (ID=1), the sensor adapts to the body.
 Subsequently, in the sitting phase (ID=2), the sensor readings show little change under controlled conditions.
 In Phase 3, where the subjects were walking outside, the measured temperature drops for all subjects.
 In the relax phase (ID=4), the subject is back in the controlled environment and the signal settles back toward the values measured in Phase 2.
+
+After the study was conducted, a questionnaire was completed by each subject. 
+This included the conditions and perceptions of the study. 
+The study was conducted at a mean indoor temperature of $25.4 ^\circ C$ and humidity of $47.55 \text{g/m}^3$. 
+The outdoor temperature was a mean of $19.375 ^\circ C$.
+The external conditions were mostly sunny and cloudy, but two subjects also experienced light rain.
+Subjects averaged 26 years of age (24-29) and were healthy.
+All test persons arrived in such a way that they had a short journey and had not previously done any activities that could significantly influence the temperature.
+After the study, all subjects were very positive about the prototype and rated it $8.1$ on a scale of 0-10.
+
 To verify the findings collected in this study, several hypotheses were formulated and tested. 
 These hypotheses aim to answer specific questions related to the performance and reliability of ear-based temperature measurements. 
 The results and their implications are discussed in the following sections, where each hypothesis is evaluated in detail based on the data collected.
@@ -99,7 +109,7 @@ The second perspective, which uses Phase 2,3 and 4 also confirms the hypothesis 
 However, the sensors behind the ear also show a statistically significant higher error compared to the ground truth, especially when the subject is involved in activities such as walking. 
 These findings have important implications for the use of ear-based temperature sensors in various applications.
 
-\subsection{Hypothesis 2: Variance Difference Indoor/Outdoor}
+\subsection{Hypothesis 2: Indoor vs Outdoor Variance}
 \label{subsec:Evaluation:Study2:Hypothesis2}
 
 \begin{table}[t]
@@ -161,7 +171,7 @@ For example, the p-value for the tympanic membrane sensor was significantly lowe
 This pattern was consistently observed for other sensors (see Table~\ref{subsec:Evaluation:Study1:Hypothesis2:pvalues}), providing strong empirical support for the hypothesis.
 In summary, the data confirm that temperature readings from ear-based sensors have significantly lower variances when measured indoors compared to outdoors.
 
-\subsection{Hypothesis 3: Interrelated Relative Changes in Temperature Readings}
+\subsection{Hypothesis 3: Interrelated Temperature Changes}
 \label{subsec:Evaluation:Study1:Hypothesis3}
 The third hypothesis examines the correlation between the relative changes in temperature readings from different sensor locations in Phases 2 and 3.
 This is used to understand the consistency between the different sensor readings, especially in relation to changing weather conditions.
@@ -188,19 +198,19 @@ Other sensors, particularly those positioned outdoors such as Outer Ear Bottom a
 This is consistent with their increased mean differences from ground truth and highlights their volatility in response to external influences. 
 Thus, the MAD values illustrate the central message of this hypothesis: sensors vary in their stability in response to external environmental influences, and this variation is quantifiable.
 
-\begin{figure}[!htbp]
+\begin{figure}[!t]
     \centering
-    \includegraphics[width=0.75\textwidth]{thesis-doc/images/study1/hypothesis3/Correlation_Heatmap_Phase_2.png}
+    % \includegraphics[width=0.75\textwidth]{thesis-doc/images/study1/hypothesis3/Correlation_Heatmap_Phase_2.png}
     \includegraphics[width=0.75\textwidth]{thesis-doc/images/study1/hypothesis3/Correlation_Heatmap_Phase_3.png}
-    \caption{Heat maps showing the Spearman correlation matrices of temperature readings from different ear-based sensors during Phase 2 (indoor) and Phase 3 (outdoor). The Spearman correlation values range from -1 to 1, where -1 indicates a perfect inverse relationship, 1 indicates a perfect direct relationship, and 0 suggests no correlation. The color-coded matrices offer a nuanced visual representation of these correlations: darker shades signify stronger positive correlations while lighter shades indicate weaker or negative correlations. These matrices not only assess the consistency between sensor measurements but also reflect their sensitivity to external environmental changes, thus providing empirical evidence for Hypothesis 3.}    
+    \caption{Heat maps showing the Spearman correlation matrices of temperature readings from different ear-based sensors during Phase 3 (outdoor). The Spearman correlation values range from -1 to 1, where -1 indicates a perfect inverse relationship, 1 indicates a perfect direct relationship, and 0 suggests no correlation. The color-coded matrices offer a nuanced visual representation of these correlations: darker shades signify stronger positive correlations while lighter shades indicate weaker or negative correlations. These matrices not only assess the consistency between sensor measurements but also reflect their sensitivity to external environmental changes, thus providing empirical evidence for Hypothesis 3.}    
     \label{fig:eval:study1:hypothesis3_result}
 \end{figure}
 
 This can also be seen in the heatmap in Figure \ref{fig:eval:study1:hypothesis3_result}.  
 Correlations between pairs of sensors are calculated using Spearman's rank correlation, which is more robust to outliers and non-linear relationships.  
-Phase 2 (interiors) shows a mixed set of correlation values, with some even showing a negative correlation, such as the pair of tympanic tubes and Outer Ear Bottom (\(r = -0.163\)).  
-This suggests that not all sensors are equally sensitive to the same factors, which could be due to individual positioning or unique interactions with environmental or physiological variables.  
-In contrast, Phase 3 (outdoors) shows uniformly high correlations, often above \(0.9\), across all sensor pairs.  
+% Phase 2 (interiors) shows a mixed set of correlation values, with some even showing a negative correlation, such as the pair of tympanic tubes and Outer Ear Bottom (\(r = -0.163\)).  
+% This suggests that not all sensors are equally sensitive to the same factors, which could be due to individual positioning or unique interactions with environmental or physiological variables.  
+Phase 3 (outdoors) shows uniformly high correlations, often above \(0.9\), across all sensor pairs.  
 This suggests that the sensors behave more coherently when subjects are outdoors, possibly due to a common response to environmental factors such as wind and sunlight.  
 It is noteworthy that the tympanic membrane sensor, which showed aberrant behavior indoors, closely matched the other sensors outdoors.
 However, it is clearly seen here in the raw data that temperature measurements in the ear drop less than temperature measurements behind the ear. 
@@ -248,7 +258,12 @@ Thus, this confirms the hypothesis that the tympanic membrane measurement provid
 
 \subsection{Hypothesis 5: Movement Leads to Changes in the Temperature Readings}
 \label{subsec:Evaluation:Study1:Hypothesis5}
-
+\begin{figure}[!t]
+    \centering
+    \includegraphics[width=\textwidth]{thesis-doc/images/study1/hypothesis5/Hypothesis5_Analysis.png}
+    \caption{Analysis of mean absolute relative change (MARC) for ear-based temperature readings and mean absolute motion. The MARC for six different sensor positions in the ear is plotted for phases 2, 3, and 4 of the study. The last subgraph shows the mean motion calculated from the IMU data during the same phases.}    
+    \label{fig:eval:study1:hypothesis5_result}
+\end{figure} 
 Hypothesis 5 addresses the evaluation of the effect of participant movement on the variability of temperature measurements at different ear-based sensor locations.
 This analysis was conducted with calibration data that included both temperature and IMU data. 
 Temperature data were collected from six strategically placed sensors: Eardrum, Pinna, Auditory Canal, Outer Ear Bottom, Outer Ear Top and Outer Ear Center.
@@ -261,12 +276,6 @@ For this purpose, the formula:
 \]
 
 was used, where \( T_{\text{current}} \) and \( T_{\text{previous}} \) are the current and previous temperature values, respectively. 
-\begin{figure}[!t]
-    \centering
-    \includegraphics[width=\textwidth]{thesis-doc/images/study1/hypothesis5/Hypothesis5_Analysis.png}
-    \caption{Analysis of mean absolute relative change (MARC) for ear-based temperature readings and mean absolute motion. The MARC for six different sensor positions in the ear is plotted for phases 2, 3, and 4 of the study. The last subgraph shows the mean motion calculated from the IMU data during the same phases.}    
-    \label{fig:eval:study1:hypothesis5_result}
-\end{figure} 
 
 Figure \ref{fig:eval:study1:hypothesis5_result} shows the mean relative absolute changes (MARC) per sensor, averaged across all subjects.
 These MARC plots per temperature sensor were combined with the mean motion data in a time series plot.
@@ -284,15 +293,44 @@ This is exacerbated by exercise during the outdoor phase.
 Thus, it cannot be clearly stated whether this is due to the outdoor temperature drop, the exercise itself or both.
 This evaluation provides the basis for future research on optimal sensor positioning and data fusion techniques for ear-based temperature sensing, especially during movement, but needs to be verified by further studies.
 
+\clearpage
 \section{Results and Discussion of Study 2}
 \label{sec:Evaluation:Study2}
 Having checked the validity of the temperature measurements, a second study will now observe how the measured temperature behaves when the subject is placed under stress.
 A more detailed introduction to the design and objectives of Study 2 is described in Chapter~\ref{ch:Design:Study:Study2}.
 Additionally, a visual representation of the procedure of Study 1 can be seen in Figure~\ref{fig:design:study1:procedure}.
 
-In order to detect stress fundamentally for the first time, HRV measurement with the Polar H9 is performed in parallel.
-This will be used to initially test whether subjects were actually experiencing stress during the study in phase 3 by looking at the HRV signal and classifying the stress.
-Then hypotheses are tested and proven or disproven.
+After the study was conducted, a questionnaire was completed by each subject. 
+This included the conditions and perceptions of the study. 
+The study was conducted at a mean indoor temperature of $23.16 ^\circ C$ and humidity of $53.56 \text{g/m}^3$. 
+The outdoor temperature averaged $20.6 ^\circ C$.
+The external conditions were mostly sunny and cloudy.
+Subjects averaged 26 years of age (24-29) and were healthy.
+All test persons arrived in such a way that they had a short journey and had not previously done any activities that could significantly influence the temperature.
+After the study, all subjects were very positive about the prototype and rated it a $7.8$ on a scale of 0-10.
+In comparison to the questionnaire from the first study, a NASA-TLX questionnaire was also attached, which should make the stress of the stress phase more tangible.
+The scale here ranges from 0-10.
+Here, the mental demand was rated on average at $7.1$, as well as the physical demand at $0.4$. 
+Since the stress tests (stroop test, N-back test, math test) each have mental demands and do not require physical demands, this reflects the expectation.
+Since the study was also expected to elicit time stress, the time requirement was also expected to be high.
+This was confirmed with a score of $7.3$.
+Since the tasks were designed to not all be solvable in time, subjects were also asked about their personal performance.
+This was answered very differently, as some subjects were very satisfied with their performance, but others were not at all. 
+This resulted in the mean value of $5.3$.
+The effort of the subjects was on average $6.5$ and the frustration was $4.6$.
+
+In order to fundamentally assess stress for the first time, an HRV measurement with the Polar H9 is performed in parallel.
+The raw data of the study measurement on Subject 4 can be seen in Figure \ref{fig:ch:Evaluation:Study2:RawData}.
+This will first test whether the subjects actually experienced stress during the study in Phase 3 by looking at the HRV signal and classifying the stress.
+Hypotheses are then tested and proven or disproven.
+
+\begin{figure}[!t]
+    \centering
+    \includegraphics[width=\textwidth]{thesis-doc/images/study2/p04/Logging_study2_p04_0smoothed_raw_data.png}
+    \includegraphics[width=\textwidth]{thesis-doc/images/study2/p04/raw_hrv_data_participant_4.png}
+    \caption{Raw data from Subject 4 during the complete measurement. In the first phase (acclimatization phase), the sensors get used to the new environment. In Phase 2 the baseline was measured, in Phase 3 the test person was put under stress. Phase 4 represents the relaxation phase.}
+    \label{fig:ch:Evaluation:Study2:RawData}
+\end{figure}
 
 \subsection{Stress Detection}
 \label{subsec:Evaluation:Study2:ground_truth}
@@ -362,151 +400,240 @@ In summary, the study showed mixed efficacy in eliciting stress in the subjects,
 However, this statement should be taken with extreme caution, as such conclusions are very difficult to make with such a small number of subjects.
 However, there is a tendency which can be further investigated by further studies.
 
-\subsection{Hypothesis 1: Measurable Temperature Rise During Stress}
+\subsection{Hypothesis 1: Stress-Induced Temperature Rise}
 \label{subsec:Evaluation:Study2:Hypothesis1}
 
+% \begin{figure}[t]
+%     \centering
+    
+%     \begin{subtable}{\textwidth}
+%         \centering
+%         \begin{tabularx}{\textwidth}{|l|*{6}{>{\centering\arraybackslash}X|}}
+%         \hline
+%         & \multicolumn{2}{c|}{\textbf{Sitting Phase}} & \multicolumn{2}{c|}{\textbf{Stress Phase}} & \multicolumn{2}{c|}{\textbf{Relax Phase}} \\
+%         & \textbf{All} & \textbf{1,4,5} & \textbf{All} & \textbf{1,4,5} & \textbf{All} & \textbf{1,4,5} \\
+%         \textbf{Sensor} & \textbf{(in $^\circ \text{C}$)} & \textbf{(in $^\circ \text{C}$)} & \textbf{(in $^\circ \text{C}$)} & \textbf{(in $^\circ \text{C}$)} & \textbf{(in $^\circ \text{C}$)} & \textbf{(in $^\circ \text{C}$)} \\
+%         \hline
+%         \textbf{TympanicMembrane} & 0.06 & 0.15 & 0.03 & 0.11 & -0.01 & 0.06 \\
+%         \textbf{Concha} & -0.59 & -0.02 & -0.49 & 0.01 & -0.46 & -0.01 \\
+%         \textbf{EarCanal} & -0.45 & -0.08 & -0.41 & -0.12 & -0.38 & -0.15 \\
+%         \textbf{Outer Ear Bottom} & -0.99 & -0.72 & -0.83 & -0.55 & -0.8 & -0.61 \\
+%         \textbf{Outer Ear Top} & -0.45 & -0.27 & -0.36 & -0.19 & -0.37 & -0.22 \\
+%         \textbf{Outer Ear Middle} & -0.79 & -0.67 & -0.61 & -0.46 & -0.59 & -0.51 \\
+%         \hline
+%         \end{tabularx}
+%         \caption{Mean Temperature of each phase over all participants and over participants 1,4, and 5. The measured ground truth values are subtracted from each participant's temperature data to combine the results in a more fair way.}
+%         \label{subsec:Evaluation:Study2:Hypothesis1:combined_mean_temps}
+%     \end{subtable}
+    
+%     \vspace{1em} % Add some vertical spacing between the tables
+    
+%     \begin{subtable}{\textwidth}
+%         \centering
+%         \resizebox{\textwidth}{!}{%
+%         \begin{tabularx}{\textwidth}{|l|*{4}{>{\centering\arraybackslash}X|}}
+%             \hline
+%             \textbf{Sensor} & \multicolumn{2}{c|}{\textbf{Sitting - Stress}} & \multicolumn{2}{c|}{\textbf{Stress - Relax}} \\
+%             & \textbf{All} & \textbf{1,4,5} & \textbf{All} & \textbf{1,4,5} \\
+%             & \textbf{p-value} & \textbf{p-value} & \textbf{p-value} & \textbf{p-value} \\
+%             \hline
+%             \textbf{Tympanic Membrane} & 0.049 & 0.007 & 0.387 & 0.530 \\
+%             \textbf{Concha} & 0.095 & 0.442 & 0.553 & 0.831 \\
+%             \textbf{Ear Canal} & 0.504 & 0.098 & 0.568 & 0.733 \\
+%             \textbf{Outer Ear Bottom} & 0.009 & 0.113 & 0.680 & 0.479 \\
+%             \textbf{Outer Ear Top} & 0.005 & 0.086 & 0.689 & 0.201 \\
+%             \textbf{Outer Ear Middle} & 0.029 & 0.077 & 0.616 & 0.073 \\
+%             \hline
+%         \end{tabularx}%
+%         }
+%         \caption{t-Test results for different sensors across phases for all subjects and for subjects 1,4 and 5. The p-value for transitions between Sitting - Stress and Stress - Relax are presented.}
+%         \label{subsec:Evaluation:Study2:Hypothesis1:TTest_Results}
+%     \end{subtable} 
+%     \caption{Evaluation results of Hypothesis 1 including mean temperatures in the Sit, Stress and Relax phases with all subjects and additionally Subjects 1, 4 and 5, as only these showed stress responses in ground truth. For this purpose, the results of the significance test are listed to show their significance.}
+%     \label{sec:Evaluation:Study2:Hypothesis1:Summary}
+% \end{figure}
 \begin{figure}[t]
     \centering
     
     \begin{subtable}{\textwidth}
         \centering
-        \begin{tabularx}{\textwidth}{|l|*{6}{>{\centering\arraybackslash}X|}}
+        \begin{tabular}{|l|rrrrrr|}
         \hline
-        & \multicolumn{2}{c|}{\textbf{Sitting Phase}} & \multicolumn{2}{c|}{\textbf{Stress Phase}} & \multicolumn{2}{c|}{\textbf{Relax Phase}} \\
-        & \textbf{All} & \textbf{1,4,5} & \textbf{All} & \textbf{1,4,5} & \textbf{All} & \textbf{1,4,5} \\
-        \textbf{Sensor} & \textbf{(in $^\circ \text{C}$)} & \textbf{(in $^\circ \text{C}$)} & \textbf{(in $^\circ \text{C}$)} & \textbf{(in $^\circ \text{C}$)} & \textbf{(in $^\circ \text{C}$)} & \textbf{(in $^\circ \text{C}$)} \\
+        \textbf{Subject} & \textbf{Tympanic} & \textbf{Concha} & \textbf{EarCanal} & \textbf{Outer Ear} & \textbf{Outer Ear} & \textbf{Outer Ear} \\
+             & \textbf{Membrane} &  &  & \textbf{Bottom} & \textbf{Top} & \textbf{Middle} \\   
+             &\textbf{(in \(^\circ\text{C}\))} & \textbf{(in \(^\circ\text{C}\))} & \textbf{(in \(^\circ\text{C}\))} & \textbf{(in \(^\circ\text{C}\))} & \textbf{(in \(^\circ\text{C}\))} & \textbf{(in \(^\circ\text{C}\))} \\
         \hline
-        \textbf{TympanicMembrane} & 0.06 & 0.15 & 0.03 & 0.11 & -0.01 & 0.06 \\
-        \textbf{Concha} & -0.59 & -0.02 & -0.49 & 0.01 & -0.46 & -0.01 \\
-        \textbf{EarCanal} & -0.45 & -0.08 & -0.41 & -0.12 & -0.38 & -0.15 \\
-        \textbf{Outer Ear Bottom} & -0.99 & -0.72 & -0.83 & -0.55 & -0.8 & -0.61 \\
-        \textbf{Outer Ear Top} & -0.45 & -0.27 & -0.36 & -0.19 & -0.37 & -0.22 \\
-        \textbf{Outer Ear Middle} & -0.79 & -0.67 & -0.61 & -0.46 & -0.59 & -0.51 \\
+        1 & -0.04 & -0.0 & -0.08 & 0.25 & 0.11 & 0.19 \\
+        2 & -0.01 & 0.2 & 0.16 & 0.14 & 0.1 & 0.27 \\
+        3 & 0.0 & 0.21 & 0.17 & 0.15 & 0.12 & 0.02 \\
+        4 & -0.05 & 0.1 & -0.02 & 0.2 & 0.11 & 0.32 \\
+        5 & -0.04 & 0.0 & -0.04 & 0.05 & 0.03 & 0.11 \\
         \hline
-        \end{tabularx}
-        \caption{Mean Temperature of each phase over all participants and over participants 1,4, and 5. The measured ground truth values are subtracted from each participant's temperature data to combine the results in a more fair way.}
-        \label{subsec:Evaluation:Study2:Hypothesis1:combined_mean_temps}
+        \end{tabular}
+        \caption{Temperature Difference from Sitting to Stress for each participant.}
+        \label{subsec:Evaluation:Study2:Hypothesis1:temp_diff_sitting_to_stress_all}
     \end{subtable}
     
     \vspace{1em} % Add some vertical spacing between the tables
     
     \begin{subtable}{\textwidth}
         \centering
-        \resizebox{\textwidth}{!}{%
-        \begin{tabularx}{\textwidth}{|l|*{4}{>{\centering\arraybackslash}X|}}
-            \hline
-            \textbf{Sensor} & \multicolumn{2}{c|}{\textbf{Sitting - Stress}} & \multicolumn{2}{c|}{\textbf{Stress - Relax}} \\
-            & \textbf{All} & \textbf{1,4,5} & \textbf{All} & \textbf{1,4,5} \\
-            & \textbf{p-value} & \textbf{p-value} & \textbf{p-value} & \textbf{p-value} \\
-            \hline
-            \textbf{Tympanic Membrane} & 0.049 & 0.007 & 0.387 & 0.530 \\
-            \textbf{Concha} & 0.095 & 0.442 & 0.553 & 0.831 \\
-            \textbf{Ear Canal} & 0.504 & 0.098 & 0.568 & 0.733 \\
-            \textbf{Outer Ear Bottom} & 0.009 & 0.113 & 0.680 & 0.479 \\
-            \textbf{Outer Ear Top} & 0.005 & 0.086 & 0.689 & 0.201 \\
-            \textbf{Outer Ear Middle} & 0.029 & 0.077 & 0.616 & 0.073 \\
-            \hline
-        \end{tabularx}%
-        }
-        \caption{t-Test results for different sensors across phases for all subjects and for subjects 1,4 and 5. The p-value for transitions between Sitting - Stress and Stress - Relax are presented.}
-        \label{subsec:Evaluation:Study2:Hypothesis1:TTest_Results}
+        \begin{tabular}{|l|rrrrrr|}
+        \hline
+        \textbf{Subject} & \textbf{Tympanic} & \textbf{Concha} & \textbf{EarCanal} & \textbf{Outer Ear} & \textbf{Outer Ear} & \textbf{Outer Ear} \\
+             & \textbf{Membrane} &  &  & \textbf{Bottom} & \textbf{Top} & \textbf{Middle} \\   
+             &\textbf{(in \(^\circ\text{C}\))} & \textbf{(in \(^\circ\text{C}\))} & \textbf{(in \(^\circ\text{C}\))} & \textbf{(in \(^\circ\text{C}\))} & \textbf{(in \(^\circ\text{C}\))} & \textbf{(in \(^\circ\text{C}\))} \\
+        \hline
+        1 & -0.02 & -0.08 & -0.07 & -0.15 & -0.04 & -0.04 \\
+        2 & 0.0 & 0.14 & 0.16 & 0.07 & 0.04 & 0.14 \\
+        3 & -0.03 & 0.1 & 0.11 & 0.28 & 0.02 & 0.11 \\
+        4 & 0.04 & 0.14 & 0.12 & 0.08 & 0.0 & -0.02 \\
+        5 & -0.15 & -0.12 & -0.13 & -0.11 & -0.06 & -0.07 \\
+        \hline
+        \end{tabular}
+        \caption{Temperature Difference from Stress to Relax for each participant.}
+        \label{subsec:Evaluation:Study2:Hypothesis1:temp_diff_stress_to_relax_all}
     \end{subtable} 
-    \caption{Evaluation results of Hypothesis 1 including mean temperatures in the Sit, Stress and Relax phases with all subjects and additionally Subjects 1, 4 and 5, as only these showed stress responses in ground truth. For this purpose, the results of the significance test are listed to show their significance.}
+    \caption{Evaluation of Hypotheses 1: Mean temperature changes during Sit, Stress, and Relax phases. The tables represent the temperature changes between the phases. A negative value implies a temperature fall between the two comparing phases, and a positive value implies a temperature rise, respectively.}
     \label{sec:Evaluation:Study2:Hypothesis1:Summary}
 \end{figure}
 
 To evaluate hypothesis 1, the analysis focuses on the average temperature changes measured by different ear-based sensors during three different phases: Sitting, Stress, and Relaxation. 
-The first phase, used to acclimate the temperature sensors, is discarded here for analysis.
+The first phase, which serves to acclimate the temperature sensors, is disregarded here for analysis.
 To ensure a fair comparison, the mean temperatures were subtracted with the ground truth for each participant.
 
-For the dataset that includes all participants, the results in Table \ref{subsec:Evaluation:Study2:Hypothesis1:combined_mean_temps} show minimum temperature differences between phases for all sensors. 
-The mean temperature of all subjects (minus ground truth) for all subjects as well as for subjects 1,4 and 5 during the three relevant phases can be seen. 
-This split was made because these subjects had signs of stress.
-However, clear increases or decreases between the temperatures cannot be seen directly.
+To evaluate the hypothesis, the mean temperature per sensor per subject is calculated.
+From this, the temperature differences of the different phases are calculated, which can be seen in Figure \ref{sec:Evaluation:Study2:Hypothesis1:Summary}.
+Here, table \ref{subsec:Evaluation:Study2:Hypothesis1:temp_diff_sitting_to_stress_all} shows the mean temperature difference between the sitting and stress phases, and table \ref{subsec:Evaluation:Study2:Hypothesis1:temp_diff_stress_to_relax_all} between the stress and relax phases.
 A significant increase of up to $0.6 ^\circ C$ can be expected \ref{vinkersEffectStressCore2013, okaMechanismsMediatorsPsychological2001, marksNonshiveringThermogenesisInterscapular2009}.
-The t-test results (Table \ref{subsec:Evaluation:Study2:Hypothesis1:TTest_Results}) are used to ensure the significance of the detectable differences.
-Mean tympanic membrane temperature shows a slight decrease in mean temperature from the sitting phase $(0.06^\circ \text{C})$ to the stress phase ($0.03^\circ \text{C}$), which contradicts the hypothesis, but the T test shows statistical significance for this transition in both the overall group (p=0.049) and the subgroup of participants 1,4,5 (p=0.007). 
-The sensors behind the ear (top and bottom) also show statistical significance only at the transition from sitting to weight-bearing for all participants (p=0.009 and p=0.005, respectively), whereas the middle sensor behind the ear shows marginal significance at the same transition (p=0.029).
-
-In the subset of participants who showed significant stress responses (Table \ref{subsec:Evaluation:Study2:Hypothesis1:combined_mean_temps}), mean tympanic membrane sensor temperature also decreases slightly from the sitting to the stress phase, similar to the larger data set. 
-Interestingly, the concha sensor shows an opposite pattern: temperature actually increases slightly during the stress phase.
-
+The largest increase in temperature to the stress phase is observed behind the ear in the middle with $0.27 ^\circ C$, however, these results are not consistent enough. 
+Most importantly, they are not consistent with the additional assumption that the temperature of the tympanic membrane provides the most accurate measurement results.
+This records a temperature drop of $-0.04 ^\circ C$.
 In summary, the data do not provide clear evidence for the hypothesis. 
 While there are minor variations, they are not consistently in the direction of a temperature increase during the stress phase, making it difficult to definitively confirm the hypothesis. 
-It is important to note here that the implementation of the study is also a critical factor here. 
-Since the study was implemented in a short time frame, which did not allow for a trier social stress test (TSST), and additionally only 5 subjects were brought in for the study, a re-study in a larger sample size is recommended to reach a more conclusive verdict.
+It is important to note at this point that the conduct of the study is also a critical factor. 
+Since the study was conducted in a short time frame that did not allow for a social stress test (TSST) to be conducted, and also only 5 subjects were used in the study, a re-study with a larger sample is recommended to reach a more conclusive conclusion.
 
-\subsection{Hypothesis 2: Variability in Temperature Changes Across Different Stress Tests}
+\subsection{Hypothesis 2: Stress Test Temperature Variability}
 \label{subsec:Evaluation:Study2:Hypothesis2}
 Hypothesis 2 states that the temperature changes between the different stress tests. 
-This can happen because stress is triggered by the sympathetic nervous system when the body enters fight-or-flight mode.
+This can happen because stress is triggered by the sympathetic nervous system when the body goes into fight-or-flight mode.
 This may be addressed differently during the different stress tests, which is then reflected in the body temperature.
-Hypothesis 2 is evaluated using the mean temperatures and t-test results, as shown in Figure \ref{sec:Evaluation:Study2:Hypothesis2:Summary}. 
+To evaluate hypothesis 2, the mean temperature change between each stress test per subject is calculated.
+The results are shown in Figure \ref{sec:Evaluation:Study2:Hypothesis2:Summary}. 
+Here, Table \ref{subsec:Evaluation:Study2:Hypothesis2:temp_diff_stroop_nback} shows the mean temperature differences between the Stroop test and the N-back test, Table \ref{subsec:Evaluation:Study2:Hypothesis2:temp_diff_nback_math} between the N-back test and the math test.
+The results show that there is no measurable temperature difference between the tests.
+Since previous studies have already shown that the signal at the tympanic membrane is the most accurate, no pattern is apparent with this small sample size.
+In both comparisons of the two tables, the maximum temperature change is 0.16 $ ^\circ C$, which is definitely not due to a stress-induced temperature increase.
 
-For the mean temperatures (see Table \ref{subsec:Evaluation:Study2:Hypothesis2:combined_mean_temps}), it can be seen that the TympanicMembrane sensor showed a slight increase in temperature across all stress tests for all participants and especially for participants 1, 4, and 5. In contrast, most of the other sensors showed temperature decreases.
-The t-test results (see Table \ref{subsec:Evaluation:Study2:Hypothesis1:TTest_Results}) provide interesting insights into the variability of temperature changes across different stress tests. 
-The Outer Ear Bottom sensor showed significant differences ($p<0.05$) in transitions between Stroop-N-Back and N-Back Math for all participants, providing strong evidence of variability. 
-However, the TympanicMembrane and EarCanal sensors did not show statistically significant results, indicating a relatively consistent pattern of temperature change across all stress tests.
-Since it was already evident from previous studies that the signal on the tympanic membrane is the most accurate, no pattern is apparent in this small sample size.
-For the subset of participants 1, 4, and 5, the t-test results show similar trends but are generally less significant due to the smaller sample size.
+% \begin{figure}[!t]
+%     \centering
+%     % First Table: Mean Temperatures
+%     \begin{subtable}{\textwidth}
+%         \centering
+%         \begin{tabularx}{\textwidth}{|l|*{6}{>{\centering\arraybackslash}X|}}
+%         \hline
+%         & \multicolumn{2}{c|}{\textbf{Stroop Test}} & \multicolumn{2}{c|}{\textbf{N-Back Test}} & \multicolumn{2}{c|}{\textbf{Math Test}} \\
+%         & \textbf{All} & \textbf{1,4,5} & \textbf{All} & \textbf{1,4,5} & \textbf{All} & \textbf{1,4,5} \\
+%         \textbf{Sensor} & \textbf{(in $^\circ \text{C}$)} & \textbf{(in $^\circ \text{C}$)} & \textbf{(in $^\circ \text{C}$)} & \textbf{(in $^\circ \text{C}$)} & \textbf{(in $^\circ \text{C}$)} & \textbf{(in $^\circ \text{C}$)} \\
+%         \hline
+%         \textbf{TympanicMembrane} & 0.06 & 0.15 & 0.03 & 0.12 & 0.02 & 0.09 \\
+%         \textbf{Concha} & -0.53 & 0.0 & -0.5 & 0.02 & -0.46 & 0.01 \\
+%         \textbf{EarCanal} & -0.4 & -0.07 & -0.42 & -0.1 & -0.4 & -0.14 \\
+%         \textbf{Outer Ear Bottom} & -0.9 & -0.63 & -0.84 & -0.57 & -0.79 & -0.52 \\
+%         \textbf{Outer Ear Top} & -0.43 & -0.25 & -0.37 & -0.19 & -0.33 & -0.18 \\
+%         \textbf{Outer Ear Middle} & -0.71 & -0.55 & -0.63 & -0.47 & -0.56 & -0.44 \\
+%         \hline
+%         \end{tabularx}
+%         \caption{Mean Temperature of each stress test over all participants and over participants 1,4, and 5. The measured ground truth values are subtracted from each participant's temperature data to combine the results in a more fair way.}
+%         \label{subsec:Evaluation:Study2:Hypothesis2:combined_mean_temps}
+%     \end{subtable}
 
+%     \vspace{1em} % Add some vertical spacing between the tables
+
+%     % Second Table: T-Tests
+%     \begin{subtable}{\textwidth}
+%     \centering
+%     \resizebox{\textwidth}{!}{%
+%     \begin{tabularx}{\textwidth}{|l|*{4}{>{\centering\arraybackslash}X|}}
+%     \hline
+%     \textbf{Sensor} & \multicolumn{2}{c|}{\textbf{Stroop-N-Back}} & \multicolumn{2}{c|}{\textbf{N-Back-Math}} \\
+    
+%     & \textbf{All} & \textbf{1,4,5} & \textbf{All} & \textbf{1,4,5} \\
+    
+%     & \textbf{p-value} & \textbf{p-value} & \textbf{p-value} & \textbf{p-value} \\
+%     \hline
+%     \textbf{Tympanic Membrane} & 0.20 & 0.32 & 0.47 & 0.43 \\
+%     \textbf{Concha} & 0.06 & 0.34 & 0.25 & 0.86 \\
+%     \textbf{Ear Canal} & 0.19 & 0.15 & 0.68 & 0.12 \\
+%     \textbf{Outer Ear Bottom} & 0.004 & 0.064 & 0.047 & 0.055 \\
+%     \textbf{Outer Ear Top} & 0.06 & 0.13 & 0.15 & 0.36 \\
+%     \textbf{Outer Ear Middle} & 0.033 & 0.21 & 0.046 & 0.077 \\
+%     \hline
+% \end{tabularx}%
+%     }
+%     \caption{T-Test results for different sensors across phases for all subjects and for subjects 1,4,5. The p-value for transitions between Sitting - Stress and Stress - Relax are presented.}
+%     \label{subsec:Evaluation:Study2:Hypothesis1:TTest_Results}
+% \end{subtable}
+    
+%     \caption{Evaluation results of Hypothesis 2 including Mean temperatures in the Stroop, N-Back, and Math tests with all subjects and additionally subjects 1, 4 and 5, as only these showed stress responses in Ground Truth. For this purpose, the results of the significance test are listed to show their significance.}
+%     \label{sec:Evaluation:Study2:Hypothesis2:Summary}
+% \end{figure}
 \begin{figure}[!t]
     \centering
     % First Table: Mean Temperatures
     \begin{subtable}{\textwidth}
         \centering
-        \begin{tabularx}{\textwidth}{|l|*{6}{>{\centering\arraybackslash}X|}}
-        \hline
-        & \multicolumn{2}{c|}{\textbf{Stroop Test}} & \multicolumn{2}{c|}{\textbf{N-Back Test}} & \multicolumn{2}{c|}{\textbf{Math Test}} \\
-        & \textbf{All} & \textbf{1,4,5} & \textbf{All} & \textbf{1,4,5} & \textbf{All} & \textbf{1,4,5} \\
-        \textbf{Sensor} & \textbf{(in $^\circ \text{C}$)} & \textbf{(in $^\circ \text{C}$)} & \textbf{(in $^\circ \text{C}$)} & \textbf{(in $^\circ \text{C}$)} & \textbf{(in $^\circ \text{C}$)} & \textbf{(in $^\circ \text{C}$)} \\
-        \hline
-        \textbf{TympanicMembrane} & 0.06 & 0.15 & 0.03 & 0.12 & 0.02 & 0.09 \\
-        \textbf{Concha} & -0.53 & 0.0 & -0.5 & 0.02 & -0.46 & 0.01 \\
-        \textbf{EarCanal} & -0.4 & -0.07 & -0.42 & -0.1 & -0.4 & -0.14 \\
-        \textbf{Outer Ear Bottom} & -0.9 & -0.63 & -0.84 & -0.57 & -0.79 & -0.52 \\
-        \textbf{Outer Ear Top} & -0.43 & -0.25 & -0.37 & -0.19 & -0.33 & -0.18 \\
-        \textbf{Outer Ear Middle} & -0.71 & -0.55 & -0.63 & -0.47 & -0.56 & -0.44 \\
-        \hline
-        \end{tabularx}
-        \caption{Mean Temperature of each stress test over all participants and over participants 1,4, and 5. The measured ground truth values are subtracted from each participant's temperature data to combine the results in a more fair way.}
-        \label{subsec:Evaluation:Study2:Hypothesis2:combined_mean_temps}
+        \resizebox{\textwidth}{!}{%
+            \begin{tabular}{|l|rrrrrr|}
+            \hline
+            \textbf{Subject} & \textbf{Tympanic} & \textbf{Concha} & \textbf{EarCanal} & \textbf{Outer Ear} & \textbf{Outer Ear} & \textbf{Outer Ear} \\
+             & \textbf{Membrane} &  &  & \textbf{Bottom} & \textbf{Top} & \textbf{Middle} \\   
+             &\textbf{(in \(^\circ\text{C}\))} & \textbf{(in \(^\circ\text{C}\))} & \textbf{(in \(^\circ\text{C}\))} & \textbf{(in \(^\circ\text{C}\))} & \textbf{(in \(^\circ\text{C}\))} & \textbf{(in \(^\circ\text{C}\))} \\
+            \hline
+            1 & 0.0 & 0.03 & -0.02 & 0.05 & 0.03 & 0.02 \\
+            2 & -0.01 & 0.06 & -0.03 & 0.07 & -0.01 & 0.11 \\
+            3 & -0.01 & 0.05 & 0.02 & 0.04 & 0.09 & 0.05 \\
+            4 & -0.08 & -0.01 & -0.06 & 0.04 & 0.11 & 0.16 \\
+            5 & -0.02 & 0.03 & -0.02 & 0.09 & 0.05 & 0.06 \\
+            \hline
+            \end{tabular}
+        }
+        \caption{Temperature differences between Stroop and N-Back for each participant.}
+        \label{subsec:Evaluation:Study2:Hypothesis2:temp_diff_stroop_nback}
     \end{subtable}
 
     \vspace{1em} % Add some vertical spacing between the tables
 
     % Second Table: T-Tests
     \begin{subtable}{\textwidth}
-    \centering
-    \resizebox{\textwidth}{!}{%
-    \begin{tabularx}{\textwidth}{|l|*{4}{>{\centering\arraybackslash}X|}}
-    \hline
-    \textbf{Sensor} & \multicolumn{2}{c|}{\textbf{Stroop-N-Back}} & \multicolumn{2}{c|}{\textbf{N-Back-Math}} \\
+        \centering
+        \resizebox{\textwidth}{!}{%
+            \begin{tabular}{|l|rrrrrr|}
+            \hline
+            \textbf{Subject} & \textbf{Tympanic} & \textbf{Concha} & \textbf{EarCanal} & \textbf{Outer Ear} & \textbf{Outer Ear} & \textbf{Outer Ear} \\
+             & \textbf{Membrane} &  &  & \textbf{Bottom} & \textbf{Top} & \textbf{Middle} \\   
+             &\textbf{(in \(^\circ\text{C}\))} & \textbf{(in \(^\circ\text{C}\))} & \textbf{(in \(^\circ\text{C}\))} & \textbf{(in \(^\circ\text{C}\))} & \textbf{(in \(^\circ\text{C}\))} & \textbf{(in \(^\circ\text{C}\))} \\
+            \hline
+            1 & -0.06 & -0.01 & -0.05 & 0.03 & 0.02 & 0.05 \\
+            2 & -0.03 & 0.09 & 0.1 & 0.0 & 0.05 & 0.11 \\
+            3 & 0.03 & 0.12 & 0.11 & 0.1 & 0.13 & 0.13 \\
+            4 & 0.02 & 0.03 & -0.01 & 0.06 & 0.01 & 0.02 \\
+            5 & -0.03 & -0.04 & -0.07 & 0.07 & -0.01 & 0.02 \\
+            \hline
+            \end{tabular}
+        }
+        \caption{Temperature differences between N-Back and Math for each participant.}
+        \label{subsec:Evaluation:Study2:Hypothesis2:temp_diff_nback_math}
+    \end{subtable}
     
-    & \textbf{All} & \textbf{1,4,5} & \textbf{All} & \textbf{1,4,5} \\
-    
-    & \textbf{p-value} & \textbf{p-value} & \textbf{p-value} & \textbf{p-value} \\
-    \hline
-    \textbf{Tympanic Membrane} & 0.20 & 0.32 & 0.47 & 0.43 \\
-    \textbf{Concha} & 0.06 & 0.34 & 0.25 & 0.86 \\
-    \textbf{Ear Canal} & 0.19 & 0.15 & 0.68 & 0.12 \\
-    \textbf{Outer Ear Bottom} & 0.004 & 0.064 & 0.047 & 0.055 \\
-    \textbf{Outer Ear Top} & 0.06 & 0.13 & 0.15 & 0.36 \\
-    \textbf{Outer Ear Middle} & 0.033 & 0.21 & 0.046 & 0.077 \\
-    \hline
-\end{tabularx}%
-    }
-    \caption{T-Test results for different sensors across phases for all subjects and for subjects 1,4,5. The p-value for transitions between Sitting - Stress and Stress - Relax are presented.}
-    \label{subsec:Evaluation:Study2:Hypothesis1:TTest_Results}
-\end{subtable}
-    
-    \caption{Evaluation results of Hypothesis 2 including Mean temperatures in the Stroop, N-Back, and Math tests with all subjects and additionally subjects 1, 4 and 5, as only these showed stress responses in Ground Truth. For this purpose, the results of the significance test are listed to show their significance.}
+    \caption{Summary of Hypothesis 2 Evaluation. The tables show mean temperature differences in \(^\circ\text{C}\) for subjects participating in Stroop, N-Back, and Math stress tests between the different stress tests. A negative value implies a temperature fall between the two comparing phases, and a positive value implies a temperature rise, respectively.}
+
     \label{sec:Evaluation:Study2:Hypothesis2:Summary}
 \end{figure}
 
-Overall, the results partially support hypothesis 2 by indicating significant variability in temperature changes across different stress tests, particularly for certain sensors. 
-However, these are not consistent across multiple sensors. 
-However, the lack of significance for some sensors suggests that further investigation is needed to definitively confirm this hypothesis, in detail a higher crosscheck sample size.
+In summary, hypothesis 2 assumed that temperature changes between different stress tests would be detectable due to different sympathetic nervous system responses. However, the analysis as detailed in Figure \ref{sec:Evaluation:Study2:Hypothesis2:Summary} does not support this hypothesis. In particular, the tympanic membrane, previously identified as the most reliable sensor, showed negligible temperature changes during the stress tests. With a maximum temperature shift of $0.16 ^\circ C$, the observed variations are statistically insignificant and cannot be attributed to stress-induced temperature changes. This limitation may be due in part to the small sample size, suggesting that more comprehensive studies are needed for a conclusive evaluation.
+In addition, a Trier Social Stress Test (TSST) could induce a stronger stress condition.
 
 \subsection{Further Discussion}
 For Study 2, there are additional hypotheses that can be considered. 

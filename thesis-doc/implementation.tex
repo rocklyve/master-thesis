@@ -124,7 +124,7 @@ Hypothesis 4 is to show that the temperature measured at the tympanic membrane i
 For this purpose, the mean standard deviation is calculated, which should show the stability of the sensors. 
 By means of 
 \[
-texttt{numpy.std(phase\_data[sensor])},
+    \texttt{numpy.std(phase\_data[sensor])},
 \]
 the standard deviation is calculated per sensor and per subject, which is then averaged over all subjects.
 This is done for the indoor and outdoor phase and displayed in the console.
@@ -178,7 +178,7 @@ The ground truth of the temperature value was now subtracted from the sensor val
 The results were output directly in the console as a combined latex table.
 Additionally by means of 
 \[
-ttest\_rel(data1, data2, nan\_policy='omit'),
+    \texttt{ttest\_rel(data1, data2, nan\_policy='omit')},
 \]
 a t-test was performed, ignoring "NaN" values. 
 "data1" and "data2" are the two data sets on which the significance test was performed. 
