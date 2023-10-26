@@ -96,7 +96,7 @@ class HRVPipeline:
 
         df_list_extended = []
         for phase, sdnn, rmssd, lf_hf, pns, sns, stress in zip(
-                ['Sitting'] * len(sitting_sdnn_list) + ['Stress'] * len(stress_sdnn_list),
+                ['Baseline'] * len(sitting_sdnn_list) + ['Stress-Induced'] * len(stress_sdnn_list),
                 sitting_sdnn_list + stress_sdnn_list,
                 sitting_rmssd_list + stress_rmssd_list,
                 sitting_lf_hf_list + stress_lf_hf_list,
@@ -116,40 +116,43 @@ class HRVPipeline:
         df_extended = pd.DataFrame(df_list_extended)
 
         # Create boxplots
-        fig, axes = plt.subplots(2, 3, figsize=(15, 10))
+        fig, axes = plt.subplots(1, 6, figsize=(15, 3))
         if probands == ['p01', 'p04', 'p05']:
-            fig.suptitle('HRV Metrics Comparison: Sitting vs Stress (Probands 1, 4, and 5)')
+            fig.suptitle('HRV Metrics Comparison: Baseline vs Stress-Induced (Probands 1, 4, and 5)', fontsize=16)
         else:
-            fig.suptitle('HRV Metrics Comparison: Sitting vs Stress (All Probands)')
+            fig.suptitle('HRV Metrics Comparison: Baseline vs Stress-Induced (All Probands)', fontsize=16)
 
         # First row: SDNN, RMSSD, LF_HF
-        snsc.boxplot(data=df_extended, x='Phase', y='SDNN', ax=axes[0, 0])
-        axes[0, 0].set_title('SDNN')
-        axes[0, 0].set_xlabel('')
+        snsc.boxplot(data=df_extended, x='Phase', y='SDNN', ax=axes[0])
+        axes[0].set_title('SDNN', fontsize=14)
+        axes[0].set_xlabel('')
+        axes[0].set_ylabel('SDNN (in ms)', fontsize=14)
 
-        snsc.boxplot(data=df_extended, x='Phase', y='RMSSD', ax=axes[0, 1])
-        axes[0, 1].set_title('RMSSD')
-        axes[0, 1].set_xlabel('')
+        snsc.boxplot(data=df_extended, x='Phase', y='RMSSD', ax=axes[1])
+        axes[1].set_title('RMSSD', fontsize=14)
+        axes[1].set_xlabel('')
+        axes[1].set_ylabel('RMSSD (in ms)', fontsize=14)
 
-        snsc.boxplot(data=df_extended, x='Phase', y='LF_HF', ax=axes[0, 2])
-        axes[0, 2].set_title('LF/HF')
-        axes[0, 2].set_xlabel('')
+        snsc.boxplot(data=df_extended, x='Phase', y='LF_HF', ax=axes[2])
+        axes[2].set_title('LF/HF', fontsize=14)
+        axes[2].set_xlabel('')
+        axes[2].set_ylabel('LF/HF Ratio', fontsize=14)
 
         # Second row: PNS_Index, SNS_Index, Stress_Index
-        snsc.boxplot(data=df_extended, x='Phase', y='PNS_Index', ax=axes[1, 0])
-        axes[1, 0].set_title('PNS Index')
-        axes[1, 0].set_xlabel('')
-        axes[1, 0].set_ylabel('PNS Index')
+        snsc.boxplot(data=df_extended, x='Phase', y='PNS_Index', ax=axes[3])
+        axes[3].set_title('PNS Index', fontsize=14)
+        axes[3].set_xlabel('')
+        axes[3].set_ylabel('PNS Index', fontsize=14)
 
-        snsc.boxplot(data=df_extended, x='Phase', y='SNS_Index', ax=axes[1, 1])
-        axes[1, 1].set_title('SNS Index')
-        axes[1, 1].set_xlabel('')
-        axes[1, 1].set_ylabel('SNS Index')
+        snsc.boxplot(data=df_extended, x='Phase', y='SNS_Index', ax=axes[4])
+        axes[4].set_title('SNS Index', fontsize=14)
+        axes[4].set_xlabel('')
+        axes[4].set_ylabel('SNS Index', fontsize=14)
 
-        snsc.boxplot(data=df_extended, x='Phase', y='Stress_Index', ax=axes[1, 2])
-        axes[1, 2].set_title('Stress Index')
-        axes[1, 2].set_xlabel('')
-        axes[1, 2].set_ylabel('Stress Index')
+        snsc.boxplot(data=df_extended, x='Phase', y='Stress_Index', ax=axes[5])
+        axes[5].set_title('Stress Index', fontsize=14)
+        axes[5].set_xlabel('')
+        axes[5].set_ylabel('Stress Index', fontsize=14)
 
         # Save the plot
         target_folder = "target"  # Replace with your actual folder path
