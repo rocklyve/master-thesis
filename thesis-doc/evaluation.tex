@@ -2,7 +2,7 @@
 \label{ch:Evaluation}
 This chapter aims to validate the hypotheses formulated for two distinct studies described in Chapter~\ref{ch:Design}. 
 Each study focuses on specific aspects of ear-based temperature measurement and aims to explore the capabilities and limitations of the developed wearable prototype. 
-For each study, a series of hypotheses have been put forward, and the data collected from the studies are used to evaluate these hypotheses.
+For each study, a set of hypotheses was established in Section \ref{ch:Introduction:PlannedApproach}, and the data collected in the studies are used to evaluate these hypotheses.
 
 \section{Results and Discussion of Study 1}
 \label{sec:Evaluation:Study1}
@@ -18,6 +18,7 @@ Subsequently, in the baseline phase (ID=2), the sensor readings show little chan
 In Phase 3, where the subjects were walking outside, the measured temperature drops for all subjects.
 In the relaxation phase (ID=4), the subject is back in the controlled environment and the signal settles back toward the values measured in Phase 2.
 
+The study was conducted with a total of 12 subjects, of which 7 were male and 5 were female. 
 After the study was conducted, a questionnaire was completed by each subject. 
 This included the conditions and perceptions of the study. 
 The study was conducted at a mean indoor temperature of $25.4 ^\circ C$ and humidity of $47.55 \text{g/m}^3$. 
@@ -27,11 +28,13 @@ Subjects averaged 26 years of age (24-29) and were healthy.
 All test persons arrived in such a way that they had a short journey and had not previously done any activities that could significantly influence the temperature.
 After the study, all subjects were very positive about the prototype and rated it $8.1$ on a scale of 0-10.
 
-To verify the findings collected in this study, several hypotheses were formulated and tested. 
+To verify the findings collected in this study, several hypotheses were formulated and tested.
+The hypotheses were formulated in Section \ref{ch:Introduction:PlannedApproach}.
 These hypotheses aim to answer specific questions related to the performance and reliability of ear-based temperature measurements. 
 The results and their implications are discussed in the following sections, where each hypothesis is evaluated in detail based on the data collected.
 
-For proving the hypothesis to be right or wrong, t-tests are used.
+To prove that the hypothesis is true or false, t-tests are used.
+These are only used to support a hypothesis, they do not prove the study.
 The t-test is a fundamental concept in statistical hypothesis testing and shows whether two sets of data are significantly different from each other. 
 It is particularly useful when small sample sizes are involved and the standard deviation of the population is unknown.
 The underlying principle of the t-test is to compare the means of two groups and evaluate how likely it is that the observed differences are due to chance.
@@ -64,7 +67,7 @@ The choice of significance level \( \alpha \), often set at 0.05, is critical be
 
 The first hypothesis is to show that a lower temperature is measured behind the ear than in the ear.
 For this purpose, the analysis was considered from two points of view. 
-First, only the data points where the subject was sitting were recorded, and second, all data except for the acclimatization phase (Phase 1) were considered.
+First, only the data points where the subject was sitting were recorded, and second, all data of all subjects except for the acclimatization phase (Phase 1) were considered.
 In both views, a distinction was made between the two two sensor groups behind the ear (Outer Ear Top, Outer Ear Middle, Outer Ear Bottom) and in the ear (Tympanic Membrane, Ear Canal, Concha). 
 
 In the first perspective, the data were considered when the subject was sitting (phase 2). 
@@ -214,7 +217,7 @@ Correlations between pairs of sensors are calculated using Spearman's rank corre
 Phase 3 (outdoors) shows uniformly high correlations, often above \(0.9\), across all sensor pairs.  
 This suggests that the sensors behave more coherently when subjects are outdoors, possibly due to a common response to environmental factors such as wind and sunlight.  
 It is noteworthy that the tympanic membrane sensor, which showed aberrant behavior indoors, closely matched the other sensors outdoors.
-However, it is clearly seen here in the raw data that temperature measurements in the ear drop less than temperature measurements behind the ear. 
+However, it is clearly seen here in the raw data from Figure \ref{} that temperature measurements in the ear drop less than temperature measurements behind the ear. 
 This is confirmed by the MAD and mean deviations to ground truth. 
 Thus, the heat map not only supports the primary hypothesis, but also reveals subtleties about how each sensor responds to different conditions.
 Additionally, together with the MAD and mean deviation to ground truth, it provides confirmation of the hypothesis.
