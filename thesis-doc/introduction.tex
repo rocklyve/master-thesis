@@ -82,6 +82,14 @@ With our studies, we hope to contribute to improving the accuracy and reliabilit
 
 \section{Planned Approach}
 \label{ch:Introduction:PlannedApproach}
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[scale=0.26]{thesis-doc/images/ear_measurement_points/emp.png}
+    \caption{Here the temperature measurement points are shown visually from different angles (profile view (1), ear from behind (2), ear from the side (3)). $P1$-$P3$ are three measuring points behind the ear, which measure the skin temperature at the mastoid. $C1$ is a measuring point that measures the temperature at the concha. $C2$ and $C3$ measure the temperature in the ear canal, where $C3$ is directed at the tympanic membrane and $C2$ is directed at the edge of the ear canal. The arrows at each measuring point show the measuring direction. In addition, a measuring point is outlined with a dashed line if it is located behind the ear. The sensor used is the MLX90632, which is an infrared temperature sensor. This is connected to the OpenEarable and the sensor values can be received and persisted using the I2C protocol.}
+    \label{fig:ear_measurement_positions}
+\end{figure}
+
 In order to position the temperature sensors at the selected positions and to record the temperature values with them, a prototype is built for this master thesis.
 Subsequently, two studies will be conducted, the first of which will look at and compare the positions and the second of which will compare the temperature behavior under stress at the different sensor positions.
 
@@ -110,13 +118,6 @@ This results in two independent studies from which the following hypotheses emer
   \item A measurable rise in temperature occurs during stress-inducing activities.
   \item There will be variability in temperature changes across different types of stress tests.
 \end{enumerate}
-
-\begin{figure}
-    \centering
-    \includegraphics[scale=0.26]{thesis-doc/images/ear_measurement_points/emp.png}
-    \caption{Here the temperature measurement points are shown visually from different angles (profile view (1), ear from behind (2), ear from the side (3)). $P1$-$P3$ are three measuring points behind the ear, which measure the skin temperature at the mastoid. $C1$ is a measuring point that measures the temperature at the concha. $C2$ and $C3$ measure the temperature in the ear canal, where $C3$ is directed at the tympanic membrane and $C2$ is directed at the edge of the ear canal. The arrows at each measuring point show the measuring direction. In addition, a measuring point is outlined with a dashed line if it is located behind the ear. The sensor used is the MLX90632, which is an infrared temperature sensor. This is connected to the OpenEarable and the sensor values can be received and persisted using the I2C protocol.}
-    \label{fig:ear_measurement_positions}
-\end{figure}
 
 \section{Expected Results}
 \label{ch:Introduction:ExpectedResults}

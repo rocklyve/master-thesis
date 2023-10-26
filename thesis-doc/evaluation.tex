@@ -14,9 +14,9 @@ Figure~\ref{fig:ch:Evaluation:Study1:RawData} shows a sample measurement from Pa
 The progression of slightly smoothed raw data across phases that can be seen is very similar to that of the other subjects. 
 The background color represents the phase the measurement is in.
 At the beginning in the acclimation phase (ID=1), the sensor adapts to the body. 
-Subsequently, in the sitting phase (ID=2), the sensor readings show little change under controlled conditions.
+Subsequently, in the baseline phase (ID=2), the sensor readings show little change under controlled conditions.
 In Phase 3, where the subjects were walking outside, the measured temperature drops for all subjects.
-In the relax phase (ID=4), the subject is back in the controlled environment and the signal settles back toward the values measured in Phase 2.
+In the relaxation phase (ID=4), the subject is back in the controlled environment and the signal settles back toward the values measured in Phase 2.
 
 After the study was conducted, a questionnaire was completed by each subject. 
 This included the conditions and perceptions of the study. 
@@ -67,17 +67,18 @@ For this purpose, the analysis was considered from two points of view.
 First, only the data points where the subject was sitting were recorded, and second, all data except for the acclimatization phase (Phase 1) were considered.
 In both views, a distinction was made between the two two sensor groups behind the ear (Outer Ear Top, Outer Ear Middle, Outer Ear Bottom) and in the ear (Tympanic Membrane, Ear Canal, Concha). 
 
-In the first perspective, the data were considered when the subject was seated (Phase 2). 
+In the first perspective, the data were considered when the subject was sitting (phase 2). 
 Here, for all subjects, the mean temperature behind the ear was \(36.30^\circ\text{C}\), while the mean temperature inside the ear was \(36.74^\circ\text{C}\). 
-To prove a statistically significant difference between the two means, a t-test can be used.
-The t-test yielded a p-value of \(0.0424\), which is below the alpha value of \(0.05\).
-Since the p-value is below the alpha, this is evidence of a significant difference.
+To demonstrate a statistically significant difference between the two means, a t-test can be used.
+This tests the probability of the null hypothesis.
+The t-test yielded a p-value of \(0.0424\), which is less than the alpha value of \(0.05\). 
+Thus, the null hypothesis, which states that the data are not significantly different, is true at less than $5\%$, confirming significance.
 The mean error between the ground truth and the temperature measured behind the ear was \(0.50^\circ\text{C}\), and that for the temperature in the ear was \(0.18^\circ\text{C}\). 
 The p-value for the comparison of these errors was \(0.0115\), again indicating a statistically significant difference.
 Thus, it is clear that temperature is measured significantly lower behind the ear than in the ear while sitting.
 
 The second perspective now also looks at other phases of the study. 
-Now, in addition to the sitting phase (Phase 2), the walking phase (Phase 3) and the relax phase (Phase 4) were also considered. 
+Now, in addition to the sitting phase (Phase 2), the walking phase (Phase 3) and the relaxation phase (Phase 4) were also considered. 
 The mean temperature behind the ear was \(35.33^\circ\text{C}\) and in the ear it was \(36.02^\circ\text{C}\). 
 The p-value of the t-test was \(0.0158\), which again is statistically significant.
 The mean error behind the ear was \(1.45^\circ\text{C}\) and in the ear it was \(0.77^\circ\text{C}\). 
@@ -95,12 +96,12 @@ Thus, both perspectives support the hypothesis, both in the sitting phase only a
 This can also be seen in Figure \ref{fig:eval:study1:hypothesis1_result}.
 The two boxplot images show the sitting and walking phases (Phase 2 and 3), always zeroed to the temperature measured by the thermometer before the measurement.
 During sitting (Phase 2), the temperature measured at the tympanic membrane is very close to the temperature measured by the thermometer ($\pm0.5^\circ\text{C}$). 
-The sensors in the ear canal and pinna also show high accuracy. 
+The sensors in the ear canal and concha also show high accuracy. 
 For the sensors behind the ear, although the median is sometimes very close to the sensors in the ear, the outliers are strongly represented here, which questions the reliability of the signals.
 When comparing the sensors behind the ear, the sensor placed at the top behind the ear provides the best results. 
 This is due to the position behind the ear: the further below the ear, the more external influences are felt, such as a gust of wind, even if only with slight movements.
 This can be seen more clearly in the boxplot for Phase 3, while the test subjects were out walking. 
-While here also the sensor pointing to the eardrum shows the best results, all other sensors have outliers.
+While here also the sensor pointing to the tympanic membrane shows the best results, all other sensors have outliers.
 There is also a significant difference between the sensor in the ear canal and the auricle. 
 The sensor in the ear canal is further in the ear and thus somewhat more protected from external conditions, which is also evident here. 
 The findings of the boxplot from Phase 2 are also confirmed for the sensors behind the ear.
@@ -121,12 +122,12 @@ These findings have important implications for the use of ear-based temperature 
 \hline
  & \textbf{Indoor} & \textbf{Outdoor} & \textbf{Indoor} & \textbf{Outdoor} & \textbf{Indoor} & \textbf{Outdoor} \\
 \hline
-\textbf{Tympanic Membrane} & 0.025 & 0.258 & 0.00097 & 0.1074 & 0.224 & -0.391 \\
+\textbf{Tympanic Membrane} & 0.025 & 0.258 & 0.00097 & 0.107 & 0.224 & -0.391 \\
 \textbf{Concha} & 0.042 & 0.820 & 0.00307 & 1.134 & -0.164 & -2.344 \\
 \textbf{EarCanal} & 0.030 & 0.624 & 0.00155 & 0.646 & -0.177 & -1.742 \\
-\textbf{O.E. Bottom} & 0.095 & 0.800 & 0.0189 & 1.110 & -0.527 & -3.094 \\
+\textbf{O.E. Bottom} & 0.095 & 0.800 & 0.01890 & 1.110 & -0.527 & -3.094 \\
 \textbf{O.E. Top} & 0.062 & 0.663 & 0.00694 & 0.650 & -0.389 & -1.903 \\
-\textbf{O.E. Middle} & 0.101 & 0.831 & 0.0198 & 1.098 & -0.529 & -2.548 \\
+\textbf{O.E. Middle} & 0.101 & 0.831 & 0.01980 & 1.098 & -0.529 & -2.548 \\
 \hline
 \end{tabular}
 \caption{Mean absolute deviation (MAD), mean variance, and mean distance from ground truth for different sensors (O.E. = Outer Ear). Phases 2 (inside) and 3 (outside) were considered. All values were calculated for each sensor and averaged over all subjects.}
@@ -147,7 +148,7 @@ A detailed listing of the results can be seen in Table \ref{subsec:Evaluation:St
 
 \begin{table}[h]
 \centering
-\begin{tabularx}{0.6\textwidth}{|X|c|}
+\begin{tabularx}{\textwidth}{|X|c|}
 \hline
 \textbf{Sensor} & \textbf{p-value} \\
 \hline
@@ -175,7 +176,7 @@ In summary, the data confirm that temperature readings from ear-based sensors ha
 \label{subsec:Evaluation:Study1:Hypothesis3}
 The third hypothesis examines the correlation between the relative changes in temperature readings from different sensor locations in Phases 2 and 3.
 This is used to understand the consistency between the different sensor readings, especially in relation to changing weather conditions.
-The mean absolute deviation is used for analysis to better understand the consistency between the different temperature sensor readings. 
+The mean absolute deviation (MAD) is used for analysis to better understand the consistency between the different temperature sensor readings. 
 Table \ref{subsec:Evaluation:Study1:Hypothesis2:mean_variance_table} shows the MAD value for each sensor location in Phase 2 (indoor) and 3 (outdoor).
 
 Initial trends can be seen in the mean distance to ground truth.
@@ -266,7 +267,7 @@ Thus, this confirms the hypothesis that the tympanic membrane measurement provid
 \end{figure} 
 Hypothesis 5 addresses the evaluation of the effect of participant movement on the variability of temperature measurements at different ear-based sensor locations.
 This analysis was conducted with calibration data that included both temperature and IMU data. 
-Temperature data were collected from six strategically placed sensors: Eardrum, Pinna, Auditory Canal, Outer Ear Bottom, Outer Ear Top and Outer Ear Center.
+Temperature data were collected from six strategically placed sensors: Tympanic Membrane, Concha, Auditory Canal, Outer Ear Bottom, Outer Ear Top and Outer Ear Center.
 A 9-axis IMU sensor was used to measure mean inertial motion. 
 The analysis was limited to phases 2, 3 and 4 of the calibration procedure because Phase 1 is used to acclimate the sensors.
 The mean absolute relative temperature change (MARC) was calculated for each sensor position and plotted versus time.
@@ -282,11 +283,11 @@ These MARC plots per temperature sensor were combined with the mean motion data 
 This approach effectively captures the total motion intensity at each time point by considering all available IMU sensors.
 The motion data were averaged across all sensors and subjects to capture motion in all directions.
 The result shows a noticeable correlation between changes in temperature readings and subject motion, a consistency observed across different sensor positions.
-The temperature sensor aimed at the eardrum shows the least change with movement, followed by the sensor in the ear canal.
-Somewhat surprisingly, the sensor behind the pinna appears to show less change than the sensor inside the pinna. 
+The temperature sensor aimed at the tympanic membrane shows the least change with movement, followed by the sensor in the ear canal.
+Somewhat surprisingly, the sensor behind the concha appears to show less change than the sensor inside the concha. 
 However, the other two sensors behind the ear in the middle and bottom show much stronger relative changes. 
 This is likely due in part to the fact that the sensors behind the ear, which are located slightly lower and are less protected by the hair, are more sensitive to environmental influences. 
-The pinna is also much more exposed to environmental influences from the front, which also explains the increase in this sensor.
+The concha is also much more exposed to environmental influences from the front, which also explains the increase in this sensor.
 In general, relative changes can be seen for the individual temperature sensors in the three phases, but this may be due to different conditions. 
 In Phase 3, the temperature generally decreased significantly when the subjects left the room and went outside.
 This is exacerbated by exercise during the outdoor phase. 
@@ -298,7 +299,7 @@ This evaluation provides the basis for future research on optimal sensor positio
 \label{sec:Evaluation:Study2}
 Having checked the validity of the temperature measurements, a second study will now observe how the measured temperature behaves when the subject is placed under stress.
 A more detailed introduction to the design and objectives of Study 2 is described in Chapter~\ref{ch:Design:Study:Study2}.
-Additionally, a visual representation of the procedure of Study 1 can be seen in Figure~\ref{fig:design:study1:procedure}.
+Additionally, a visual representation of the procedure of Study 2 can be seen in Figure~\ref{fig:design:study2:procedure}.
 
 After the study was conducted, a questionnaire was completed by each subject. 
 This included the conditions and perceptions of the study. 
@@ -308,7 +309,7 @@ The external conditions were mostly sunny and cloudy.
 Subjects averaged 26 years of age (24-29) and were healthy.
 All test persons arrived in such a way that they had a short journey and had not previously done any activities that could significantly influence the temperature.
 After the study, all subjects were very positive about the prototype and rated it a $7.8$ on a scale of 0-10.
-In comparison to the questionnaire from the first study, a NASA-TLX questionnaire was also attached, which should make the stress of the stress phase more tangible.
+In comparison to the questionnaire from the first study, a NASA-TLX questionnaire was also attached, which should make the stress of the stress-induced phase more tangible.
 The scale here ranges from 0-10.
 Here, the mental demand was rated on average at $7.1$, as well as the physical demand at $0.4$. 
 Since the stress tests (stroop test, N-back test, math test) each have mental demands and do not require physical demands, this reflects the expectation.
@@ -334,27 +335,32 @@ Hypotheses are then tested and proven or disproven.
 
 \subsection{Stress Detection}
 \label{subsec:Evaluation:Study2:ground_truth}
+\begin{figure}[!t]
+\begin{minipage}{\textwidth}
+        \centering
+        \resizebox{\textwidth}{!}{%
+            \begin{tabularx}{1.2\textwidth}{|c|*{12}{>{\centering\arraybackslash}X|}}
+            \hline
+            \textbf{Subj.} & \multicolumn{2}{c|}{\textbf{SDNN (ms)}} & \multicolumn{2}{c|}{\textbf{RMSSD (ms)}} & \multicolumn{2}{c|}{\textbf{LF/HF}} & \multicolumn{2}{c|}{\textbf{Stress-Index}} & \multicolumn{2}{c|}{\textbf{PNS Index}} & \multicolumn{2}{c|}{\textbf{SNS Index}} \\
+             & \textbf{Base} & \textbf{Stress} & \textbf{Base} & \textbf{Stress} & \textbf{Base} & \textbf{Stress} & \textbf{Base} & \textbf{Stress} & \textbf{Base} & \textbf{Stress} & \textbf{Base} & \textbf{Stress} \\
+            \hline
+            1 & 65.89 & 47.25 & 29.66 & 21.99 & 12.08 & 9.80 & 7 & 11 & -1.6 & -1.85 & 1.96 & 2.73 \\
+        2 & 70.93 & 71.62 & 42.05 & 44.76 & 2.75 & 3.49 & 8 & 8 & -0.92 & -0.98 & 0.87 & 1.02 \\
+        3 & 150.45 & 163.09 & 99.82 & 79.58 & 0.68 & 1.22 & 5 & 6 & 2.21 & 0.92 & -1.33 & -0.51 \\
+        4 & 101.44 & 71.71 & 35.86 & 19.37 & 2.08 & 4.40 & 9 & 14 & -0.51 & -2.01 & 0.33 & 2.73 \\
+        5 & 225.16 & 202.75 & 268.12 & 235.46 & 0.29 & 0.34 & 2 & 2 & 7.26 & 6.44 & -2.28 & -2.24 \\
+            \hline
+            \end{tabularx}
+        }
+    \end{minipage}
+    \vspace{2em}  % Adds vertical space
+    \includegraphics[width=\textwidth]{thesis-doc/images/study2/hrv_metrics_comparison.png}
+    \vspace{2em}  % Adds vertical space
+    \includegraphics[width=\textwidth]{thesis-doc/images/study2/hrv_metrics_comparison_145.png}
+    \caption{Comparison of heart rate variability (HRV) between baseline and stress induced phase in five subjects. SDNN, RMSSD, and LF/HF are HRV metrics, while stress index, PNS index, and SNS index are derived from analysis using "KubiosHRV Standard" software. All metrics are presented as pairs, with the baseline value appearing first, followed by the value under stress-induced conditions. Additionally, the values are presented as a boxplot across all subjects. The PNS is the regeneration index and indicates the recovery ability. The lower the value, the higher the regeneration phase and the more stressed the person is. The normal value is 0. The SNS is the stress index. The higher this value is, the higher the stress and accordingly the more stressed the person is. Here, too, the normal value is 0.}
+    \label{subsec:Evaluation:Study2:ground_truth_result}
+\end{figure}
 
-\begin{table}[!t]
-\centering
-\resizebox{\textwidth}{!}{%
-\begin{tabularx}{1.2\textwidth}{|c|*{12}{>{\centering\arraybackslash}X|}}
-\hline
-\textbf{Subj.} & \multicolumn{2}{c|}{\textbf{SDNN}} & \multicolumn{2}{c|}{\textbf{RMSSD}} & \multicolumn{2}{c|}{\textbf{LF/HF}} & \multicolumn{2}{c|}{\textbf{Stress-Index}} & \multicolumn{2}{c|}{\textbf{PNS Index}} & \multicolumn{2}{c|}{\textbf{SNS Index}} \\
- & \textbf{Sit} & \textbf{Stress} & \textbf{Sit} & \textbf{Stress} & \textbf{Sit} & \textbf{Stress} & \textbf{Sit} & \textbf{Stress} & \textbf{Sit} & \textbf{Stress} & \textbf{Sit} & \textbf{Stress} \\
-\hline
-1 & 65.89 & 47.25 & 29.66 & 21.99 & 12.08 & 9.80 & 7 & 11 & -1.6 & -1.85 & 1.96 & 2.73 \\
-2 & 70.93 & 71.62 & 42.05 & 44.76 & 2.75 & 3.49 & 8 & 8 & -0.92 & -0.98 & 0.87 & 1.02 \\
-3 & 150.45 & 163.09 & 99.82 & 79.58 & 0.68 & 1.22 & 5 & 6 & 2.21 & 0.92 & -1.33 & -0.51 \\
-4 & 101.44 & 71.71 & 35.86 & 19.37 & 2.08 & 4.40 & 9 & 14 & -0.51 & -2.01 & 0.33 & 2.73 \\
-5 & 225.16 & 202.75 & 268.12 & 235.46 & 0.29 & 0.34 & 2 & 2 & 7.26 & 6.44 & -2.28 & -2.24 \\
-\hline
-\end{tabularx}%
-}
-\caption{Comparison of heart rate variability (HRV) between sedentary and stressful conditions in five subjects. SDNN, RMSSD and LF/HF are HRV metrics, while stress index, PNS index and SNS index are derived from analysis using "KubiosHRV Standard" software. All metrics are presented as pairs, with the seated value appearing first, followed by the value under stressful conditions. The PNS is the regeneration index and indicates the recovery ability. The lower the value, the higher the regeneration phase and the more stressed the person is. The normal value is 0.
-The SNS is the stress index. The higher this value, the higher the stress and correspondingly the more stressed the person is. Again, the normal value is 0.}
-\label{subsec:Evaluation:Study2:ground_truth_result}
-\end{table}
 
 At the outset, we examine whether the study actually produced stress in the subjects. 
 This is necessary because the stress detection procedures used, although scientifically accepted, do not produce good results in every subject. 
@@ -377,22 +383,22 @@ The SNS index describes the activities of the sympathetic nervous system.
 Higher positive values induce stress or fight-or-flight responses.
 The PNS index describes the activities of the parasympathetic nervous system. 
 Higher positive values indicate relaxation.
-This resulted in the results shown in Table \ref{subsec:Evaluation:Study2:ground_truth_result}. 
+The results are shown in Figure \ref{subsec:Evaluation:Study2:ground_truth_result}. 
 
-Here it can be seen that for Subject 1, the SDNN and RMSSD value decreased during the stress phase, which is an indication of stress.
-However, for Subject 1 there is also a decrease in LF/HF ratio, which is contrary to a normal stress phase.
+Here it can be seen that for Subject 1, the SDNN and RMSSD value decreased during the stress-induced phase, which is an indication of stress.
+However, for Subject 1 there is also a decrease in LF/HF ratio, which is contrary to a normal stress-induced phase.
 The two SNS and PNS indices are helpful here, as values indicate stress, as the stress index does, which increases from 7 to 11.
-For Test Person 2, a slight increase in the values can be seen in the stress phase, which is contrary to the expectation of recognizing stress.
+For Test Person 2, a slight increase in the values can be seen in the stress-induced phase, which is contrary to the expectation of recognizing stress.
 The stress index also remains stable at the value 8, which confirms the values. 
 The PNS and SNS indices show slight increases, which could indicate stress, but the increases are not sufficient to detect a stronger tendency here. 
 Test Person 3, no stress can be detected on the basis of the SDNN and RMSSD values either, as an increase in the SDNN and a decrease in the RMSSD values can be seen here. 
 However, the LF/HF ratio increases, which indicates stress, as the slight decrease in the PNS index and slight increase in the stress index to 14. 
 However, the decrease in the SNS index is an atypical sign of stress, which is why stress cannot be accurately attributed to Subject 3 either.
 Proband 4 delivers the best values.
-Here a significant decrease of the SDNN and RMSSD values during the stress phase, a dramatic increase of the LF/HF ratio, a strongly increasing stress index to 14.
+Here a significant decrease of the SDNN and RMSSD values during the stress-induced phase, a dramatic increase of the LF/HF ratio, a strongly increasing stress index to 14.
 Furthermored, changes of PNS and SNS indices can be seen, which are all clear indications for stress.
 Subject 4 here provides exactly the expected responses to stress.
-Subject 5, on the other hand, shows a decrease in SDNN and RMSSD during the stress phase. 
+Subject 5, on the other hand, shows a decrease in SDNN and RMSSD during the stress-induced phase. 
 This indicates stress, which is confirmed by the slight increase in the LF/HF ratio.
 However, the stress index remained stable for Subject 5, and the PNS and SNS index increased slightly, which is additionally indicative of stress, even though the increases are very small.
 
@@ -403,55 +409,6 @@ However, there is a tendency which can be further investigated by further studie
 \subsection{Hypothesis 1: Stress-Induced Temperature Rise}
 \label{subsec:Evaluation:Study2:Hypothesis1}
 
-% \begin{figure}[t]
-%     \centering
-    
-%     \begin{subtable}{\textwidth}
-%         \centering
-%         \begin{tabularx}{\textwidth}{|l|*{6}{>{\centering\arraybackslash}X|}}
-%         \hline
-%         & \multicolumn{2}{c|}{\textbf{Sitting Phase}} & \multicolumn{2}{c|}{\textbf{Stress Phase}} & \multicolumn{2}{c|}{\textbf{Relax Phase}} \\
-%         & \textbf{All} & \textbf{1,4,5} & \textbf{All} & \textbf{1,4,5} & \textbf{All} & \textbf{1,4,5} \\
-%         \textbf{Sensor} & \textbf{(in $^\circ \text{C}$)} & \textbf{(in $^\circ \text{C}$)} & \textbf{(in $^\circ \text{C}$)} & \textbf{(in $^\circ \text{C}$)} & \textbf{(in $^\circ \text{C}$)} & \textbf{(in $^\circ \text{C}$)} \\
-%         \hline
-%         \textbf{TympanicMembrane} & 0.06 & 0.15 & 0.03 & 0.11 & -0.01 & 0.06 \\
-%         \textbf{Concha} & -0.59 & -0.02 & -0.49 & 0.01 & -0.46 & -0.01 \\
-%         \textbf{EarCanal} & -0.45 & -0.08 & -0.41 & -0.12 & -0.38 & -0.15 \\
-%         \textbf{Outer Ear Bottom} & -0.99 & -0.72 & -0.83 & -0.55 & -0.8 & -0.61 \\
-%         \textbf{Outer Ear Top} & -0.45 & -0.27 & -0.36 & -0.19 & -0.37 & -0.22 \\
-%         \textbf{Outer Ear Middle} & -0.79 & -0.67 & -0.61 & -0.46 & -0.59 & -0.51 \\
-%         \hline
-%         \end{tabularx}
-%         \caption{Mean Temperature of each phase over all participants and over participants 1,4, and 5. The measured ground truth values are subtracted from each participant's temperature data to combine the results in a more fair way.}
-%         \label{subsec:Evaluation:Study2:Hypothesis1:combined_mean_temps}
-%     \end{subtable}
-    
-%     \vspace{1em} % Add some vertical spacing between the tables
-    
-%     \begin{subtable}{\textwidth}
-%         \centering
-%         \resizebox{\textwidth}{!}{%
-%         \begin{tabularx}{\textwidth}{|l|*{4}{>{\centering\arraybackslash}X|}}
-%             \hline
-%             \textbf{Sensor} & \multicolumn{2}{c|}{\textbf{Sitting - Stress}} & \multicolumn{2}{c|}{\textbf{Stress - Relax}} \\
-%             & \textbf{All} & \textbf{1,4,5} & \textbf{All} & \textbf{1,4,5} \\
-%             & \textbf{p-value} & \textbf{p-value} & \textbf{p-value} & \textbf{p-value} \\
-%             \hline
-%             \textbf{Tympanic Membrane} & 0.049 & 0.007 & 0.387 & 0.530 \\
-%             \textbf{Concha} & 0.095 & 0.442 & 0.553 & 0.831 \\
-%             \textbf{Ear Canal} & 0.504 & 0.098 & 0.568 & 0.733 \\
-%             \textbf{Outer Ear Bottom} & 0.009 & 0.113 & 0.680 & 0.479 \\
-%             \textbf{Outer Ear Top} & 0.005 & 0.086 & 0.689 & 0.201 \\
-%             \textbf{Outer Ear Middle} & 0.029 & 0.077 & 0.616 & 0.073 \\
-%             \hline
-%         \end{tabularx}%
-%         }
-%         \caption{t-Test results for different sensors across phases for all subjects and for subjects 1,4 and 5. The p-value for transitions between Sitting - Stress and Stress - Relax are presented.}
-%         \label{subsec:Evaluation:Study2:Hypothesis1:TTest_Results}
-%     \end{subtable} 
-%     \caption{Evaluation results of Hypothesis 1 including mean temperatures in the Sit, Stress and Relax phases with all subjects and additionally Subjects 1, 4 and 5, as only these showed stress responses in ground truth. For this purpose, the results of the significance test are listed to show their significance.}
-%     \label{sec:Evaluation:Study2:Hypothesis1:Summary}
-% \end{figure}
 \begin{figure}[t]
     \centering
     
@@ -470,7 +427,7 @@ However, there is a tendency which can be further investigated by further studie
         5 & -0.04 & 0.0 & -0.04 & 0.05 & 0.03 & 0.11 \\
         \hline
         \end{tabular}
-        \caption{Temperature Difference from Sitting to Stress for each participant.}
+        \caption{Temperature Difference from Baseline to Stress for each participant.}
         \label{subsec:Evaluation:Study2:Hypothesis1:temp_diff_sitting_to_stress_all}
     \end{subtable}
     
@@ -491,28 +448,28 @@ However, there is a tendency which can be further investigated by further studie
         5 & -0.15 & -0.12 & -0.13 & -0.11 & -0.06 & -0.07 \\
         \hline
         \end{tabular}
-        \caption{Temperature Difference from Stress to Relax for each participant.}
+        \caption{Temperature Difference from stress-induced to relaxation for each participant.}
         \label{subsec:Evaluation:Study2:Hypothesis1:temp_diff_stress_to_relax_all}
     \end{subtable} 
-    \caption{Evaluation of Hypotheses 1: Mean temperature changes during Sit, Stress, and Relax phases. The tables represent the temperature changes between the phases. A negative value implies a temperature fall between the two comparing phases, and a positive value implies a temperature rise, respectively.}
+    \caption{Evaluation of Hypotheses 1: Mean temperature changes during baseline, stress-induced, and relaxation phases. The tables represent the temperature changes between the phases. A negative value implies a temperature fall between the two comparing phases, and a positive value implies a temperature rise, respectively.}
     \label{sec:Evaluation:Study2:Hypothesis1:Summary}
 \end{figure}
 
-To evaluate hypothesis 1, the analysis focuses on the average temperature changes measured by different ear-based sensors during three different phases: Sitting, Stress, and Relaxation. 
+To evaluate hypothesis 1, the analysis focuses on the average temperature changes measured by different ear-based sensors during three different phases: baseline, stress-induced, and relaxation. 
 The first phase, which serves to acclimate the temperature sensors, is disregarded here for analysis.
 To ensure a fair comparison, the mean temperatures were subtracted with the ground truth for each participant.
 
 To evaluate the hypothesis, the mean temperature per sensor per subject is calculated.
 From this, the temperature differences of the different phases are calculated, which can be seen in Figure \ref{sec:Evaluation:Study2:Hypothesis1:Summary}.
-Here, table \ref{subsec:Evaluation:Study2:Hypothesis1:temp_diff_sitting_to_stress_all} shows the mean temperature difference between the sitting and stress phases, and table \ref{subsec:Evaluation:Study2:Hypothesis1:temp_diff_stress_to_relax_all} between the stress and relax phases.
-A significant increase of up to $0.6 ^\circ C$ can be expected \ref{vinkersEffectStressCore2013, okaMechanismsMediatorsPsychological2001, marksNonshiveringThermogenesisInterscapular2009}.
-The largest increase in temperature to the stress phase is observed behind the ear in the middle with $0.27 ^\circ C$, however, these results are not consistent enough. 
+Here, table \ref{subsec:Evaluation:Study2:Hypothesis1:temp_diff_sitting_to_stress_all} shows the mean temperature difference between the baseline and stress-induced phases, and table \ref{subsec:Evaluation:Study2:Hypothesis1:temp_diff_stress_to_relax_all} between the stress-induced and relaxation phases.
+A significant increase of up to $0.6 ^\circ C$ can be expected \cite{vinkersEffectStressCore2013, okaMechanismsMediatorsPsychological2001, marksNonshiveringThermogenesisInterscapular2009}.
+The largest increase in temperature to the stress-induced phase is observed behind the ear in the middle with $0.27 ^\circ C$, however, these results are not consistent enough. 
 Most importantly, they are not consistent with the additional assumption that the temperature of the tympanic membrane provides the most accurate measurement results.
 This records a temperature drop of $-0.04 ^\circ C$.
 In summary, the data do not provide clear evidence for the hypothesis. 
-While there are minor variations, they are not consistently in the direction of a temperature increase during the stress phase, making it difficult to definitively confirm the hypothesis. 
+While there are minor variations, they are not consistently in the direction of a temperature increase during the stress-induced phase, making it difficult to definitively confirm the hypothesis. 
 It is important to note at this point that the conduct of the study is also a critical factor. 
-Since the study was conducted in a short time frame that did not allow for a social stress test (TSST) to be conducted, and also only 5 subjects were used in the study, a re-study with a larger sample is recommended to reach a more conclusive conclusion.
+Since the study was conducted in a short time frame that did not allow for a social stress test (TSST) to be conducted, and also only five subjects were used in the study, a re-study with a larger sample is recommended to reach a more conclusive conclusion.
 
 \subsection{Hypothesis 2: Stress Test Temperature Variability}
 \label{subsec:Evaluation:Study2:Hypothesis2}
@@ -638,11 +595,11 @@ In addition, a Trier Social Stress Test (TSST) could induce a stronger stress co
 \subsection{Further Discussion}
 For Study 2, there are additional hypotheses that can be considered. 
 First, the correlation between heart rate variability (HRV) and ear temperature can be considered. 
-In addition, it can be considered whether the ear temperature returns to the "normal level" after the stress phase.
+In addition, it can be considered whether the ear temperature returns to the "normal level" after the stress-induced phase.
 It can also be considered that the regeneration of the body after the stress test differs from subject to subject and takes different amounts of time to return to baseline temperature.
 In addition, the thesis can be considered that stress has different characteristics between male and female subjects and whether this is also reflected in the temperature.
 For this, however, the number of subjects must be significantly higher.
-However, it can already be seen in Table \ref{sec:Evaluation:Study2:Hypothesis1:Summary} that the temperature hardly changes between the stress phase and the phases around it. 
+However, it can already be seen in Table \ref{sec:Evaluation:Study2:Hypothesis1:Summary} that the temperature hardly changes between the stress-induced phase and the phases around it. 
 Because of this, the analyses are not continued here, as a new study with an increased number of subjects is needed.
 In addition, the selected stress tests (as already mentioned in Section \ref{ch:Design:Study:Study1}) do not elicit sufficient stress in every subject.
 A Trier social stress test (TSST) is also a clearly scientifically recognized stress test, which should be considered for this purpose in the future.
