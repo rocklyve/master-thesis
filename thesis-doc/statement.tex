@@ -4,7 +4,7 @@
 \par
 Ich versichere wahrheitsgemäß, die Arbeit selbstständig angefertigt, alle benutzten Hilfsmittel vollständig und genau angegeben und alles kenntlich gemacht zu haben, was aus Arbeiten anderer unverändert oder mit Abänderungen entnommen wurde.
 
-Karlsruhe, den 01.10.2023
+Karlsruhe, den 01.11.2023
 
 \cleardoublepage
 
@@ -13,14 +13,28 @@ Karlsruhe, den 01.10.2023
 	\textbf{Zusammenfassung}
 \end{center}
 \par
-Diese Masterarbeit untersucht die Rolle von Ohrbasierten Temperaturmessungen und die optimale Platzierung von Sensoren für tragbare Anwendungen.
-Ein Prototyp wurde entwickelt, um Temperaturdaten an verschiedenen Positionen des Ohrs zu sammeln.
-Zwei Studien wurden durchgeführt, um unterschiedliche Hypothesen zu testen.
-Die erste Studie fokussierte sich auf die lokale Temperaturmessung am Ohr und ermittelte, dass die Sensoren konsistente und verlässliche Daten lieferten.
-Die zweite Studie konzentrierte sich auf den Einfluss von Stress auf die Ohrtemperatur.
-Es wurde festgestellt, dass Stress messbare Temperaturänderungen verursachte, was durch zusätzliche Herzfrequenzmessungen bestätigt wurde.
-Diese Erkenntnisse sind besonders relevant für die Entwicklung von Wearables, die Stress oder andere physiologische Zustände überwachen könnten.
-Die Arbeit schließt erfolgreich die Lücke zwischen Theorie und Praxis und liefert eine solide Grundlage für zukünftige Forschungen, einschließlich der Erkennung von zirkadianen Rhythmen und der Zyklusverfolgung für Frauen.
+
+Durch die steigende Nachfrage für healthcare wird das Beobachten von biophysiologischen Signalen des Körpers immer wichtiger.
+In den letzten Jahren sind zahlreiche Arbeiten in diesem Bereich entstanden, woraus sich ein neues Forschungsgebiet gebildet hat: den Wearables.
+Earables (am Ohr getragene Wearables) wurden aufgrund ihrer kompakten Größe, deren komfortablem Fit und der einfachen Handhabung sehr beliebt. Ihre Nähe zu den Körperöffnungen und kritischen Organen, wie dem Gehirn, bietet eine einmalige Gelegenheit für eine verlängerte Datenerfassung von Vitaldaten, einschließlich der Körpertemperatur.
+
+Aufgrund dessen wurde die am TECO bereits verfügbare Plattform OpenEarable erweitert um sechs Temperatursensoren, welche die Temperatur an verschiedenen Positionen in und um das Ohr messen können. 
+Daraus entsteht ein eigens in dieser Thesis erstellter Prototyp, welcher anschließend zur Datenaufzeichnung für zwei Studien verwendet wird.
+
+In der ersten Studie wurden 12 Probanden eingesetzt, um die Temperatur, sowie deren Schwankungen an den ausgewählten Sensorpositionen zu untersuchen. 
+Dabei wurden die Sensoren unter kontrollierten Bedingungen, sowie unter dem Einfluss externer Umweltbedingungen wie Wind und Sonneneinstrahlung überwacht. 
+Die Beobachtungen deuten darauf hin, dass die Sensoren im hinteren Bereich des Ohrs niedrigere Temperaturmesswerte liefern und im Vergleich zu den anderen Positionen eine höhere Varianz aufweisen. 
+Wichtig ist, dass diese Abweichungen zunahmen, wenn sich die Probanden im Freien bewegten. 
+Bei allen Sensoranordnungen wurde eine ausgeprägte Korrelation unter dem Einfluss von Umweltfaktoren beobachtet. 
+Die zuverlässigsten Messungen wurden erzielt, wenn die Sensoren auf das tympanic membrane ausgerichtet waren. 
+Darüber hinaus wurde ein interessanter Zusammenhang zwischen der Bewegung, die durch die Signale der Inertialmesseinheit (IMU) dokumentiert wurde, und den relativen absoluten Änderungen der Temperaturwerte festgestellt.
+
+Die zweite Studie wurde mit einer kleineren Stichprobengröße von 5 Probanden durchgeführt und war auf die Erkennung von stressbedingten thermischen Veränderungen ausgerichtet. 
+Das Experiment ergab, dass die festgestellten Temperaturänderungen nicht ausreichend erkennbar waren, um Stress definitiv zu identifizieren.
+Dennoch lassen die Ergebnisse auf zukünftige, umfangreichere Studien mit einer erhöhten Probandenzahl schließen, insbesondere auf solche, die den Trier Social Stress Test (TSST) für differenziertere Beobachtungen einsetzen könnten.
+
+Diese Erkenntnisse sind besonders relevant für die Entwicklung von Wearables, welche den Fokus auf Stresserkennung oder weitere sich durch Temperatur erkennbare physiologische Zustände haben. 
+Die Thesis schließt erfolgreich die Lücke zwischen Theorie und Praxis und liefert eine solide Grundlage für zukünftige Forschungen, einschließlich der Erkennung von zirkadianen Rhythmen, der Zykluserkennung für Frauen oder auch beispielsweise die Früherkennung von Krankheiten.
 
 \cleardoublepage
 \vspace*{1em}
@@ -28,13 +42,28 @@ Die Arbeit schließt erfolgreich die Lücke zwischen Theorie und Praxis und lief
 	\textbf{Abstract}
 \end{center}
 \par
-This master's thesis investigates the role of ear-based temperature measurements and optimal sensor placement for wearable applications.
-A prototype was engineered to capture temperature data at various ear positions.
-Two studies were conducted to test different hypotheses.
-The first study focused on localized ear temperature measurements and found that the sensors provided consistent and reliable data.
-The second study examined the impact of stress on ear temperature and revealed that stress led to measurable changes in temperature, further corroborated by additional heart rate measurements.
-These findings are especially pertinent for the development of wearables that could monitor stress or other physiological states.
-The thesis successfully bridges the gap between theoretical concepts and practical implementation, providing a solid foundation for future research, including the detection of circadian rhythms and cycle tracking for women.
+
+Due to the increasing demand for healthcare, monitoring biophysiological signals of the body is becoming more and more important.
+In recent years, a lot of work has been done in this field, resulting in a new field of research: wearables.
+Earables (wearables worn on the ear) have become very popular due to their compact size, comfortable fit, and ease of use. Their proximity to body orifices and critical organs, such as the brain, provides a unique opportunity for prolonged data collection of vital signs, including body temperature.
+
+Because of this, the OpenEarable platform already available at TECO has been expanded to include six temperature sensors that can measure temperature at different positions in and around the ear. 
+This will result in a prototype created specifically in this thesis, which will subsequently be used to record data for two studies.
+
+In the first study, 12 subjects were used to investigate the temperature, as well as its fluctuations, at the selected sensor positions. 
+The sensors were monitored under controlled conditions, as well as under the influence of external environmental conditions such as wind and solar radiation. 
+Observations indicate that the sensors at the back of the ear provide lower temperature readings and have higher variance compared to the other positions. 
+Importantly, these variances increased when subjects moved outdoors. 
+A pronounced correlation under the influence of environmental factors was observed for all sensor arrangements. 
+The most reliable measurements were obtained when the sensors were aligned with the tympanic membrane. 
+In addition, an interesting correlation was found between the motion documented by the inertial measurement unit (IMU) signals and the relative absolute changes in temperature values.
+
+The second study was conducted with a smaller sample size of 5 subjects and was focused on the detection of stress-induced thermal changes. 
+The experiment revealed that the detected temperature changes were not sufficiently detectable to definitively identify stress.
+Nevertheless, the results suggest future, more extensive studies with an increased number of subjects, especially those that could use the Trier Social Stress Test (TSST) for more sophisticated observations.
+
+These findings are particularly relevant for the development of wearables that focus on stress detection or other temperature-detectable physiological states. 
+The thesis successfully bridges the gap between theory and practice and provides a solid foundation for future research, including circadian rhythm detection, cycle detection for women, or even, for example, early detection of diseases.
 
 \cleardoublepage
 
