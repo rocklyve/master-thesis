@@ -3,7 +3,7 @@
 # different sensor locations.
 import os
 import numpy as np
-from scipy.stats import pearsonr, spearmanr
+from scipy.stats import pearsonr, spearmanr, ttest_rel
 import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
@@ -118,4 +118,16 @@ class Hypothesis3Analyzer:
                 avg_mad = np.mean(values)
                 avg_mad_by_sensor[phase][sensor] = avg_mad
 
+        p_values = {}
+        for sensor in self.all_temp_data[0].temp_columns:  # Assuming temp_columns is the same for all temp_data
+            phase2_values = mad_by_sensor['Indoor'].get(sensor, [])
+            phase3_values = mad_by_sensor['Outdoor'].get(sensor, [])
+
+            if len(phase2_values) == len(phase3_values) and len(phase2_values) > 1:
+                # Perform paired t-test
+                t_stat, p_value = ttest_rel(phase2_values, phase3_values)
+                p_values[sensor] = p_value
+
         print(f"Average MAD by sensor for Phases 2 (Indoor) and 3 (Outdoor): {avg_mad_by_sensor}")
+
+        print(f"p-values for paired t-test between Phase 2 and Phase 3: {p_values}")
