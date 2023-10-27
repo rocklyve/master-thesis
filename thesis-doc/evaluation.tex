@@ -58,7 +58,7 @@ The choice of significance level \( \alpha \), often set at 0.05, is critical be
 \begin{figure}[!t]
     \centering
     \includegraphics[width=\textwidth]{thesis-doc/images/study1/Logging_person_10_0smoothed_raw_data.png}
-    \caption{Raw data of a measurement in Study 1 of Subject 10. The subject had a body temperature of $36.5^\circ\text{C}$ at the beginning. Phases 1-4 are shown, distinguished by the background color of the plot. In Phase 1, the sensor has adjusted and acclimated to the temperature of the subject. After the sensor settled in, Phase 2 measured the temperature while sitting in a room. In Phase 3, the subject went for a walk outside. In Phase 4, he went back into the room to see how the sensors settled back to the calmer environmental conditions. During the measurement, the subject was sitting on a chair in a room with closed windows. The ground truth is measured before and after the whole measurement in the same ear (right) where the prototype is placed. Also the room temperature, humidity and outdoor temperature was noted manually to complete the dataset.}
+    \caption{Raw data of a measurement in Study 1 of Subject 10. The subject had a body temperature of $36.5^\circ\text{C}$ at the beginning. Phases 1-4 are shown, distinguished by the background color of the plot. In Phase 1, the sensor has adjusted and acclimated to the temperature of the subject. After the sensor settled in, Phase 2 measured the temperature while sitting in a room (baseline phase). In Phase 3, the subject went for a walk outside (outdoor phase). In Phase 4, he went back into the room to see how the sensors settled back to the calmer environmental conditions (acclimatization phase). During the measurement, the subject was sitting on a chair in a room with closed windows, except the outdoor phase. The ground truth is measured before and after the whole measurement in the same ear (right) where the prototype is placed. Also the room temperature, humidity and outdoor temperature was noted manually to complete the dataset.}
     \label{fig:ch:Evaluation:Study1:RawData}
 \end{figure}
 
@@ -67,10 +67,10 @@ The choice of significance level \( \alpha \), often set at 0.05, is critical be
 
 The first hypothesis is to show that a lower temperature is measured behind the ear than in the ear.
 For this purpose, the analysis was considered from two points of view. 
-First, only the data points where the subject was sitting were recorded, and second, all data of all subjects except for the acclimatization phase (Phase 1) were considered.
+First, only the data points where the subject was sitting were recorded (baseline phase), and second, all data of all subjects except for the acclimatization phase (Phase 1) were considered.
 In both views, a distinction was made between the two two sensor groups behind the ear (Outer Ear Top, Outer Ear Middle, Outer Ear Bottom) and in the ear (Tympanic Membrane, Ear Canal, Concha). 
 
-In the first perspective, the data were considered when the subject was sitting (phase 2). 
+In the first perspective, only the baseline phase (phase 2) was considered. 
 Here, for all subjects, the mean temperature behind the ear was \(36.30^\circ\text{C}\), while the mean temperature inside the ear was \(36.74^\circ\text{C}\). 
 To demonstrate a statistically significant difference between the two means, a t-test can be used.
 This tests the probability of the null hypothesis.
@@ -81,12 +81,12 @@ The p-value for the comparison of these errors was \(0.0115\), again indicating 
 Thus, it is clear that temperature is measured significantly lower behind the ear than in the ear while sitting.
 
 The second perspective now also looks at other phases of the study. 
-Now, in addition to the sitting phase (Phase 2), the walking phase (Phase 3) and the relaxation phase (Phase 4) were also considered. 
+Now, in addition to the baseline phase (Phase 2), the outdoor phase (Phase 3) and the relaxation phase (Phase 4) were also considered. 
 The mean temperature behind the ear was \(35.33^\circ\text{C}\) and in the ear it was \(36.02^\circ\text{C}\). 
 The p-value of the t-test was \(0.0158\), which again is statistically significant.
 The mean error behind the ear was \(1.45^\circ\text{C}\) and in the ear it was \(0.77^\circ\text{C}\). 
 The p-value for the comparison of these errors was \(0.0042\), which is also statistically significant.
-Thus, both perspectives support the hypothesis, both in the sitting phase only and during all activities except the acclimatization phase.
+Thus, both perspectives support the hypothesis, both in the baseline phase only and during all activities except the acclimatization phase.
 
 \begin{figure}[!ht]
     \centering
@@ -97,8 +97,8 @@ Thus, both perspectives support the hypothesis, both in the sitting phase only a
 \end{figure}
 
 This can also be seen in Figure \ref{fig:eval:study1:hypothesis1_result}.
-The two boxplot images show the sitting and walking phases (Phase 2 and 3), always zeroed to the temperature measured by the thermometer before the measurement.
-During sitting (Phase 2), the temperature measured at the tympanic membrane is very close to the temperature measured by the thermometer ($\pm0.5^\circ\text{C}$). 
+The two boxplot images show the baseline and outdoor phases (Phase 2 and 3), always zeroed to the temperature measured by the thermometer before the measurement.
+During sitting in the baseline phase (Phase 2), the temperature measured at the tympanic membrane is very close to the temperature measured by the thermometer ($\pm0.5^\circ\text{C}$). 
 The sensors in the ear canal and concha also show high accuracy. 
 For the sensors behind the ear, although the median is sometimes very close to the sensors in the ear, the outliers are strongly represented here, which questions the reliability of the signals.
 When comparing the sensors behind the ear, the sensor placed at the top behind the ear provides the best results. 
@@ -133,7 +133,7 @@ These findings have important implications for the use of ear-based temperature 
 \textbf{O.E. Middle} & 0.101 & 0.831 & 0.01980 & 1.098 & -0.529 & -2.548 \\
 \hline
 \end{tabular}
-\caption{Mean absolute deviation (MAD), mean variance, and mean distance from ground truth for different sensors (O.E. = Outer Ear). Phases 2 (inside) and 3 (outside) were considered. All values were calculated for each sensor and averaged over all subjects.}
+\caption{Mean absolute deviation (MAD), mean variance, and mean distance from ground truth for different sensors (O.E. = Outer Ear). Phases 2 (indoor) and 3 (outdoor) were considered. All values were calculated for each sensor and averaged over all subjects.}
 \label{subsec:Evaluation:Study1:Hypothesis2:mean_variance_table}
 \end{table}
 
@@ -142,6 +142,7 @@ This expectation is derived from the fact that the external influences in an ind
 To test this hypothesis empirically, the data set of several ear-based temperature sensors at different positions was considered, both indoors and outdoors.
 The different situations within the studies were divided into phases. 
 Phase 2 represents an indoor measurement and Phase 3 represents an outdoor measurement during walking.
+Phase 2 used to be referred to as the base phase, but for indoor/outdoor comparisons it is also referred to as the indoor phase.
 Here, the temperature values in different areas of the ear were looked at closely.
 To prove the hypothesis, the variances per temperature sensor were now calculated for phases 2 and 3 respectively. 
 The results show a clear pattern. 
@@ -149,7 +150,7 @@ The mean variance for the tympanic membrane sensor is $0.00097$ indoors and $0.1
 This pattern was consistently observed for other sensor locations, such as the concha with a mean variance of $0.00307$ indoors and $1.134$ outdoors.
 A detailed listing of the results can be seen in Table \ref{subsec:Evaluation:Study1:Hypothesis2:mean_variance_table}.
 
-\begin{table}[h]
+\begin{table}[t]
 \centering
 \begin{tabularx}{\textwidth}{|X|c|}
 \hline
@@ -181,6 +182,27 @@ The third hypothesis examines the correlation between the relative changes in te
 This is used to understand the consistency between the different sensor readings, especially in relation to changing weather conditions.
 The mean absolute deviation (MAD) is used for analysis to better understand the consistency between the different temperature sensor readings. 
 Table \ref{subsec:Evaluation:Study1:Hypothesis2:mean_variance_table} shows the MAD value for each sensor location in Phase 2 (indoor) and 3 (outdoor).
+In order to distinguish the values significantly, a paired t-test was performed. 
+This compares the MAD values of the sensors per subject and thus produces a p-value, which is on a subject-by-subject basis.
+The results of this can be seen in Figure \ref{subsec:Evaluation:Study1:Hypothesis3:pvalues}.
+It can be seen that the MAD of all sensors is significantly different with $p<0.05$.
+\begin{table}[!t]
+\centering
+\begin{tabularx}{\textwidth}{|X|c|}
+\hline
+\textbf{Sensor} & \textbf{p-value} \\
+\hline
+Tympanic Membrane & \(1.44 \times 10^{-5}\) \\
+Concha & \(9.80 \times 10^{-6}\) \\
+Ear Canal & \(5.35 \times 10^{-6}\) \\
+Outer Ear Bottom & \(2.89 \times 10^{-7}\) \\
+Outer Ear Top & \(8.52 \times 10^{-8}\) \\
+Outer Ear Middle & \(3.57 \times 10^{-6}\) \\
+\hline
+\end{tabularx}
+\caption{P-values from the paired t tests of the different MAD's for each sensor between phase 2 and phase 3.}
+\label{subsec:Evaluation:Study1:Hypothesis3:pvalues}
+\end{table}
 
 Initial trends can be seen in the mean distance to ground truth.
 For example, in the outdoor phase, the temperature drops significantly compared to the indoor phase.
@@ -193,6 +215,14 @@ In addition, the outdoor temperature at the end of September when recorded at ab
 This shows that these sensor positions are not as stable to external environmental influences as the sensor directed at the tympanic membrane.
 This is exactly what is shown in the mean absolute deviation. 
 
+\begin{figure}[!t]
+    \centering
+    % \includegraphics[width=0.75\textwidth]{thesis-doc/images/study1/hypothesis3/Correlation_Heatmap_Phase_2.png}
+    \includegraphics[width=\textwidth]{thesis-doc/images/study1/hypothesis3/Correlation_Heatmap_Phase_3.png}
+    \caption{Heat maps showing the Spearman correlation matrices of temperature readings from different ear-based sensors during Phase 3 (outdoor). The Spearman correlation values range from -1 to 1, where -1 indicates a perfect inverse relationship, 1 indicates a perfect direct relationship, and 0 suggests no correlation. The color-coded matrices offer a nuanced visual representation of these correlations: darker shades signify stronger positive correlations while lighter shades indicate weaker or negative correlations. These matrices not only assess the consistency between sensor measurements but also reflect their sensitivity to external environmental changes, thus providing empirical evidence for Hypothesis 3.}
+    \label{fig:eval:study1:hypothesis3_result}
+\end{figure}
+
 Mean absolute deviation (MAD) serves as a robust metric to quantify the stability of different sensor locations under varying environmental conditions. 
 As shown in Table \ref{subsec:Evaluation:Study1:Hypothesis2:mean_variance_table}, the MAD values for indoor and outdoor environments differ significantly. 
 For example, the tympanic sensor has a low MAD value of \(0.025 ^\circ\text{C}\) for indoor measurements, indicating that it provides very consistent readings in controlled environments. 
@@ -202,14 +232,6 @@ Other sensors, particularly those positioned outdoors such as Outer Ear Bottom a
 This is consistent with their increased mean differences from ground truth and highlights their volatility in response to external influences. 
 Thus, the MAD values illustrate the central message of this hypothesis: sensors vary in their stability in response to external environmental influences, and this variation is quantifiable.
 
-\begin{figure}[!t]
-    \centering
-    % \includegraphics[width=0.75\textwidth]{thesis-doc/images/study1/hypothesis3/Correlation_Heatmap_Phase_2.png}
-    \includegraphics[width=0.75\textwidth]{thesis-doc/images/study1/hypothesis3/Correlation_Heatmap_Phase_3.png}
-    \caption{Heat maps showing the Spearman correlation matrices of temperature readings from different ear-based sensors during Phase 3 (outdoor). The Spearman correlation values range from -1 to 1, where -1 indicates a perfect inverse relationship, 1 indicates a perfect direct relationship, and 0 suggests no correlation. The color-coded matrices offer a nuanced visual representation of these correlations: darker shades signify stronger positive correlations while lighter shades indicate weaker or negative correlations. These matrices not only assess the consistency between sensor measurements but also reflect their sensitivity to external environmental changes, thus providing empirical evidence for Hypothesis 3.}    
-    \label{fig:eval:study1:hypothesis3_result}
-\end{figure}
-
 This can also be seen in the heatmap in Figure \ref{fig:eval:study1:hypothesis3_result}.  
 Correlations between pairs of sensors are calculated using Spearman's rank correlation, which is more robust to outliers and non-linear relationships.  
 % Phase 2 (interiors) shows a mixed set of correlation values, with some even showing a negative correlation, such as the pair of tympanic tubes and Outer Ear Bottom (\(r = -0.163\)).  
@@ -217,7 +239,7 @@ Correlations between pairs of sensors are calculated using Spearman's rank corre
 Phase 3 (outdoors) shows uniformly high correlations, often above \(0.9\), across all sensor pairs.  
 This suggests that the sensors behave more coherently when subjects are outdoors, possibly due to a common response to environmental factors such as wind and sunlight.  
 It is noteworthy that the tympanic membrane sensor, which showed aberrant behavior indoors, closely matched the other sensors outdoors.
-However, it is clearly seen here in the raw data from Figure \ref{} that temperature measurements in the ear drop less than temperature measurements behind the ear. 
+However, it is clearly seen here in the raw data from Figure \ref{fig:ch:Evaluation:Study1:RawData} that temperature measurements in the ear drop less than temperature measurements behind the ear. 
 This is confirmed by the MAD and mean deviations to ground truth. 
 Thus, the heat map not only supports the primary hypothesis, but also reveals subtleties about how each sensor responds to different conditions.
 Additionally, together with the MAD and mean deviation to ground truth, it provides confirmation of the hypothesis.
@@ -241,24 +263,50 @@ In contrast, the other sensors show higher standard deviations, more specificall
 This makes them more susceptible to external conditions, such as environmental changes.
 Thus, this confirms the hypothesis that the tympanic membrane measurement provides the most stable temperature readings.
 
-\begin{table}[t]
-\centering
-\begin{tabular}{|l|c|c|}
-\hline
-\textbf{Sensor} & \textbf{Mean Standard Deviation} & \textbf{Mean Standard Deviation} \\
-& \textbf{Phase 2 (indoor)} & \textbf{Phase 3 (outdoor)} \\
-\hline
-\textbf{Tympanic Membrane} & 0.0308 & 0.3048 \\
-\textbf{Concha} & 0.0535 & 0.9882 \\
-\textbf{Ear Canal} & 0.0378 & 0.7496 \\
-\textbf{Outer Ear Bottom} & 0.1138 & 1.0156 \\
-\textbf{Outer Ear Top} & 0.0730 & 0.7836 \\
-\textbf{Outer Ear Middle} & 0.1176 & 0.9875 \\
-\hline
-\end{tabular}
-\caption{Mean Standard deviations of temperature readings for different sensors during phases 2 and 3, averaged over all subjects. Lower values indicate higher stability.}
-\label{subsec:Evaluation:Study1:Hypothesis4:std_dev_table}
-\end{table}
+\begin{figure}[t]
+    \centering
+    
+    \begin{subtable}{\textwidth}
+        \centering
+        \begin{tabular}{|l|c|c|}
+        \hline
+        \textbf{Sensor} & \textbf{Mean Standard Deviation} & \textbf{Mean Standard Deviation} \\
+        & \textbf{Phase 2 (indoor)} & \textbf{Phase 3 (outdoor)} \\
+        \hline
+        \textbf{Tympanic Membrane} & 0.0308 & 0.3048 \\
+        \textbf{Concha} & 0.0535 & 0.9882 \\
+        \textbf{Ear Canal} & 0.0378 & 0.7496 \\
+        \textbf{Outer Ear Bottom} & 0.1138 & 1.0156 \\
+        \textbf{Outer Ear Top} & 0.0730 & 0.7836 \\
+        \textbf{Outer Ear Middle} & 0.1176 & 0.9875 \\
+        \hline
+        \end{tabular}
+        \caption{Mean Standard deviations of temperature readings for different sensors during phases 2 and 3, averaged over all subjects. Lower values indicate higher stability.}
+        \label{subsec:Evaluation:Study1:Hypothesis4:std_dev_table}
+    \end{subtable}
+    
+    \vspace{1em} % Add some vertical spacing between the tables
+    
+    \begin{subtable}{\textwidth}
+        \centering
+        \begin{tabularx}{\textwidth}{|X|c|}
+        \hline
+        \textbf{Sensor} & \textbf{p-value} \\
+        \hline
+        Tympanic Membrane & \(1.25 \times 10^{-5}\) \\
+        Concha & \(9.39 \times 10^{-6}\) \\
+        Ear Canal & \(5.96 \times 10^{-6}\) \\
+        Outer Ear Bottom & \(2.09 \times 10^{-7}\) \\
+        Outer Ear Top & \(6.59 \times 10^{-8}\) \\
+        Outer Ear Middle & \(2.71 \times 10^{-6}\) \\
+        \hline
+        \end{tabularx}
+        \caption{P-values from the paired t-tests of the different sensors between Phase 2 and Phase 3.}
+        \label{subsec:Evaluation:Study1:Hypothesis4:pvalues}
+    \end{subtable} 
+    \caption{Mean standard deviations and the p-values of the paired t-test comparing the indoor and outdoor values for each sensor to detect significant differences. Phases 2 and 3 are used for the indoor and outdoor phases.}
+    \label{sec:Evaluation:Study1:Hypothesis4:Summary}
+\end{figure}
 
 \subsection{Hypothesis 5: Movement Leads to Changes in the Temperature Readings}
 \label{subsec:Evaluation:Study1:Hypothesis5}
@@ -297,7 +345,6 @@ This is exacerbated by exercise during the outdoor phase.
 Thus, it cannot be clearly stated whether this is due to the outdoor temperature drop, the exercise itself or both.
 This evaluation provides the basis for future research on optimal sensor positioning and data fusion techniques for ear-based temperature sensing, especially during movement, but needs to be verified by further studies.
 
-\clearpage
 \section{Results and Discussion of Study 2}
 \label{sec:Evaluation:Study2}
 Having checked the validity of the temperature measurements, a second study will now observe how the measured temperature behaves when the subject is placed under stress.
