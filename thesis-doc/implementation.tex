@@ -48,6 +48,14 @@ To achieve this, only one sensor value per iteration was read out to achieve the
 Additionally, the code had to be optimized several times for performance reasons, ranging from removing \texttt{for} loops to storing data in strings, instead of arrays. 
 Finally, a sampling rate of $50Hz$ of IMU data and a sampling rate of $8.3Hz$ of sensor values has been achieved.
 Since the temperature sensors have an update rate of $2Hz$, some consecutive sensor values are the same, but no measured sensor value is lost.
+A snippet of the final result of the csv file can be taken from Figure \ref{fig:implementation:raw_csv_content_snippet}. Please note that the temperature of the sensor itself is also stored, but is not shown here due to space limitations.
+
+\begin{figure}[!t]
+    \centering
+    \includegraphics[width=\textwidth]{thesis-doc/images/prototype/MeasurementRawDataSnippet.png}
+    \caption{Snippet of the resulting csv-file from study 1 of subject 10. The temperature values were multiplied by 100 to store the values as integer and to have two decimal places. The IMU data were each multiplied by 10000 to retain the information over three decimal places. The timestamp is given in milliseconds, the "ID" defines the current phase the measurement is into.}    
+    \label{fig:implementation:raw_csv_content_snippet}
+\end{figure} 
 
 \section{Sensor Calibration Implementation in Arduino}
 The calibration was implemented using the Arduino platform, modifying the library for the MLX90632 sensors to introduce an emission factor of $0.98$ according to the sensor datasheet. 
@@ -180,11 +188,9 @@ This plots the raw data and persists the plot to the "target" folder.
 Now all the necessary steps have been done to prepare the data so that each hypothesis can be considered. 
 
 \paragraph{Hypothesis 1}
-Hypothesis 1 looks at temperature change and states that temperature increases under stress.
-For this purpose, the mean temperature of the individual sensors is calculated for the sitting phase, stress phase and relaxation phase. 
-Due to the consideration of the ground truth, everything was additionally considered also only for the test persons 1,4 and 5, since these had also actually signs of stress in the stress phase.
-The ground truth of the temperature value was now subtracted from the sensor value for each temperature sensor and test person in order to be able to average all test persons with each other.
-The results were output directly in the console as a combined latex table.
+Hypothesis 1 considers the temperature change and states that the temperature increases under stress.
+For this purpose, the mean temperature of the individual sensors per subject is calculated for the baseline phase, stress-induced phase and relaxation phase. 
+The difference between the mean temperature values of the individual phases was now calculated per subject and were output directly to the console as a latex table.
 Additionally by means of 
 \[
     \texttt{ttest\_rel(data1, data2, nan\_policy='omit')},
@@ -195,11 +201,10 @@ This was done on the 3 relevant phases at the adjacent phases for each sensor.
 These results were also displayed in the console.
 
 \paragraph{Hypothesis 2}
-Hypothesis 2 states that the individual stress tests show different temperature changes.
+Hypothesis 2 states that the individual stress tests have different temperature changes.
 For this purpose, the data set was restricted to the phase of the stress tests. 
-This was implemented by using the time value of the HRV data to determine the intervals of the individual stress tests.
-Then, the ground truth value of the temperature measurement was subtracted from the sensor value to compare the data across subjects. 
-The averaged result is output to the console as a final latex table.
-A significance test was performed to statistically substantiate the results.
-This was done as in Hypothesis 1, but with the individual sub-stress phases instead of the coarser phases.
-The result was output in the console.
+This was implemented by using the time value of the HRV data to determine the intervals of each stress test.
+Subsequently, the difference of the mean temperture measurements of both stress tests was calculated and output as a final latex table on the console.
+A significance test was performed to statistically validate the results.
+This was done as for Hypothesis 1, but with the individual partial stress phases instead of the coarser phases.
+The result was output to the console.
