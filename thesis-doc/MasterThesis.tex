@@ -41,12 +41,14 @@
 %\usepackage[numbers,sort&compress]{natbib}
 \usepackage[backend=biber,natbib=true,hyperref=true,doi=false,url=false]{biblatex}
 \usepackage{url}
+\usepackage{pdfpages}
 \setcounter{biburllcpenalty}{7000}
 \setcounter{biburlucpenalty}{8000}
 % \usepackage{varioref}
 % \usepackage{verbatim}
 \usepackage{float} 
 \usepackage{enumitem}%z.B. \floatstyle{ruled}\restylefloat{figure}
+\usepackage[breaklinks=true]{hyperref}
 % \usepackage[hidelinks]{hyperref}
 % \usepackage{subfigure}
 % \usepackage{fancybox} % für schattierte,ovale Boxen etc.
@@ -137,7 +139,6 @@
 % Es werden nur die Teile eingebunden, die hier 
 % aufgefuehrt sind!
 \includeonly{%
-titlepage,%
 statement,% Ist in KA Pflicht für Diplomarbeiten
 introduction,% Motivation, Zielsetzung, Gliederung
 background,% Grundlagen 
@@ -160,7 +161,7 @@ appendix
 \frontmatter
 \pagenumbering{roman}
 \ifnotdraft{
- \include{titlepage}
+ \includepdf{images/titlepage.pdf}
  \blankpage % Leerseite auf Titelrückseite
  %
  % Die folgende Erklärung ist für Diplomarbeiten Pflicht

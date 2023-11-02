@@ -1,0 +1,60 @@
+%% Titelseite
+%% Vorlage $Id: titelseite.tex 54 2009-12-10 12:23:58Z bless $
+
+\def\usesf{}
+\let\usesf\sffamily % diese Zeile auskommentieren für normalen TeX Font
+
+\newsavebox{\Erstgutachter}
+\savebox{\Erstgutachter}{\usesf Prof.~Dr.~Michael Beigl}
+\newsavebox{\Zweitgutachter}
+\savebox{\Zweitgutachter}{\usesf Tamim Asfour}
+
+\begin{titlepage}
+\setlength{\unitlength}{1pt}
+
+\begin{picture}(0,0)(85,770)
+\includegraphics[width=\paperwidth]{logos/KIT_Deckblatt}
+\end{picture}
+
+\vspace*{-39pt}\hspace*{300pt}\includegraphics[width=.27\paperwidth]{logos/TECO_KIT}
+
+\thispagestyle{empty}
+
+%\begin{titlepage}
+%%\let\footnotesize\small \let\footnoterule\relax
+\begin{center}
+\hbox{}
+\vfill
+{\usesf
+{\huge\bfseries Ear-Based Temperature Probing: Sensor Placement and Fusion for Wearable Applications
+ \par}
+\vskip 1.8cm
+Master's Thesis\\
+by\\[2mm]
+\vskip 1cm
+
+{\large\bfseries David Laubenstein\\}
+\vskip 1.2cm
+Chair of Pervasive Computing Systems/TECO\\
+Institute of Telematics\\
+Department of Informatics\\
+%Universität Karlsruhe (TH)\\[2ex]
+\vskip 3cm
+\begin{tabular}{p{5.5cm}l}
+First Reviewer: & \usebox{\Erstgutachter} \\
+Second Reviewer: & \usebox{\Zweitgutachter} \\
+Supervisor: & Tobias Röddiger \\
+\end{tabular}
+\vskip 3cm
+Project Period:\qquad 05/01/2023 -- 11/02/2023\\
+}
+\end{center}
+\vfill
+\end{titlepage}
+%% Titelseite Ende
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "diplarb"
+%%% End: 

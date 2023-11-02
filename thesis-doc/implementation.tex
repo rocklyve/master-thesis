@@ -13,7 +13,7 @@ A general overview of the code can be visually seen in Figure \ref{fig:ch:Implem
 
 \begin{figure}[!t]
     \centering
-    \includegraphics[width=\textwidth]{thesis-doc/images/ArduinoCodeProcedure2.pdf}
+    \includegraphics[width=\textwidth]{thesis-doc/images/ArduinoCodeProcedure.pdf}
     \caption{Sequence of the behavior of the prototype. Using the ArduinoIDE, the code is written in $c++$ and flashed to the OpenEarable. The code includes the usual "setup()" and "loop()" functions and their behavior to create the dataset for the two studies.
 This results in a csv file that contains all the information.}
     \label{fig:ch:Implementation:ArduinoCodeProcedure}
@@ -134,6 +134,11 @@ The correlations range is from $-1$ to $1$, with the value $-1$ representing a p
 These mean correlations were then used in the second function \texttt{generate\_heatmap()} to create a heatmap. 
 The heatmap is then saved in the "target" folder for each of the two phases.
 The third method is \texttt{analyze\_mad()}, which calculates the mean absolute deviation, respectively for the indoor and outdoor phases.
+Therefore, also a t-test is calculated with
+\[
+    \texttt{stats.ttest\_rel(phase2\_values, phase3\_values)},
+\]
+to know if the difference is significant.
 The results are also printed to the console.
 
 \paragraph{Hypothesis 4}
@@ -145,6 +150,11 @@ By means of
 \]
 the standard deviation is calculated per sensor and per subject, which is then averaged over all subjects.
 This is done for the indoor and outdoor phase and displayed in the console.
+Furthermore, a t-test is used with
+\[
+    \texttt{stats.ttest\_rel(phase2\_values, phase3\_values)},
+\]
+to show if the data difference is significant.
 
 \paragraph{Hypothesis 5}
 Hypothesis 5 states that motions lead to absolute relative temperature changes.
