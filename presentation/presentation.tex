@@ -7,7 +7,7 @@
 \documentclass[en]{sdqbeamer} 
  
 %% Titelbild
-\titleimage{../images/title_header_4}
+\titleimage{../images/title_header_5}
 
 %% Gruppenlogo
 \grouplogo{teco_logo.png} 
@@ -123,7 +123,7 @@ Institute of Telematics, Department of Informatics\\
             \item OpenEarable platform adaption
             \item MLX temperature sensor
         \end{itemize}
-        \item 2 studies
+        \item 2 studies (baseline surveys and environmental influences, under stress conditions)
     \end{itemize}
     \begin{center}
         \includegraphics[scale=0.17]{../thesis-doc/images/ear_measurement_points/emp.png}    
@@ -141,23 +141,29 @@ Institute of Telematics, Department of Informatics\\
 
 \section{Prototype}
 \begin{frame}{Prototype}
-  \begin{columns}[T] % The "T" option aligns column content to the top
-    \begin{column}{.48\textwidth} % Left column, 48% of the text block width
-      \includegraphics[width=0.7\linewidth]{../thesis-doc/images/prototype/prototype_on_head_visual.png} % Left image, full column width
-    \end{column}
-    
-    \begin{column}{.48\textwidth} % Right column, 48% of the text block width
-      \includegraphics[width=0.75\linewidth]{../thesis-doc/images/prototype/Lorenz.png} % Right image, full column width
-    \end{column}
-  \end{columns}
+    \begin{center}
+      \begin{columns}[T] % The "T" option aligns column content to the top
+        \begin{column}{.48\textwidth} % Left column, 48% of the text block width
+          \includegraphics[width=0.7\linewidth]{../thesis-doc/images/prototype/prototype_on_head_visual.png} % Left image, full column width
+        \end{column}
+        
+        \begin{column}{.48\textwidth} % Right column, 48% of the text block width
+          \includegraphics[width=0.75\linewidth]{../thesis-doc/images/prototype/Lorenz.png} % Right image, full column width
+        \end{column}
+      \end{columns}
+    \end{center}
 \end{frame}
 
 \begin{frame}{Prototype}
-    \includegraphics[width=0.6\linewidth]{../thesis-doc/images/prototype/PrototypeConnection.png} % Right image, full column width
+    \begin{center}
+        \includegraphics[width=0.6\linewidth]{../thesis-doc/images/prototype/PrototypeConnection.png} % Right image, full column width
+    \end{center}
 \end{frame}
 
 \begin{frame}{Prototype}
-    \includegraphics[width=0.6\linewidth]{../thesis-doc/images/prototype/PCB_Description.png} % Right image, full column width
+    \begin{center}
+        \includegraphics[width=0.6\linewidth]{../thesis-doc/images/prototype/PCB_Description.png} % Right image, full column width
+    \end{center}
 \end{frame}
 
 \begin{frame}{Prototype}
@@ -220,74 +226,99 @@ Institute of Telematics, Department of Informatics\\
 \end{frame}
 
 \section{Study 1}
-\begin{frame}%{Study 1: Localized Ear Temperature Measurement Study Procedure: Baseline Surveys and Environmental Influences}
-    \includegraphics[width=0.95\linewidth]{../thesis-doc/images/study1/Procedure_short.pdf} % Right image, full column width
+\begin{frame}{Study 1: Localized Ear Temperature Measurement Study Procedure: Baseline Surveys and Environmental Influences}
+\textbf{Hypothesis:}
+\begin{overprint}
+  \onslide<1-5>
+    \begin{itemize}
+        \item<1-> The temperature measured by sensors located behind the ear is lower compared to the other locations.
+        \item<2-> The variance in temperature readings differs between indoor and outdoor settings.
+        \item<3-> Relative changes in temperature readings across different sensor locations will be interrelated.
+        \item<4-> The temperature at the tympanic membrane has the greatest stability compared to other sensor locations.
+        \item<5-> Subject movement leads to significant changes in the temperature readings across various sensor locations.
+    \end{itemize}
+    \end{overprint}
+    
+    \begin{center}
+        \includegraphics<1->[width=0.85\linewidth]{../thesis-doc/images/study1/Procedure_short.pdf} % Image visible from slide 1 onward
+    \end{center}
 \end{frame}
+
+\begin{frame}
+    \begin{center}
+        \includegraphics[width=0.9\linewidth]{../thesis-doc/images/study1/Logging_person_10_0smoothed_raw_data.png} % Right image, full column width
+    \end{center}
+\end{frame}
+
+% \begin{frame}{Evaluation Study 1: Hypothesis 1}
+%     \begin{itemize}
+%         \item additional info or pictures
+%     \end{itemize}
+% \end{frame}
+
+% \begin{frame}{Evaluation Study 1: Hypothesis 2}
+%     \begin{itemize}
+%         \item additional info or pictures
+%     \end{itemize}
+% \end{frame}
+
+% \begin{frame}{Evaluation Study 1: Hypothesis 3}
+%     \begin{itemize}
+%         \item additional info or pictures
+%     \end{itemize}
+% \end{frame}
+
+% \begin{frame}{Evaluation Study 1: Hypothesis 4}
+%     \begin{itemize}
+%         \item additional info or pictures
+%     \end{itemize}
+% \end{frame}
+
+% \begin{frame}{Evaluation Study 1: Hypothesis 5}
+%     \begin{itemize}
+%         \item additional info or pictures
+%     \end{itemize}
+% \end{frame}
 
 \section{Study 2}
-\begin{frame}%{Study 2: Study Course Under Stress Conditions: Impact on Temperature Measurements With Ear-Based Sensors}
-    \includegraphics[width=0.95\linewidth]{../thesis-doc/images/study2/Procedure2_short.pdf} % Right image, full column width
+\begin{frame}{Study 2: Study Course Under Stress Conditions: Impact on Temperature Measurements With Ear-Based Sensors}
+\textbf{Hypothesis:}
+\begin{overprint}
+  \onslide<1->
+  \begin{itemize}
+    \item<1-> A measurable rise in temperature occurs during stress-inducing activities.
+    \item<2-> There will be variability in temperature changes across different types of stress tests.
+  \end{itemize}
+\end{overprint}
+
+\begin{center}
+  \includegraphics<1->[width=0.95\linewidth]{../thesis-doc/images/study2/Procedure2_short.pdf} % Image visible from slide 1 onward
+\end{center}
 \end{frame}
 
-\section{Evaluation}
-\begin{frame}{Evaluation Study 1: Hypothesis}
-    \begin{enumerate}[label=H\arabic{*}:]
-      \item The temperature measured by sensors located behind the ear is lower compared to the other locations.
-      \item The variance in temperature readings differs between indoor and outdoor settings.
-      \item Relative changes in temperature readings across different sensor locations will be interrelated.
-      \item The temperature at the tympanic membrane has the greatest stability compared to other sensor locations.
-      \item Subject movement leads to significant changes in the temperature readings across various sensor locations.
-    \end{enumerate}
+\begin{frame}
+    \begin{center}
+        \includegraphics[width=0.9\linewidth]{../thesis-doc/images/study2/p04/raw_hrv_data_participant_4.png} 
+    \end{center}
 \end{frame}
 
-\begin{frame}{Evaluation Study 1: Hypothesis 1}
-    \begin{itemize}
-        \item additional info or pictures
-    \end{itemize}
+\begin{frame}
+    \begin{center}
+        \includegraphics[width=0.9\linewidth]{../thesis-doc/images/study2/p04/Logging_study2_p04_0smoothed_raw_data.png} 
+    \end{center}
 \end{frame}
 
-\begin{frame}{Evaluation Study 1: Hypothesis 2}
-    \begin{itemize}
-        \item additional info or pictures
-    \end{itemize}
-\end{frame}
+% \begin{frame}{Evaluation Study 2: Hypothesis 1}
+%     \begin{itemize}
+%         \item additional info or pictures
+%     \end{itemize}
+% \end{frame}
 
-\begin{frame}{Evaluation Study 1: Hypothesis 3}
-    \begin{itemize}
-        \item additional info or pictures
-    \end{itemize}
-\end{frame}
-
-\begin{frame}{Evaluation Study 1: Hypothesis 4}
-    \begin{itemize}
-        \item additional info or pictures
-    \end{itemize}
-\end{frame}
-
-\begin{frame}{Evaluation Study 1: Hypothesis 5}
-    \begin{itemize}
-        \item additional info or pictures
-    \end{itemize}
-\end{frame}
-
-\begin{frame}{Evaluation Study 2: Hypothesis}
-    \begin{enumerate}[label=H\arabic{*}:]
-      \item A measurable rise in temperature occurs during stress-inducing activities.
-      \item There will be variability in temperature changes across different types of stress tests.
-    \end{enumerate}
-\end{frame}
-
-\begin{frame}{Evaluation Study 2: Hypothesis 1}
-    \begin{itemize}
-        \item additional info or pictures
-    \end{itemize}
-\end{frame}
-
-\begin{frame}{Evaluation Study 2: Hypothesis 2}
-    \begin{itemize}
-        \item additional info or pictures
-    \end{itemize}
-\end{frame}
+% \begin{frame}{Evaluation Study 2: Hypothesis 2}
+%     \begin{itemize}
+%         \item additional info or pictures
+%     \end{itemize}
+% \end{frame}
 
 \section{Conclusion \& Future Work}
 \begin{frame}{Conclusion}
