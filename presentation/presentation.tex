@@ -31,6 +31,7 @@ Institute of Telematics, Department of Informatics\\
  
 \usepackage[bibstyle=numeric,hyperref,backend=biber]{biblatex}
 \usepackage[inkscapeformat=png]{svg}
+\usepackage{tabularx}
 \addbibresource{../thesis-doc/Literature.bib}
 \bibhang1em
 
@@ -48,16 +49,20 @@ Institute of Telematics, Department of Informatics\\
 \section{Motivation}
 \begin{frame}{Motivation}
     \begin{itemize}
-        \item current state of temperature measurement \cite{TemperatureDigitalGlassa}
+        \item Current state of temperature measurement \cite{TemperatureDigitalGlassa}
+        \item No long-term measurement possible
     \end{itemize}
     \begin{center}
-        \includegraphics[scale=0.16]{proposal-presentation/images/thermometer_types.jpg}    
+        \includegraphics[scale=0.15]{proposal-presentation/images/thermometer_types.jpg}    
     \end{center}
 \end{frame}
 
 \begin{frame}{Motivation}
+    \begin{itemize}
+        \item Solution: integration in wearables we already use a lot
+    \end{itemize}
     \begin{center}
-        \includegraphics[scale=0.16]{proposal-presentation/images/inears/earbuds_picture.jpg}
+        \includegraphics[scale=0.14]{proposal-presentation/images/inears/earbuds_picture.jpg}
     \end{center}
 \end{frame}
 
@@ -81,13 +86,13 @@ Institute of Telematics, Department of Informatics\\
 % \begin{frame}[fragile]{Question}
 %     \begin{column}{0.50\textwidth}
 %         \begin{itemize}
-%             \item measure temperature at different locations in and around the ears
+%             \item measures temperature at different locations in and around the ears
 %             \item hypotheses
 %             \begin{itemize}
 %                 \item correlations with activity
 %                 \item quality can be improved through IMU
 %                 \item combination of signals improves the quality
-%                 \item skin temperature around the ear strongly correlates with core body temperature.
+%                 \item Skin temperature around the ear strongly correlates with core body temperature.
 %             \end{itemize}
 %         \end{itemize}
 %     \end{column}
@@ -118,7 +123,7 @@ Institute of Telematics, Department of Informatics\\
 \section{Planned Approach}
 \begin{frame}{Planned Approach}
     \begin{itemize}
-        \item device to measure ear-based temperature data
+        \item Device to measure ear-based temperature data
         \begin{itemize}
             \item OpenEarable platform adaption
             \item MLX temperature sensor
@@ -135,118 +140,228 @@ Institute of Telematics, Department of Informatics\\
 %     \begin{itemize}
 %         \item insights into sensor placement in/around the ear
 %         \item combination of sensors to improve data quality
-%         \item support the development of more accurate and reliable wearable devices for biometric applications
+%         \item supports the development of more accurate and reliable wearable devices for biometric applications
 %     \end{itemize}
 % \end{frame}
 
 \section{Prototype}
 \begin{frame}{Prototype}
     \begin{center}
-      \begin{columns}[T] % The "T" option aligns column content to the top
-        \begin{column}{.48\textwidth} % Left column, 48% of the text block width
-          \includegraphics[width=0.7\linewidth]{../thesis-doc/images/prototype/prototype_on_head_visual.png} % Left image, full column width
+      \begin{columns}[T]
+        \begin{column}{.48\textwidth}
+          \includegraphics[width=0.7\linewidth]{../thesis-doc/images/prototype/prototype_on_head_visual.png}
         \end{column}
         
-        \begin{column}{.48\textwidth} % Right column, 48% of the text block width
-          \includegraphics[width=0.75\linewidth]{../thesis-doc/images/prototype/Lorenz.png} % Right image, full column width
+        \begin{column}{.48\textwidth}
+          \includegraphics[width=0.75\linewidth]{../thesis-doc/images/prototype/Lorenz.png} 
         \end{column}
       \end{columns}
     \end{center}
 \end{frame}
 
-\begin{frame}{Prototype}
-    \begin{center}
-        \includegraphics[width=0.6\linewidth]{../thesis-doc/images/prototype/PrototypeConnection.png} % Right image, full column width
-    \end{center}
+\begin{frame}{Prototype: Main Hardware Connection}
+    \begin{columns}[T]
+        \begin{column}{.34\textwidth}
+          \begin{itemize}
+              \item Communication between components with I2C
+              \item OpenEarable
+              \begin{itemize}
+                  \item SD card
+                  \item Arduino Nano 33 BLE
+                  \item IMU
+                  \item Status LED
+                  \item Clicky button
+              \end{itemize}
+              \item PCB
+              \item FlexPCB
+          \end{itemize}
+        \end{column}
+        
+        \begin{column}{.64\textwidth}
+          \includegraphics[width=0.95\linewidth]{../thesis-doc/images/prototype/PrototypeConnection.png}
+        \end{column}
+      \end{columns}
 \end{frame}
 
-\begin{frame}{Prototype}
-    \begin{center}
-        \includegraphics[width=0.6\linewidth]{../thesis-doc/images/prototype/PCB_Description.png} % Right image, full column width
-    \end{center}
+\begin{frame}{Prototype: PCB Composition}
+    \begin{columns}[T]
+        \begin{column}{.34\textwidth}
+          \begin{itemize}
+              \item 4-pin and 8-pin connector to connect OpenEarable and FlexPCB
+              \item Multiplexer
+              \begin{itemize}
+                  \item Switch through one of 8 channels
+                  \item Each temperature sensor is connected
+              \end{itemize}
+              \item MLX90632 temperature sensor
+              \begin{itemize}
+                  \item Infrared sensor
+                  \item Factory calibrated
+                  \item Accuracy of $\pm0.2^\circ\text{C}$
+              \end{itemize}
+              \item LED
+          \end{itemize}
+        \end{column}
+        
+        \begin{column}{.64\textwidth}
+          \includegraphics[width=0.95\linewidth]{../thesis-doc/images/prototype/PCB_Description.png}
+        \end{column}
+      \end{columns}
 \end{frame}
 
-\begin{frame}{Prototype}
-\begin{columns}[T] % The "T" option aligns column content to the top
-    \begin{column}{.48\textwidth} % Left column, 48% of the text block width
-      \includegraphics[width=0.9\linewidth]{../thesis-doc/images/prototype/flex_pcb_design_finding.png} % Right image, full column width
+\begin{frame}{Prototype: FlexPCB - Concept vs Final Design}
+\begin{columns}[T]
+    \begin{column}{.48\textwidth}
+      \includegraphics[width=0.9\linewidth]{../thesis-doc/images/prototype/flex_pcb_design_finding.png}
     \end{column}
 
-    \begin{column}{.48\textwidth} % Right column, 48% of the text block width
-      \includegraphics[width=1.05\linewidth]{../thesis-doc/images/prototype/pcb/flex_pcb_3D.png} % Right image, full column width
+    \begin{column}{.48\textwidth}
+      \includegraphics[width=1.05\linewidth]{../thesis-doc/images/prototype/pcb/flex_pcb_3D.png}
     \end{column}
   \end{columns}
     
 \end{frame}
 
-\begin{frame}{Prototype}
-  \begin{columns}[T] % The "T" option aligns column content to the top
-    \begin{column}{.31\textwidth} % Left column, 48% of the text block width
-      \includegraphics[width=0.9\linewidth]{../thesis-doc/images/prototype/Earpod_Side1.png} % Left image, full column width
+% \begin{frame}{Prototype: FlexPCB}
+%   \begin{columns}[T]
+%     \begin{column}{.31\textwidth}
+%       \includegraphics[width=0.9\linewidth]{../thesis-doc/images/prototype/Earpod_Side1.png}
+%     \end{column}
+    
+%     \begin{column}{.31\textwidth}
+%       \includegraphics[width=0.9\linewidth]{../thesis-doc/images/prototype/Earpod_Front_2.pdf}
+%     \end{column}
+    
+%     \begin{column}{.31\textwidth}
+%       \includegraphics[width=0.9\linewidth]{../thesis-doc/images/prototype/Earpod_Side2.png}
+%     \end{column}
+%   \end{columns}
+% \end{frame}
+
+\begin{frame}{Prototype: FlexPCB}
+  \begin{columns}[T]
+    \begin{column}{.31\textwidth}
+      \includegraphics[width=0.9\linewidth]{../thesis-doc/images/prototype/Earpod_Side1_visual_markers.pdf}
     \end{column}
     
-    \begin{column}{.31\textwidth} % Right column, 48% of the text block width
-      \includegraphics[width=0.9\linewidth]{../thesis-doc/images/prototype/Earpod_Front_2.pdf} % Right image, full column width
+    \begin{column}{.31\textwidth}
+      \includegraphics[width=0.9\linewidth]{../thesis-doc/images/prototype/Earpod_Front_visual_markers.pdf}
     \end{column}
 
-    \begin{column}{.31\textwidth} % Right column, 48% of the text block width
-      \includegraphics[width=0.9\linewidth]{../thesis-doc/images/prototype/Earpod_Side2.png} % Right image, full column width
-    \end{column}
-  \end{columns}
-\end{frame}
-
-\begin{frame}{Prototype}
-  \begin{columns}[T] % The "T" option aligns column content to the top
-    \begin{column}{.31\textwidth} % Left column, 48% of the text block width
-      \includegraphics[width=0.9\linewidth]{../thesis-doc/images/prototype/Earpod_Side1_visual_markers.pdf} % Left image, full column width
-    \end{column}
-    
-    \begin{column}{.31\textwidth} % Right column, 48% of the text block width
-      \includegraphics[width=0.9\linewidth]{../thesis-doc/images/prototype/Earpod_Front_visual_markers.pdf} % Right image, full column width
-    \end{column}
-
-    \begin{column}{.31\textwidth} % Right column, 48% of the text block width
-      \includegraphics[width=0.9\linewidth]{../thesis-doc/images/prototype/Earpod_Side2_visual_markers.pdf} % Right image, full column width
+    \begin{column}{.31\textwidth}
+      \includegraphics[width=0.9\linewidth]{../thesis-doc/images/prototype/Earpod_Side2_visual_markers.pdf}
     \end{column}
   \end{columns}
 \end{frame}
 
 \section{Study 1}
 \begin{frame}{Study 1: Localized Ear Temperature Measurement Study Procedure: Baseline Surveys and Environmental Influences}
-\textbf{Hypothesis:}
-\begin{overprint}
-  \onslide<1-3>
     \begin{itemize}
-        \item<1-> The temperature measured by sensors located behind the ear is lower compared to the other locations.
-        \item<2-> The variance in temperature readings differs between indoor and outdoor settings.
-        % \item<3-> Relative changes in temperature readings across different sensor locations will be interrelated.
-        \item<3-> The temperature at the tympanic membrane has the greatest stability compared to other sensor locations.
-        % \item<5-> Subject movement leads to significant changes in the temperature readings across various sensor locations.
+        \item 12 probands (7 male, 5 female)
+        \item Mean room temperature $25.4^\circ\text{C}$
+        \item Mean outdoor temperature: $19.4^\circ\text{C}$
+        \item Thermometer measurement before/after data measurement
     \end{itemize}
-    \end{overprint}
-    
     \begin{center}
-        \includegraphics<1->[width=0.85\linewidth]{../thesis-doc/images/study1/Procedure_short.pdf} % Image visible from slide 1 onward
+        \includegraphics[width=0.95\linewidth]{../thesis-doc/images/study1/Procedure_short.pdf}
     \end{center}
 \end{frame}
 
 \begin{frame}
     \begin{center}
-        \includegraphics[width=0.9\linewidth]{../thesis-doc/images/study1/Logging_person_10_0smoothed_raw_data.png} % Right image, full column width
+        \includegraphics[width=0.9\linewidth]{../thesis-doc/images/study1/Logging_person_10_0smoothed_raw_data.png}
     \end{center}
 \end{frame}
 
 \begin{frame}{Evaluation Study 1: Hypothesis 1}
-    \begin{itemize}
-        \item additional info or pictures
-    \end{itemize}
+    \textbf{The temperature measured by sensors located behind the ear is lower compared to the other locations.}
+    \begin{center}
+      \begin{columns}[T]
+        \begin{column}{.3\textwidth}
+        \vspace{10pt}
+          \begin{itemize}
+              \item Baseline phase (phase 2)
+              \item Mean temperature of all probands
+              \begin{itemize}
+                  \item The ground truth is subtracted from each measured temperature value
+              \end{itemize}
+          \end{itemize}
+        \end{column}
+        
+        \begin{column}{.66\textwidth}
+        \includegraphics[width=0.99\linewidth]{../thesis-doc/images/study1/hypothesis1/hypothesis1_boxplot_phase_2.png}
+        \end{column}
+      \end{columns}
+    \end{center}
+\end{frame}
+
+\begin{frame}{Evaluation Study 1: Hypothesis 1}
+    \textbf{The temperature measured by sensors located behind the ear is lower compared to the other locations.}
+    \begin{center}
+      \begin{columns}[T]
+        \begin{column}{.3\textwidth}
+        \vspace{10pt}
+          \begin{itemize}
+              \item Outdoor phase (phase 3)
+              \item Mean temperature of all probands
+              \begin{itemize}
+                  \item The ground truth is subtracted from each measured temperature value
+              \end{itemize}
+          \end{itemize}
+        \end{column}
+        
+        \begin{column}{.66\textwidth}
+        \includegraphics[width=0.99\linewidth]{../thesis-doc/images/study1/hypothesis1/hypothesis1_boxplot_phase_3.png}
+        \end{column}
+      \end{columns}
+    \end{center}
 \end{frame}
 
 \begin{frame}{Evaluation Study 1: Hypothesis 2}
+    \textbf{The variance in temperature readings differs between indoor and outdoor settings}
+
     \begin{itemize}
-        \item additional info or pictures
+        \item Huge increase in variance between indoor and outdoor phase for each sensor position
     \end{itemize}
+    \vspace{15pt}
+    \begin{tabularx}{\textwidth}{|X|c|c|}
+        \hline
+        \textbf{Sensor} & \multicolumn{2}{c|}{\textbf{Mean Variance}} \\
+         & \multicolumn{2}{c|}{\textbf{(in ^\circ \text{C}^2)}} \\
+         & \textbf{Indoor} & \textbf{Outdoor} \\
+        \hline
+        \textbf{Tympanic Membrane} & 0.00097 & 0.107 \\
+        \textbf{Concha} & 0.00307 & 1.134 \\
+        \textbf{EarCanal} & 0.00155 & 0.646 \\
+        \textbf{Outer Ear Bottom} & 0.01890 & 1.110 \\
+        \textbf{Outer Ear Top} & 0.00694 & 0.650 \\
+        \textbf{Outer Ear Middle} & 0.01980 & 1.098 \\
+        \hline
+    \end{tabularx}
 \end{frame}
+
+\begin{frame}{Evaluation Study 1: Hypothesis 2}
+    \textbf{The variance in temperature readings differs between indoor and outdoor settings}
+
+    \begin{itemize}
+        \item Null hypothesis is rejected, if $p<0.05$.
+        \item Strong indication that the hypothesis is proven.
+    \end{itemize}
+    \vspace{15pt}
+    \begin{tabularx}{\textwidth}{|X|c|}
+\hline
+\textbf{Sensor} & \textbf{p-value} \\
+\hline
+Tympanic Membrane & \(0.0005438\) \\
+Concha & \(0.0005870\) \\
+Ear Canal & \(0.0005009\) \\
+Outer Ear Bottom & \(4.71 \times 10^{-6}\) \\
+Outer Ear Top & \(7.04 \times 10^{-7}\) \\
+Outer Ear Middle & \(0.0002436\) \\
+\hline
+\end{tabularx}
+\end{frame}
+
 
 % \begin{frame}{Evaluation Study 1: Hypothesis 3}
 %     \begin{itemize}
@@ -255,9 +370,47 @@ Institute of Telematics, Department of Informatics\\
 % \end{frame}
 
 \begin{frame}{Evaluation Study 1: Hypothesis 4}
+    \textbf{The temperature at the tympanic membrane has the greatest stability compared to other sensor locations}
     \begin{itemize}
-        \item additional info or pictures
+        \item The results for the outdoor area in particular show that the tympanic membrane is the most stable.
     \end{itemize}
+    \vspace{15pt}
+    
+        \begin{tabularx}{\textwidth}{|X|c|c|}
+        \hline
+        \textbf{Sensor} & \textbf{Mean Standard Deviation} & \textbf{Mean Standard Deviation} \\
+        & \textbf{Phase 2 (indoor)} & \textbf{Phase 3 (outdoor)} \\
+        \hline
+        \textbf{Tympanic Membrane} & 0.0308 & 0.3048 \\
+        \textbf{Concha} & 0.0535 & 0.9882 \\
+        \textbf{Ear Canal} & 0.0378 & 0.7496 \\
+        \textbf{Outer Ear Bottom} & 0.1138 & 1.0156 \\
+        \textbf{Outer Ear Top} & 0.0730 & 0.7836 \\
+        \textbf{Outer Ear Middle} & 0.1176 & 0.9875 \\
+        \hline
+        \end{tabularx}
+\end{frame}
+
+\begin{frame}{Evaluation Study 1: Hypothesis 4}
+    \textbf{The temperature at the tympanic membrane has the greatest stability compared to other sensor locations}
+    \begin{itemize}
+        \item Null hypothesis is rejected if $p<0.05$.
+        \item Strong indication that the hypothesis is proven.
+    \end{itemize}
+    \vspace{15pt}
+    
+    \begin{tabularx}{\textwidth}{|X|c|}
+        \hline
+        \textbf{Sensor} & \textbf{p-value} \\
+        \hline
+        Tympanic Membrane & \(1.25 \times 10^{-5}\) \\
+        Concha & \(9.39 \times 10^{-6}\) \\
+        Ear Canal & \(5.96 \times 10^{-6}\) \\
+        Outer Ear Bottom & \(2.09 \times 10^{-7}\) \\
+        Outer Ear Top & \(6.59 \times 10^{-8}\) \\
+        Outer Ear Middle & \(2.71 \times 10^{-6}\) \\
+        \hline
+        \end{tabularx}
 \end{frame}
 
 % \begin{frame}{Evaluation Study 1: Hypothesis 5}
@@ -268,17 +421,14 @@ Institute of Telematics, Department of Informatics\\
 
 \section{Study 2}
 \begin{frame}{Study 2: Study Course Under Stress Conditions: Impact on Temperature Measurements With Ear-Based Sensors}
-\textbf{Hypothesis:}
-\begin{overprint}
-  \onslide<1->
-  \begin{itemize}
-    \item<1-> A measurable rise in temperature occurs during stress-inducing activities.
-    \item<2-> There will be variability in temperature changes across different types of stress tests.
-  \end{itemize}
-\end{overprint}
-
+    \begin{itemize}
+        \item 5 probands (3 male, 2 female)
+        \item Mean room temperature $23.1^\circ\text{C}$
+        \item Thermometer measurement before/after data measurement
+        \item Polar H9 as ground truth for stress
+    \end{itemize}
 \begin{center}
-  \includegraphics<1->[width=0.95\linewidth]{../thesis-doc/images/study2/Procedure2_short.pdf} % Image visible from slide 1 onward
+  \includegraphics[width=0.95\linewidth]{../thesis-doc/images/study2/Procedure2_short.pdf}
 \end{center}
 \end{frame}
 
@@ -308,9 +458,31 @@ Institute of Telematics, Department of Informatics\\
 
 \section{Conclusion \& Future Work}
 \begin{frame}{Conclusion}
-    \begin{itemize}
-        \item additional info or pictures
-    \end{itemize}
+    \begin{center}
+      \begin{columns}[T]
+        \begin{column}{.55\textwidth}
+          \begin{itemize}
+              \item Creation of a prototype
+              \item 2 studies
+              \begin{itemize}
+                  \item Baseline and environmental influences
+                  \item Under stress conditions
+              \end{itemize}
+              \item Findings:
+              \begin{itemize}
+                  \item Prototype for future studies
+                  \item Long-term temperature monitoring while sitting/ sleeping
+                  \item High potential to include motion data
+              \end{itemize}
+              
+          \end{itemize}
+        \end{column}
+        
+        \begin{column}{.4\textwidth}
+          \includegraphics[width=0.8\linewidth]{../thesis-doc/images/prototype/Lorenz.png} 
+        \end{column}
+      \end{columns}
+    \end{center}
 \end{frame}
 
 \begin{frame}{Future Work}
@@ -335,26 +507,26 @@ Institute of Telematics, Department of Informatics\\
 \section{Study Descriptions}
 \begin{frame}
     \begin{center}
-        \includegraphics[width=0.9\linewidth]{../thesis-doc/images/study1/Procedure.pdf} % Image visible from slide 1 onward
+        \includegraphics[width=0.9\linewidth]{../thesis-doc/images/study1/Procedure.pdf}
     \end{center}
 \end{frame}
 
 \begin{frame}
     \begin{center}
-        \includegraphics[width=0.9\linewidth]{../thesis-doc/images/study2/Procedure2.pdf} % Image visible from slide 1 onward
+        \includegraphics[width=0.9\linewidth]{../thesis-doc/images/study2/Procedure2.pdf}
     \end{center}
 \end{frame}
 
 \section{Implementation}
 % \begin{frame}{Implementation}
-%     \includegraphics[width=0.45\linewidth]{../thesis-doc/images/ArduinoCodeProcedure.pdf} % Right image, full column width
+%     \includegraphics[width=0.45\linewidth]{../thesis-doc/images/ArduinoCodeProcedure.pdf}
 % \end{frame}
 
 \begin{frame}{Implementation}
     \begin{itemize}
         \item Arduino code
         \begin{itemize}
-            \item setup() for initialization of temperature and imu sensors and sd logger
+            \item setup() for initialization of temperature and IMU sensors and SD logger
             \item loop() for measuring data (temperature sensors with $8,3Hz$, imu data with $50Hz$)
         \end{itemize}
         \item Button action
@@ -373,7 +545,7 @@ Institute of Telematics, Department of Informatics\\
 \end{frame}
 
 \begin{frame}{Implementation}
-    \includegraphics[width=\linewidth]{../thesis-doc/images/prototype/MeasurementRawDataSnippet_short.png} % Right image, full column width
+    \includegraphics[width=\linewidth]{../thesis-doc/images/prototype/MeasurementRawDataSnippet_short.png}
 \end{frame}
 
 \backupend
